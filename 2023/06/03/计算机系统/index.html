@@ -6,17 +6,20 @@
   
   <title>计算机系统 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="##程序的机器级表示or eax，ebx eax与ebx或运算，将值输出给ebxsub S，D D&lt;——D-S%rax用于存放函数返回值###移位操作SAL、SHL：左移指令SAR：算术移位 填上符号位SHR：逻辑移位 填上0###">
+  <meta name="description" content="##程序的机器级表示or S,D D&lt;——D|Ssub S,D D&lt;——D-S%rax用于存放函数返回值###移位操作SAL、SHL：左移指令SAR：算术移位 填上符号位SHR：逻辑移位 填上0###x86-64命名延续字 2字节双字 4字节四字 8字节八字 16字节对应传送指令 字节movb 传送字节 1movw 传送字 2movl 传送双字 4movq 传送四字 8指令与字节：##">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机系统">
 <meta property="og:url" content="https://caiji-qaq.github.io/2023/06/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="##程序的机器级表示or eax，ebx eax与ebx或运算，将值输出给ebxsub S，D D&lt;——D-S%rax用于存放函数返回值###移位操作SAL、SHL：左移指令SAR：算术移位 填上符号位SHR：逻辑移位 填上0###">
+<meta property="og:description" content="##程序的机器级表示or S,D D&lt;——D|Ssub S,D D&lt;——D-S%rax用于存放函数返回值###移位操作SAL、SHL：左移指令SAR：算术移位 填上符号位SHR：逻辑移位 填上0###x86-64命名延续字 2字节双字 4字节四字 8字节八字 16字节对应传送指令 字节movb 传送字节 1movw 传送字 2movl 传送双字 4movq 传送四字 8指令与字节：##">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230705224241.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/IMG_20230706_223245.jpg">
 <meta property="article:published_time" content="2023-06-03T12:24:59.000Z">
-<meta property="article:modified_time" content="2023-07-04T14:50:36.623Z">
+<meta property="article:modified_time" content="2023-07-06T15:03:11.620Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230705224241.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -97,12 +100,22 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>##程序的机器级表示<br>or eax，ebx eax与ebx或运算，将值输出给ebx<br>sub S，D D&lt;——D-S<br>%rax用于存放函数返回值<br>###移位操作<br>SAL、SHL：左移指令<br>SAR：算术移位 填上符号位<br>SHR：逻辑移位 填上0<br>###</p>
+        <p>##程序的机器级表示<br>or S,D D&lt;——D|S<br>sub S,D D&lt;——D-S<br>%rax用于存放函数返回值<br>###移位操作<br>SAL、SHL：左移指令<br>SAR：算术移位 填上符号位<br>SHR：逻辑移位 填上0<br>###x86-64命名<br>延续字 2字节<br>双字 4字节<br>四字 8字节<br>八字 16字节<br>对应传送指令 字节<br>movb 传送字节 1<br>movw 传送字 2<br>movl 传送双字 4<br>movq 传送四字 8<br>指令与字节：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230705224241.png"><br>###跳转<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/IMG_20230706_223245.jpg"><br>反汇编版本中是根据第二个字节的数值加上下一个指令的地址来判断跳转的地址，若出现f*这种情况则是负数(补码)，同样是与下一个指令的地址加和。<br>条件判断转移中第一种比较普通的方式：转移</p>
+<pre><code>if（a&gt;b) goto state1
+else goto state2
+</code></pre>
+<p>但这种情况一般情况下并不会使用，因为效率太低，计算机使用的是流水线的形式的提升效率，即可能在判断if的过程中已经开始编译下一步了，如果if判断为错就会让之前的编译白费。所以计算机一般是使用</p>
+<pre><code>a1=a-b
+a2 =b-a
+c=a1&gt;a2
+if c a1=a2
+</code></pre>
+<p>这种形式来提升效率</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/06/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" data-id="cljpr7uql00051gtp3of0d3kt" data-title="计算机系统" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/06/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" data-id="cljra2xyd0004bktpa1wid0u8" data-title="计算机系统" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -162,6 +175,10 @@
       <ul>
         
           <li>
+            <a href="/2023/07/05/markdown%E8%AF%AD%E6%B3%95/">markdown语法</a>
+          </li>
+        
+          <li>
             <a href="/2023/07/02/%E6%A0%91%E8%8E%93%E6%B4%BE/">树莓派</a>
           </li>
         
@@ -175,10 +192,6 @@
         
           <li>
             <a href="/2023/06/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">计算机系统</a>
-          </li>
-        
-          <li>
-            <a href="/2023/06/03/linux-%E6%8C%87%E4%BB%A4%E5%AD%A6%E4%B9%A0/">linux 指令学习</a>
           </li>
         
       </ul>
