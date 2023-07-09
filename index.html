@@ -171,7 +171,7 @@ H<sub>2</sub>O  CO<sub>2</sub>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/07/05/markdown%E8%AF%AD%E6%B3%95/" data-id="cljra2xy50000bktpfxnc2bl9" data-title="markdown语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/07/05/markdown%E8%AF%AD%E6%B3%95/" data-id="cljviuaz60000e4tp7s0eajzf" data-title="markdown语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -222,12 +222,13 @@ CPU=>swi异常处理函数，由内核提供，同时也切换了到了内核模
 <pre><code>  major=register_chrdev(0,&quot;hello&quot;,&amp;hello_drv) ;
 </code></pre>
 <p>只要主设备号等于major的值就可以访问驱动程序了<br><strong>4 入口</strong>：入口函数用来调用注册函数，将2中结构体注册进了内核里（放到了数组里）module_init<br>而module_init只是一个宏定义，是更多代码的替代 因此可以将一个普通的c程序变成入口函数 ，一个驱动函数的入口函数是固定的：init_module<br>问题:如果入口函数一样编进内核那不就重名了？<br>编进内核就比再是原来的声明时候的意思了，编进内核第二个意思的结构体的值等于指针</p>
-<p>整个流程就是：<br>应用程序open，中断，sysopen判断是字符设备节点，查找主设备号，调用数组里主设备号对应的驱动程序</p>
+<p>整个流程就是：<br>应用程序open，中断，sysopen判断是字符设备节点，查找主设备号，调用数组里主设备号对应的驱动程序<br>###04字符设备驱动回顾与数据流程<br>####1.节点分类<br> 普通节点<br> char：字符节点<br> block：块节点<br>####2.写一个驱动流程<br>0 确定主设备号<br>1 构造结构体<br>构造一个file_operation的结构体含有下面这三个函数<br>.open&#x3D;..<br>.read&#x3D;…<br>.wirte&#x3D;…<br>2 注册<br>将上面的结构体注册进一个数组里chardvs[n]<br>使用函数<br>major&#x3D;register_chrdev(主设备号,名字，&amp;fops)<br>注：如果主设备号设为0 ，major就会返回一个主设备号，&amp;fops:是结构体的地址<br>3 入口<br>入口函数用于调用注册函数，内核调用入口函数<br>4 出口<br>unregister_chrdev<br>####3.驱动程序如何调用&#x2F;返回应用程序中输入的参数？<br>比如write想要写入参数，驱动程序是<strong>无法直接</strong>调用应用函数中的参数的，需要使用copy_to_user来传给user或是使用copy_from_user来得到函数中给的参数。<br>####4.驱动程序可以直接访问物理地址嘛？<br>也是不可以的，驱动程序中使用的是虚拟地址，而硬件使用的是物理地址，需要使用ioremap函数来将物理地址转换为虚拟地址，驱动程序通过虚拟地址才能访问到硬件的地址。得需要芯片手册才能得到物理地址。</p>
+<h3 id="05入口出口"><a href="#05入口出口" class="headerlink" title="05入口出口"></a>05入口出口</h3><p>1.编译必须需要内核源码，因为使用函数必须要用到内核的头文件<br>2. 编写驱动程序<br>入口函数以及出口函数名称都是确定的：init_module&#x2F;cleanup_module，但是也可以通过moudle_init来自己定义入口函数名<br>printf要写成printk因为是printkernel。但是如果printk是无法直接显示在屏幕上看到的，应该如何查看呢，使用dmesg(开机显示函数)<br>加入__init&#x2F;__exit这两个宏，加入段属性，来保证可以只使用一次将内存释放掉，因为init只在创建的时候有用，在内存的空间可以在使用过后释放掉。exit因为只在移除驱动程序的时候使用，不能释放所以这个有啥意义呢？<br>exit是给那些编进内核的驱动程序使用的  <strong>（总的来说还是没太懂）</strong><br>驱动可以被编进内核就不需要释放与出口，不能卸载一个编进内核的驱动程序，出口函数无存在必要exit保证不会链接进内核里，因为exit不会在内核里使用也就不会再内核里存放这个代码。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/07/02/%E6%A0%91%E8%8E%93%E6%B4%BE/" data-id="cljra2xyb0002bktp2i3517nu" data-title="树莓派" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/07/02/%E6%A0%91%E8%8E%93%E6%B4%BE/" data-id="cljviuazc0002e4tp14vedwnj" data-title="树莓派" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -266,7 +267,7 @@ CPU=>swi异常处理函数，由内核提供，同时也切换了到了内核模
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/07/02/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%90%86%E8%AE%BA/" data-id="cljra2xy90001bktp8tc7dfn6" data-title="嵌入式" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/07/02/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%90%86%E8%AE%BA/" data-id="cljviuaza0001e4tp83bk44y8" data-title="嵌入式" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -308,7 +309,7 @@ CPU=>swi异常处理函数，由内核提供，同时也切换了到了内核模
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/06/23/%E7%BB%8F%E6%B5%8E/" data-id="cljra2xyf0006bktp2nv0fepy" data-title="经济学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/06/23/%E7%BB%8F%E6%B5%8E/" data-id="cljviuazf0005e4tpcgpgc73o" data-title="经济学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -357,7 +358,7 @@ if c a1=a2
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/06/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" data-id="cljra2xyd0004bktpa1wid0u8" data-title="计算机系统" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/06/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" data-id="cljviuazd0003e4tpelzudduy" data-title="计算机系统" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -397,7 +398,7 @@ if c a1=a2
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/06/03/linux-%E6%8C%87%E4%BB%A4%E5%AD%A6%E4%B9%A0/" data-id="cljra2xyd0003bktp6qxp118x" data-title="linux 指令学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/06/03/linux-%E6%8C%87%E4%BB%A4%E5%AD%A6%E4%B9%A0/" data-id="cljviuazk0006e4tpf7ev045b" data-title="linux 指令学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -438,7 +439,7 @@ if c a1=a2
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/06/03/hexo%E5%91%BD%E4%BB%A4/" data-id="cljra2xye0005bktphl72de3q" data-title="hexo命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/06/03/hexo%E5%91%BD%E4%BB%A4/" data-id="cljviuaze0004e4tpdfvf7iqi" data-title="hexo命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
