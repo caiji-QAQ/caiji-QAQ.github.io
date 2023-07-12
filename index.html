@@ -171,7 +171,7 @@ H<sub>2</sub>O  CO<sub>2</sub>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/07/05/markdown%E8%AF%AD%E6%B3%95/" data-id="cljwz0b2b0002jgtphwg85yai" data-title="markdown语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/07/05/markdown%E8%AF%AD%E6%B3%95/" data-id="cljz35zrl0003actpfg45d191" data-title="markdown语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -207,28 +207,35 @@ H<sub>2</sub>O  CO<sub>2</sub>
       
         <p>前期准备：<br>Datasheet：硬件手册，用于了解目标平台的规格&#x2F;寄存器&#x2F;内存地址&#x2F;引脚定义等<br>编译器：用于编译目标平台的驱动源码，嵌入式开发，一般用交叉编译器<br>内核源码：编译驱动依赖于内核，且必须与目标平台系统内核版本一致<br>外围电路原理图：连怎么走线都不知道，还开发个球啊！<br><a target="_blank" rel="noopener" href="https://www.raspberrypi.com/documentation/computers/raspberry-pi.html">引脚图</a><br><a target="_blank" rel="noopener" href="https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-reduced-schematics.pdf?_gl=1*17haad8*_ga*Njk2NTc4NzMzLjE2ODgyODM2OTg.*_ga_22FD70LWDS*MTY4ODI4NTg2MC4yLjEuMTY4ODI4NTg4NC4wLjAuMA">电路原理图</a>..<br>makefile介绍：<br>一个工程中的源文件不计数，按类型、功能、模块分别放在若干个目录中，Makefile定义了一系列的规则来指定，哪些文件需要先编译，哪些文件需要后编译，那些文件需要重新编译等，可以说Makefile关系到了整个工程的编译规则，因此会不会写Makefile，能不能写好Makefile，说明了一个程序员完成大型工程的能力。类似FPGA的testbench。</p>
 <p>树莓派指令：<br>关机:sudo poweroff，直接断电会对板子有损害先关机再断电<br>预编译：make ARCH&#x3D;arm64 CROSS_COMPILE&#x3D;aarch64-linux-gnu- bcm2711_defconfig<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%9E%B6%E6%9E%84.png"></p>
-<p>韦东山：<br>##01单片机与linux程序的分层<br>单片机：有很多封装库，调库就可以解决大部分工程要求<br>###1.linux与单片机的区别<br>单片机和linux的主要不同是应用程序与驱动程序有无明显的界限<br>###2.linux下是无法同时读写寄存器的<br>为了保证安全，应用程序是无法直接访问到硬件的，访问硬件只能使用驱动程序，有严格分界；<br>甚至即使知道寄存器地址也无法读写：因为驱动程序与应用程序权限不一样。<br>MCU：微控制器单元，单片机<br>MPU：微处理器单元，跑linux的芯片含有mmu（内存管理单元）。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706202530.png"></p>
+<p>韦东山：</p>
+<h2 id="01单片机与linux程序的分层"><a href="#01单片机与linux程序的分层" class="headerlink" title="01单片机与linux程序的分层"></a>01单片机与linux程序的分层</h2><p>单片机：有很多封装库，调库就可以解决大部分工程要求</p>
+<h3 id="1-linux与单片机的区别"><a href="#1-linux与单片机的区别" class="headerlink" title="1.linux与单片机的区别"></a>1.linux与单片机的区别</h3><p>单片机和linux的主要不同是应用程序与驱动程序有无明显的界限</p>
+<h3 id="2-linux下是无法同时读写寄存器的"><a href="#2-linux下是无法同时读写寄存器的" class="headerlink" title="2.linux下是无法同时读写寄存器的"></a>2.linux下是无法同时读写寄存器的</h3><p>为了保证安全，应用程序是无法直接访问到硬件的，访问硬件只能使用驱动程序，有严格分界；<br>甚至即使知道寄存器地址也无法读写：因为驱动程序与应用程序权限不一样。<br>MCU：微控制器单元，单片机<br>MPU：微处理器单元，跑linux的芯片含有mmu（内存管理单元）。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706202530.png"></p>
 <center>图1 左MCU 右MPU</center>
 左：MCU：可以传输地址也可以传输数据，没有权限管理。
 右：MPU：但是多了一个MMU模块，MMU模块可以帮助权限管理，例如在APP模式下，用户想要访问GPIO MMU就会予以拒绝，但是当在内核模式下，MMU就会允许访问GPIO。
 想要访问硬件就需要驱动程序
-###3.linux中应用程序如何调用驱动程序
-应用程序不能直接调用驱动程序的代码，也是安全问题。
-swi #0 触发一个异常（类似中断）
-CPU=>swi异常处理函数，由内核提供，同时也切换了到了内核模式，拥有更高的权限。
-通过设置一个寄存器来判断是open还是read还是wirte。这样就能通过应用态切换到内核态了。根据R0分辩原因，调用不同的驱动程序。判断文件名普通文件就正常open、设备文件则通过驱动程序的open来读写寄存器。
 
-<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706204951.png"><br>##02应用程序与驱动程序的接口<br>驱动&#x3D;框架+硬件操作（和MCU很像）<br>swi:software interrupt 软件异常<br>驱动相当于积木，只能是调用这个积木但是没办法修改形状<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706210221.png"><br>第一节最后一张图的简略版（好看好多）<br>##03字符设备驱动程序框架<br>###1.文件ls -l的属性<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706210918.png"><br>类别：c也就是属性是char 字符设备节点（如果是正常文件的话c的地方是-）<br>主设备号：属性节点下标识号<br>###2.写驱动程序<br>####2.1应用程序如何找到驱动？<br>主要根据属性以及主设备号来找，暂时可以看做一个数组：chrdevs[主设备号]。<br>####2.2如何写一个驱动程序<br><strong>1 确定主设备号</strong>：选择一个名字没有占用的设备号，设置0则让系统自动分配了<br>(次设备号：比如有两个小灯，在一个主设备号下，判断点亮哪一个灯则需要次设备号，次设备号的含义是由自己决定的)<br><strong>2 构造一个结构体</strong>：file_operations里面是驱动的函数<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706212019.png"><br>.owner是一个扩展语法，为了避免初始化时函数不用的输入都需要设置的情况，防止初始化过多。就比如ssize我不用的话正常就要写上NULL站上这个位置，但是使用.owner就不需要再在这个位置上写NULL了。<br><strong>3 注册</strong>：把结构体放在数组或者链表里<br>例如</p>
+<h3 id="3-linux中应用程序如何调用驱动程序"><a href="#3-linux中应用程序如何调用驱动程序" class="headerlink" title="3.linux中应用程序如何调用驱动程序"></a>3.linux中应用程序如何调用驱动程序</h3><p>应用程序不能直接调用驱动程序的代码，也是安全问题。<br>swi #0 触发一个异常（类似中断）<br>CPU&#x3D;&gt;swi异常处理函数，由内核提供，同时也切换了到了内核模式，拥有更高的权限。<br>通过设置一个寄存器来判断是open还是read还是wirte。这样就能通过应用态切换到内核态了。根据R0分辩原因，调用不同的驱动程序。判断文件名普通文件就正常open、设备文件则通过驱动程序的open来读写寄存器。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706204951.png"></p>
+<h2 id="02应用程序与驱动程序的接口"><a href="#02应用程序与驱动程序的接口" class="headerlink" title="02应用程序与驱动程序的接口"></a>02应用程序与驱动程序的接口</h2><p>驱动&#x3D;框架+硬件操作（和MCU很像）<br>swi:software interrupt 软件异常<br>驱动相当于积木，只能是调用这个积木但是没办法修改形状<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706210221.png"><br>第一节最后一张图的简略版（好看好多）</p>
+<h2 id="03字符设备驱动程序框架"><a href="#03字符设备驱动程序框架" class="headerlink" title="03字符设备驱动程序框架"></a>03字符设备驱动程序框架</h2><h3 id="1-文件ls-l的属性"><a href="#1-文件ls-l的属性" class="headerlink" title="1.文件ls -l的属性"></a>1.文件ls -l的属性</h3><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706210918.png"><br>类别：c也就是属性是char 字符设备节点（如果是正常文件的话c的地方是-）<br>主设备号：属性节点下标识号</p>
+<h3 id="2-写驱动程序"><a href="#2-写驱动程序" class="headerlink" title="2.写驱动程序"></a>2.写驱动程序</h3><h4 id="2-1应用程序如何找到驱动？"><a href="#2-1应用程序如何找到驱动？" class="headerlink" title="2.1应用程序如何找到驱动？"></a>2.1应用程序如何找到驱动？</h4><p>主要根据属性以及主设备号来找，暂时可以看做一个数组：chrdevs[主设备号]。</p>
+<h4 id="2-2如何写一个驱动程序"><a href="#2-2如何写一个驱动程序" class="headerlink" title="2.2如何写一个驱动程序"></a>2.2如何写一个驱动程序</h4><p><strong>1 确定主设备号</strong>：选择一个名字没有占用的设备号，设置0则让系统自动分配了<br>(次设备号：比如有两个小灯，在一个主设备号下，判断点亮哪一个灯则需要次设备号，次设备号的含义是由自己决定的)<br><strong>2 构造一个结构体</strong>：file_operations里面是驱动的函数<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706212019.png"><br>.owner是一个扩展语法，为了避免初始化时函数不用的输入都需要设置的情况，防止初始化过多。就比如ssize我不用的话正常就要写上NULL站上这个位置，但是使用.owner就不需要再在这个位置上写NULL了。<br><strong>3 注册</strong>：把结构体放在数组或者链表里<br>例如</p>
 <pre><code>  major=register_chrdev(0,&quot;hello&quot;,&amp;hello_drv) ;
 </code></pre>
 <p>只要主设备号等于major的值就可以访问驱动程序了<br><strong>4 入口</strong>：入口函数用来调用注册函数，将2中结构体注册进了内核里（放到了数组里）module_init<br>而module_init只是一个宏定义，是更多代码的替代 因此可以将一个普通的c程序变成入口函数 ，一个驱动函数的入口函数是固定的：init_module<br>问题:如果入口函数一样编进内核那不就重名了？<br>编进内核就比再是原来的声明时候的意思了，编进内核第二个意思的结构体的值等于指针</p>
-<p>整个流程就是：<br>应用程序open，中断，sysopen判断是字符设备节点，查找主设备号，调用数组里主设备号对应的驱动程序<br>###04字符设备驱动回顾与数据流程<br>####1.节点分类<br> 普通节点<br> char：字符节点<br> block：块节点<br>####2.写一个驱动流程<br>0 确定主设备号<br>1 构造结构体<br>构造一个file_operation的结构体含有下面这三个函数<br>.open&#x3D;..<br>.read&#x3D;…<br>.wirte&#x3D;…<br>2 注册<br>将上面的结构体注册进一个数组里chardvs[n]<br>使用函数<br>major&#x3D;register_chrdev(主设备号,名字，&amp;fops)<br>注：如果主设备号设为0 ，major就会返回一个主设备号，&amp;fops:是结构体的地址<br>3 入口<br>入口函数用于调用注册函数，内核调用入口函数<br>4 出口<br>unregister_chrdev<br>####3.驱动程序如何调用&#x2F;返回应用程序中输入的参数？<br>比如write想要写入参数，驱动程序是<strong>无法直接</strong>调用应用函数中的参数的，需要使用copy_to_user来传给user或是使用copy_from_user来得到函数中给的参数。<br>####4.驱动程序可以直接访问物理地址嘛？<br>也是不可以的，驱动程序中使用的是虚拟地址，而硬件使用的是物理地址，需要使用ioremap函数来将物理地址转换为虚拟地址，驱动程序通过虚拟地址才能访问到硬件的地址。得需要芯片手册才能得到物理地址。</p>
+<p>整个流程就是：<br>应用程序open，中断，sysopen判断是字符设备节点，查找主设备号，调用数组里主设备号对应的驱动程序</p>
+<h3 id="04字符设备驱动回顾与数据流程"><a href="#04字符设备驱动回顾与数据流程" class="headerlink" title="04字符设备驱动回顾与数据流程"></a>04字符设备驱动回顾与数据流程</h3><h4 id="1-节点分类"><a href="#1-节点分类" class="headerlink" title="1.节点分类"></a>1.节点分类</h4><p> 普通节点<br> char：字符节点<br> block：块节点 </p>
+<h4 id="2-写一个驱动流程"><a href="#2-写一个驱动流程" class="headerlink" title="2.写一个驱动流程"></a>2.写一个驱动流程</h4><p><strong>0 确定主设备号</strong><br><strong>1 构造结构体</strong><br>构造一个file_operation的结构体含有下面这三个函数<br>.open&#x3D;..<br>.read&#x3D;…<br>.wirte&#x3D;…<br><strong>2 注册</strong><br>将上面的结构体注册进一个数组里chardvs[n]<br>使用函数<br>major&#x3D;register_chrdev(主设备号,名字，&amp;fops)<br>注：如果主设备号设为0 ，major就会返回一个主设备号，&amp;fops:是结构体的地址<br><strong>3 入口</strong><br>入口函数用于调用注册函数，内核调用入口函数<br><strong>4 出口</strong><br>unregister_chrdev</p>
+<h4 id="3-驱动程序如何调用-x2F-返回应用程序中输入的参数？"><a href="#3-驱动程序如何调用-x2F-返回应用程序中输入的参数？" class="headerlink" title="3.驱动程序如何调用&#x2F;返回应用程序中输入的参数？"></a>3.驱动程序如何调用&#x2F;返回应用程序中输入的参数？</h4><p>比如write想要写入参数，驱动程序是<strong>无法直接</strong>调用应用函数中的参数的，需要使用copy_to_user来传给user或是使用copy_from_user来得到函数中给的参数。</p>
+<h4 id="4-驱动程序可以直接访问物理地址嘛？"><a href="#4-驱动程序可以直接访问物理地址嘛？" class="headerlink" title="4.驱动程序可以直接访问物理地址嘛？"></a>4.驱动程序可以直接访问物理地址嘛？</h4><p>也是不可以的，驱动程序中使用的是虚拟地址，而硬件使用的是物理地址，需要使用ioremap函数来将物理地址转换为虚拟地址，驱动程序通过虚拟地址才能访问到硬件的地址。得需要芯片手册才能得到物理地址。</p>
 <h3 id="05入口出口"><a href="#05入口出口" class="headerlink" title="05入口出口"></a>05入口出口</h3><p>1.编译必须需要内核源码，因为使用函数必须要用到内核的头文件<br>2. 编写驱动程序<br>入口函数以及出口函数名称都是确定的：init_module&#x2F;cleanup_module，但是也可以通过moudle_init来自己定义入口函数名<br>printf要写成printk因为是printkernel。但是如果printk是无法直接显示在屏幕上看到的，应该如何查看呢，使用dmesg(开机显示函数)<br>加入__init&#x2F;__exit这两个宏，加入段属性，来保证可以只使用一次将内存释放掉，因为init只在创建的时候有用，在内存的空间可以在使用过后释放掉。exit因为只在移除驱动程序的时候使用，不能释放所以这个有啥意义呢？<br>exit是给那些编进内核的驱动程序使用的  <strong>（总的来说还是没太懂）</strong><br>驱动可以被编进内核就不需要释放与出口，不能卸载一个编进内核的驱动程序，出口函数无存在必要exit保证不会链接进内核里，因为exit不会在内核里使用也就不会再内核里存放这个代码。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/07/02/%E6%A0%91%E8%8E%93%E6%B4%BE/" data-id="cljwz0b2h0004jgtp90ln9nk9" data-title="树莓派" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/07/02/%E6%A0%91%E8%8E%93%E6%B4%BE/" data-id="cljz35zrn0005actp8euhbtgn" data-title="树莓派" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -267,7 +274,7 @@ CPU=>swi异常处理函数，由内核提供，同时也切换了到了内核模
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/07/02/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%90%86%E8%AE%BA/" data-id="cljwz0b2g0003jgtpfc1lg301" data-title="嵌入式" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/07/02/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%90%86%E8%AE%BA/" data-id="cljz35zri0001actpcy1b6va7" data-title="嵌入式" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -309,7 +316,7 @@ CPU=>swi异常处理函数，由内核提供，同时也切换了到了内核模
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/06/23/%E7%BB%8F%E6%B5%8E/" data-id="cljwz0b2i0005jgtpftzl48ax" data-title="经济学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/06/23/%E7%BB%8F%E6%B5%8E/" data-id="cljz35zrm0004actpb4zifxz3" data-title="经济学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -358,7 +365,7 @@ if c a1=a2
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/06/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" data-id="cljwz0b2m0006jgtphag0et0n" data-title="计算机系统" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/06/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" data-id="cljz35zrk0002actpftuxgiig" data-title="计算机系统" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -398,7 +405,7 @@ if c a1=a2
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/06/03/linux-%E6%8C%87%E4%BB%A4%E5%AD%A6%E4%B9%A0/" data-id="cljwz0b280001jgtp0s7t8iw4" data-title="linux 指令学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/06/03/linux-%E6%8C%87%E4%BB%A4%E5%AD%A6%E4%B9%A0/" data-id="cljz35zrn0006actp32k15t1h" data-title="linux 指令学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -439,7 +446,7 @@ if c a1=a2
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/06/03/hexo%E5%91%BD%E4%BB%A4/" data-id="cljwz0b230000jgtp36joc6ac" data-title="hexo命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/06/03/hexo%E5%91%BD%E4%BB%A4/" data-id="cljz35zrb0000actp34a57it8" data-title="hexo命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
