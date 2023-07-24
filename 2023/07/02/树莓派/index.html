@@ -14,13 +14,14 @@
 <meta property="og:description" content="前期准备：Datasheet：硬件手册，用于了解目标平台的规格&#x2F;寄存器&#x2F;内存地址&#x2F;引脚定义等编译器：用于编译目标平台的驱动源码，嵌入式开发，一般用交叉编译器内核源码：编译驱动依赖于内核，且必须与目标平台系统内核版本一致外围电路原理图：连怎么走线都不知道，还开发个球啊！引脚图电路原理图..makefile介绍：一个工程中的源文件不计数，按类型、功能、模块分别放在若干个目">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230715215640.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706202530.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706204951.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706210221.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706210918.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706212019.png">
 <meta property="article:published_time" content="2023-07-02T07:55:47.000Z">
-<meta property="article:modified_time" content="2023-07-12T02:12:14.676Z">
+<meta property="article:modified_time" content="2023-07-24T01:29:28.830Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%9E%B6%E6%9E%84.png">
@@ -106,7 +107,7 @@
       
         <p>前期准备：<br>Datasheet：硬件手册，用于了解目标平台的规格&#x2F;寄存器&#x2F;内存地址&#x2F;引脚定义等<br>编译器：用于编译目标平台的驱动源码，嵌入式开发，一般用交叉编译器<br>内核源码：编译驱动依赖于内核，且必须与目标平台系统内核版本一致<br>外围电路原理图：连怎么走线都不知道，还开发个球啊！<br><a target="_blank" rel="noopener" href="https://www.raspberrypi.com/documentation/computers/raspberry-pi.html">引脚图</a><br><a target="_blank" rel="noopener" href="https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-reduced-schematics.pdf?_gl=1*17haad8*_ga*Njk2NTc4NzMzLjE2ODgyODM2OTg.*_ga_22FD70LWDS*MTY4ODI4NTg2MC4yLjEuMTY4ODI4NTg4NC4wLjAuMA">电路原理图</a>..<br>makefile介绍：<br>一个工程中的源文件不计数，按类型、功能、模块分别放在若干个目录中，Makefile定义了一系列的规则来指定，哪些文件需要先编译，哪些文件需要后编译，那些文件需要重新编译等，可以说Makefile关系到了整个工程的编译规则，因此会不会写Makefile，能不能写好Makefile，说明了一个程序员完成大型工程的能力。类似FPGA的testbench。</p>
 <p>树莓派指令：<br>关机:sudo poweroff，直接断电会对板子有损害先关机再断电<br>预编译：make ARCH&#x3D;arm64 CROSS_COMPILE&#x3D;aarch64-linux-gnu- bcm2711_defconfig<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%9E%B6%E6%9E%84.png"></p>
-<p>韦东山：</p>
+<p><strong>遇到的的问题</strong>：<br>1.function declaration isnt a prototype<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230715215640.png"><br>解决：将hello_init()改成了hello_init(void)奇迹般的解决了也是非常不理解了<br>2.搞了半天发现找不到#include&lt;linux&#x2F;module.h&gt;<br>解决：<br>通过修改environment文件:<br>vim &#x2F;etc&#x2F;environment中加入内核的路径最终找到<br>韦东山：</p>
 <h2 id="01单片机与linux程序的分层"><a href="#01单片机与linux程序的分层" class="headerlink" title="01单片机与linux程序的分层"></a>01单片机与linux程序的分层</h2><p>单片机：有很多封装库，调库就可以解决大部分工程要求</p>
 <h3 id="1-linux与单片机的区别"><a href="#1-linux与单片机的区别" class="headerlink" title="1.linux与单片机的区别"></a>1.linux与单片机的区别</h3><p>单片机和linux的主要不同是应用程序与驱动程序有无明显的界限</p>
 <h3 id="2-linux下是无法同时读写寄存器的"><a href="#2-linux下是无法同时读写寄存器的" class="headerlink" title="2.linux下是无法同时读写寄存器的"></a>2.linux下是无法同时读写寄存器的</h3><p>为了保证安全，应用程序是无法直接访问到硬件的，访问硬件只能使用驱动程序，有严格分界；<br>甚至即使知道寄存器地址也无法读写：因为驱动程序与应用程序权限不一样。<br>MCU：微控制器单元，单片机<br>MPU：微处理器单元，跑linux的芯片含有mmu（内存管理单元）。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706202530.png"></p>
@@ -134,7 +135,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://caiji-qaq.github.io/2023/07/02/%E6%A0%91%E8%8E%93%E6%B4%BE/" data-id="cljz35zrn0005actp8euhbtgn" data-title="树莓派" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://caiji-qaq.github.io/2023/07/02/%E6%A0%91%E8%8E%93%E6%B4%BE/" data-id="clkgdh56k0005uotphhurdg5h" data-title="树莓派" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -194,6 +195,10 @@
       <ul>
         
           <li>
+            <a href="/2023/07/24/%E7%A7%BB%E6%B0%91%E6%94%BF%E7%AD%96%E8%B0%83%E7%A0%94/">移民政策调研</a>
+          </li>
+        
+          <li>
             <a href="/2023/07/05/markdown%E8%AF%AD%E6%B3%95/">markdown语法</a>
           </li>
         
@@ -207,10 +212,6 @@
         
           <li>
             <a href="/2023/06/23/%E7%BB%8F%E6%B5%8E/">经济学习</a>
-          </li>
-        
-          <li>
-            <a href="/2023/06/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">计算机系统</a>
           </li>
         
       </ul>
