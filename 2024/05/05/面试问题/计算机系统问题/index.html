@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="caijiQAQ">
+    
+    <title>
+        
+            计算机操作系统问题 |
+        
+        学习笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"caiji-qaq.github.io","root":"/","language":"en"}
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066cc","logo":"/images/logo.svg","favicon":"/images/logo.svg","avatar":"/images/avatar.svg","font_size":null,"font_family":null,"hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"header_transparent":false,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","font_color":null,"hitokoto":false},"scroll":{"progress_bar":false,"percent":false}},"local_search":{"enable":false,"preload":false},"code_copy":{},"code_block":{"tools":{"enable":false,"style":"default"},"highlight_theme":"default"},"side_tools":{},"pjax":{"enable":false},"lazyload":{"enable":false},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.8"},"waline":{"server_url":null,"reaction":false,"version":2}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"enable":false,"wordcount":false,"min2read":false},"img_align":"left","copyright_info":false},"version":"3.6.1"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original article title","author":"Original article author","link":"Original article link"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+               学习笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            <div class="article-title">
+                <span class="title-hover-animation">计算机操作系统问题</span>
+            </div>
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/avatar.svg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">caijiQAQ</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            
+<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        
+            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
+        
+        <span class="pc">2024-05-05 00:00:00</span>
+        <span class="mobile">2024-05-05 00:00</span>
+    </span>
+    
+        <span class="article-update-date article-meta-item">
+        <i class="fas fa-file-pen"></i>&nbsp;
+        <span class="pc">2024-05-14 22:21:45</span>
+    </span>
+    
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content keep-markdown-body">
+                
+
+                <h1 id="C-x2F-C-问题"><a href="#C-x2F-C-问题" class="headerlink" title="C&#x2F;C++问题"></a>C&#x2F;C++问题</h1><p>1.程序从编译到运行全过程：</p>
+<ul>
+<li>编译。编译器会将程序源代码编译成汇编代码。</li>
+<li>汇编。汇编器会将汇编代码文件翻译成为二进制的机器码。</li>
+<li>链接。链接器会将一个个目标文件和库文件链接在一起，成为一个完整的可执行程序。</li>
+<li>载入。加载器会将可执行文件的代码和数据从硬盘加载到内存中，然后跳转到程序的第一条指令处开始运行。</li>
+</ul>
+<h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><p>好文：<a class="link"   target="_blank" rel="noopener" href="https://hansimov.gitbook.io/csapp/part2/ch08-exceptional-control-flow/8.1-exceptions" >https://hansimov.gitbook.io/csapp/part2/ch08-exceptional-control-flow/8.1-exceptions<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="1-进程与线程的区别"><a href="#1-进程与线程的区别" class="headerlink" title="1. 进程与线程的区别"></a>1. 进程与线程的区别</h3><p><strong>进程</strong>：</p>
+<ul>
+<li>系统进行资源分配的基本单位</li>
+<li>进程是线程的容器。程序是指令、数据及其组织形式的描述，进程是程序的实体。</li>
+</ul>
+<p><strong>线程</strong>：</p>
+<ul>
+<li>操作系统最小的运算调度单位</li>
+<li>线程包含在进程中，是进程实际执行任务的单位</li>
+<li>在一些操作系统中，线程也被称为轻量化进程</li>
+</ul>
+<p><strong>线程和进程的区别</strong></p>
+<ul>
+<li>线程是进程的一份，使进程内实际执行单位，而进程则是操作系统分配资源的基本单位。</li>
+<li>每个进程都有独立的<strong>地址空间和系统资源</strong>，而线程共享<strong>同一进程的地址空间和系统资源</strong>。虽然线程共享进程的地址空间，但每个线程都有<strong>自己独立的栈空间</strong>。线程的栈用于存储函数调用的局部变量、返回地址等。</li>
+<li>线程之间的切换比进程之间的切换更快，因为线程共享相同的上下文和资源。</li>
+<li>线程间通信更加方便，可以直接读写共享内存，而进程间通信需要通过特定的机制（<strong>如管道、消息队列等</strong>）。</li>
+<li>进程的创建和销毁比线程的开销更大。</li>
+<li>进程是相对独立的，一个进程的崩溃不会影响其他进程，而线程是相互依赖的，一个线程的崩溃会导致整个进程的崩溃。</li>
+</ul>
+<h3 id="2-什么时候用进程，什么时候用线程？"><a href="#2-什么时候用进程，什么时候用线程？" class="headerlink" title="2.什么时候用进程，什么时候用线程？"></a>2.什么时候用进程，什么时候用线程？</h3><p>####使用进程的情况：</p>
+<ul>
+<li>1.需要独立的地址空间和系统资源。不同任务之间的数据隔离较为重要</li>
+<li>2.需要更高的安全性和稳定性。一个任务的崩溃不会影响到其他任务的正常运行</li>
+<li>3.并行计算要求：如果任务需要<strong>充分利用多核处理器的计算能力</strong>，可以通过多个独立的进程并行执行来提高计算效率。</li>
+</ul>
+<p>####使用线程的情况：</p>
+<ul>
+<li>1.共享数据和资源：数据同步通信较为频繁就可以使用线程</li>
+<li>2.轻量化：如果任务比较轻量级，且并行执行可以提高效率，使用线程可以进行更快速的切换和调度，减少开销。</li>
+<li>3.实时性：线程可以更快地响应事件和处理任务。</li>
+</ul>
+<h3 id="3-一个线程占用多大内存"><a href="#3-一个线程占用多大内存" class="headerlink" title="3.一个线程占用多大内存"></a>3.一个线程占用多大内存</h3><p>一个线程在Linux系统中大约占用8MB的内存。这是因为Linux系统中的线程栈是通过缺页异常来进行内存分配的，不是所有的栈空间都会被实际分配内存。因此，<strong>8MB只是一个上限</strong>，实际的内存消耗会略微超过实际需要的内存。这个差额主要是由于内部损耗（每个线程内部的一些开销）所引起的，通常在4KB范围内.<br><strong>注：线程共享进程的地址空间，但每个线程有自己的栈空间。内核为每个线程分配独立的内核栈。</strong></p>
+<h3 id="4-信号量是什么？有什么作用？"><a href="#4-信号量是什么？有什么作用？" class="headerlink" title="4.信号量是什么？有什么作用？"></a>4.信号量是什么？有什么作用？</h3><p>信号量是一种同步机制，<strong>它本质上是一个计数器，用于多进程或多线程对共享资源的访问</strong>。信号量的主要作用是保护共享资源，使得在一个时刻只有一定数量的进程或线程可以访问。<br>信号量的原理是基于 P(sv) 和 V(sv) 两种操作：</p>
+<ul>
+<li>P(sv) 操作会将信号量的值减1，如果信号量的值大于零，进程或线程可以继续访问共享资源；如果信号量的值为零，进程或线程会被挂起，直到其他进程或线程通过 V(sv) 操作释放信号量。</li>
+<li>V(sv) 操作会将信号量的值加1，如果有进程或线程因等待信号量而被挂起，它们中的一个会被唤醒继续执行；如果没有进程或线程等待信号量，信号量的值会增加。</li>
+</ul>
+<h3 id="5-多进程内存共享存在什么问题，如何处理？"><a href="#5-多进程内存共享存在什么问题，如何处理？" class="headerlink" title="5.多进程内存共享存在什么问题，如何处理？"></a>5.多进程内存共享存在什么问题，如何处理？</h3><p>####多进程内存共享问题：</p>
+<ul>
+<li><strong>竞争条件</strong>（Race Condition）：当多个进程同时访问和修改共享内存时，由于执行顺序的不确定性，可能导致数据不一致或不正确的结果。</li>
+<li>数据同步问题：不同的进程可能以不同的速度访问共享内存，导致数据在读取和更新之间的时间差异，进而引发数据不一致的问题。</li>
+<li>死锁（Deadlock）：如果多个进程在访问共享内存时发生<strong>互相等待</strong>的情况，可能导致死锁，使得进程无法继续执行。</li>
+</ul>
+<p>####如何处理：</p>
+<ul>
+<li>使用互斥锁（Mutex）：通过在访问共享内存之前获取互斥锁，并在访问完成后释放锁，可以<strong>确保同一时间只有一个进程访问共享内存</strong>，从而避免竞争条件。</li>
+<li>信号量：通过使用信号量来同步进程的访问，可以控制同时访问共享内存的进程数量，从而避免数据同步问题和死锁。</li>
+<li>条件变量：条件变量可以用于进程间的通信和同步，它可以在特定条件满足时唤醒等待的进程，从而避免忙等待和减少资源消耗。</li>
+<li>使用进程间通信机制(IPC)：：使用操作系统提供的进程间通信机制，如管道、消息队列、共享内存、套接字等，可以实现进程间的数据传输和同步，确保共享数据的正确性和一致性。</li>
+</ul>
+<h3 id="6-多线程、多进程通信的方法："><a href="#6-多线程、多进程通信的方法：" class="headerlink" title="6.多线程、多进程通信的方法："></a>6.多线程、多进程通信的方法：</h3><ul>
+<li>1.多线程：互斥锁、信号量、读写锁</li>
+<li>2.多进程：互斥锁、信号量、惯导、共享内存</li>
+</ul>
+<h3 id="7-父进程与子进程的区别："><a href="#7-父进程与子进程的区别：" class="headerlink" title="7.父进程与子进程的区别："></a>7.父进程与子进程的区别：</h3><p>####父进程与子进程的关系<br>父进程是创建子进程的进程。当父进程创建一个新的进程时，该新进程就成为子进程。父进程在创建子进程时，会为子进程<strong>分配独立的资源和运行环境</strong>。<br>子进程是由父进程创建的新进程。子进程会继承父进程的大部分属性和资源。它可以独立运行，并且可以执行不同的代码路径。子进程可以创建自己的子进程，形成进程的层次结构。<br>####父进程与子进程的区别</p>
+<ul>
+<li><strong>进程ID</strong>：每个进程在系统中都有一个唯一的进程ID。父进程在创建子进程时，会将子进程的进程ID分配给子进程。</li>
+<li><strong>进程关系</strong>：父进程与子进程之间建立了一种层次关系，父进程是子进程的创造者和管理者。</li>
+<li>资源继承：子进程会继承父进程的大部分属性和资源，<strong>包括打开的文件、环境变量和当前工作目录等。</strong></li>
+<li><strong>进程通信</strong>：父进程和子进程可以通过进程间通信机制来进行交互和数据共享，如管道、共享内存、消息队列等。</li>
+<li><strong>生命周期</strong>：父进程和子进程的生命周期是相互独立的。<font style="color:red">子进程可以在父进程退出后继续存在，成为孤儿进程，由系统的init进程接管管理</font>。</li>
+</ul>
+<p>注：fork() 函数用于创建一个新的进程。fork() 调用一次，但返回两次：一次在父进程中返回，一次在子进程中返回。父进程中返回新创建子进程的PID，而在子进程中，fork返回0，子进程也通过这个返回值知道自己是哦新创建的子进程。</p>
+<h3 id="8-僵尸进程的处理方法"><a href="#8-僵尸进程的处理方法" class="headerlink" title="8.僵尸进程的处理方法"></a>8.僵尸进程的处理方法</h3><p>####僵尸进程出现的原因：<br>父进程等待子进程结束，而此时子进程已经结束退出，父进程一直苦等但是没有等到子进程返回的信号，父进程就成了僵尸进程。<br>####处理方法：</p>
+<ul>
+<li>1.在使用fork()创建子进程后，确实应该及时使用**wait()或waitpid()**系统调用来回收子进程的资源。</li>
+<li>2.<strong>kill命令来处理僵尸进程</strong>，kill命令主要是用来向进程发送信号。如果父进程在子进程退出后没有处理SIGCHLD信号导致出现僵尸进程，可以使用kill命令发送SIGCHLD信号给父进程来触发父进程处理僵尸进程。可以使用以下命令来找到僵尸进程的PID：ps aux | grep Z（ps aux列出进程，Z代表zombie）<br>接着使用kill -s SIGCHLD <parent_pid></li>
+</ul>
+<h3 id="9-什么事进程上下文、中断上下文？"><a href="#9-什么事进程上下文、中断上下文？" class="headerlink" title="9.什么事进程上下文、中断上下文？"></a>9.什么事进程上下文、中断上下文？</h3><p>其实也就是这两个出现的条件不一样，进程上下文是因为操作系统调度器想要切换到另一个进程，而中断上下文则是因为出现了中断和异常，需要保存当前环境。<br>####进程上下文</p>
+<ul>
+<li><strong>进程状态信息</strong>：进程上下文是指操作系统在执行进程时所需的所有状态信息的集合。</li>
+<li><strong>程序数据</strong>：包括程序的代码、数据、进程的标识符、堆栈、寄存器的值等。</li>
+<li>进程上下文的切换通常发生在操作系统的调度器决定切换到另一个进程运行时。</li>
+</ul>
+<p>####中断上下文</p>
+<ul>
+<li>中断上下文是指当发生中断或异常事件时，硬件或操作系统内核自动保存当前被中断程序的执行现场，并切换到中断处理程序执行的上下文环境。</li>
+<li>中断上下文包含了被中断程序的寄存器状态、堆栈指针、中断原因等信息。<br><strong>使用场景</strong>：</li>
+<li><strong>当硬件设备发生某种事件</strong>，如I&#x2F;O完成、定时器中断等，会触发中断，并切换到中断上下文执行中断处理程序。</li>
+<li>在中断处理程序执行过程中，保存和恢复被中断程序的上下文是必要的，以确保被中断程序的执行能够正确继续。</li>
+</ul>
+<h3 id="10-守护进程："><a href="#10-守护进程：" class="headerlink" title="10.守护进程："></a>10.守护进程：</h3><p>####什么是守护进程：<br>在后台运行的特殊进程，通常以init进程为父进程，独立于终端或控制终端，用于执行常驻任务。一般可以用于网络服务、系统监控（例如top）、定时任务、设备管理：例如打印服务（如 CUPS）、硬件管理等。感觉就是后台的常驻程序。</p>
+<h4 id="创建守护进程。"><a href="#创建守护进程。" class="headerlink" title="创建守护进程。"></a>创建守护进程。</h4><ul>
+<li>1.<strong>创建子进程</strong>：通过在父进程中调用fork()函数来创建子进程。</li>
+<li>2.<strong>终止父进程</strong>：子进程创建后，父进程会调用exit()函数或其他方式终止自身执行，从而使子进程成<strong>孤儿进程</strong>。</li>
+<li>3.调用setsid()创建新会话：子进程调用setsid()函数创建一个新的会话。这将使子进程成为会话领导者，并且与其父进程和控制终端解除关系。</li>
+<li>4.更改当前目录为根目录：守护进程通常将当前工作目录更改为根目录（chdir(“&#x2F;“)），这样可以避免后续操作与其他进程的目录关联。<br>（注：每个进程都有一个当前工作目录，即默认读取或保存文件的目录。）</li>
+<li>5.重设文件权限掩码：守护进程会调用umask()函数来重设文件权限掩码，这样可以确保守护进程创建的文件具有适当的权限。<br>（注：文件权限掩码：文件权限掩码（umask）用于限制新创建文件的默认权限。而确保守护进程有适当的权限，通常将umask设置为0。）</li>
+<li>6.关闭文件描述符：守护进程会关闭不再需要的文件描述符，比如标准输入、标准输出和标准错误。这可以防止守护进程意外地与控制终端进行交互。<br>（注：文件描述符是操作系统用于跟踪打开文件的整数标识符。常见的文件描述符包括：0：标准输入，1：标准输出，2：标准错误输出。<br><font style="color:red">感觉有必要去实操一下fork相关的东西</font></li>
+</ul>
+<h3 id="11-进程五种状态，如何转换。"><a href="#11-进程五种状态，如何转换。" class="headerlink" title="11.进程五种状态，如何转换。"></a>11.进程五种状态，如何转换。</h3><ul>
+<li>1.<strong>创建状态</strong>：进程刚被创建，系统为其分配所需的资源，创建进程控制块（PCB）来管理进程的信息和状态。</li>
+<li>2.<strong>就绪状态</strong>：进程已经准备好开始执行，但还没有获取到处理器资源，处于等待调度的状态。</li>
+<li>3.<strong>执行状态</strong>：进程已经获取到处理器资源，正在执行指令和运行程序。</li>
+<li>4.<strong>阻塞状态</strong>：在执行状态下，如果进程遇到阻塞操作，例如等待I&#x2F;O完成，它会进入阻塞状态。在此状态下，进程暂时无法继续执行，直到阻塞的操作完成或者条件满足后才能再次进入就绪状态。</li>
+<li>5.<strong>终止状态</strong>：进程执行结束或者被系统终止，进入终止状态。在终止状态下，进程的资源会被释放，PCB会被删除。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240506224328.png"><br>（注：时间片（Time Slice 或 Time Quantum）是操作系统中分配给每个运行中的进程或线程的一段时间。在现代多任务操作系统中，为了让每个任务（进程或线程）都能<strong>公平地使用 CPU</strong>，操作系统会采用一种称为 <strong>时间片轮转调度</strong>（Round Robin Scheduling） 的调度算法。）</li>
+</ul>
+<h3 id="12-进程通信中的管道实现原理是什么？"><a href="#12-进程通信中的管道实现原理是什么？" class="headerlink" title="12.进程通信中的管道实现原理是什么？"></a>12.进程通信中的管道实现原理是什么？</h3><p>####管道是什么？<br>管道是一种用于两个进程间同一时刻进行<font style="color:red">单向通信的机制</font>，也被称为半双工管道。操作系统在内核中开辟一块缓冲区（管道），用于进程之间的通信。由于其特性，<strong>同一时刻只能有一个进程进行读或写操作</strong>，所以称为半双工。<br>####管道分类<br>管道分为无名管道和命名管道。<br>无名管道只能用于具有父子关系或兄弟关系的进程之间通信，它类似于特殊的文件，管道本质上也是一种文件。无名管道的读端由描述符fd[0]表示，写端由描述符fd[1]表示。<br>命名管道允许无亲缘关系的进程间通信，通过文件系统中的特殊文件进行。命名管道的特点是可以通过路径和文件名访问，不仅限于亲缘关系的进程。</p>
+<p>####创建管道方法<br>可以使用pipe()函数来创建管道。管道创建后可以使用文件IO函数来进行数据读写操作。通常情况下，一个进程在使用pipe()创建管道后，会再通过fork()创建子进程，然后通过管道实现父子进程之间的通信。父子进程都有管道的读端和写端，子进程的描述符是从父进程复制而来的。通过这种方式，<strong>父子进程可以进行数据交换和通信</strong>。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240506225300.png"></p>
+<pre><code>  int main() &#123;
+  int pipefd[2]; // 用于存储管道读端和写端的文件描述符
+
+  // 创建管道
+  if (pipe(pipefd) == -1) &#123;
+     perror(&quot;pipe&quot;);
+     exit(EXIT_FAILURE);
+  &#125;
+      pid_t pid = fork();
+
+if (pid == -1) &#123;
+    perror(&quot;fork&quot;);
+    exit(EXIT_FAILURE);
+&#125;
+else if (pid == 0) &#123;
+    // 子进程读取管道中的数据
+    close(pipefd[1]); // 关闭管道写端
+    
+    char buffer[100];
+    ssize_t bytesRead = read(pipefd[0], buffer, sizeof(buffer));
+
+    if (bytesRead == -1) &#123;
+        perror(&quot;read&quot;);
+        exit(EXIT_FAILURE);
+    &#125;
+    else if (bytesRead == 0) &#123;
+        std::cout &lt;&lt; &quot;管道已关闭&quot; &lt;&lt; std::endl;
+    &#125;
+    else &#123;
+        std::cout &lt;&lt; &quot;子进程读取到的数据：&quot; &lt;&lt; buffer &lt;&lt; std::endl;
+    &#125;
+
+    close(pipefd[0]); // 关闭管道读端
+    exit(EXIT_SUCCESS);
+&#125;
+</code></pre>
+<p>####管道使用</p>
+<ul>
+<li>1.<strong>创建管道</strong>：调用pipe()函数创建管道，获取管道的读端和写端的文件描述符。</li>
+<li>2.<strong>创建子进程</strong>：调用fork()创建子进程，此时子进程会继承父进程的管道描述符。</li>
+<li>3.<strong>保证父子进程的读写端</strong>：在父进程中关闭管道的不需要的端口，例如关闭管道的读端，保留管道的写端；在子进程中关闭管道的另一个端口，即关闭管道的写端，保留管道的读端。</li>
+<li>4.<strong>写入数据</strong>：父进程通过保留的管道写端，使用write()函数向管道写入数据。</li>
+<li>5.<strong>读取数据</strong>：子进程通过保留的管道读端，使用read()函数从管道中读取数据。</li>
+<li>6.父进程和子进程根据需求进行数据的交换和通信。</li>
+<li>7.<strong>关闭端口</strong>：当通信结束后，父进程和子进程分别关闭其管道端口，即父进程关闭管道的写端，子进程关闭管道的读端。</li>
+<li>8.<strong>等待子进程结束</strong>：父进程通过调用wait()等待子进程的结束，确保子进程正确退出。</li>
+</ul>
+<h3 id="13-死锁的原因和条件以及如何预防？"><a href="#13-死锁的原因和条件以及如何预防？" class="headerlink" title="13. 死锁的原因和条件以及如何预防？"></a>13. 死锁的原因和条件以及如何预防？</h3><p>多个进程在执行过程中，因争夺资源而造成了互相等待。此时系统产生了死锁。<br>####死锁产生的条件</p>
+<ul>
+<li>1.互斥条件：进程对分配资源独享，其他进程需要等待</li>
+<li>2.请求保持条件：进程需要<strong>持有已分配的资源</strong>，并继续请求其他资源，但他们无法满足请求，导致<strong>进程阻塞并保持对已有资源的持有</strong>。拿着手里的，还想要别人的。</li>
+<li>3.不可剥夺：进程获得的资源不能被其他进程强制获取。</li>
+<li>4.环路等待条件：存在多个进程之间形成循环等待资源的关系。我要你的，你要我的，转起来了。</li>
+</ul>
+<p>####预防死锁（对应上面的4个条件说给出解法）</p>
+<ul>
+<li>1.破坏互斥条件：尽可能地<strong>共享资源</strong>，而不是互斥地独占资源。</li>
+<li>2.破坏请求保持条件：请求资源时<strong>先释放已占有的资源</strong>，再请求所需的资源，以避免持有资源的阻塞情况。</li>
+<li>3.破坏不可剥夺条件：引入资源抢占机制，使得系统可以对进程已获取的资源进行剥夺。</li>
+<li>4.破坏环路等待条件：通过合理的资源分配策略，避免形成循环等待的资源关系。</li>
+</ul>
+<h3 id="14-死锁和活锁的区别"><a href="#14-死锁和活锁的区别" class="headerlink" title="14.死锁和活锁的区别"></a>14.死锁和活锁的区别</h3><p>####死锁</p>
+<ul>
+<li>1.死锁指的是两个或多个线程彼此等待对方释放所持有的资源，从而导致所有线程都无法继续执行，程序无法继续运行的情况。</li>
+<li>2.死锁是一种静止状态，线程被无限阻塞，直到外部干预，如强制终止某些线程。</li>
+<li>3.死锁发生时，线程无法自行解锁，需要外部的干预来打破循环依赖，释放资源以解决死锁。</li>
+</ul>
+<p>####活锁</p>
+<ul>
+<li>1.活锁指的是多个线程不断重试，但最终无法取得进展的情况。线程们在不断改变自己的状态，但总是无法成功完成所需的操作。</li>
+<li>2.活锁是一种动态状态，线程不断重试，但无法使程序向前推进。</li>
+<li>3.活锁通常是由于竞争条件、过度的自旋等问题引起的。<br><strong>活锁举个例子</strong>：两个线程 threadFunction1 和 threadFunction2 分别尝试获取 mutex1 和 mutex2 这两个互斥量。但是它们在获取其中一个互斥量之后会尝试获取另一个互斥量，如果获取失败则释放已经获取的互斥量。这样，两个线程会不断地尝试交换互斥量的所有权，但最终都无法成功获取到所有的互斥量</li>
+</ul>
+<p><strong>解决活锁问题的方式：</strong></p>
+<ul>
+<li>1.引入随机性：通过引入随机因素，使线程的行为具有一定的不确定性，避免线程们不断重复相同的操作。</li>
+<li>2.使用策略：在活锁发生时，采用某种策略，例如放弃一部分工作、转让任务或等待一段随机时间等。</li>
+<li>3.调整线程优先级：适当调整线程的优先级，以改变线程的竞争行为。</li>
+<li>4.重新设计算法和协调：如果活锁是由于设计问题引起的，需要重新设计算法或协调机制，以避免竞争条件。</li>
+</ul>
+<h3 id="15-sleep和wait的区别"><a href="#15-sleep和wait的区别" class="headerlink" title="15.sleep和wait的区别"></a>15.sleep和wait的区别</h3><ul>
+<li>1.所属类别：sleep是Thread类的方法，而wait是Object类的方法。</li>
+<li>2.锁的释放：在调用wait时，<strong>线程会释放它持有的锁，进入等待状态</strong>，并等待其他线程通过notify或notifyAll来唤醒它。而sleep方法不会释放锁，<strong>线程会保持对锁的持有</strong>。</li>
+<li>3.唤醒方式：调用wait的线程<font style="color:red">必须依赖其他线程的notify或notifyAll来唤醒它</font>，而sleep方法可以<font style="color:red">设定一个固定的时间</font>，时间到后线程会自动唤醒。wait 函数来等待条件满足，如果条件不满足，它会释放互斥量并进入阻塞状态，等待其他线程发出信号。</li>
+<li>4.使用场景：wait通常用于线程间的<strong>同步和协作</strong>，例如等待其他线程的信号或共享资源的通知。sleep适用于线程的<strong>暂时休眠</strong>，例如实现定时任务或控制线程执行间隔。</li>
+</ul>
+<h3 id="16-epoll和select的区别，epoll为什么高效？"><a href="#16-epoll和select的区别，epoll为什么高效？" class="headerlink" title="16.epoll和select的区别，epoll为什么高效？"></a>16.epoll和select的区别，epoll为什么高效？</h3><p>select 和 epoll 都是在 Linux 系统上用于多路复用 I&#x2F;O 的机制，可以使一个进程能够监视多个文件描述符的状态，从而在有 I&#x2F;O 事件发生时进行响应。<br>IO多路复用:一种同步IO模型，单个进程&#x2F;线程就可以同时处理多个IO请求。一个进程&#x2F;线程可以监视多个文件句柄；一旦某个文件句柄就绪，就能够通知应用程序进行相应的读写操作。<br><strong>例子：你是一个老师，让学生做作业，学生做完作业后收作业。</strong><br><strong>同步阻塞</strong>：逐个收作业，先收A，再收B，接着是C、D，如果有一个学生还未做完，则你会等到他写完，然后才继续收下一个。<br>解析：这就是同步阻塞的特点，只要中间有一个未就绪，则你会<strong>被阻塞住</strong>，从而影响到后面的其他学生。<br><strong>同步非阻塞</strong>：逐个收作业，先收A，再收B，接着是C、D，如果有一个学生还未做完，则你会跳过该学生，继续去收下一个。</p>
+<h3 id="17-互斥锁机制，互斥锁与读写锁的区别？"><a href="#17-互斥锁机制，互斥锁与读写锁的区别？" class="headerlink" title="17.互斥锁机制，互斥锁与读写锁的区别？"></a>17.互斥锁机制，互斥锁与读写锁的区别？</h3><p>互斥锁（Mutex）是一种用于线程同步的机制，用于保护共享资源在多个线程间的互斥访问。互斥锁的特点如下：<br><strong>互斥原理</strong>：当一个线程获得互斥锁时，其他线程需要等待该线程释放锁才能继续执行。通过互斥锁的加锁和解锁操作，可以确保同一时间只有一个线程能够访问共享资源，从而保证数据的一致性和正确性。<br><strong>加锁操作</strong>：当线程想要访问共享资源时，首先需要尝试获得互斥锁。如果互斥锁已被其他线程占用，则当前线程会被阻塞，直到互斥锁被释放。一旦线程成功获得互斥锁，它就可以安全地访问共享资源。<br><strong>解锁操作</strong>：线程使用完共享资源后，应该释放互斥锁，以便其他线程可以继续访问。释放互斥锁将导致等待该锁的线程中的一个或多个线程恢复执行。<br>####互斥锁与读写互斥锁的区别：</p>
+<ul>
+<li>互斥锁（Mutex）：互斥锁保证了在任意时刻只有一个线程能够获得锁。当一个线程获得互斥锁后，其他线程必须等待该线程释放锁才能继续执行。互斥锁适用于对共享资源的互斥访问，既包括读操作也包括写操作。</li>
+<li>读写锁（ReadWrite Lock）：读写锁允许多个线程同时读共享资源，但在写共享资源时需要互斥访问。多个线程可以同时获取读写锁的读锁，只有当没有线程持有读锁时，写锁才能被获取。读写锁适用于读多写少的场景，可以提高并发性能。</li>
+</ul>
+<h3 id="18-IO讲解："><a href="#18-IO讲解：" class="headerlink" title="18 IO讲解："></a>18 IO讲解：</h3><p><a class="link"   target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/607461843" >IO讲解<i class="fas fa-external-link-alt"></i></a><br>####文件描述符<br>我们知道在Linux系统中一切皆可以看成是文件，文件又可分为：普通文件、目录文件、链接文件和设备文件。在操作这些所谓的文件的时候，我们每操作一次就找一次名字，这会耗费大量的时间和效率。所以Linux中规定每一个文件<strong>对应一个索引</strong>，这样要操作文件的时候，我们直接找到索引就可以对其进行操作了。<br>文件描述符（file descriptor）就是内核为了高效管理这些已经被打开的文件所创建的索引，其是一个非负整数（通常是小整数），用于指代被打开的文件，所有执行I&#x2F;O操作的系统调用都通过文件描述符来实现</p>
+<p>程序开始运行时，有三个文件被自动打开了，占用0 1 2 三个描述符：依次打开的三个文件分别是&#x2F;dev&#x2F;stdin，&#x2F;dev&#x2F;stdout，&#x2F;dev&#x2F;stderr<br>文件偏移量：写会改变文件大小。<br>####文件描述符表、打开文件表、i-node表。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240513224439.png"><br>####inode：用于描述文件的信息：</p>
+<ul>
+<li><p>文件的字节数</p>
+</li>
+<li><p>文件拥有者的User ID</p>
+</li>
+<li><p>文件的Group ID</p>
+</li>
+<li><p>文件的读、写、执行权限</p>
+</li>
+<li><p>文件的时间戳，共有三个：ctime指inode上一次变动的时间，mtime指文件内容上一次变动的时间，atime指文件上一次打开的时间。</p>
+</li>
+<li><p>链接数，即有多少文件名指向这个inode</p>
+</li>
+<li><p>文件数据block的位置</p>
+</li>
+</ul>
+<p>每个inode节点的大小，一般是128字节或256字节</p>
+<h3 id="2-什么是页表与页表的作用"><a href="#2-什么是页表与页表的作用" class="headerlink" title="2. 什么是页表与页表的作用"></a>2. 什么是页表与页表的作用</h3><p>页表是用来转换物理地址与虚拟的地址的数据结构。作用：内存非连续分区分配的基础，实现逻辑地址转换成物理地址。<br>MMU（Memory Management Unit）内存管理单元，就是分页用于管理转换表的管理单元。</p>
+<h3 id="3-分页与分段：分段感觉还没有讲清楚没弄懂"><a href="#3-分页与分段：分段感觉还没有讲清楚没弄懂" class="headerlink" title="3.分页与分段：分段感觉还没有讲清楚没弄懂"></a>3.分页与分段：分段感觉还没有讲清楚没弄懂</h3><h3 id="3-进程间同步的方式有哪些？"><a href="#3-进程间同步的方式有哪些？" class="headerlink" title="3. 进程间同步的方式有哪些？"></a>3. 进程间同步的方式有哪些？</h3><ul>
+<li>1、临界区:通过对多线程的串行化来访问公共资源或一段代码，速度快，适合控制数据访问。<br>优点：保证一个时刻只有一个线程可以访问的方法。<br>缺点：只能同步本进程内的线程，不能同步多个进程内的线程。</li>
+<li>2、互斥量:为协调共同对一个共享资源的单独访问而设计的。互斥量跟临界区很相似，比临界区复杂，互斥对象<strong>只有一个</strong>，只有拥有互斥对象的线程才具有访问资源的权限。<br>优点:<br>使用互斥不仅仅能够在同一应用程序不同线程中实现资源的安全共享，而且可以在<strong>不同应用程序的线程之间</strong>实现对资源的安全共享。<br>缺点:<br>互斥量是可以命名的，也就是说它可以跨越进程使用，所以创建互斥量需要的资源更多，所以如果只为了在进程内部是用的话使用临界区会带来速度上的优势并能够减少资源占用量。<br>通过互斥量可以指定资源被独占的方式使用，但如果有下面一种情况通过互斥量就无法处理，比如现在一位用户购买了一份三个并发访问许可的数据库系统，可以根据用户购买的访问许可数量来决定有多少个线程&#x2F;进程能同时进行数据库操作，这时候如果利用互斥量就没有办法完成这个要求，信号量对象可以说是一种资源计数器。</li>
+<li>3、信号量:为控制一个具有有限数量用户资源而设计。它允许多个线程在同一时刻访问同一资源，但是需要限制在同一时刻访问此资源的最大线程数目。互斥量是信号量的一种特殊情况，当信号量的最大资源数&#x3D;1就是互斥量了。</li>
+</ul>
+<h3 id="4-线程间的同步方式有哪些？"><a href="#4-线程间的同步方式有哪些？" class="headerlink" title="4.线程间的同步方式有哪些？"></a>4.线程间的同步方式有哪些？</h3><p>相较3来说多一个事件：事件机制：允许一个线程处理一个任务之后，主动唤醒另外一个线程来执行任务。</p>
+<h3 id="5-互斥锁（Mutex）"><a href="#5-互斥锁（Mutex）" class="headerlink" title="5.互斥锁（Mutex）"></a>5.互斥锁（Mutex）</h3><p>是用于多线程编程的同步的方法（多线程同步其实真正意思是防止多多线程同步），来确保多个线程访问共享资源的互斥性</p>
+<h3 id="6-死锁是什么？以及死锁产生的条件？"><a href="#6-死锁是什么？以及死锁产生的条件？" class="headerlink" title="6.死锁是什么？以及死锁产生的条件？"></a>6.死锁是什么？以及死锁产生的条件？</h3><ul>
+<li>1、在两个或者多个并发进程中，如果每个进程持有某种资源而又等待其它进程释放它或它们现在保持着的资源，在未改变这种状态之前都不能向前推进，称这一组进程产生了死锁。通俗的讲就是两个或多个进程无限期的阻塞、相互等待的一种状态。</li>
+<li>2、产生的条件<br>互斥条件:一个资源一次只能被一个进程使用<br>请求与保持条件:一个进程因请求资源而阻塞时，对已获得资源保持不放<br>不剥夺条件:进程获得的资源，在未完全使用完之前，不能强行剥夺<br>循环等待条件:若干进程之间形成一种头尾相接的环形等待资源关系</li>
+</ul>
+<h3 id="7-进程的状态"><a href="#7-进程的状态" class="headerlink" title="7.进程的状态"></a>7.进程的状态</h3><p>进程一共有5种状态，分别是创建、就绪、运行（执行)、终止、阻塞。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406171256.png"></p>
+<h3 id="8-交换空间"><a href="#8-交换空间" class="headerlink" title="8.交换空间"></a>8.交换空间</h3><p>操作系统把物理内存(physical RAM)分成一块一块的小内存，每一块内存被称为页(page)。当内存资源不足时，Linux把<strong>某些页的内容转移至硬盘上的一块空间上</strong>，以释放内存空间。硬盘上的那块空间叫做交换空间(swap space),而这一过程被称为交换(swapping)。物理内存和交换空间的总容量就是虚拟内存的可用容量。</p>
+<h3 id="9-缓冲区和缓存是一个东西吗？"><a href="#9-缓冲区和缓存是一个东西吗？" class="headerlink" title="9.缓冲区和缓存是一个东西吗？"></a>9.缓冲区和缓存是一个东西吗？</h3><p>答：根本不是一个东西。</p>
+<ul>
+<li><p><strong>1.1 缓冲区（Buffer）：</strong> 它是内存空间的一部分。也就是说，在内存空间中预留了一定的存储空间，这些存储空间用来缓冲输入或输出的数据，这部分预留的空间就叫做缓冲区，显然缓冲区是具有一定大小的。<br>有时候，从键盘输入的内容，或者将要输出到显示器上的内容，会暂时进入缓冲区，待时机成熟，再一股脑将缓冲区中的所有内容“倒出”，我们才能看到变量的值被刷新，或者屏幕产生变化。<br><strong>总结：</strong> 缓冲区就是一块内存区，它用在输入输出设备和CPU之间，用来存储数据。它使得低速的输入输出设备和高速的CPU能够协调工作，避免低速的输入输出设备占用CPU，解放出CPU，使其能够高效率工作，同时减少操作硬件的次数。<br><strong>1.2缓冲区的好处</strong> ：<br>读取与写入硬盘速度非常缓慢，使用缓冲区可以减少写入的次数，一起再写入，节省时间。<br><strong>1.3缓冲的类型：</strong><br>全缓冲：在这种情况下，当填满标准I&#x2F;O缓存后才进行实际I&#x2F;O操作，即一定大小的缓冲区填满后。<strong>举例</strong> ：全缓冲的典型代表是对磁盘文件的读写。<br>行缓冲：在遇到换行符之后再进行输入输出。<strong>举例</strong> ：按下回车键换行时才进行实际的I&#x2F;O操作。行缓冲的典型代表就是标准输入设备（也即键盘）和标准输出设备（也即显示器）。<br>不带缓冲： 不进行缓冲操作，类似C语言的getch</p>
+</li>
+<li><p><strong>2. 缓存（cache）：</strong> CPU的Cache，它中文名称是高速缓冲存储器，读写速度很快，几乎与CPU一样。由于CPU的运算速度太快，内存的数据存取速度无法跟上CPU的速度，所以在CPU与内存间设置了Cache为CPU的数据快取区。当计算机执行程序时，数据与地址管理部件会预测可能要用到的数据和指令，并将这些数据和指令预先从内存中读出送到Cache。</p>
+</li>
+<li><p><strong>主要区别：</strong> Buffer的核心作用是用来缓冲，缓和冲击。比如你每秒要写100次硬盘，对系统冲击很大，浪费了大量时间在<strong>忙着处理开始写和结束写</strong>这两件事嘛。用个buffer暂存起来，变成每10秒写一次硬盘，对系统的冲击就很小，写入效率就高了，并极大缓和了冲击。<br>Cache的核心作用是加快取用的速度。比如你一个很复杂的计算做完了，下次还要用结果，就把结果放手边一个好拿的地方存着，<strong>下次不用再算了</strong>。加快了数据取用的速度。<br>一个是为了保证向系统写的效率，一个是为了保证数据提取效率，目的完全不同。</p>
+</li>
+</ul>
+<h3 id="10-为什么Linux一定要用虚拟地址？"><a href="#10-为什么Linux一定要用虚拟地址？" class="headerlink" title="10.为什么Linux一定要用虚拟地址？"></a>10.为什么Linux一定要用虚拟地址？</h3><p>为了提供更高效的内存管理以及更好的系统性能。</p>
+<ul>
+<li>1.地址空间隔离： 虚拟地址提供了地址空间的隔离，使得<strong>每个进程</strong>都可以拥有自己独立的地址空间。这意味着每个进程可以访问自己的虚拟地址空间，而不会影响其他进程的地址空间。这种隔离性有助于增强系统的安全性和稳定性。</li>
+<li>2.内存保护： 虚拟地址使得操作系统能够实现内存<strong>保护机制</strong>。通过使用页表和内存管理单元（MMU），<font style ="color:red">操作系统可以控制进程对内存的访问权限</font>，例如只读、读写或不可访问等，从而保护系统免受恶意或错误的访问。</li>
+<li>3.内存管理： 虚拟地址使得操作系统可以更灵活地管理内存。操作系统可以通过虚拟内存管理技术，将物理内存映射到不同进程的虚拟地址空间中，从而实现进程间的共享内存、内存回收、内存分配等功能。</li>
+<li>4.地址重定位： 虚拟地址允许操作系统对进程的内存访问进行重定向。例如，操作系统可以将进程的虚拟地址映射到不同的物理地址，以<strong>实现内存压缩、内存共享或者动态内存分配</strong>等功能。</li>
+<li>5.便于移植性： 使用虚拟地址可以<strong>使得操作系统更容易地移植到不同的硬件平台上</strong>。<strong>虚拟地址屏蔽了底层硬件</strong>的差异，使得操作系统能够以统一的方式管理内存，从而提高了操作系统的可移植性。</li>
+</ul>
+<h3 id="11-同步与异步之间的差别"><a href="#11-同步与异步之间的差别" class="headerlink" title="11.同步与异步之间的差别"></a>11.同步与异步之间的差别</h3><ul>
+<li>同步：指一个进程在执行某个请求的时候，若该请求需要一段时间才能返回信息，那么这个进程将会一直<strong>等待</strong>下去，直到收到返回信息才继续执行下去;<br> 同步就相当于是 当客户端发送请求给服务端，在等待服务端响应的请求时，客户端不做其他的事情。当服务端做完了才返回到客户端。这样的话客户端需要一直等待。用户使用起来会有不友好。</li>
+<li>异步：异步是指进程不需要一直等下去，而是<strong>继续执行</strong>下面的操作，不管其他进程的状态。当有消息返回时系统会通知进程进行处理，这样可以提高执行的效率。<br>异步就相当于当客户端发送给服务端请求时，在等待服务端响应的时候，客户端可以做其他的事情，这样节约了时间，提高了效率。</li>
+</ul>
+<h3 id="12-子进程与父进程的结束问题"><a href="#12-子进程与父进程的结束问题" class="headerlink" title="12.子进程与父进程的结束问题"></a>12.子进程与父进程的结束问题</h3><ul>
+<li>1.子进程如果提前与父进程结束，那么父进程会自己继续执行到结束。**注意:**最好父进程要在合适的地方放一些wait()或者waitpid()函数来等待子进程的结束，如果没有父进程就只能在结束的时候读取子进程状态了，也就存在了一个僵尸进程。</li>
+<li>2.父进程提前结束，会给孤儿进程找一个继父</li>
+</ul>
+<h3 id="13-僵尸状态"><a href="#13-僵尸状态" class="headerlink" title="13.僵尸状态"></a>13.僵尸状态</h3><p>僵尸状态-Z（zombie）:当一个进程将要退出的时候，操作系统OS不会立即释放该进程的资源，会等一段时间，让父进程或者操作系统读取子进程的返回结果（即退出码），没有读取到子进程退出的返回代码就会产生僵尸进程。僵尸进程会以终止状态保持在进程表中，并且会一直在等待父进程读取退出状态代码。所以，只要子进程退出，父进程还在运行，但<strong>父进程没有读取子进程状态</strong>，子进程就进入僵尸状态-Z。</p>
+<h3 id="14-僵尸进程的危害"><a href="#14-僵尸进程的危害" class="headerlink" title="14.僵尸进程的危害"></a>14.僵尸进程的危害</h3><ul>
+<li>1.僵尸进程的退出状态必须要被维持下去，因为它要告诉关心它的进程（父进程），你交给我的任务，我办的怎么样了。可父进程如果一直不读取，那么子进程就会一直处于僵尸Z状态。</li>
+<li>2.维护退出状态要用数据维护，这也属于进程基本信息，所以僵尸进程的退出信息保存在task_stuct（PCB）中，如果父进程一直不读取子进程退出结果，那么Z状态一直不退出，PCB就要一直被维护。</li>
+<li>3.如果一个父进程创建了很多子进程，但是都没有进行回收，那么就会造成内存资源的浪费，因为数据结构对象（task_stuct）本省就要占用内存，如果不进行回收，那当然就会造成内存泄漏这样严重的问题。</li>
+</ul>
+<h3 id="15"><a href="#15" class="headerlink" title="15."></a>15.</h3>
+            </div>
+
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                               rel="prev"
+                               href="/2024/05/05/linux%20camera%E9%A1%B9%E7%9B%AE%E5%AE%9E%E7%8E%B0/"
+                            >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                                <span class="title flex-center">
+                                <span class="post-nav-title-item">linux camera项目实现</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                               rel="next"
+                               href="/2024/05/02/bootloader%E5%AD%A6%E4%B9%A0/"
+                            >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">bootloader学习</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                                <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+            
+        </div>
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            
+<footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+                <span>2020</span> -
+            
+            2024
+            
+                &nbsp;<i class="fas fa-heart icon-animate"></i>
+                &nbsp;<a href="/">caijiQAQ</a>
+            
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.6.1</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+        
+<script src="/js/post-helper.js"></script>
+
+        
+        
+    
+</div>
+
+
+
+</body>
+</html>

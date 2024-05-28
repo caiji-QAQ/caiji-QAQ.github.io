@@ -147,7 +147,7 @@
                         <div class="author">
                             <span class="name">caijiQAQ</span>
                             
-                                <span class="author-label">Lv2</span>
+                                <span class="author-label">Lv3</span>
                             
                         </div>
                         <div class="meta-info">
@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-08-31 21:21:59</span>
+        <span class="pc">2024-03-24 16:46:53</span>
     </span>
     
     
@@ -192,7 +192,10 @@
 设置网络状态：sudo vim /var/lib/NetworkManager/NetworkManager.state，设置为true
 打开网络服务：sudo service network-manager start
 </code></pre>
-<p>此时，就看到了网络连接成功的标识。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230820145946.png"><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230820150113.png"><br><strong>2.想要将版本同步的尝试：</strong><br>1.对下载后的树莓派提升版本，想要将自带的21版本升至最新版本，但是apt update之后还是21版本可能这只是对原有软件包更新了一下，而不是对整体进行更新。<br>2.准备完成官网的做法了，也没别的点子了，相同版本也难以同时找到img与源码，只能试着去生成，上一次生成时可能是文件系统格式出现问题，这次使用FAT32试一下。<br><strong>3.如何将磁盘分区</strong><br>在开始界面打入disk，找到磁盘界面分盘，开始需要点击-符号来将盘初始化为剩余空间，再点击+来创建分区，选择对应的文件写入形式（FAT32 EXT4）<br><strong>4.树莓派no wireless interface网络连接不上的问题</strong><br><a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/lfri/p/11875527.html" >树莓派Wlan0:Not associated 报错解决方案<i class="fas fa-external-link-alt"></i></a><br>当执行 ifconfig wlan0 时，是有wlan0的网卡信息输出的。<br>当执行 ifconfig wlan0 up 是没问题的（即没有任何输出）。<br>执行 iwlist wlan0 scan | grep SSID 应该能看过周围环境的WIFI。<br>此时你只需要修改网络配置信息即可，<br>1.加一个网络凭条得到64位的PSK</p>
+<p>此时，就看到了网络连接成功的标识。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230820145946.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230820150113.png"></p>
+<p><strong>2.想要将版本同步的尝试：</strong><br>1.对下载后的树莓派提升版本，想要将自带的21版本升至最新版本，但是apt update之后还是21版本可能这只是对原有软件包更新了一下，而不是对整体进行更新。<br>2.准备完成官网的做法了，也没别的点子了，相同版本也难以同时找到img与源码，只能试着去生成，上一次生成时可能是文件系统格式出现问题，这次使用FAT32试一下。<br><strong>3.如何将磁盘分区</strong><br>在开始界面打入disk，找到磁盘界面分盘，开始需要点击-符号来将盘初始化为剩余空间，再点击+来创建分区，选择对应的文件写入形式（FAT32 EXT4）<br><strong>4.树莓派no wireless interface网络连接不上的问题</strong><br><a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/lfri/p/11875527.html" >树莓派Wlan0:Not associated 报错解决方案<i class="fas fa-external-link-alt"></i></a><br>当执行 ifconfig wlan0 时，是有wlan0的网卡信息输出的。<br>当执行 ifconfig wlan0 up 是没问题的（即没有任何输出）。<br>执行 iwlist wlan0 scan | grep SSID 应该能看过周围环境的WIFI。<br>此时你只需要修改网络配置信息即可，<br>1.加一个网络凭条得到64位的PSK</p>
 <pre><code>wpa_passphrase &quot;\&lt;ssid&gt;&quot; &quot;\&lt;password&gt;&quot; &gt;&gt; /etc/wpa_supplicant/wpa_supplicant.conf
 
 network=&#123;
@@ -205,11 +208,53 @@ network=&#123;
 <pre><code>  killall wpa_supplicant 
   wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf 
 </code></pre>
-<p>就连接好了wifi</p>
-<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%9E%B6%E6%9E%84.png"><br><strong>5.function declaration isnt a prototype</strong><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230715215640.png"><br>解决：将hello_init()改成了hello_init(void)奇迹般的解决了也是非常不理解了<br><strong>6.搞了半天发现找不到#include&lt;linux&#x2F;module.h&gt;</strong><br>解决：<br>通过修改environment文件:<br>vim &#x2F;etc&#x2F;environment中加入内核的路径最终找到</p>
-<h1 id="韦东山："><a href="#韦东山：" class="headerlink" title="韦东山："></a>韦东山：</h1><h2 id="01单片机与linux程序的分层"><a href="#01单片机与linux程序的分层" class="headerlink" title="01单片机与linux程序的分层"></a>01单片机与linux程序的分层</h2><p>单片机：有很多封装库，调库就可以解决大部分工程要求</p>
+<p>就连接好了wifi<br><strong>5.Module in use</strong><br>由于测试驱动模块过程不小心输入了没有在应用层指定的字符，导致出现无法卸载模块：rmmod: remove ‘led_drv’: Resource temporarily unavailable，使用top命令（退出top使用ctrl+c）找到app对应的PID，执行kill -9 PID再卸载即可。下次注意不要使用应用程序向没有能力接受字符的驱动里输入字符了。一直卸载不掉关机也没办法重新insmod</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%9E%B6%E6%9E%84.png"></p>
+<p><strong>6.function declaration isnt a prototype</strong><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230715215640.png"></p>
+<p>解决：将hello_init()改成了hello_init(void)奇迹般的解决了也是非常不理解了<br><strong>7.搞了半天发现找不到#include&lt;linux&#x2F;module.h&gt;</strong><br>解决：<br>通过修改environment文件:<br>vim &#x2F;etc&#x2F;environment中加入内核的路径最终找到</p>
+<h1 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h1><p>1.int main(int argc,char* argv[])详解</p>
+<pre><code>int main(int argc,char* argv[]) 也可以写成 int main(int argc,char** argv)。
+argc表示程序运行时发送给main函数的命令行参数的个数（包括可执行程序以及传参）。
+argv[]是字符指针数组，它的每个元素都是字符指针，指向命令行中每个参数的第一个字符。
+
+argv[0]指向可执行程序。
+argv[1]指向可执行程序后的第一个字符串。
+argv[2]指向可执行程序后的第二个字符串 。
+argv[3]指向可执行程序后的第三个字符串 。
+argv[argc]为NULL。
+</code></pre>
+<p>比如在Linu系统下使用vim编写以下代码，并保存为sample.c。</p>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc,char** argv)
+&#123;
+int i;
+printf(&quot;%d\n&quot;,argc);
+for(i=0;i&lt;argc;i++)
+&#123;
+printf(&quot;%s\n&quot;,*argv);
+argv++;
+//printf(&quot;%s\n&quot;,argv[i]);
+&#125;
+&#125;
+</code></pre>
+<p>然后用“gcc sample.c -o sample.out”编译得到sample.out后，输入“.&#x2F;sample.out aa bb cc”执行。</p>
+<pre><code>xjh@ubuntu:~/iot/tmp$ gcc sample.c -o sample.out
+xjh@ubuntu:~/iot/tmp$ ls
+sample.c  sample.out
+xjh@ubuntu:~/iot/tmp$ ./sample.out aa bb cc
+4      //显示有4个参数，显然把可执行程序也当做参数了
+./sample.out           
+aa
+bb
+cc
+xjh@ubuntu:~/iot/tmp$ 
+</code></pre>
+<p>2.一堆宏<br>_<em>FILE</em><em>:表示当前源文件名，类型为字符串常量<br>_<em>LINE</em></em>:代表当前程序的行数<br>_<em>func</em><em>&#x2F;_<em>FUNCTION</em></em>:代表当前函数的函数名</p>
+<h1 id="韦东山"><a href="#韦东山" class="headerlink" title="韦东山"></a>韦东山</h1><h2 id="01单片机与linux程序的分层"><a href="#01单片机与linux程序的分层" class="headerlink" title="01单片机与linux程序的分层"></a>01单片机与linux程序的分层</h2><p>单片机：有很多封装库，调库就可以解决大部分工程要求</p>
 <h3 id="1-linux与单片机的区别"><a href="#1-linux与单片机的区别" class="headerlink" title="1.linux与单片机的区别"></a>1.linux与单片机的区别</h3><p>单片机和linux的主要不同是应用程序与驱动程序有无明显的界限</p>
-<h3 id="2-linux下是无法同时读写寄存器的"><a href="#2-linux下是无法同时读写寄存器的" class="headerlink" title="2.linux下是无法同时读写寄存器的"></a>2.linux下是无法同时读写寄存器的</h3><p>为了保证安全，应用程序是无法直接访问到硬件的，访问硬件只能使用驱动程序，有严格分界；<br>甚至即使知道寄存器地址也无法读写：因为驱动程序与应用程序权限不一样。<br>MCU：微控制器单元，单片机<br>MPU：微处理器单元，跑linux的芯片含有mmu（内存管理单元）。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706202530.png"></p>
+<h3 id="2-linux下是无法同时读写寄存器的"><a href="#2-linux下是无法同时读写寄存器的" class="headerlink" title="2.linux下是无法同时读写寄存器的"></a>2.linux下是无法同时读写寄存器的</h3><p>为了保证安全，应用程序是无法直接访问到硬件的，访问硬件只能使用驱动程序，有严格分界；<br>甚至即使知道寄存器地址也无法读写：因为驱动程序与应用程序权限不一样。<br>MCU：微控制器单元，单片机<br>MPU：微处理器单元，跑linux的芯片含有mmu（内存管理单元）。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230706202530.png"></p>
 <center>图1 左MCU 右MPU</center>
 左：MCU：可以传输地址也可以传输数据，没有权限管理。
 右：MPU：但是多了一个MMU模块，MMU模块可以帮助权限管理，例如在APP模式下，用户想要访问GPIO MMU就会予以拒绝，但是当在内核模式下，MMU就会允许访问GPIO。
@@ -248,12 +293,104 @@ network=&#123;
 <p>总结一下就是 insmod之后硬件提供的主设备号创建一个字符设备节点，应用程序再访问硬件对应的字符设备节点就可以实现驱动与应用层的数据传输。</p>
 <h2 id="07-数据交互"><a href="#07-数据交互" class="headerlink" title="07 数据交互"></a>07 数据交互</h2><p><strong>1.应用程序r&#x2F;w内核的值</strong><br>read：<br>想要将底层的数据传输给应用程序，只能用copy_to_user，如果直接使用数组赋值，将会令系统崩溃<br>copy_to_user(应用的变量，&amp;内核空间的地址，拷贝的大小)<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230829201319.png"><br>write：<br>copy_from_user(&amp;内核空间的地址，应用的变量，拷贝的大小)</p>
 <h2 id="08-地址空间"><a href="#08-地址空间" class="headerlink" title="08 地址空间"></a>08 地址空间</h2><p><strong>1.驱动程序与硬件交换</strong><br>ioremap通过物理地址返回得到的虚拟地址，驱动也就可以通过写虚拟地址来操作实际的物理地址上的内容。<br><strong>问：为什么使用虚拟地址？</strong><br>为了让linux可以支持一个任务同时运行多次，不得不引入虚拟地址。单片机上只能烧写一个程序，所以板子上程序的地址都是确定好的。而linux上会同时跑很多程序，地址也无法提前确定，因此无法确定一个明确的地址，这时就需要系统来分配一个虚拟地址，也就得到了一个映射。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230830202444.png"><br><strong>问：为什么需要用ioremap？</strong><br>只有通过虚拟地址才能访问得到物理地址，<br>问题1：当同样的程序运行，显示地址相同但是对应的值不同（如下图所示）</p>
-<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230829204339.png"><br><strong>CPU与内存的交互</strong><br>CPU与内存：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230829212147.png"><br>单片机中CPU在地址线传输地址给memory_controller，mc经过判断就会向想要的模块（RAM）发送信号令他启动，如果不发送信号的单元则不会传输信号。RAM则会通过数据线传回数据。</p>
-<p>CPU与MMU（内存管理单元）：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230829210629.png"><br>MMU的作用：<br>1.地址片选：用来区别输入的地址到底属于哪一个内存区域（比如ram，gpio，uart）<br>2.地址映射：将cpu输出的虚拟地址转化为物理地址，只有物理地址才能辨别是在哪个内存区域中。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230829204339.png"><br><strong>CPU与内存的交互</strong><br>CPU与内存：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230829212147.png"><br>单片机中CPU在地址线传输地址给memory_controller，mc经过判断就会向想要的模块（RAM）发送信号令他启动，如果不发送信号的单元则不会传输信号。RAM则会通过数据线传回数据。</p>
+<p>CPU与MMU（内存管理单元）：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230829210629.png"><br>MMU的作用：<br>1.地址片选：用来区别输入的地址到底属于哪一个内存区域（比如ram，gpio，uart）<br>2.地址映射：将cpu输出的虚拟地址转化为物理地址，只有物理地址才能辨别是在哪个内存区域中。</p>
 <p>只有通过物理地址才能访问到硬件，因此地址线上传输的是真实地址<br>运行同一个程序的时候，同一个虚拟地址可以对应多个物理地址<br>物理地址可以通过查找芯片手册得到，但是虚拟地址就要通过ioremap来得到。</p>
-<h2 id="09驱动程序的辅助信息"><a href="#09驱动程序的辅助信息" class="headerlink" title="09驱动程序的辅助信息"></a>09驱动程序的辅助信息</h2><p><strong>1.创建类</strong><br>class_create创建一个类(结构体)，会创建一个sys&#x2F;class&#x2F;hello_class，<br>device_create创建设备<br>class_create在&#x2F;sys&#x2F;devices&#x2F;virtual中创建了一个类里面有虚拟文件，其中的dev文件中就是设备信息。同时也成功让系统自动帮我们创建了一个字符设备节点。<br>这样就可以自动创建设备节点了，就不需要mknod了<br><strong>问：链接的作用</strong><br>是将工程中各个汇编文件内容连接在一起，比如全局变量，接着放到一个文件里，这个文件中的各个函数的位置都是确定好了的。</p>
+<h2 id="09驱动程序的辅助信息"><a href="#09驱动程序的辅助信息" class="headerlink" title="09驱动程序的辅助信息"></a>09驱动程序的辅助信息</h2><p>正常创建设备节点需要手动查找实在是太麻烦了，使用类就不需要手动mknod创建字符节点了。<br><strong>1.创建类</strong><br>class_create创建一个类(结构体)，会创建一个sys&#x2F;class&#x2F;hello_class，<br>device_create创建设备<br>class_create在&#x2F;sys&#x2F;devices&#x2F;virtual中创建了一个类里面有虚拟文件，其中的dev文件中就是设备信息。同时也成功让系统自动帮我们创建了一个字符设备节点。<br>这样就可以自动创建设备节点了，就不需要mknod了<br><strong>问：链接的作用</strong><br>是将工程中各个汇编文件内容连接在一起，比如全局变量，接着放到一个文件里，这个文件中的各个函数的位置都是确定好了的。</p>
 <h2 id="10-点灯驱动程序"><a href="#10-点灯驱动程序" class="headerlink" title="10 点灯驱动程序"></a>10 点灯驱动程序</h2><p><strong>1.找到芯片手册以及想要操作的GPIO地址</strong><br>经查询树莓派4B+芯片为BCM2711，找到他的芯片手册以及对应的地址。<br><a class="link"   target="_blank" rel="noopener" href="https://datasheets.raspberrypi.com/bcm2711/bcm2711-peripherals.pdf" >BCM2711芯片手册<i class="fas fa-external-link-alt"></i></a><br><strong>2.编写结构体以及内部对应的open，write函数</strong><br>注：应该在open函数调用再对GPIO初始化，原因：由于安装后也不一定什么时候会调用，提前初始化会占用资源，所以最好不要在__init函数中初始化而是在.open里单独声明。<br><strong>3.Makefile编写</strong><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230831204331.png"><br>对Makefile编写内容的解释：<br>进入$(KERN_DIR)这个内核目录，M&#x3D; pwd 在pwd这个路径下编译modules(模块)，obj-m代表了是led_drv.o这个模块<br><strong>注：</strong>交叉编译链不要随便用，因为每个芯片的指令集可能有所不同，比如arm9使用的是armv4的指令集，但是其他链使用的可能是armv8，也就是说编完之后是armv8的指令这样肯定是没法用的。<br><strong>4.将内核编写进内核</strong><br>内核目录下的drivers&#x2F;char&#x2F;Makefile文件中：<br>obj-m内核就不会编进内核映像文件中<br>obj-y就会编成为内核映像文件的一部分<br>问：$(CONFIG)这个变量在哪里被设置呢？<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230831205629.png"><br>内核根目录.config<br>问：.config如何生成的呢？<br>defconfig是一个默认配置文件，在(make)编译的时候会自动复制生成.config，同时.config也可以修改——make menuconfig，设置菜单下的这些目录都是从各个内核目录下的KConfig生成的。</p>
-<p>cd 到&#x2F;drviers&#x2F;char字符设备路径下，将.c文件拷贝进来，接着修改内核目录(Makefile)，加入obj-$(CONFIG)+&#x3D;.o文件（$(CONFIG)就在.config里）<br>接着make，-m则使用make modules,-y则用make zImage -j将驱动编进内核里去。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230831210835.png"></p>
+<p>cd 到&#x2F;drviers&#x2F;char字符设备路径下，将.c文件拷贝进来，接着修改内核目录(Makefile)，加入obj-$(CONFIG)+&#x3D;.o文件（$(CONFIG)就在.config里）<br>接着make，-m则使用make modules,-y则用make zImage -j将驱动编进内核里去。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230831210835.png"><br>查看创建的设备号：cat &#x2F;proc&#x2F;devices<br>查看地址号：cat &#x2F;proc&#x2F;iomem</p>
+<h2 id="11-总线设备模型"><a href="#11-总线设备模型" class="headerlink" title="11 总线设备模型"></a>11 总线设备模型</h2><p><strong>分离：</strong> 分为固定的部分以及与设备相关会改变的部分<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231122201132.png"><br><strong>总线驱动模型：</strong> 将驱动放在一个总线（Bus）链表里共同管理<br>1）驱动程序要分为左右两边（驱动+device）这样会更容易扩展<br>2）构造drv，注册<br>3）构造dev，注册<br>4）匹配执行</p>
+<p>linux自带platform_bus_type总线结构体<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231122201940.png"><br>调用总线match函数来匹配，若匹配则调用drv中probe函数<br><font style="background:yellow"><strong>整体流程</strong></font ><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231122202530.png"><br>但probe中所做的事情完全是由自己决定的，所以其他操作只是将drv、dev链接起来<br>匹配方法其实就是两者名字（.name）相同就可，如果名字相同就调用.probe<br>核心其实依旧是.probe里面的file_operation结构体，以上只是写法差异。<br><font style="background:yellow"><strong>注册设备与驱动链表的流程</strong></font ><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231122204234.png"></p>
+<p>__***长成这个样子的函数都是代码的内部实现，要是要用的话就用前面定义的函数<br>dev需要定义一个resource数组来表示硬件资源，同时drv也要传入resource，这样也就做成了分离的效果。</p>
+<p><strong>如何匹配</strong><br>在名字相同的情况下可以匹配，但是当想要多个dev匹配同一个drv时候会报错。<br>使用platform_bus_type的结构体中的.driver_override&#x3D;平台名字来实现匹配（相当于在同一组）<br>使用id_table定义支持哪些设备，定义leddrv可以支持什么设备名字。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231126160936.png"></p>
+<h2 id="12-设备树"><a href="#12-设备树" class="headerlink" title="12 设备树"></a>12 设备树</h2><p><strong>原有问题：</strong> </p>
+<ul>
+<li>分离之后跑platformdev链表中具有大量的产品信息，比如一个产品多个版本就得有1.c 2.c 3.c，会让linux内核变得非常臃肿<br>现在我想直接把配置文件和内核分开，内核读取配置文件生成platformdev，这也就是设备树引入的原因和方法。</li>
+</ul>
+<p><strong>基础知识</strong></p>
+<ul>
+<li><p>.dtb文件是已经编译好的设备树文件，想知道源文件，可以查找对应的.dts文件，可以反编译：</p>
+<p>  dtc -I dtb -O dts xxx.dtb &gt; 1.dts ^C</p>
+</li>
+</ul>
+<p>-I:输入的格式dtb文件，-O：输出的格式 将xxx.dtb文件转换为1.dts</p>
+<ul>
+<li><p>设备树相当于替代了platformdev的功能，但是设备树文件转换为平台节点也需要一些要求，不满足要求的设备树文件是转换不成平台节点的。<br>要求1：要有compatible的属性<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231128202955.png"></p>
+</li>
+<li><p>尽管同为根节点的额子节点但会被注册成platformdev的只有下面的这个节点<br>设备树文件需要将dtb文件放到&#x2F;boot文件夹下，接着重启开发板<br>查看设备树文件要到&#x2F;sys&#x2F;firmware&#x2F;devicetree&#x2F;base（该目录相当于设备树的根目录）<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231128203704.png"><br>因此设备树的流程为：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231128203842.png"><br>某一些节点会转换为platformdev，转换为平台设备的要求就是需要有一个<font style="background:yellow">compatible属性</font>，平台总线设备就在这个目录下：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231128204236.png"></p>
+</li>
+<li><p>删除节点<br>比如现在我想要删除一个myled节点<br>1.我就可以使用&#x2F;delete-node&#x2F;来删除节点<br>2.我还可以加上一个状态,来告诉这个节点已经废了，什么也不需要去做</p>
+<pre><code>  &amp;myled&#123;
+      status=&quot;disabled&quot;;
+      &#125;;
+</code></pre>
+</li>
+</ul>
+<p><strong>platformdriver与platformdev的匹配流程</strong></p>
+<ul>
+<li><p>实现platform_driver与dev的值相匹配，下面这个led_driver也有三种匹配的方法，使用.name名字比较，.of_match_table设备树比较，.id_table比较。</p>
+<pre><code>  static struct platform_driver led_driver=&#123;
+      .probe=eld_probe,
+      .remove=led_remove,
+      .driver=&#123;
+          .name=&quot;100ask_led&quot;,
+          .of_match_table=dts_devices_ids,
+      &#125;,
+      .id_table=led_id_table,
+  &#125;;
+</code></pre>
+</li>
+</ul>
+<p>其中.of_match_table就是与设备树节点相匹配的表，而与设备树相匹配的要求就是compatible属性相匹配。dts_devices_ids的写法：</p>
+<pre><code>    static const struct of_device_id dts_device_ids[]=&#123;
+        &#123;.compatible=&quot;100askm,led&quot;,&#125;,
+        &#123;/*sdentinel*/&#125;
+    &#125;;
+</code></pre>
+<p>总而言之，设备树是一种可以描述硬件信息的形式。<br><strong>硬件的分类</strong></p>
+<ol>
+<li>GPIO</li>
+</ol>
+<ul>
+<li>低电平有效</li>
+<li>pin值</li>
+<li>按键值（软件信息）：定义两个按键A&#x2F;B</li>
+<li>描述灯GPIO设备的设备树应该怎么写：<br>设备树怎么写都是由驱动程序决定的，驱动程序如果需要一个子节点，那设备树就必须提供一个子节点。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231129202602.png"></li>
+</ul>
+<ol start="2">
+<li>协议（I2C，SPI，UART）<br><font style="background:yellow">一个需要描述I2C控制器，另一个需要描述接入I2C的设备</font><br>描述I2C控制器：</li>
+</ol>
+<ul>
+<li>pin</li>
+<li>频率</li>
+</ul>
+<p>dtsi文件指的是include表示这个文件会被别的文件包含<br>下面这两个文件dtsi是厂家提供的代码，而dts是商家提供的代码，频率等参数也是由商家开发板所指定的。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231129205042.png"></p>
+<p>而所接入的I2C设备：</p>
+<ul>
+<li>描述本身</li>
+<li>在哪个I2C总线下</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231129205639.png"><br>在i2c1总线下创建一个子节点↑，这样也就表明了i2c总线和这个设备的关系<br>同名属性中含义有可能完全不同：就比如上面的两个reg，i2c1这个设备树里reg的含义就是制定了寄存器的地址以及后面0x4000都是这个设备。但at这个设备树里reg的含义就单纯的是这个地址。属性的含义由驱动来决定。</p>
+<p>怎么修改设备树文件：<br>1.使用厂家工具<br>2.内核看绑定文档&#x2F;Documentation&#x2F;devicetree&#x2F;bindings<br>3.参考同类型设备树文件<br>4.网上搜索<br>5.实在没办法只能去研究驱动源码 </p>
+<p><strong>pinctrl</strong><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231130201754.png"></p>
+<ul>
+<li>soc需要一个IOMUX模块来选择I2C等模块的引脚，IOMUX一般是包含在I2C等模块之中的，只是抽象出来为IOMUX。pin来选择接在那个模块上，例如由于I2C比较耗电，因此在休眠的时候pin也许就会接在GPIO上来进行一个省电的操作。<br>也就是I2C状态的选择与pinctrl息息相关：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231130202259.png"><br>pinctrl的使用，pinctrldevice的节点对应pinctrller的节点：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231130202619.png"></li>
+<li><font style="background:yellow"><strong>驱动无需操作pinctrl</strong></font><br>原因：调用probe函数之前已经帮着设置好了引脚，因此driver里无需操作，只需要设备树里指定相关引脚，就会帮着设置，同时pinctrl每个厂家设置是有区别的<br>只有dev与drv比较匹配之后再.probe函数之前才会被调用，因此即使设备树文件中转换为平台设备了，也<font style="background:yellow">不会配置引脚</font><br>为什么USB不需要设备树?<br>对于复杂的接口<br>1.看原理图，根据引脚名字搜索设备树<br>2.确定pinctrl的名字<br>3.根据pinctrl的名字找节点：查看哪个dts里包含了这个名字，去查看</li>
+</ul>
+<h2 id="13-中断"><a href="#13-中断" class="headerlink" title="13 中断"></a>13 中断</h2><h3 id="13-1-应用程序和驱动程序交互的4种方式"><a href="#13-1-应用程序和驱动程序交互的4种方式" class="headerlink" title="13.1 应用程序和驱动程序交互的4种方式"></a>13.1 应用程序和驱动程序交互的4种方式</h3><p>妈妈怎么知道卧室里小孩醒了？<br>1.查询方式<br>时不时去房间看下<br>2.休眠唤醒<br>进去陪孩子一起睡，孩子醒了吵醒他，但是这种妈妈也干不了活了<br>3.poll方式<br>妈妈陪孩子小睡一会，定一个闹钟，要么孩子吵醒妈妈，要么闹钟吵醒妈妈干活<br>4.异步通知<br>妈妈在客厅干活，小孩醒了会自己走出房门告诉妈妈，异步通知≈中断，APP注册一个信号处理函数，底层有情况主动发送信号<br>前三种方式都是同步，只有最后一种方式是异步</p>
+<h3 id="13-2-中断"><a href="#13-2-中断" class="headerlink" title="13.2 中断"></a>13.2 中断</h3><p>1.设置中断控制器<br>2.注册中断处理函数<br>3.保存现场：把当前的进程保存下来<br>4.调用处理函数<br>5.恢复现场</p>
+<p>中断与异常之间的区别：<br>中断可屏蔽，异常不可屏蔽</p>
+<p>阻塞方式：没有数据就休眠</p>
+<h3 id="13-3-怎么写驱动"><a href="#13-3-怎么写驱动" class="headerlink" title="13.3 怎么写驱动"></a>13.3 怎么写驱动</h3><p>request_irq 中断处理函数</p>
+<pre><code>request_irq(usigned int irq,irq_handler_t handler,unsigned long flags,const char *name,void *dev)
+</code></pre>
+<p>如何知道是哪一个irq呢？<br>查看设备树，为某一个设备指定中断。</p>
+<ul>
+<li><strong>中断结构：</strong><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231203112045.png"><br>看设备树的节点是否为中断控制器，如果是中断控制器设备树下就会有interrupt-controller：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231203112304.png"><br>GPIO1（2级中断控制器，用到了1级中断控制器的哪些中断：interrupts里有显示）<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231203112747.png"><br>层级关系可以从interrupt-parent里面看出来，说明他的父亲是intc这个设备树节点<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231203113334.png"><br>整体结构：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231203114248.png"></li>
+<li><strong>中断的类型：</strong><br>1.软件触发中断(SGI，Software Generated Interrupt)<br>由软件通过写入专用仲裁单元的寄存器生成<br>2.私有外设中断(PPI，Private Peripheral Interrupt)<br>单个CPU核私有的外设生成<br>3.共享外设中断(SPI，Shared Peripheral Interrupt)<br>由外设生成的中断。</li>
+</ul>
 
             </div>
 
@@ -320,7 +457,7 @@ network=&#123;
             
                 <span>2020</span> -
             
-            2023
+            2024
             
                 &nbsp;<i class="fas fa-heart icon-animate"></i>
                 &nbsp;<a href="/">caijiQAQ</a>

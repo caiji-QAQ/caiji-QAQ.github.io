@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="caijiQAQ">
+    
+    <title>
+        
+            linux camera项目实现 |
+        
+        学习笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"caiji-qaq.github.io","root":"/","language":"en"}
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066cc","logo":"/images/logo.svg","favicon":"/images/logo.svg","avatar":"/images/avatar.svg","font_size":null,"font_family":null,"hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"header_transparent":false,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","font_color":null,"hitokoto":false},"scroll":{"progress_bar":false,"percent":false}},"local_search":{"enable":false,"preload":false},"code_copy":{},"code_block":{"tools":{"enable":false,"style":"default"},"highlight_theme":"default"},"side_tools":{},"pjax":{"enable":false},"lazyload":{"enable":false},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.8"},"waline":{"server_url":null,"reaction":false,"version":2}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"enable":false,"wordcount":false,"min2read":false},"img_align":"left","copyright_info":false},"version":"3.6.1"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original article title","author":"Original article author","link":"Original article link"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+               学习笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            <div class="article-title">
+                <span class="title-hover-animation">linux camera项目实现</span>
+            </div>
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/avatar.svg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">caijiQAQ</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            
+<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        
+            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
+        
+        <span class="pc">2024-05-05 14:52:00</span>
+        <span class="mobile">2024-05-05 14:52</span>
+    </span>
+    
+        <span class="article-update-date article-meta-item">
+        <i class="fas fa-file-pen"></i>&nbsp;
+        <span class="pc">2024-05-20 22:42:52</span>
+    </span>
+    
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content keep-markdown-body">
+                
+
+                <p>之前自学的驱动项目有点太入门了，实在是太不亮眼，所以打算再加一个linux应用的项目，驱动的知识当做是锦上添花不打算当做主要的项目了，先做个应用的项目撑撑场面。<br><strong>基于V4L2架构驱动外置USB摄像头实现拍照和查看相册的功能</strong><br>实现功能：<br>1.V4L2获取摄像头数据<br>2.在LCD显示屏上显示摄像头数据<br>3.多线程操作<br>4.照片存储</p>
+<hr>
+<h2 id="1-整体流程理论"><a href="#1-整体流程理论" class="headerlink" title="1.整体流程理论"></a>1.整体流程理论</h2><p>摄像头会把采集到的每一帧数据放入到buffer中，因此需要很多的buffer，将buffer分成两个链表，一个是空闲链表（也就是还没有采集数据），一个是完成链表（已经采集完的数据）。</p>
+<ul>
+<li>1.应用程序将完成链表中的buffer提取出来放回到空闲链表中</li>
+<li>2.驱动程序则是将空闲链表中的buffer采集完数据放到完成链表中<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240505155127.png"></li>
+</ul>
+<h2 id="2-操作流程"><a href="#2-操作流程" class="headerlink" title="2.操作流程"></a>2.操作流程</h2><h4 id="1-打开设备"><a href="#1-打开设备" class="headerlink" title="1.打开设备"></a>1.打开设备</h4><p>  将摄像头插到电脑上，通过ls &#x2F;dev&#x2F;video*可以打印出刚刚的设备节点。<br>  然后使用打开文件open，就可以打开&#x2F;dev&#x2F;video0这个设备了。</p>
+<h4 id="2-获取摄像头支持的格式"><a href="#2-获取摄像头支持的格式" class="headerlink" title="2.获取摄像头支持的格式"></a>2.获取摄像头支持的格式</h4><ul>
+<li><p>1.v4l2_fmtdesc结构体：<br>结构体用于描述视频设备支持的图像格式（format）。在 V4L2（Video4Linux2）中，<strong>这个结构体通常用于列举设备支持的不同图像格式</strong>，以便用户空间程序选择适合的格式来进行视频捕获或输出</p>
+<pre><code>  struct v4l2_fmtdesc &#123;
+      __u32		    index;             /* Format number      */
+      __u32		    type;              /* enum v4l2_buf_type */
+      __u32               flags;
+      __u8		    description[32];   /* Description string */
+      __u32		    pixelformat;       /* Format fourcc      */
+      __u32		    reserved[4];
+  &#125;;
+</code></pre>
+<p>  v4l2不只是针对摄像头，因此要选择type为1：V4L2_BUF_TYPE_VIDEO_CAPTURE;视频抓取。</p>
+<pre><code>  enum v4l2_buf_type &#123;
+      V4L2_BUF_TYPE_VIDEO_CAPTURE        = 1,
+      V4L2_BUF_TYPE_VIDEO_OUTPUT         = 2,
+      V4L2_BUF_TYPE_VIDEO_OVERLAY        = 3,
+      V4L2_BUF_TYPE_VBI_CAPTURE          = 4,
+      V4L2_BUF_TYPE_VBI_OUTPUT           = 5,
+      V4L2_BUF_TYPE_SLICED_VBI_CAPTURE   = 6,
+      V4L2_BUF_TYPE_SLICED_VBI_OUTPUT    = 7,
+      V4L2_BUF_TYPE_VIDEO_OUTPUT_OVERLAY = 8,
+      V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE = 9,
+      V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE  = 10,
+      V4L2_BUF_TYPE_SDR_CAPTURE          = 11,
+      V4L2_BUF_TYPE_SDR_OUTPUT           = 12,
+      V4L2_BUF_TYPE_META_CAPTURE         = 13,
+      /* Deprecated, do not use */
+      V4L2_BUF_TYPE_PRIVATE              = 0x80,
+  &#125;;
+</code></pre>
+</li>
+<li><p>2.v4l2_capability结构体<br>除了用 v4l2_fmtdesc结构体获取像素格式，还可以通过v4l2_capability结构体来获取<strong>设备的功能</strong>，主要看capabilities成员，其是否支持视频捕获（V4L2_CAP_VIDEO_CAPTURE）、以及是否支持流读写（V4L2_CAP_STREAMING）。</p>
+<pre><code>  struct v4l2_capability
+  &#123;
+      u8 driver[16]; // 驱动名字
+      u8 card[32]; // 设备名字
+      u8 bus_info[32]; // 设备在系统中的位置
+      u32 version;// 驱动版本号
+      u32 capabilities;// 设备支持的操作
+      u32 reserved[4]; // 保留字段
+  &#125;;
+</code></pre>
+</li>
+</ul>
+<p>设置并调用获取像素格式以及读取驱动名字和查看摄像头的能力<br>下层驱动，ioctl函数可调用的功能。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240512110526.png"></p>
+<pre><code>while(1)
+    &#123;
+        v4fmt.index = i;
+        i++;
+        int ret = ioctl(fd, VIDIOC_ENUM_FMT, &amp;v4fmt);
+        if(ret &lt; 0)
+        &#123;
+            perror(&quot;获取格式失败&quot;);
+            break;
+        &#125;
+        printf(&quot;index = %d\n&quot;, v4fmt.index);
+        printf(&quot;flags = %d\n&quot;, v4fmt.flags);
+        printf(&quot;descrrption = %s\n&quot;, v4fmt.description);
+        unsigned char *p = (unsigned char*)&amp;v4fmt.pixelformat;
+        printf(&quot;pixelformat = %c%c%c%c\n&quot;, p[0],p[1],p[2],p[3]);
+        printf(&quot;reserved = %d\n&quot;, v4fmt.reserved[0]);
+    &#125;
+
+    int ret = ioctl(fd, VIDIOC_QUERYCAP, &amp;cap);
+    if(ret &lt; 0)
+        perror(&quot;获取功能失败&quot;);
+    
+    printf(&quot;drivers:%s\n&quot;, cap.driver);//读取驱动名字
+    if(cap.capabilities &amp; V4L2_CAP_VIDEO_CAPTURE)
+        printf(&quot;%s 支持视频捕获\n&quot;, argv[1]);
+    if(cap.capabilities &amp; V4L2_CAP_STREAMING)
+        printf(&quot;%s 支持流读写\n&quot;, argv[1]);
+</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240512110239.png"><br>通过返回的格式可以看到，摄像头读取的格式为：YUYV与JPEG</p>
+<h4 id="3-配置摄像头参数"><a href="#3-配置摄像头参数" class="headerlink" title="3.配置摄像头参数"></a>3.配置摄像头参数</h4><p>在视频采集之前需要设置视频采集的格式。定义定义v4l2_format结构体变量，然后通过结构体v4l2_pix_format来设置采集的高、宽以及像素格式（YUYV）。</p>
+<pre><code>struct v4l2_format &#123;
+    __u32	 type;
+    union &#123;
+        struct v4l2_pix_format		pix;     /* V4L2_BUF_TYPE_VIDEO_CAPTURE */
+        struct v4l2_pix_format_mplane	pix_mp;  /* V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE */
+        struct v4l2_window		win;     /* V4L2_BUF_TYPE_VIDEO_OVERLAY */
+        struct v4l2_vbi_format		vbi;     /* V4L2_BUF_TYPE_VBI_CAPTURE */
+        struct v4l2_sliced_vbi_format	sliced;  /* V4L2_BUF_TYPE_SLICED_VBI_CAPTURE */
+        struct v4l2_sdr_format		sdr;     /* V4L2_BUF_TYPE_SDR_CAPTURE */
+        __u8	raw_data[200];                   /* user-defined */
+    &#125; fmt;
+&#125;;
+
+struct v4l2_pix_format &#123;
+    __u32         		width;
+    __u32			height;
+    __u32			pixelformat;
+    __u32			field;		/* enum v4l2_field */
+    __u32            	bytesperline;	/* for padding, zero if unused */
+    __u32          		sizeimage;
+    __u32			colorspace;	/* enum v4l2_colorspace */
+    __u32			priv;		/* private data, depends on pixelformat */
+    __u32			flags;		/* format flags (V4L2_PIX_FMT_FLAG_*) */
+    __u32			ycbcr_enc;	/* enum v4l2_ycbcr_encoding */
+    __u32			quantization;	/* enum v4l2_quantization */
+    __u32			xfer_func;	/* enum v4l2_xfer_func */
+&#125;;
+</code></pre>
+<h4 id="4-向内核申请帧缓冲队列并映射"><a href="#4-向内核申请帧缓冲队列并映射" class="headerlink" title="4.向内核申请帧缓冲队列并映射"></a>4.向内核申请帧缓冲队列并映射</h4><p>V4L2读取数据时有两种方式，第一种是用read读取（调用read函数），第二种是<strong>用流（streaming）读取</strong>，在第二步上已经获取到我的设备支持流读写，为了提高效率采用流读写，流读写就是在内核中维护一个<strong>缓存队列</strong>，然后再映射到用户空间，应用层直接读取队列中的数据。<br>申请缓冲区-&gt;逐个查询申请到的缓冲区-&gt;逐个映射-&gt;逐个放入队列中<br>申请缓冲空间的结构体：</p>
+<pre><code>    v4l2_requestbuffers：
+    /*
+    *	M E M O R Y - M A P P I N G   B U F F E R S
+    */
+    struct v4l2_requestbuffers &#123;
+        __u32			count;
+        __u32			type;		/* enum v4l2_buf_type */
+        __u32			memory;		/* enum v4l2_memory */
+        __u32			reserved[2];
+    &#125;;
+
+    enum v4l2_buf_type &#123;
+        V4L2_BUF_TYPE_VIDEO_CAPTURE        = 1,
+        V4L2_BUF_TYPE_VIDEO_OUTPUT         = 2,
+        V4L2_BUF_TYPE_VIDEO_OVERLAY        = 3,
+        V4L2_BUF_TYPE_VBI_CAPTURE          = 4,
+        V4L2_BUF_TYPE_VBI_OUTPUT           = 5,
+        V4L2_BUF_TYPE_SLICED_VBI_CAPTURE   = 6,
+        V4L2_BUF_TYPE_SLICED_VBI_OUTPUT    = 7,
+        V4L2_BUF_TYPE_VIDEO_OUTPUT_OVERLAY = 8,
+        V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE = 9,
+        V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE  = 10,
+        V4L2_BUF_TYPE_SDR_CAPTURE          = 11,
+        V4L2_BUF_TYPE_SDR_OUTPUT           = 12,
+        V4L2_BUF_TYPE_META_CAPTURE         = 13,
+        /* Deprecated, do not use */
+        V4L2_BUF_TYPE_PRIVATE              = 0x80,
+    &#125;;
+
+    enum v4l2_memory &#123;
+        V4L2_MEMORY_MMAP             = 1,//内存映射的方式
+        V4L2_MEMORY_USERPTR          = 2,
+        V4L2_MEMORY_OVERLAY          = 3,
+        V4L2_MEMORY_DMABUF           = 4,
+    &#125;;
+</code></pre>
+<p>请求缓冲空间：</p>
+<pre><code>struct v4l2_requestbuffers reqbuffer;
+reqbuffer.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+reqbuffer.count = 4;	//申请4个缓冲区
+reqbuffer.memory = V4L2_MEMORY_MMAP;	//采用内存映射的方式
+
+ret = ioctl(fd, VIDIOC_REQBUFS, &amp;reqbuffer);
+</code></pre>
+<p>映射，映射之前需要查询缓存信息-&gt;每个缓冲区逐个映射-&gt;将缓冲区放入队列<br>v4l2_buffer结构体：</p>
+<pre><code>struct v4l2_buffer &#123;
+    __u32			index;
+    __u32			type;
+    __u32			bytesused;
+    __u32			flags;
+    __u32			field;
+    struct timeval		timestamp;
+    struct v4l2_timecode	timecode;
+    __u32			sequence;
+
+    /* memory location */
+    __u32			memory;
+    union &#123;
+        __u32           offset;
+        unsigned long   userptr;
+        struct v4l2_plane *planes;
+        __s32		fd;
+    &#125; m;
+    __u32			length;
+    __u32			reserved2;
+    __u32			reserved;
+&#125;;
+</code></pre>
+<p>对v4l2_buffer设置</p>
+<pre><code>struct v4l2_buffer mapbuffer;
+unsigned char *mmpaddr[4];//用于存储映射后的首地址
+mapbuffer.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;//初始化type
+</code></pre>
+<p>这里是将队列中的数据读取到readbuffer中：</p>
+<pre><code>struct v4l2_buffer readbuffer;
+readbuffer.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+ret = ioctl(fd, VIDIOC_DQBUF, &amp;readbuffer);//从缓冲队列获取一帧数据（出队列）
+</code></pre>
+<p>在使用readbuffer后再将readbuffer放回到队列中：</p>
+<pre><code>LCD_JPEG_Show(mmpaddr[readbuffer.index], readbuffer.length);
+//读取数据后将缓冲区放入队列
+ret = ioctl(fd, VIDIOC_QBUF, &amp;readbuffer);
+</code></pre>
+<p><font style="color:red">至于这里是为什么使用之后还要放回去：只有将这帧队列的数据放回才能使用该帧的缓冲区来接收新的帧</font></p>
+
+            </div>
+
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                               rel="next"
+                               href="/2024/05/05/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E9%97%AE%E9%A2%98/"
+                            >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">计算机操作系统问题</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                                <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+            
+        </div>
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            
+<footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+                <span>2020</span> -
+            
+            2024
+            
+                &nbsp;<i class="fas fa-heart icon-animate"></i>
+                &nbsp;<a href="/">caijiQAQ</a>
+            
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.6.1</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+        
+<script src="/js/post-helper.js"></script>
+
+        
+        
+    
+</div>
+
+
+
+</body>
+</html>
