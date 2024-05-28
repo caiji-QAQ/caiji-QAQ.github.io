@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-05-28 11:45:51</span>
+        <span class="pc">2024-05-28 22:24:21</span>
     </span>
     
     
@@ -277,14 +277,14 @@
 <li><p>1.释放后没有置空指针：</p>
 <pre><code>int* ptr = new int;
 delete ptr;
-// 此时 ptr 成为ᰀ指针，因为它仍然指向已经被释放的内存
-ptr = nullptr; // 避免ᰀ指针，应该将指针置为 nullptr 或赋予新的有效地址
+// 此时 ptr 成为野指针，因为它仍然指向已经被释放的内存
+ptr = nullptr; // 避免野指针，应该将指针置为 nullptr 或赋予新的有效地址
 </code></pre>
 </li>
 <li><p>2.返回局部变量的指针</p>
 <pre><code>int* createInt() &#123;
 int x = 10;
-return &amp;x; // x 是局部变ᰁ，函数结束后 x 被销毁，返回的指针成为ᰀ指针
+return &amp;x; // x 是局部变量，函数结束后 x 被销毁，返回的指针成为野指针
 &#125;
 // 在使⽤返回值时可能引发未定义⾏为
 </code></pre>
@@ -363,48 +363,13 @@ foo(ptr);
 <td>派生类不可见</td>
 <td>派生类不可见</td>
 </tr>
-<tr>
-<td><em><strong>2.封装</strong></em></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>数据和代码捆绑在⼀起，避免外界⼲扰和不确定性访问。<strong>把客观事物封装成抽象的类</strong>，并且类可以把⾃⼰的数据和⽅法只让可信的类或者对象操作，对不可信的进⾏信息隐藏，例如：将公共的数据或⽅法使⽤public修饰，⽽不希望被访问的数据或⽅法采⽤private修饰</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><em><strong>3.多态</strong></em></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>同⼀事物表现出不同事物的能⼒，即向不同对象发送同⼀消息，不同的对象在接收时会产⽣不同的⾏为（重载实现编译时多态，虚函数实现运⾏时多态）。</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>多态性是允许你将⽗对象设置成为和⼀个或更多的他的⼦对象相等的技术，赋值之后，⽗对象就可以根据当前赋值给它的⼦对象的特性以不同的⽅式运作。</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>实现多态两种方式：</strong></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
 </tbody></table>
+<p><em><strong>2.封装</strong></em><br>数据和代码捆绑在⼀起，避免外界⼲扰和不确定性访问。<strong>把客观事物封装成抽象的类</strong>，并且类可以把⾃⼰的数据和⽅法只让可信的类或者对象操作，对不可信的进⾏信息隐藏，例如：将公共的数据或⽅法使⽤public修饰，⽽不希望被访问的数据或⽅法采⽤private修饰<br><em><strong>3.多态</strong></em><br>同⼀事物表现出不同事物的能⼒，即向不同对象发送同⼀消息，不同的对象在接收时会产⽣不同的⾏为（重载实现编译时多态，虚函数实现运⾏时多态）。<br>多态性是允许你将⽗对象设置成为和⼀个或更多的他的⼦对象相等的技术，赋值之后，⽗对象就可以根据当前赋值给它的⼦对象的特性以不同的⽅式运作。<br><strong>实现多态两种方式：</strong></p>
 <ul>
 <li>1.覆盖override：是指⼦类重新定义⽗类的虚函数的做法</li>
 <li>2.重载overload：允许存在多个同名函数，只是这些函数的参数不同。</li>
 </ul>
-<h3 id="16-多重继承"><a href="#16-多重继承" class="headerlink" title="16.多重继承"></a>16.多重继承</h3><p>⼀个类可以从多个基类（⽗类）继承属性和⾏为。在C++等⽀持多᯿继承的语⾔中，⼀个派⽣类可以同时拥有多个基类。<br>菱形继承：B继承A，C继承A，D多重继承B与A，这时在D中调用A的函数就会带来歧义。<br>解决办法：让B虚继承A，C虚继承A</p>
+<h3 id="16-多重继承"><a href="#16-多重继承" class="headerlink" title="16.多重继承"></a>16.多重继承</h3><p>⼀个类可以从多个基类（⽗类）继承属性和⾏为。在C++等⽀持多重继承的语⾔中，⼀个派⽣类可以同时拥有多个基类。<br>菱形继承：B继承A，C继承A，D多重继承B与A，这时在D中调用A的函数就会带来歧义。<br>解决办法：让B虚继承A，C虚继承A</p>
 <h3 id="17-重载与重写的区别"><a href="#17-重载与重写的区别" class="headerlink" title="17.重载与重写的区别"></a>17.重载与重写的区别</h3><ul>
 <li><p><strong>重载</strong>:重载是指在同⼀作⽤域内，使⽤相同的函数名但具有不同的参数列表或类型，使得同⼀个函数名可以有<strong>多个版本</strong>。</p>
 <pre><code>int add(int a, int b) &#123;
@@ -566,13 +531,13 @@ virtual void draw() const = 0;
                         <div class="article-prev">
                             <a class="prev"
                                rel="prev"
-                               href="/2024/01/01/%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0/"
+                               href="/2024/01/01/%E7%BD%91%E7%BB%9C/"
                             >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                                 <span class="title flex-center">
-                                <span class="post-nav-title-item">驱动实现</span>
+                                <span class="post-nav-title-item">《网络是怎样连接的》</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                             </a>
