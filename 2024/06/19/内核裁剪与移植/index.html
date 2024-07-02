@@ -9,7 +9,7 @@
     
     <title>
         
-            嵌入式 |
+            内核裁剪与移植 |
         
         学习笔记
     </title>
@@ -135,7 +135,7 @@
         <div class="article-content-container">
 
             <div class="article-title">
-                <span class="title-hover-animation">嵌入式</span>
+                <span class="title-hover-animation">内核裁剪与移植</span>
             </div>
 
             
@@ -157,13 +157,13 @@
         
             <i class="fa-regular fa-calendar-plus"></i>&nbsp;
         
-        <span class="pc">2023-07-02 15:44:13</span>
-        <span class="mobile">2023-07-02 15:44</span>
+        <span class="pc">2024-06-19 21:07:14</span>
+        <span class="mobile">2024-06-19 21:07</span>
     </span>
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-07-24 09:29:22</span>
+        <span class="pc">2024-06-23 11:05:20</span>
     </span>
     
     
@@ -183,7 +183,54 @@
             <div class="article-content keep-markdown-body">
                 
 
-                <p>##1.交叉编译<br>###编译：<br>将源代码转换成机器代码的过程称为编译（Compile），编译的工作需要编译器（Complier）来完成。编译器对源代码进行语法检查，只有没有语法错误的源代码才能被编译通过。源代码经过编译后，并没有生成最终的可执行文件，而是生成一种被称为目标文件(Object File)的中间文件。源代码有几个源文件就会生成几个目标文件。但目标文件会由于源文件之间的引用关系导致一些问题导致无法执行。<br>###链接：<br>经过编译生成的目标文件，根据其引用关系相连接生成一个完整的、可执行的文件过程称为链接。链接工作是由链接器来完成的<br>下面提到的本地编译以及交叉编译包含上面的两个步骤。<br>###本地编译：<br>是指编译源代码的平台和执行源代码编译后程序的平台是同一个平台。<br>###交叉编译（Cross_Compile）:<br>是指编译源代码的平台和执行源代码编译后程序的平台是两个不同的平台。比如，在Intel x86架构&#x2F;Linux（Ubuntu）平台下、使用交叉编译工具链生成的可执行文件，在ARM架构&#x2F;Linux下运行。</p>
+                <p>使用的开发板是正点原子imx6ullmini的开发板</p>
+<h1 id="1-Linux启动流程"><a href="#1-Linux启动流程" class="headerlink" title="1.Linux启动流程"></a>1.Linux启动流程</h1><h1 id="2-boot"><a href="#2-boot" class="headerlink" title="2.boot"></a>2.boot</h1><h2 id="1-uboot之间的区别："><a href="#1-uboot之间的区别：" class="headerlink" title="1.uboot之间的区别："></a>1.uboot之间的区别：</h2><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240619211353.png"></p>
+<p><strong>问：为什么开发板厂商仍然需要自己再搞一个uboot呢？</strong><br>因为半导体厂商给的uboot是针对自家的评估板的，所以如果购买了第三方开发板后仍然使用半导体厂商提供的uboot，有些外设驱动可能不支持，就需要自己移植了。</p>
+<h2 id="2-uboot的启动流程"><a href="#2-uboot的启动流程" class="headerlink" title="2.uboot的启动流程"></a>2.uboot的启动流程</h2><p>这个流程源码实在是有点太长了，有时间再深入研究吧</p>
+<h2 id="3-uboot的移植"><a href="#3-uboot的移植" class="headerlink" title="3.uboot的移植"></a>3.uboot的移植</h2><p>uboot 的移植并不是说我们完完全全的<strong>从零开始将 uboot 移植</strong>到我们现在所使用的开发板或者开发平台上。这个对于我们来说基本是不可能的，这个工作一般是半导体厂商做的，半导体厂商负责将 uboot 移植到他们的芯片上，因此半导体厂商都会自己做一个开发板，这个开发板就叫做原厂开发板，比如大家学习STM32的时候听说过的discover开发板就是ST自己做的。半导体厂商会将 uboot 移植到他们自己的原厂开发板上，测试好以后就会将这个 uboot 发布出去，这就是大家常说的原厂 <strong>BSP</strong> 包。所以做产品一般就会参考原厂的开发板做硬件，然后在原厂提供的 BSP 包上做修改，将 uboot 或者 linux kernel 移植到我们的硬件上。</p>
+<p><strong>uboot移植的一般流程</strong>：</p>
+<ul>
+<li>① 在 uboot 中找到参考的开发平台，一般是原厂的开发板。</li>
+<li>② 参考原厂开发板移植 uboot 到我们所使用的开发板上。</li>
+</ul>
+<p>感觉看这个教程一大堆感觉什么也学不到啊，先放弃uboot，先学习一下内核裁剪</p>
+<h1 id="3-内核裁剪"><a href="#3-内核裁剪" class="headerlink" title="3.内核裁剪"></a>3.内核裁剪</h1><h2 id="1-正常编译内核的流程"><a href="#1-正常编译内核的流程" class="headerlink" title="1.正常编译内核的流程"></a>1.正常编译内核的流程</h2><p><strong>先下载源码，编写脚本，主要完成的操作有</strong>：</p>
+<ul>
+<li><p>1.清除之前的编译痕迹</p>
+</li>
+<li><p>2.defconfig:一般由平台厂商提供，内核编译用做.config的<strong>参考</strong>,一般有平台厂商提供，文件位于 &#x2F;kernel&#x2F;..&#x2F;arch&#x2F;arm&#x2F;configs&#x2F;xxx_defconfig</p>
+</li>
+<li><p>3.menuconfig配置编译</p>
+</li>
+<li><p>4.开始编译指定几个核来编译</p>
+<pre><code>  #!/bin/sh
+  make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
+  make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- imx_v7_defconfig
+  make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
+  make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- all -j16
+</code></pre>
+</li>
+</ul>
+<p><strong>编译源码后的文件夹如下所示</strong>：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240622211651.png"><br><strong>介绍几个重要的文件夹</strong></p>
+<ul>
+<li><ol>
+<li><strong>arch</strong><br>这个目录是和架构有关的目录，比如 arm、arm64、avr32、x86 等等架构。每种架构都对应一个目录，在这些目录中又有很多子目录，比如 boot、common、configs 等等。其中在架构下的子目录会用于控制系统引导、系统调用、动态调频、主频设置等。<br><code>arch/arm/configs</code> 目录是<strong>不同平台的默认配置文件</strong>：xxx_defconfig。<br><code>arch/arm/boot/dts</code>目录里是设备树文件<br><code>arch/arm/boot</code> 目录下会保存编译出来的 Image 和 zImage 镜像文件，而zImage 就是我们要用的 linux 镜像文件。<br>注：&#x3D;&#x3D;<strong>Image</strong>&#x3D;&#x3D; 是未经压缩的 Linux 内核镜像，它直接包含了编译后的内核代码和数据。&#x3D;&#x3D;<strong>zImage</strong>&#x3D;&#x3D; 是压缩后的 Linux 内核镜像，它使用了 gzip 压缩，并包含一个小的解压缩程序。<br><code>arch/arm/mach-xxx</code> 目录分别为相应平台的驱动和初始化文件，比如mach-imx 目录里面就是imx系列 CPU 的驱动和初始化文件。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li><strong>block</strong><br>block 是 Linux 下块设备目录，像 SD 卡、EMMC、NAND、硬盘等存储设备就属于块设备，block 目录中存放着管理块设备的相关文件。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li><strong>drivers</strong><br>驱动目录文件，此目录根据驱动类型的不同，分门别类进行整理，比如 drivers&#x2F;i2c 就是 I2C相关驱动目录，drivers&#x2F;gpio 就是 GPIO 相关的驱动目录，这是我们学习的重点。</li>
+</ol>
+</li>
+<li><ol start="4">
+<li><strong>fs</strong><br>此目录存放文件系统，比如 fs&#x2F;ext2、fs&#x2F;ext4、fs&#x2F;f2fs 等，分别是 ext2、ext4 和 f2fs 等文件系统。</li>
+</ol>
+</li>
+</ul>
+<h2 id="2-内核裁剪选项说明"><a href="#2-内核裁剪选项说明" class="headerlink" title="2.内核裁剪选项说明"></a>2.内核裁剪选项说明</h2><p>启动menuconfig，自定义设置，这里源码使用的是linux 4.1.15版本的源码<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240623110226.png"><br>进入第二个Gerneral setup中开始设置</p>
 
             </div>
 
@@ -197,13 +244,13 @@
                         <div class="article-prev">
                             <a class="prev"
                                rel="prev"
-                               href="/2023/07/02/%E6%A0%91%E8%8E%93%E6%B4%BE/"
+                               href="/2024/06/30/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/%E9%9D%A2%E8%AF%95%E9%AB%98%E9%A2%91%E6%89%8B%E6%92%95%E4%BB%A3%E7%A0%81/"
                             >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                                 <span class="title flex-center">
-                                <span class="post-nav-title-item">树莓派</span>
+                                <span class="post-nav-title-item">面试高频手撕代码</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                             </a>
@@ -213,10 +260,10 @@
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2023/06/23/%E7%BB%8F%E6%B5%8E/"
+                               href="/2024/06/16/docker%E7%BC%96%E7%A8%8B/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">经济学习</span>
+                                <span class="post-nav-title-item">docker编程</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">

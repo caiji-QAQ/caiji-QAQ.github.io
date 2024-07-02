@@ -9,7 +9,7 @@
     
     <title>
         
-            bootloader学习 |
+            docker编程 |
         
         学习笔记
     </title>
@@ -135,7 +135,7 @@
         <div class="article-content-container">
 
             <div class="article-title">
-                <span class="title-hover-animation">bootloader学习</span>
+                <span class="title-hover-animation">docker编程</span>
             </div>
 
             
@@ -157,13 +157,13 @@
         
             <i class="fa-regular fa-calendar-plus"></i>&nbsp;
         
-        <span class="pc">2024-05-02 00:00:00</span>
-        <span class="mobile">2024-05-02 00:00</span>
+        <span class="pc">2024-06-16 21:10:32</span>
+        <span class="mobile">2024-06-16 21:10</span>
     </span>
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-05-02 11:36:22</span>
+        <span class="pc">2024-06-16 21:30:04</span>
     </span>
     
     
@@ -183,48 +183,21 @@
             <div class="article-content keep-markdown-body">
                 
 
-                <p>参考github的uboot研读笔记：<a class="link"   target="_blank" rel="noopener" href="https://github.com/Mculover666/uboot-jz2440" >this one<i class="fas fa-external-link-alt"></i></a></p>
-<h1 id="01-嵌入式Linux系统中Bootloader的作用和基本运行原理"><a href="#01-嵌入式Linux系统中Bootloader的作用和基本运行原理" class="headerlink" title="01 嵌入式Linux系统中Bootloader的作用和基本运行原理"></a>01 嵌入式Linux系统中Bootloader的作用和基本运行原理</h1><h2 id="1-嵌入式linux系统开发架构"><a href="#1-嵌入式linux系统开发架构" class="headerlink" title="1.嵌入式linux系统开发架构"></a>1.嵌入式linux系统开发架构</h2><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240502102917.png"></p>
-<p>软件程序开发中，从下往上每一次的作用依次为：</p>
-<p>Bootloader：将硬件初始化，并将内核引导起来；<br>Linux Kernel：定制、裁剪之后的Linux内核；<br>根文件系统：提供文件系统，更好的使用存储空间；<br>设备驱动：完成设备操作，并向上层软件提供设备的调用接口；<br>应用程序：Linux系统编程、网络编程、shell编程、图形界面编程等等；</p>
-<h2 id="2-bootloader的作用"><a href="#2-bootloader的作用" class="headerlink" title="2.bootloader的作用"></a>2.bootloader的作用</h2><ul>
-<li>1.初始化各个硬件</li>
-<li>2.<strong>负责直接拉起内核</strong>：建立内存空间映射图，为内核的启动运行做好一切准备，最后将Linux内核代码加载到RAM中运行</li>
+                <p>啥也不懂，参考文章：<a class="link"   target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/image/pull" >Docker-从入门到实践<i class="fas fa-external-link-alt"></i></a></p>
+<h1 id="1-docker"><a href="#1-docker" class="headerlink" title="1.docker"></a>1.docker</h1><h2 id="1-1-docker是什么"><a href="#1-1-docker是什么" class="headerlink" title="1.1 docker是什么"></a>1.1 docker是什么</h2><p>Docker 使用 Google 公司推出的 Go 语言 进行开发实现，基于 Linux 内核的 cgroup，namespace，以及 OverlayFS 类的 Union FS 等技术，对进程进行封装隔离，属于<font style="color:red">操作系统层面的虚拟化技术</font>。由于隔离的进程独立于宿主和其它的隔离的进程，因此也称其为<font style="color:red">容器</font>。</p>
+<h2 id="1-2-Docker与传统虚拟化方向不同"><a href="#1-2-Docker与传统虚拟化方向不同" class="headerlink" title="1.2 Docker与传统虚拟化方向不同"></a>1.2 Docker与传统虚拟化方向不同</h2><p>Docker 和传统虚拟化方式的不同之处。传统虚拟机技术是<strong>虚拟出一套硬件</strong>后，在其上运行一个完整操作系统，在该系统上再运行所需应用进程；而容器内的应用进程直接运行于<strong>宿主的内核</strong>，容器内没有自己的内核，而且也没有进行硬件虚拟。因此容器要比传统虚拟机更为轻便。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240616211649.png"></p>
+<h2 id="1-3-Docker的好处"><a href="#1-3-Docker的好处" class="headerlink" title="1.3 Docker的好处"></a>1.3 Docker的好处</h2><ul>
+<li>更高效的利用系统资源</li>
+<li>更快速的启动时间</li>
+<li>一致的运行环境：<br>开发过程中一个常见的问题是环境一致性问题。由于开发环境、测试环境、生产环境不一致，导致有些 bug 并未在开发过程中被发现。而 Docker 的镜像提供了除内核外完整的运行时环境，确保了应用运行环境一致性，从而不会再出现 「这段代码在我机器上没问题啊」 这类问题。</li>
+<li>持续交付和部署<br>使用 Docker 可以通过定制应用镜像来实现持续集成、持续交付、部署。开发人员可以通过 Dockerfile 来进行镜像构建<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240616212038.png"></li>
 </ul>
-<h2 id="3-bootlaoder的操作模式："><a href="#3-bootlaoder的操作模式：" class="headerlink" title="3.bootlaoder的操作模式："></a>3.bootlaoder的操作模式：</h2><p>一般bootloader有两种操作模式：<br>1.正常启动：上电就会自动开始运行，自己完成启动内核的任务。<br>2.下载模式（开发者模式）：需要用户使用uboot命令进行操作。</p>
-<h2 id="4-bootloader运行基本原理"><a href="#4-bootloader运行基本原理" class="headerlink" title="4.bootloader运行基本原理"></a>4.bootloader运行基本原理</h2><p>BootLoader程序是<font style="color:red">分级载入机制</font>，通常分为 stage1 和 stage2 两大部分。</p>
-<h4 id="stage1"><a href="#stage1" class="headerlink" title="stage1:"></a>stage1:</h4><p>stage1 依赖于CPU体系结构的代码，例如CPU相关初始化代码等， 通常都用汇编语言来实现，达到高效操作的目的。<br>stage1的步骤如下：</p>
-<ul>
-<li>1.硬件设备初始化<ul>
-<li>屏蔽所有中断</li>
-<li>设置CPU的速度和时钟频率</li>
-<li>设置内存管理器</li>
-<li>关闭CPU内部指令</li>
+<h2 id="1-4-Docker三大组件："><a href="#1-4-Docker三大组件：" class="headerlink" title="1.4 Docker三大组件："></a>1.4 Docker三大组件：</h2><ul>
+<li>1.镜像</li>
+<li>2.容器</li>
+<li>3.仓库</li>
 </ul>
-</li>
-<li>2.为加载stage2准备RAM空间</li>
-<li>3.拷贝stage2 到RAM空间</li>
-<li>4.设置好堆栈指针sp，为执行C语言代码做准备</li>
-<li>5.跳转stage的C程序入口处</li>
-</ul>
-<p>感觉stage1就是做了硬件的初始化以及stage2中C语言的初始化工作。</p>
-<h4 id="stage2："><a href="#stage2：" class="headerlink" title="stage2："></a>stage2：</h4><p>stage2 通常用C语言来实现，可以实现更复杂的功能，而且代码会具有更好的可读性和可移植性。<br>stage2的步骤如下：</p>
-<ul>
-<li>1.<strong>初始化本阶段要用到的硬件设备</strong>。例如串口设备以输出信息</li>
-<li>2.**检测内存映射（memory map)**：准备识别在整个 4GB 物理地址空间中有哪些地址范围被分配用来寻址系统的 RAM单元；</li>
-<li>3.将kernel映像和根文件系统映像上读到RAM空间中。</li>
-<li>4.<strong>为内核设置启动参数</strong></li>
-<li>5.<strong>调用内核</strong>：跳至内核代码入口开始执行</li>
-</ul>
-<h2 id="5-bootloader的种类"><a href="#5-bootloader的种类" class="headerlink" title="5.bootloader的种类"></a>5.bootloader的种类</h2><p>一些常见的 bootloader 类型及其特点：</p>
-<ul>
-<li>1.GRUB：广泛用于<strong>Linux 系统</strong>的多启动 bootloader</li>
-<li>2.UEFI：一种现代化的固件接口，支持<strong>图形界面、多启动和安全启动</strong>等功能。</li>
-<li>3.uboot：一种灵活的 bootloader，主要用于<strong>嵌入式设备</strong>，支持多种硬件平台和文件系统。</li>
-<li>4.Syslinux：主要用于轻量级 Linux 系统启动</li>
-</ul>
-<p>后面就都是uboot了，后面我要使用树莓派学习bootloader，但是树莓派比较独特：<br>树莓派具有独特的启动过程，与传统的 PC 或嵌入式设备不同，它依赖于自己的引导机制。反正树莓派就是不需要uboot的程序来进行引导。<strong>但bootloader仍然可以用于学习bootloader，只是说可能需要更多的配置</strong></p>
-<p>不管怎么说先备份一下SD卡。</p>
 
             </div>
 
@@ -238,13 +211,13 @@
                         <div class="article-prev">
                             <a class="prev"
                                rel="prev"
-                               href="/2024/05/05/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E9%97%AE%E9%A2%98/"
+                               href="/2024/06/19/%E5%86%85%E6%A0%B8%E8%A3%81%E5%89%AA%E4%B8%8E%E7%A7%BB%E6%A4%8D/"
                             >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                                 <span class="title flex-center">
-                                <span class="post-nav-title-item">计算机操作系统问题</span>
+                                <span class="post-nav-title-item">内核裁剪与移植</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                             </a>
@@ -254,10 +227,10 @@
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2024/04/07/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"
+                               href="/2024/06/03/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/C%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item"></span>
+                                <span class="post-nav-title-item">C语言面试准备</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">

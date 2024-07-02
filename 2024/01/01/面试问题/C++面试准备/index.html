@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-05-28 22:24:21</span>
+        <span class="pc">2024-07-01 22:41:56</span>
     </span>
     
     
@@ -248,7 +248,7 @@
 </ul>
 <h3 id="6-volatile关键字是什么"><a href="#6-volatile关键字是什么" class="headerlink" title="6.volatile关键字是什么"></a>6.volatile关键字是什么</h3><p>关键字 volatile 在 C 和 C++ 中用来告诉编译器，某个变量的值可能会在程序外部被改变，因此编译器在使用这个变量的时候不应该对其访问做任何优化。例如：<img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240416224523.png"></p>
 <h3 id="7-原子操作"><a href="#7-原子操作" class="headerlink" title="7.原子操作"></a>7.原子操作</h3><p>原子操作在处理多线程或多进程环境中的数据共享和竞争条件时非常重要。如果操作是原子的，你就可以确保在任何时刻<strong>只有一个线程</strong>能修改该数据，从而避免了竞争条件和其他一些常见的多线程问题。<br>在 C++11 及之后的版本中，标准库提供了 &lt;atomic&gt; 头文件，其中包含了一系列用于执行原子操作的模板和函数。这允许你声明原子类型的变量，以及安全地在多线程环境中对这些变量进行操作。std::atomic 类型封装了一些基础类型（如 int、long 等），并提供了一系列方法来进行安全的原子操作。也就是原子操作可以保证在线程操作的时候不会出现数据竞争。</p>
-<h3 id="8-struct-和class的区别"><a href="#8-struct-和class的区别" class="headerlink" title="8.struct 和class的区别"></a>8.struct 和class的区别</h3><p>通常， struct ⽤于表示⼀组<strong>相关的数据</strong>，⽽ class ⽤于表示<strong>⼀个封装了数据和操作的对象</strong>,在实际使⽤中，可以根据具体的需求选择使⽤ struct 或 class 。如果只是⽤来组织⼀些数据，⽽不涉及复杂的封装和继承关系， struct 可能更直观；如果需要进⾏封装、继承等⾯向对象编程的特性，可以选择使⽤ class 。</p>
+<h3 id="8-struct-和class的区别"><a href="#8-struct-和class的区别" class="headerlink" title="8.struct 和class的区别"></a>8.struct 和class的区别</h3><p>通常， struct ⽤于表示⼀组<strong>相关的数据</strong>，⽽ class ⽤于表示<strong>⼀个封装了数据和操作的对象</strong>,在实际使⽤中，可以根据具体的需求选择使⽤ struct 或 class 。如果只是⽤来组织⼀些数据，⽽不涉及复杂的封装和继承关系， struct 可能更直观；如果需要进⾏封装、继承等&#x3D;&#x3D;⾯向对象编程&#x3D;&#x3D;的特性，可以选择使⽤ class 。</p>
 <ul>
 <li>struct 继承时默认使⽤<strong>公有</strong>继承。class 继承时默认使⽤<strong>私有</strong>继承。</li>
 <li>如果struct和class都没有声明构造函数，那么编译器就会生成默认的无参数构造函数</li>
@@ -262,7 +262,7 @@
 <h3 id="11-内存泄漏"><a href="#11-内存泄漏" class="headerlink" title="11.内存泄漏"></a>11.内存泄漏</h3><p>内存泄漏(memory leak)是指由于疏忽或错误造成了程序未能释放掉不再使⽤的内存的情况。内存泄漏并⾮指内存在物理上的消失，⽽是应⽤程序分配某段内存后，由于设计错误，失去了对该段内存的控制，因⽽造成了内存的浪费。<br>内存泄漏的分类：</p>
 <ul>
 <li>1.堆内存泄漏：<br>使用malloc、new等方法从堆中分配一块地址，最终导致没有释放，这块地址就会产生堆内存泄漏</li>
-<li>2.系统资源泄露<br>主要指程序使⽤系统分配的资源⽐如 Bitmap,handle ,SOCKET 等没有使⽤相应的函数释放掉，导致系统资源的浪费，严᯿可导致系统效能降低，系统运⾏不稳定。 </li>
+<li>2.系统资源泄露<br>主要指程序使⽤系统分配的资源⽐如 Bitmap,handle ,SOCKET 等没有使⽤相应的函数释放掉，导致系统资源的浪费，严重可导致系统效能降低，系统运⾏不稳定。 </li>
 <li>3.没有将基类的析构函数定义为虚函数<br>当基类指针指向⼦类对象时，如果<strong>基类的析构函数不是 virtual，那么⼦类的析构函数将不会被调⽤</strong>，⼦类的资源没有正确是释放，因此造成内存泄露。这里指的是在构造函数中new定义了堆内存，而在析构函数中定义了释放。而子类析构函数的失效会导致new没有对应的delete。</li>
 </ul>
 <h3 id="12-子类可以继承父类的哪些东西？"><a href="#12-子类可以继承父类的哪些东西？" class="headerlink" title="12.子类可以继承父类的哪些东西？"></a>12.子类可以继承父类的哪些东西？</h3><p>  1.成员变量：子类继承了父类的所有成员变量，但是继承的可访问性（即从哪里可以访问这些成员）取决于这些成员的访问修饰符（public, protected, private）：</p>
@@ -461,6 +461,17 @@ virtual void draw() const = 0;
 <li>1.深拷贝：深拷⻉是对对象的<strong>完全独⽴复制</strong>，包括对象内部动态分配的资源。在深拷⻉中，不仅复制<strong>对象的值</strong>，还会复制对象<strong>所指向的堆上的数据</strong>。</li>
 <li>2.浅拷贝：浅拷⻉<strong>仅复制对象的值</strong>，⽽不涉及对象内部动态分配的资源。在浅拷⻉中，新对象和原对象<strong>共享相同的资源</strong>，⽽不是复制⼀份新的资源。</li>
 </ul>
+<p><strong>例子来区分深拷贝与浅拷贝的使用情况</strong>：</p>
+<ul>
+<li><p>1.<strong>基本类不会改变</strong>：<br>因为，基本类型赋值时，赋的是数据（所以，不存在深拷贝和浅拷贝的问题）。<br>如：</p>
+<pre><code>Var x = 100;
+Var y = x; //此时x和y都是100;
+</code></pre>
+<p> 如果要改变y的值，x的值不会改变。</p>
+</li>
+<li><p>2.引用类型赋值用的就是浅拷贝（因为只复制了地址）</p>
+</li>
+</ul>
 <h3 id="23-智能指针"><a href="#23-智能指针" class="headerlink" title="23.智能指针"></a>23.智能指针</h3><p>智能指针：用于管理动态内存的对象，目的是在避免内存泄漏和方便资源管理</p>
 <ul>
 <li>1.unique_ptr:独占智能指针<br>独占所有权的智能指针：同一个时间内只有一个unique_ptr可以拥有对象的所有权。当unique_ptr被销毁时，<font style= "color:red">它指向的对象也会被自动销毁。</font></li>
@@ -518,6 +529,212 @@ virtual void draw() const = 0;
 <li>list来说，它使⽤了不连续分配的内存，并且它的erase⽅法也会返回下⼀个有效的迭代器，因此上⾯两种⽅法都可以使⽤。</li>
 </ul>
 <h3 id="28-最抽象的一题：C-11的新特性有哪些"><a href="#28-最抽象的一题：C-11的新特性有哪些" class="headerlink" title="28.最抽象的一题：C++11的新特性有哪些"></a>28.最抽象的一题：C++11的新特性有哪些</h3><p>1.语法改进<br>（1）统⼀的初始化⽅法<br>（2）成员变量默认初始化<br>（3）auto关键字： 允许编译器⾃动推断变ᰁ的类型，减少类型声明的冗余。<br>（4）decltype 求表达式的类型<br>（5）智能指针 std::shared_ptr 和 std::unique_ptr<br>（6）空指针 nullptr: 提供了明确表示空指针的关键字，替代了传统的 NULL 。<br>（7）基于范围的for循环: 简化遍历容器元素的语法<br>（8）右值引⽤和move语义 引⼊右值引⽤和移动构造函数，允许⾼效地将资源从⼀个对象移动到另⼀个对象，提⾼性能。<br>2.标准库扩充<br>（9）⽆序容器（哈希表） ⽤法和功能同map⼀模⼀样，区别在于哈希表的效率更⾼<br>（10）正则表达式 可以认为正则表达式实质上是⼀个字符串，该字符串描述了⼀种特定模式的字符串<br>（11）Lambda表达式： 允许在代码中定义匿名函数</p>
+<h3 id="29-为什么析构函数用虚函数好一点"><a href="#29-为什么析构函数用虚函数好一点" class="headerlink" title="29.为什么析构函数用虚函数好一点"></a>29.为什么析构函数用虚函数好一点</h3><p>当基类指针指向⼦类对象时，如果&#x3D;&#x3D;基类的析构函数不是 virtual&#x3D;&#x3D;，那么⼦类的析构函数将不会被调⽤，⼦类的资源没有正确是释放，因此造成内存泄露。这里指的是在构造函数中new定义了堆内存，而在析构函数中定义了释放。而子类析构函数的失效会导致new没有对应的delete。</p>
+<h3 id="30-lambda表达式"><a href="#30-lambda表达式" class="headerlink" title="30.lambda表达式"></a>30.lambda表达式</h3><p><strong>lambda表达式基本语法</strong>：</p>
+<pre><code>  [capture](parameters) -&gt; return_type &#123; body &#125;
+</code></pre>
+<ul>
+<li>capture：捕获列表，指定哪些外部变量可以在Lambda表达式中使用。</li>
+<li>parameters：参数列表，类似于函数的参数列表。</li>
+<li>return_type：返回类型，可以省略，如果编译器能够推导出返回类型。</li>
+<li>body：函数体，包含要执行的代码。<br>只有 [capture] &#x3D;&#x3D;捕获列表&#x3D;&#x3D;和 {body } &#x3D;&#x3D;函数体&#x3D;&#x3D;是必选的</li>
+</ul>
+<p><strong>捕获列表</strong>：</p>
+<ul>
+<li>[ ]：不捕获任何变量。</li>
+<li>[&#x3D;]：按值捕获外部作用域中的所有变量。</li>
+<li>[&amp;]：按引用捕获外部作用域中的所有变量。</li>
+<li>[x]：按值捕获变量x。</li>
+<li>[&amp;x]：按引用捕获变量x。</li>
+<li>[&#x3D;, &amp;y]：按值捕获外部作用域中的所有变量，但按引用捕获变量y。</li>
+<li>[&amp;, x]：按引用捕获外部作用域中的所有变量，但按值捕获变量x。</li>
+</ul>
+<p><strong>实例</strong>：<br><strong>按值捕获</strong>（[&#x3D;] 或 [x]）：按值捕获外部变量的当前值，Lambda表达式内无法修改这些变量。<br><strong>按引用捕获</strong>（[&amp;] 或 [&amp;x]）：按引用捕获外部变量，Lambda表达式内可以&#x3D;&#x3D;修改这些变量&#x3D;&#x3D;。<br><strong>隐式捕获</strong>（[&#x3D;] 或 [&amp;]）：捕获所有外部变量，[&#x3D;]按值捕获，[&amp;]按引用捕获。<br><strong>混合捕获</strong>：可以同时使用按值和按引用捕获特定的外部变量，如 [&#x3D;, &amp;x] 或 [&amp;, x]。</p>
+<ul>
+<li><p>1.基本lambda表达式：不捕获任何变量</p>
+<pre><code>#include &lt;iostream&gt;
+
+int main() &#123;
+auto add = [](int a, int b) &#123;
+      return a + b;
+&#125;;
+
+std::cout &lt;&lt; &quot;3 + 4 = &quot; &lt;&lt; add(3, 4) &lt;&lt; std::endl;
+return 0;
+&#125;
+</code></pre>
+</li>
+<li><p>2.捕获外部变量：</p>
+<pre><code>#include &lt;iostream&gt;
+
+int main() &#123;
+int x = 10;
+int y = 20;
+
+auto add = [x, y]() &#123;
+      return x + y;
+&#125;;
+
+std::cout &lt;&lt; &quot;x + y = &quot; &lt;&lt; add() &lt;&lt; std::endl; // 输出: x + y = 30
+return 0;
+&#125;
+</code></pre>
+</li>
+<li><p>3.按引用捕获变量</p>
+<pre><code>      #include &lt;iostream&gt;
+
+      int main() &#123;
+      int x = 10;
+      int y = 20;
+
+      auto add_and_modify = [&amp;x, &amp;y]() &#123;
+            x += 5;
+            y += 5;
+            return x + y;
+      &#125;;
+
+      std::cout &lt;&lt; &quot;x + y = &quot; &lt;&lt; add_and_modify() &lt;&lt; std::endl; // 输出: x + y = 35
+      std::cout &lt;&lt; &quot;x = &quot; &lt;&lt; x &lt;&lt; &quot;, y = &quot; &lt;&lt; y &lt;&lt; std::endl;   // 输出: x = 15, y = 25
+      return 0;
+      &#125;
+</code></pre>
+</li>
+</ul>
+<h3 id="31-C语言与C-的区别"><a href="#31-C语言与C-的区别" class="headerlink" title="31.C语言与C++的区别"></a>31.C语言与C++的区别</h3><ul>
+<li>1.面向对象编程<ul>
+<li><strong>C语言</strong>：不支持面向对象编程，没有类、对象、继承、封装和多态等概念。</li>
+<li><strong>C++语言</strong>：支持面向对象编程，引入了类、对象、继承、封装和多态等概念，使得代码复用性和可维护性大大提高。</li>
+</ul>
+</li>
+<li>2.数据抽象和封装<ul>
+<li><strong>C语言</strong>：主要通过结构体（struct）和函数来实现数据抽象。没有访问控制机制。</li>
+<li><strong>C++语言</strong>：通过类和对象来实现数据抽象和封装。支持公有（public）、私有（private）和保护（protected）等访问控制机制。</li>
+</ul>
+</li>
+</ul>
+<h3 id="32-继承的内在实现"><a href="#32-继承的内在实现" class="headerlink" title="32.继承的内在实现"></a>32.继承的内在实现</h3><ul>
+<li><p><strong>内存布局</strong><br>在继承的情况下，派生类对象的内存布局通常包括基类部分和派生类部分。&#x3D;&#x3D;基类部分在内存中的位置通常在派生类部分之前&#x3D;&#x3D;。一般内存布局如下：</p>
+<pre><code>+------------------+
+| base_data        |  // 来自 Base 类
++------------------+
+| derived_data     |  // 来自 Derived 类
++------------------+
+</code></pre>
+</li>
+<li><p>虚函数和虚函数表（vtable）<br>虚函数是C++中实现多态性的一种机制。当基类中有虚函数时，编译器会为类创建一个虚函数表（vtable）。虚函数表包含了类的虚函数指针。每个对象都有一个&#x3D;&#x3D;指向该表的指针&#x3D;&#x3D;，称为虚函数指针（vptr）。如果出现了B继承A，C继承B的情况发生。也是只有一个虚函数表存在，里面包含类ABC。</p>
+</li>
+</ul>
+<h3 id="33-被隐藏的基类函数如何调用？子类怎么调用父类的同名函数和父类成员变量？"><a href="#33-被隐藏的基类函数如何调用？子类怎么调用父类的同名函数和父类成员变量？" class="headerlink" title="33.被隐藏的基类函数如何调用？子类怎么调用父类的同名函数和父类成员变量？"></a>33.被隐藏的基类函数如何调用？子类怎么调用父类的同名函数和父类成员变量？</h3><p>一种类中声明，一种通过子类中调用基类的函数</p>
+<ul>
+<li><p><strong>调用父类的同名函数</strong>：可以使用基类名加上作用域解析运算符来调用父类的同名函数。例如：</p>
+<pre><code>class Base &#123;
+public:
+void function() &#123;
+      cout &lt;&lt; &quot;This is the Base class function&quot; &lt;&lt; endl;
+&#125;
+&#125;;
+
+class Derived : public Base &#123;
+public:
+void function() &#123;
+      cout &lt;&lt; &quot;This is the Derived class function&quot; &lt;&lt; endl;
+&#125;
+
+void callBaseFunction() &#123;
+      Base::function(); // 调用父类的同名函数
+&#125;
+&#125;;
+
+Derived d;
+d.function(); // 调用子类的同名函数
+d.callBaseFunction(); // 调用父类的同名函数
+</code></pre>
+</li>
+</ul>
+<p>在上述示例中，Derived类中定义了一个与Base类同名的函数function。通过使用&#x3D;&#x3D;Base::function()&#x3D;&#x3D;，我们可以在子类中调用父类的同名函数。</p>
+<ul>
+<li><p>访问父类的同名成员变量：可以使用作用域解析运算符来访问父类的同名成员变量。例如：</p>
+<pre><code>class Base &#123;
+public:
+int x;
+
+void print() &#123;
+      cout &lt;&lt; &quot;Base x: &quot; &lt;&lt; x &lt;&lt; endl;
+&#125;
+&#125;;
+
+class Derived : public Base &#123;
+public:
+int x;
+
+void print() &#123;
+      cout &lt;&lt; &quot;Derived x: &quot; &lt;&lt; x &lt;&lt; endl; // 访问子类的同名成员变量
+      cout &lt;&lt; &quot;Base x: &quot; &lt;&lt; Base::x &lt;&lt; endl; // 访问父类的同名成员变量
+&#125;
+&#125;;
+
+Derived d;
+d.x = 10;
+d.Base::x = 20;
+d.print();
+</code></pre>
+</li>
+</ul>
+<p>在上述示例中，Derived类和Base类都定义了一个同名的成员变量x。通过使用&#x3D;&#x3D;Base::x&#x3D;&#x3D;，我们可以在子类中访问父类的同名成员变量。</p>
+<h3 id="34-拷贝构造函数"><a href="#34-拷贝构造函数" class="headerlink" title="34.拷贝构造函数"></a>34.拷贝构造函数</h3><p>拷贝构造函数的作用是<strong>创建一个对象的副本</strong>。<br>它在以下情况下被调用：</p>
+<ul>
+<li>1.对象的复制：当使用一个同类对象来初始化另一个同类对象时，拷贝构造函数被调用。例如，通过复制一个对象来创建一个新对象。</li>
+<li>2.参数传递：当将对象作为参数传递给函数时，拷贝构造函数用于创建参数的副本。</li>
+<li>3.返回值：当函数返回一个对象时，拷贝构造函数用于创建返回值的副本。</li>
+</ul>
+<p>需要自定义拷贝构造函数的情况：</p>
+<ul>
+<li>浅拷贝不够：如果类中有指针成员或资源（如文件句柄）需要进行深度拷贝，以防止多个对象共享同一资源。否则，当一个对象销毁时，共享的资源可能会被释放，从而导致其他对象的资源变为无效。</li>
+<li>防止浅拷贝：如果类没有指针成员或资源，但是你希望禁止浅拷贝操作，以确保每个对象都有其自己的独立副本，而不是共享相同的数据。</li>
+<li>高效率要求：有时候默认的拷贝构造函数可能不够高效，例如当类中有大量的数据或复杂的操作时。在这种情况下，自定义拷贝构造函数可以实现更高效的对象复制。</li>
+</ul>
+<p>例子：</p>
+<pre><code>  #include &lt;iostream&gt;
+
+  class MyClass &#123;
+  public:
+  int* data; // 指针成员
+
+  // 默认构造函数
+  MyClass() : data(nullptr) &#123;&#125;
+
+  // 自定义拷贝构造函数
+  MyClass(const MyClass&amp; other) &#123;
+        // 执行深拷贝
+        if (other.data != nullptr) &#123;
+              data = new int(*other.data);
+        &#125; else &#123;
+              data = nullptr;
+        &#125;
+  &#125;
+
+  // 析构函数
+  ~MyClass() &#123;
+        delete data; // 释放堆内存
+  &#125;
+  &#125;;
+
+  int main() &#123;
+  MyClass obj1;
+  obj1.data = new int(10);
+
+  MyClass obj2(obj1); // 使用拷贝构造函数进行深拷贝
+
+  std::cout &lt;&lt; *obj1.data &lt;&lt; std::endl; // 输出: 10
+  std::cout &lt;&lt; *obj2.data &lt;&lt; std::endl; // 输出: 10
+
+  delete obj1.data;
+
+  std::cout &lt;&lt; *obj2.data &lt;&lt; std::endl; // 输出: 10，仍然有效
+  return 0;
+  &#125;
+</code></pre>
+<p>上述代码中，MyClass类中包含了一个指针成员data。为了避免多个对象共享同一个内存资源，我们在拷贝构造函数中进行了深拷贝操作，即创建一个新的内存副本并将指针指向新的内存位置。这样，obj2对象将拥有独立的data指针和副本，而不会与obj1对象共享。至于析构函数中的delete操作，则用于释放堆内存，避免内存泄漏</p>
 
             </div>
 
@@ -531,13 +748,13 @@ virtual void draw() const = 0;
                         <div class="article-prev">
                             <a class="prev"
                                rel="prev"
-                               href="/2024/01/01/%E7%BD%91%E7%BB%9C/"
+                               href="/2024/01/01/%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0/"
                             >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                                 <span class="title flex-center">
-                                <span class="post-nav-title-item">《网络是怎样连接的》</span>
+                                <span class="post-nav-title-item">驱动实现</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                             </a>

@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-05-28 11:46:21</span>
+        <span class="pc">2024-06-24 16:19:17</span>
     </span>
     
     
@@ -378,7 +378,7 @@
   ./scripts/dtc/dtc -I dtb -O dts -o tmp.dts arch/arm/boot/dts/xxx.dtb  // 反编译dtb为dts
 </code></pre>
 </li>
-<li><p>3.更换设备树文件dtb<br>设备树文件是：内核源码目录中arch&#x2F;arm&#x2F;boot&#x2F;dts&#x2F;stm32mp157c-100ask-512d-lcd-v1.dtb<br>可以通过nfs ssh等方式把新编译出来的方式拷贝到开发板 **<font style="color:red">&#x2F;boot目录下 替换掉原来的</font>**。</p>
+<li><p>3.更换设备树文件dtb<br>设备树文件是：内核源码目录中arch&#x2F;arm&#x2F;boot&#x2F;dts&#x2F;stm32mp157c-100ask-512d-lcd-v1.dtb<br>可以通过nfs ssh等方式把新编译出来的方式拷贝到开发板 <font style="color:red">&#x2F;boot目录下 替换掉原来的</font>。</p>
 </li>
 </ul>
 <h3 id="4-内核对设备树的处理"><a href="#4-内核对设备树的处理" class="headerlink" title="4.内核对设备树的处理"></a>4.内核对设备树的处理</h3><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240227202416.png"><br>① dts在PC机上被编译为dtb文件；<br>② u-boot把dtb文件传给内核；<br>③ 内核解析dtb文件，把每一个节点都转换为device_node结构体；<br>④<font style="color:red"> 对于某些device_node结构体</font>，会被转换为platform_device结构体</p>
@@ -387,10 +387,7 @@
 <p>  B. 含有特定compatile属性的节点的子节点</p>
 </li>
 </ul>
-<p>如果一个节点的compatile属性，它的值是这<font style="color:red">4者之一：“simple-bus”,“simple-mfd”,“isa”,“arm,amba-bus”</font>,那么它的子结点(需含compatile属性)也可以转换为platform_device。</p>
-<pre><code>C. &lt;font style=&quot;color:red&quot;&gt;总线I2C、SPI节点下的子节点：不转换为platform_device&lt;/font&gt;
-</code></pre>
-<p>某个总线下到子节点，应该交给对应的总线驱动程序来处理, 它们不应该被转换为platform_device。</p>
+<p>如果一个节点的compatile属性，它的值是这<font style="color:red">4者之一：“simple-bus”,“simple-mfd”,“isa”,“arm,amba-bus”</font>,那么它的子结点(需含compatile属性)也可以转换为platform_device。<br>C. <font style="color:red">总线I2C、SPI节点下的子节点：不转换为platform_device</font><br>某个总线下到子节点，应该交给对应的总线驱动程序来处理, 它们不应该被转换为platform_device。</p>
 <h3 id="5-platform-device如何与platform-driver配对"><a href="#5-platform-device如何与platform-driver配对" class="headerlink" title="5.platform_device如何与platform_driver配对"></a>5.platform_device如何与platform_driver配对</h3><p>从设备树转换得来的platform_device会被注册进内核里，以后当我们每注册一个platform_driver时，它们就会两两确定能否配对，如果能配对成功就调用platform_driver的probe函数。<br><strong>比较设备树信息platform_device. dev.of_node和platform_driver.driver.of_match_table</strong></p>
 <pre><code>如果一个platform_driver支持设备树，它的platform_driver.driver.of_match_table是一个数组，类型如下：
 platform_driver.driver.of_match_table:
@@ -1007,13 +1004,13 @@ gpiod_set_value(sr04.trip,0);
                         <div class="article-prev">
                             <a class="prev"
                                rel="prev"
-                               href="/2024/01/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"
+                               href="/2024/01/01/%E7%BD%91%E7%BB%9C/"
                             >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                                 <span class="title flex-center">
-                                <span class="post-nav-title-item">数据结构</span>
+                                <span class="post-nav-title-item">《网络是怎样连接的》</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                             </a>
@@ -1023,10 +1020,10 @@ gpiod_set_value(sr04.trip,0);
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2024/01/01/%E7%BD%91%E7%BB%9C/"
+                               href="/2024/01/01/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/C++%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">《网络是怎样连接的》</span>
+                                <span class="post-nav-title-item">C++面试</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">

@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-05-20 22:42:52</span>
+        <span class="pc">2024-06-26 20:31:21</span>
     </span>
     
     
@@ -183,16 +183,16 @@
             <div class="article-content keep-markdown-body">
                 
 
-                <p>之前自学的驱动项目有点太入门了，实在是太不亮眼，所以打算再加一个linux应用的项目，驱动的知识当做是锦上添花不打算当做主要的项目了，先做个应用的项目撑撑场面。<br><strong>基于V4L2架构驱动外置USB摄像头实现拍照和查看相册的功能</strong><br>实现功能：<br>1.V4L2获取摄像头数据<br>2.在LCD显示屏上显示摄像头数据<br>3.多线程操作<br>4.照片存储</p>
+                <p>之前自学的驱动项目有点太入门了，实在是太不亮眼，所以打算再加一个linux应用的项目，驱动的知识当做是锦上添花不打算当做主要的项目了，先做个应用的项目撑撑场面。<br><strong>基于V4L2架构驱动外置USB摄像头实现拍照和查看相册的功能</strong><br>实现功能：<br>1.V4L2获取摄像头数据<br>2.按键中断——GPIO驱动，实现控制整个进程开启以及关闭<br>3.socket与服务端（PC ubuntu）通信，服务端实现实时监控，同时在服务端实现实时显示完成监控</p>
 <hr>
-<h2 id="1-整体流程理论"><a href="#1-整体流程理论" class="headerlink" title="1.整体流程理论"></a>1.整体流程理论</h2><p>摄像头会把采集到的每一帧数据放入到buffer中，因此需要很多的buffer，将buffer分成两个链表，一个是空闲链表（也就是还没有采集数据），一个是完成链表（已经采集完的数据）。</p>
+<h1 id="一、camera项目"><a href="#一、camera项目" class="headerlink" title="一、camera项目"></a>一、camera项目</h1><h2 id="1-整体流程理论"><a href="#1-整体流程理论" class="headerlink" title="1.整体流程理论"></a>1.整体流程理论</h2><p>摄像头会把采集到的每一帧数据放入到buffer中，因此需要很多的buffer，将buffer分成两个链表，一个是空闲链表（也就是还没有采集数据），一个是完成链表（已经采集完的数据）。</p>
 <ul>
 <li>1.应用程序将完成链表中的buffer提取出来放回到空闲链表中</li>
 <li>2.驱动程序则是将空闲链表中的buffer采集完数据放到完成链表中<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240505155127.png"></li>
 </ul>
 <h2 id="2-操作流程"><a href="#2-操作流程" class="headerlink" title="2.操作流程"></a>2.操作流程</h2><h4 id="1-打开设备"><a href="#1-打开设备" class="headerlink" title="1.打开设备"></a>1.打开设备</h4><p>  将摄像头插到电脑上，通过ls &#x2F;dev&#x2F;video*可以打印出刚刚的设备节点。<br>  然后使用打开文件open，就可以打开&#x2F;dev&#x2F;video0这个设备了。</p>
 <h4 id="2-获取摄像头支持的格式"><a href="#2-获取摄像头支持的格式" class="headerlink" title="2.获取摄像头支持的格式"></a>2.获取摄像头支持的格式</h4><ul>
-<li><p>1.v4l2_fmtdesc结构体：<br>结构体用于描述视频设备支持的图像格式（format）。在 V4L2（Video4Linux2）中，<strong>这个结构体通常用于列举设备支持的不同图像格式</strong>，以便用户空间程序选择适合的格式来进行视频捕获或输出</p>
+<li><p>1.<strong>v4l2_fmtdesc结构体</strong><br>结构体用于描述视频设备支持的图像格式（format）。在 V4L2（Video4Linux2）中，<strong>这个结构体通常用于列举设备支持的不同图像格式</strong>，以便用户空间程序选择适合的格式来进行视频捕获或输出</p>
 <pre><code>  struct v4l2_fmtdesc &#123;
       __u32		    index;             /* Format number      */
       __u32		    type;              /* enum v4l2_buf_type */
@@ -222,7 +222,7 @@
   &#125;;
 </code></pre>
 </li>
-<li><p>2.v4l2_capability结构体<br>除了用 v4l2_fmtdesc结构体获取像素格式，还可以通过v4l2_capability结构体来获取<strong>设备的功能</strong>，主要看capabilities成员，其是否支持视频捕获（V4L2_CAP_VIDEO_CAPTURE）、以及是否支持流读写（V4L2_CAP_STREAMING）。</p>
+<li><p>2.<strong>v4l2_capability结构体</strong><br>除了用 v4l2_fmtdesc结构体获取像素格式，还可以通过v4l2_capability结构体来获取<strong>设备的功能</strong>，主要看capabilities成员，其是否支持视频捕获（V4L2_CAP_VIDEO_CAPTURE）、以及是否支持流读写（V4L2_CAP_STREAMING）。</p>
 <pre><code>  struct v4l2_capability
   &#123;
       u8 driver[16]; // 驱动名字
@@ -233,67 +233,49 @@
       u32 reserved[4]; // 保留字段
   &#125;;
 </code></pre>
+<p>  设置并调用获取像素格式以及读取驱动名字和查看摄像头的能力<br>  下层驱动，ioctl函数可调用的功能。</p>
 </li>
 </ul>
-<p>设置并调用获取像素格式以及读取驱动名字和查看摄像头的能力<br>下层驱动，ioctl函数可调用的功能。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240512110526.png"></p>
-<pre><code>while(1)
-    &#123;
-        v4fmt.index = i;
-        i++;
-        int ret = ioctl(fd, VIDIOC_ENUM_FMT, &amp;v4fmt);
-        if(ret &lt; 0)
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240512110526.png"></p>
+<pre><code>    while(1)
         &#123;
-            perror(&quot;获取格式失败&quot;);
-            break;
+            v4fmt.index = i;
+            i++;
+            int ret = ioctl(fd, VIDIOC_ENUM_FMT, &amp;v4fmt);
+            if(ret &lt; 0)
+            &#123;
+                perror(&quot;获取格式失败&quot;);
+                break;
+            &#125;
+            printf(&quot;index = %d\n&quot;, v4fmt.index);
+            printf(&quot;flags = %d\n&quot;, v4fmt.flags);
+            printf(&quot;descrrption = %s\n&quot;, v4fmt.description);
+            unsigned char *p = (unsigned char*)&amp;v4fmt.pixelformat;
+            printf(&quot;pixelformat = %c%c%c%c\n&quot;, p[0],p[1],p[2],p[3]);
+            printf(&quot;reserved = %d\n&quot;, v4fmt.reserved[0]);
         &#125;
-        printf(&quot;index = %d\n&quot;, v4fmt.index);
-        printf(&quot;flags = %d\n&quot;, v4fmt.flags);
-        printf(&quot;descrrption = %s\n&quot;, v4fmt.description);
-        unsigned char *p = (unsigned char*)&amp;v4fmt.pixelformat;
-        printf(&quot;pixelformat = %c%c%c%c\n&quot;, p[0],p[1],p[2],p[3]);
-        printf(&quot;reserved = %d\n&quot;, v4fmt.reserved[0]);
-    &#125;
 
-    int ret = ioctl(fd, VIDIOC_QUERYCAP, &amp;cap);
-    if(ret &lt; 0)
-        perror(&quot;获取功能失败&quot;);
-    
-    printf(&quot;drivers:%s\n&quot;, cap.driver);//读取驱动名字
-    if(cap.capabilities &amp; V4L2_CAP_VIDEO_CAPTURE)
-        printf(&quot;%s 支持视频捕获\n&quot;, argv[1]);
-    if(cap.capabilities &amp; V4L2_CAP_STREAMING)
-        printf(&quot;%s 支持流读写\n&quot;, argv[1]);
+        int ret = ioctl(fd, VIDIOC_QUERYCAP, &amp;cap);
+        if(ret &lt; 0)
+            perror(&quot;获取功能失败&quot;);
+        
+        printf(&quot;drivers:%s\n&quot;, cap.driver);//读取驱动名字
+        if(cap.capabilities &amp; V4L2_CAP_VIDEO_CAPTURE)
+            printf(&quot;%s 支持视频捕获\n&quot;, argv[1]);
+        if(cap.capabilities &amp; V4L2_CAP_STREAMING)
+            printf(&quot;%s 支持流读写\n&quot;, argv[1]);
 </code></pre>
 <p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240512110239.png"><br>通过返回的格式可以看到，摄像头读取的格式为：YUYV与JPEG</p>
-<h4 id="3-配置摄像头参数"><a href="#3-配置摄像头参数" class="headerlink" title="3.配置摄像头参数"></a>3.配置摄像头参数</h4><p>在视频采集之前需要设置视频采集的格式。定义定义v4l2_format结构体变量，然后通过结构体v4l2_pix_format来设置采集的高、宽以及像素格式（YUYV）。</p>
-<pre><code>struct v4l2_format &#123;
-    __u32	 type;
-    union &#123;
-        struct v4l2_pix_format		pix;     /* V4L2_BUF_TYPE_VIDEO_CAPTURE */
-        struct v4l2_pix_format_mplane	pix_mp;  /* V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE */
-        struct v4l2_window		win;     /* V4L2_BUF_TYPE_VIDEO_OVERLAY */
-        struct v4l2_vbi_format		vbi;     /* V4L2_BUF_TYPE_VBI_CAPTURE */
-        struct v4l2_sliced_vbi_format	sliced;  /* V4L2_BUF_TYPE_SLICED_VBI_CAPTURE */
-        struct v4l2_sdr_format		sdr;     /* V4L2_BUF_TYPE_SDR_CAPTURE */
-        __u8	raw_data[200];                   /* user-defined */
-    &#125; fmt;
-&#125;;
-
-struct v4l2_pix_format &#123;
-    __u32         		width;
-    __u32			height;
-    __u32			pixelformat;
-    __u32			field;		/* enum v4l2_field */
-    __u32            	bytesperline;	/* for padding, zero if unused */
-    __u32          		sizeimage;
-    __u32			colorspace;	/* enum v4l2_colorspace */
-    __u32			priv;		/* private data, depends on pixelformat */
-    __u32			flags;		/* format flags (V4L2_PIX_FMT_FLAG_*) */
-    __u32			ycbcr_enc;	/* enum v4l2_ycbcr_encoding */
-    __u32			quantization;	/* enum v4l2_quantization */
-    __u32			xfer_func;	/* enum v4l2_xfer_func */
-&#125;;
+<h4 id="3-配置摄像头参数"><a href="#3-配置摄像头参数" class="headerlink" title="3.配置摄像头参数"></a>3.配置摄像头参数</h4><ul>
+<li><p><strong>v4l2_format结构体</strong>：用于配置camera采集的数据的格式，这里分别设置了采集的宽高（1280*720）与格式（MJPG)。</p>
+<pre><code>  struct v4l2_format vfmt;
+  vfmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+  vfmt.fmt.pix.width = 1280;
+  vfmt.fmt.pix.height = 720;
+  vfmt.fmt.pix.pixelformat = V4L2_PIX_FMT_MJPEG;
 </code></pre>
+</li>
+</ul>
 <h4 id="4-向内核申请帧缓冲队列并映射"><a href="#4-向内核申请帧缓冲队列并映射" class="headerlink" title="4.向内核申请帧缓冲队列并映射"></a>4.向内核申请帧缓冲队列并映射</h4><p>V4L2读取数据时有两种方式，第一种是用read读取（调用read函数），第二种是<strong>用流（streaming）读取</strong>，在第二步上已经获取到我的设备支持流读写，为了提高效率采用流读写，流读写就是在内核中维护一个<strong>缓存队列</strong>，然后再映射到用户空间，应用层直接读取队列中的数据。<br>申请缓冲区-&gt;逐个查询申请到的缓冲区-&gt;逐个映射-&gt;逐个放入队列中<br>申请缓冲空间的结构体：</p>
 <pre><code>    v4l2_requestbuffers：
     /*
@@ -379,6 +361,301 @@ ret = ioctl(fd, VIDIOC_DQBUF, &amp;readbuffer);//从缓冲队列获取一帧数�
 ret = ioctl(fd, VIDIOC_QBUF, &amp;readbuffer);
 </code></pre>
 <p><font style="color:red">至于这里是为什么使用之后还要放回去：只有将这帧队列的数据放回才能使用该帧的缓冲区来接收新的帧</font></p>
+<h4 id="5-采集的整个流程"><a href="#5-采集的整个流程" class="headerlink" title="5.采集的整个流程"></a>5.采集的整个流程</h4><ul>
+<li><p>1.采集像素的格式</p>
+<pre><code>  struct v4l2_format vfmt;
+  vfmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+  vfmt.fmt.pix.width = 1280;
+  vfmt.fmt.pix.height = 720;
+  vfmt.fmt.pix.pixelformat = V4L2_PIX_FMT_MJPEG;
+
+  int ret = ioctl(fd, VIDIOC_S_FMT, &amp;vfmt);
+</code></pre>
+</li>
+<li><p>2.申请缓冲区队列</p>
+<pre><code>  reqbuffer.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+  reqbuffer.count = 4;
+  reqbuffer.memory = V4L2_MEMORY_MMAP;
+
+  ret = ioctl(fd, VIDIOC_REQBUFS, &amp;reqbuffer);
+</code></pre>
+</li>
+<li><p>3.开始采集   </p>
+<pre><code>  ret = ioctl(fd, VIDIOC_STREAMON, &amp;type);
+</code></pre>
+</li>
+<li><p>4.提取缓冲队列中一帧的数据</p>
+<pre><code>  struct v4l2_buffer readbuffer;
+  readbuffer.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+  ret = ioctl(fd, VIDIOC_DQBUF, &amp;readbuffer);
+</code></pre>
+</li>
+<li><p>5.将这一帧的数据放回到队列中，令数据可以继续采集</p>
+<pre><code>  ret = ioctl(fd, VIDIOC_QBUF, &amp;readbuffer);
+</code></pre>
+</li>
+<li><p>6.结束采集（流）</p>
+<pre><code>  ret = ioctl(fd, VIDIOC_STREAMOFF, &amp;type);
+</code></pre>
+</li>
+</ul>
+<h1 id="二、socket网络编程"><a href="#二、socket网络编程" class="headerlink" title="二、socket网络编程"></a>二、socket网络编程</h1><h1 id="1-socket是什么"><a href="#1-socket是什么" class="headerlink" title="1.socket是什么"></a>1.socket是什么</h1><p>socket：套接字。<br>Socket需要通信的<strong>目的IP地址、使用的传输层协议、以及传输层使用的端口号</strong>3个参数才能运行</p>
+<h1 id="2-socket的类型"><a href="#2-socket的类型" class="headerlink" title="2.socket的类型"></a>2.socket的类型</h1><p>比较常用的类型包括：流式套接字（使用TCP）,数据报套接字（UDP），原始套接字等等。我们主要会用到：流式套接字SOCK_STREAM和数据报套接字SOCK_DGRAM。</p>
+<ul>
+<li><strong>流式套接字SOCK_STREAM</strong><br>那么什么是流式套接字SOCK_STREAM呢？流式套接字是<strong>面向连接的套接字</strong>，在程序中用SOCK_STREAM 表示。SOCK_STREAM是一种靠得住、双向的通讯流。<br><strong>特点</strong>：<font style="color:red">数据在传输过程中不会消失</font>、数据是按照顺序传输的、数据的发送和接收不是同步的。<br>举个例子方便大家理解，不知道大家有没有去过物流公司，在物流公司中所有的包裹都通过一条传输带传输，只要你把包裹放到传输带上，在传输带正常运行的情况下，包裹们就会按顺序准确无误地到达目的地。同理流式套接字中的数据就像是一个个包裹一样按照先后顺序在网络上传输，只要网络没有断开正常运行这些数据就会按照顺序，<strong>准确无误地送达</strong>。流式套接字能有这么高质的数据传输是因为它使用的是<strong>TCP协议</strong>。</li>
+<li><strong>数据报套接字SOCK_DGRAM</strong><br>什么是数据报套接字SOCK_DGRAM呢？数据报套接字是<strong>面向无连接的套接字</strong>，在程序中用SOCK_DGRAM 表示。SOCK_DGRAM是靠不住，无序的通讯流。<br><strong>特点</strong>：<font style="color:red">快速传输但无序、传输的数据可能丢失也可能损坏</font>，限制每次传输的数据大小、数据的发送和接收是同步的。<br>举个例子，相信大家对外卖有一点定的了解，在送外卖时，外卖员配送给同一个人的两单外卖，不用保证顺序，只要保证能够把外卖用最快的速度配送给客户就可以。当然这会存在外卖在路上被弄坏，丢失的风险。同理数据报式套接字中的数据就像是一个个外卖一样只考虑速度，不考虑顺序，不考虑是否把数据原模原样的准确送达。数据报套接字使用的是 <strong>UDP 协议</strong>。</li>
+</ul>
+<h1 id="3-socket相关概念"><a href="#3-socket相关概念" class="headerlink" title="3.socket相关概念"></a>3.socket相关概念</h1><ul>
+<li><p>1.流<br>  计算机中的流其实是一种<strong>信息的转换</strong>。于某一对象，通常把对象接收外界的信息输入称为输入流，把对象向外输出信息为输出流，合称为输入&#x2F;输出流（I&#x2F;O Stream）。<br>  对象间进行数据交换时总是先将数据转换为某种形式的流，再通过流的传输，到达目的对象后再将<strong>流转换为对象数据</strong>。所以，可以把流看作是一种数据的载体，通过它可以实现数据交换和传输。</p>
+</li>
+<li><p>2.同步与异步<br>  同步：在发出一个功能调用时，在没有得到结果之前，该调用就不返回，同时其它线程也不能调用这个方法。</p>
+<p>  异步呢：发出一个功能调用后，不管没有结果的返回，都不影响当前任务的继续执行。即两个生产线相互独立。</p>
+</li>
+<li><p>3.字节顺序<br>  字节顺序是指占内存多于一个字节类型的数据在内存中的存放顺序，通常有小端、大端两种字节顺序。<br>  大端：高位字节存储在内存的低地址处，低位字节存储在内存的高地址处。<br>  小端：低位字节存储在内存的低地址处，高位字节存储在内存的高地址处。<br>  例如：32位的整数0x12345678<br>  大端：</p>
+<pre><code>  地址：  | 0x00 | 0x01 | 0x02 | 0x03 |
+  内容：  | 0x12 | 0x34 | 0x56 | 0x78 |
+</code></pre>
+<p>  小端：</p>
+<pre><code>  地址：  | 0x00 | 0x01 | 0x02 | 0x03 |
+  内容：  | 0x78 | 0x56 | 0x34 | 0x12 |
+</code></pre>
+</li>
+<li><p>4.带外数据<br>  带外数据，也称为TCP紧急数据，是相连的每一对流套接口间一个逻辑上独立的传输通道。带外数据是独立于普通数据传送给用户的。<br>  用途：紧急通知（需要立即中断某个进程），控制命令（暂停、继续或停止数据传输）等</p>
+</li>
+</ul>
+<h1 id="4-网络的基本概念"><a href="#4-网络的基本概念" class="headerlink" title="4.网络的基本概念"></a>4.网络的基本概念</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407101814.png"><br><strong>OSI7层模型：</strong><br>OSI 七层模型是国际标准化组织（International Organization for Standardization）制定的一个用于计算机或通信系统间互联的标准体系。</p>
+<ul>
+<li><p><strong>应用层</strong>：应用层:是面向用户的 APP，承载用户的数据，微信聊天的文字、图片，抖音观看的视频等都属于应用层数据，常见的协议有：HTTP FTP  SMTP SNMP DNS.</p>
+</li>
+<li><p><strong>表示层</strong>：<strong>计算机用自己的编码方式</strong>，对用户的数据进行编码。如用jpeg 编码方式来表示各种图片数据，用MP3编码方式来表示各种声音数据。当然，某公司为了安全起见也可以独创一套只要自己才能识别的编码方式来表示数据，不一样的格式。</p>
+</li>
+<li><p>会话层：两个程序之间的接口。例如APP可以调用微信支付，就是二者之间的会话层接口。 为什么美团就不能用支付宝支付呢？因为二者没有打通会话层这一层的关系。（API）</p>
+</li>
+<li><p><strong>传输层</strong>：<strong>用于建立 TCP 或 UDP连接</strong>，并给数据报文打上<font style="color:red">端口号（所以说socket就是传输层+网络层的事）</font>。<br>TCP 或 UDP 的连接区别是，TCP 传输<strong>可靠性高但是速度慢延迟高</strong>，UDP 刚好相反。根据不同的应用场景按需选择。给报文打上端口号的作用是，<strong>接收方可以识别报文属于什么应用程序</strong>，如 80 是网页的数据，4000是 QQ的数据，</p>
+</li>
+<li><p><strong>网络层</strong>：IP地址和路由选择。给数据包打上IP地址，用于路由转发。有了IP地址，网络设备才知道数据包应该发往互联网上的哪个位置。<br><em><strong>网络层传输的流程:</strong></em> 在手机想要转发一个包时，需要提供目标地址，目标地址将会给<strong>路由器</strong>（也就是网关），其中路由器内部有路由表，可以查询到我应该发送给哪一个路由器。</p>
+</li>
+<li><p><strong>数据链路层</strong>:数据链路层通常简称为链路层。将网络层传下来的IP数据包组装成帧，并再相邻节点的链路上传送帧<br>路由器将包丢给交换机之后。交换机通过看MAC地址来判断应该发送给哪台电脑。<br><em><strong>为什么不能直接使用路由器直接连接到电脑上？</strong></em></p>
+<ul>
+<li>局域网可以快速地进行数据交换。使用交换机可以创建一个局域网，连接多台设备，在一个局域网内设备之间可以进行更快速的数据交换。</li>
+<li>易于IP地址的管理：： 在一个局域网中，通常使用相同的IP地址子网，并且通过交换机连接到同一个网络。而路由器通常用于连接不同的子网或不同的网络，因此在一个局域网内直接连接到路由器可能会导致IP地址冲突或配置复杂。</li>
+</ul>
+<p><em><strong>常见的协议</strong></em><br>以太网；PPP：一种点对点的数据链路层协议，多用与广域网；</p>
+</li>
+<li><p><strong>物理层</strong>：使用封装的包转换物理信号使用网线发送出去<br>TCP&#x2F;IP标准模型：应用层，传输层，网络层，网络接口层<br>TCP&#x2F;IP对等模型:应用层，传输层，网络层，数据链路层，物理层</p>
+</li>
+</ul>
+<h1 id="5-TCP-x2F-IP协议联系"><a href="#5-TCP-x2F-IP协议联系" class="headerlink" title="5.TCP&#x2F;IP协议联系"></a>5.TCP&#x2F;IP协议联系</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240608154452.png"></p>
+<h1 id="6-TCP服务端代码流程"><a href="#6-TCP服务端代码流程" class="headerlink" title="6.TCP服务端代码流程"></a>6.TCP服务端代码流程</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240608162530.png"><br>服务端常用的函数：<br>socket(),bind(),listen(),accept(),recv(),send(),closesocket()</p>
+<h1 id="7-常用函数的用法"><a href="#7-常用函数的用法" class="headerlink" title="7.常用函数的用法"></a>7.常用函数的用法</h1><ul>
+<li><p>socket()：创建套接字</p>
+<pre><code>  int socket(int domain, int type, int protocol)
+</code></pre>
+<ul>
+<li>domain:协议域,常见的协议组用AF_INET AF_INET6 AF_LOCAL AF_ROUTE . 协议族决定了socket的地址类型,在通信中必须采用相应的地址.</li>
+<li>type:socket的类型，流格式套接字(SOCK_STREAM):也称之为面向连接的套接字，数据报格式套接字(SOCK_DGRAM):也称之为无连接的套接字</li>
+<li>protocol:协议,常见的协议有IPPROTO_TCP、IPPTOTO_UDP、 IPPROTO_SCTP、IPPROTO_TIPC他们分别对应这TCP传输协议,UDP传输协议,STCP传输协议,TIPC传输协议.当protocol为0时,会自动选择type类型对应的默认协议.</li>
+</ul>
+</li>
+<li><p>bind()：绑定socket到端口</p>
+<pre><code>  int server_port=5001;//端口号
+  server_addr.sin_family = AF_INET;
+  server_addr.sin_port = htons(server_port);
+  server_addr.sin_addr.s_addr = INADDR_ANY;
+
+  // 绑定socket到端口
+  bind(sockfd, (struct sockaddr *)&amp;server_addr, sizeof(server_addr))
+</code></pre>
+<p>  这里要将小端序转换为大端序。</p>
+<ul>
+<li>大端序：<font style="color:red">常见于网络字节序、RSIC</font></li>
+<li>小端序：常见于Intel x86 和 x86-64 体系结构，Windows 操作系统</li>
+</ul>
+</li>
+<li><p>listen()：监听端口，第二个参数为相应的socket可以排队的最大连接数</p>
+<pre><code>  listen(sockfd, 5);
+</code></pre>
+</li>
+<li><p>accept():接收连接请求</p>
+</li>
+<li><p>recv():接收socket传递过来的信号，一般buffer设置为1024、2048、4096等。为了区分帧与帧之间的差别，一般会使用固定长度前缀或者分隔符的方法，如果一次性传输文件的话。</p>
+</li>
+<li><p>connect():连接server的IP地址与对应的接口<br>其中inet_pton(AF_INET, server_ip, &amp;server_addr.sin_addr);：将点分十进制的IP地址字符串转换为网络字节序的二进制形式，并存储在 server_addr.sin_addr 中。</p>
+<pre><code>  const char *server_ip = &quot;192.168.43.128&quot;;
+  int server_port = 5001;
+  int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  struct sockaddr_in server_addr;
+  server_addr.sin_family = AF_INET;
+  server_addr.sin_port = htons(server_port);
+  inet_pton(AF_INET, server_ip, &amp;server_addr.sin_addr);
+
+  if (connect(sockfd, (struct sockaddr *)&amp;server_addr, sizeof(server_addr)) &lt; 0) &#123;
+      perror(&quot;Connection to server failed&quot;);
+      close(sockfd);
+      pthread_exit(NULL);
+  &#125;
+</code></pre>
+</li>
+</ul>
+<h1 id="三、按键驱动"><a href="#三、按键驱动" class="headerlink" title="三、按键驱动"></a>三、按键驱动</h1><p>（这里没有按键，就用之前的SR04来代替下，反正流程基本一样）<br>主要实现了按键触发中断，传给用户一个值。</p>
+<h2 id="1-设备树修改"><a href="#1-设备树修改" class="headerlink" title="1.设备树修改"></a>1.设备树修改</h2><p>声明一下用到了哪个GPIO以及对应的有效位</p>
+<pre><code>mysr04&#123;
+    compatible=&quot;wzw,sr04&quot;;
+    status= &quot;okay&quot;;
+    sr04-gpios =&lt;&amp;gpio 17 GPIO_ACTIVE_HIGH&gt;,
+                                &lt;&amp;gpio 18 GPIO_ACTIVE_HIGH&gt;;
+&#125;;
+</code></pre>
+<h2 id="2-硬件端（probe匹配）"><a href="#2-硬件端（probe匹配）" class="headerlink" title="2.硬件端（probe匹配）"></a>2.硬件端（probe匹配）</h2><p>probe函数实现了以下几个功能：<br>1.gpio的初始化<br>2.声明了GPIO的中断函数<br>3.声明字符设备节点</p>
+<pre><code>static int probe(struct platform_device *pdev)
+&#123;
+    printk(&quot;%s %s line %d\n&quot;, __FILE__, __FUNCTION__, __LINE__);
+
+    sr04.trip = gpiod_get_index(&amp;pdev-&gt;dev,&quot;sr04&quot;,0, GPIOD_OUT_HIGH);
+    sr04.echo = gpiod_get_index(&amp;pdev-&gt;dev,&quot;sr04&quot;,1,GPIOD_OUT_HIGH); //initialize the start situation GPIO_OUT_HIGH mean out 1
+    gpiod_direction_output(sr04.trip,0);
+    gpiod_direction_input(sr04.echo);
+    // get interrupt
+    sr04.echo_irq = gpiod_to_irq(sr04.echo);
+    request_irq(sr04.echo_irq , sr04_isr, IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING, &quot;mysr04_irq&quot;, NULL);
+    /* 注册file_operations 	*/
+    major = register_chrdev(0, &quot;sr04&quot;, &amp;gpio_button_drv);  /* /dev/gpio_key */
+    sr04_class = class_create(THIS_MODULE, &quot;sr04_class&quot;);
+
+
+    if (IS_ERR(sr04_class )) 
+    &#123;
+        printk(&quot;%s %s line %d\n&quot;, __FILE__, __FUNCTION__, __LINE__);
+        unregister_chrdev(major, &quot;sr04&quot;);
+        return PTR_ERR(sr04_class );
+    &#125;
+
+    device_create(sr04_class , NULL, MKDEV(major, 0), NULL, &quot;sr04&quot;); 
+    return 0;
+&#125;
+</code></pre>
+<h2 id="3-软件端（面向用户）"><a href="#3-软件端（面向用户）" class="headerlink" title="3.软件端（面向用户）"></a>3.软件端（面向用户）</h2><p>这里就到了比较主要的用法，为程序注册一个异步通知，当用户注册之后，就可以去做别的事情了，按键按下的时候，会触发中断并发消息给用户进程，这就免去了等待的过程，算是最有效率的做法了。</p>
+<ul>
+<li><p>1.用户的file_operation 结构体：</p>
+<pre><code>  static struct file_operations async_button_fops = &#123;
+      .owner = THIS_MODULE,
+      .open = async_button_open,
+      .release = async_button_release,
+      .fasync = async_button_fasync,
+  &#125;;
+</code></pre>
+</li>
+<li><p>2.<strong>fasync 机制</strong>允许设备驱动在特定事件（如数据到达或硬件中断）发生时通知用户空间进程</p>
+<pre><code>  static int async_button_fasync(int fd, struct file *file, int on) &#123;
+      return fasync_helper(fd, file, on, &amp;button_fasync);
+  &#125;
+</code></pre>
+</li>
+<li><p>3.中断函数</p>
+<pre><code>  static irqreturn_t gpio button isr(int irg, void *dev_id)&#123;
+      int val;
+      kill_fasync(&amp;button fasync, SIGIO, POLL_IN);
+      return IRQ_HANDLED:
+  &#125;
+</code></pre>
+</li>
+<li><p>4.用户程序<br>当按键按下时，内核驱动程序会通过 kill_fasync 发送 SIGIO 信号给用户空间进程，用户空间进程可以通过信号处理程序处理该事件。flag &#x3D; 0的时候就则等待，flag&#x3D;1的时候则开始采集。<br>这里的fcntl是操作文件描述符的函数，实现的步骤有：1.设置进程为文件描述符的所有者，获取文件描述符当前标志，设置文件描述符的异步IO标志</p>
+<pre><code>  #include &lt;stdio.h&gt;
+  #include &lt;stdlib.h&gt;
+  #include &lt;unistd.h&gt;
+  #include &lt;fcntl.h&gt;
+  #include &lt;signal.h&gt;
+
+  #define DEVICE_FILE &quot;/dev/async_button&quot;
+  int flag =0;
+  void signal_handler(int signum) &#123;
+      printf(&quot;Button pressed!\n&quot;);
+      flag =1;
+  &#125;
+
+  int main() &#123;
+      int fd = open(DEVICE_FILE, O_RDWR);
+      if (fd &lt; 0) &#123;
+          perror(&quot;Failed to open the device&quot;);
+          return EXIT_FAILURE;
+      &#125;
+
+      signal(SIGIO, signal_handler);//收到SIGIO的时候就会进入signal_handler函数
+      fcntl(fd, F_SETOWN, getpid());
+      int flags = fcntl(fd, F_GETFL);
+      fcntl(fd, F_SETFL, flags | FASYNC);
+
+      while (1) &#123;
+          pause(); // 等待信号
+      &#125;
+
+      close(fd);
+      return 0;
+  &#125;
+</code></pre>
+<ul>
+<li><p>1.<strong>注册信号处理程序</strong>：signal(SIGIO, signal_handler);<br>将 SIGIO 信号与 signal_handler 函数关联起来，使得进程在接收到 SIGIO 信号时能够调用 signal_handler 函数进行处理。<br>设置异步I&#x2F;O信号接收者：fcntl(fd, F_SETOWN, getpid());</p>
+</li>
+<li><p>2.将文件描述符 fd 的所有者<strong>设置为当前进程</strong>，使得当前进程成为该文件描述符的<strong>异步I&#x2F;O信号</strong>的接收者。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>获取文件描述符当前标志：int flags &#x3D; fcntl(fd, F_GETFL);</p>
+<ul>
+<li>3.<strong>获取文件描述符 fd 的当前标志</strong>，准备进行进一步设置。<br>启用异步模式：fcntl(fd, F_SETFL, flags | FASYNC);</li>
+<li>4.将文件描述符 fd <strong>设置为异步模式</strong>，使得当该文件描述符发生特定事件（如数据可读、可写）时，当前进程能够接收到 SIGIO 信号。</li>
+</ul>
+<h1 id="4-线程实现"><a href="#4-线程实现" class="headerlink" title="4.线程实现"></a>4.线程实现</h1><p>虽然说线程总体来说用法比较固定，但是还是第一次碰到条件变量这个东西，所以有必要记录一下（记录下之前已经碰到的有：共享内存，互斥锁）</p>
+<h2 id="1-条件变量："><a href="#1-条件变量：" class="headerlink" title="1.条件变量："></a>1.条件变量：</h2><p>举个例子：现在有3个进程thread1，thread2，thread4，有一个int类型的全局变量iCount，thread1&#x2F;2的功能是count+1，thread是当iCount的值大于等于100时，打印提示信息并重置iCount&#x3D;0。<br><strong>现在有一种普通的写法：</strong> thread1与thread2调用互斥锁来加1，同时thread4需要查询iCount的大小，这样的话就会严重拖累进度，因为thread4里如果没到100的话也没别的操作，只是访问一下，占用了很多其他CPU的资源。</p>
+<pre><code>thread1/2：
+    while (1)
+    &#123;
+            pthread_mutex_lock(&amp;mutex);
+            iCount++;
+            pthread_mutex_unlock(&amp;mutex);
+    &#125;
+thread4:
+    while(1)
+    &#123;
+            pthead_mutex_lock(&amp;mutex);
+            if (100 &lt;= iCount)
+            &#123;
+                printf(&quot;iCount &gt;= 100\r\n&quot;);
+                iCount = 0;
+                pthread_mutex_unlock(&amp;mutex);
+            &#125;
+            else
+            &#123;
+                pthread_mutex_unlock(&amp;mutex);
+            &#125;
+    &#125;
+</code></pre>
+<p><strong>加了条件变量之后：</strong> thread1&#x2F;2还是正常的+1但是在iCount大于100之后会向其他的线程同步通报一下，就会让其他等待中的进程直接取消wait开始接下来的操作。条件满足将会自动退出阻塞。</p>
+<pre><code>thread1/2:
+    while(1)
+    &#123;
+            pthread_mutex_lock(&amp;mutex);
+            iCount++;
+            pthread_mutex_unlock(&amp;mutex);
+            if (iCount &gt;= 100)
+            &#123;
+                    pthread_cond_signal(&amp;cond);
+            &#125;
+    &#125;         
+thread4:
+    while (1)
+    &#123;
+            pthread_mutex_lock(&amp;mutex);
+            while(iCount &lt; 100)
+            &#123;
+                    pthread_cond_wait(&amp;cond, &amp;mutex);
+            &#125;
+            printf(&quot;iCount &gt;= 100\r\n&quot;);
+            iCount = 0;
+            pthread_mutex_unlock(&amp;mutex);
+    &#125;
+</code></pre>
 
             </div>
 
@@ -388,6 +665,21 @@ ret = ioctl(fd, VIDIOC_QBUF, &amp;readbuffer);
 
             
                 <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                               rel="prev"
+                               href="/2024/06/03/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/C%E8%AF%AD%E8%A8%80%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/"
+                            >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                                <span class="title flex-center">
+                                <span class="post-nav-title-item">C语言面试准备</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                            </a>
+                        </div>
                     
                     
                         <div class="article-next">
