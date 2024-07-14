@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-07-01 22:06:14</span>
+        <span class="pc">2024-07-14 11:50:22</span>
     </span>
     
     
@@ -252,6 +252,28 @@ static bool cmp(int a,int b)&#123;
     return abs(a)&gt;abs(b);
 &#125;
 </code></pre>
+<h2 id="5-string的用法"><a href="#5-string的用法" class="headerlink" title="5.string的用法"></a>5.string的用法</h2><ul>
+<li><p>1.拼接</p>
+<pre><code>  string s = &quot;Hello, &quot;;  
+  s += &quot;world!&quot;; // s 现在为 &quot;Hello, world!&quot;
+</code></pre>
+</li>
+<li><p>2.比较<br>compare：</p>
+<pre><code>  int result1 = str1.compare(str2); // str1 &lt; str2，返回负整数  
+  int result2 = str1.compare(str3); // str1 == str3，返回0  
+  int result3 = str1.compare(cstr); // str1 == cstr，返回0  
+</code></pre>
+</li>
+<li><p>3.字符串子串<br>substr</p>
+<pre><code>  std::string str = &quot;Hello, World!&quot;;  
+  // 获取从索引0开始的5个字符的子串  
+  std::string substr1 = str.substr(0, 5);  
+  // 获取从索引7开始到字符串末尾的子串  
+  std::string substr2 = str.substr(7);  
+  std::cout &lt;&lt; &quot;Substring 2: &quot; &lt;&lt; substr2 &lt;&lt; std::endl; // 输出: Substring 2: World!
+</code></pre>
+</li>
+</ul>
 <h1 id="1-C-哈希表"><a href="#1-C-哈希表" class="headerlink" title="1.C++哈希表"></a>1.C++哈希表</h1><p>leetcode:1</p>
 <h2 id="哈希表概念"><a href="#哈希表概念" class="headerlink" title="哈希表概念"></a>哈希表概念</h2><p>“散列表（Hash table，也叫哈希表），是根据键（Key）而直接访问在内存存储位置的数据结构。也就是说，它通过计算一个关于键值的函数，将所需查询的数据映射到表中一个位置来访问记录，这<strong>加快了查找速度</strong>。这个映射函数称做散列函数，存放记录的数组称做散列。类似python里的字典。</p>
 <p>哈希表一般使用两种方法：1.数组+链表 2.数组+二叉树</p>
@@ -480,7 +502,59 @@ static bool cmp(int a,int b)&#123;
 <h2 id="3-回溯问题的流程"><a href="#3-回溯问题的流程" class="headerlink" title="3.回溯问题的流程"></a>3.回溯问题的流程</h2><p>1.回溯函数模板返回值以及参数<br>回溯算法中函数返回值一般为void。<br>2.回溯函数终止条件<br>3.回溯搜索的遍历过程</p>
 <h2 id="4-去重问题"><a href="#4-去重问题" class="headerlink" title="4.去重问题"></a>4.去重问题</h2><p>原题如下：<a class="link"   target="_blank" rel="noopener" href="https://leetcode.cn/problems/combination-sum-ii/description/" >力扣40<i class="fas fa-external-link-alt"></i></a><br>1.先对输入的序列进行排序，这一步主要是将所有相同的元素都连在一起<br>2.声明一个used数组用于记录是否重复调用，如果candidate[i]&#x3D;&#x3D;candidate[i-1]&amp;&amp;used[i-1]&#x3D;0 就说明这已经不是第一次调用了，前面已经有人调用过这一情况了，所以不要重复选取直接下一个。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240627204119.png"></p>
 <h1 id="6-贪心算法"><a href="#6-贪心算法" class="headerlink" title="6.贪心算法"></a>6.贪心算法</h1><h1 id="7-动态规划"><a href="#7-动态规划" class="headerlink" title="7.动态规划"></a>7.动态规划</h1><h2 id="1-解题步骤"><a href="#1-解题步骤" class="headerlink" title="1.解题步骤"></a>1.解题步骤</h2><p>1.确定dp数组（dp table）以及下标的含义<br>2.确定递推公式<br>3.dp数组如何初始化<br>4.确定遍历顺序<br>5.举例推导dp数组</p>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="1-为什么使用迭代器使用的-gt-first，但是对于哈希表unordered-map类型的数据就用的是-first"><a href="#1-为什么使用迭代器使用的-gt-first，但是对于哈希表unordered-map类型的数据就用的是-first" class="headerlink" title="1.为什么使用迭代器使用的-&gt;first，但是对于哈希表unordered_map类型的数据就用的是.first"></a>1.为什么使用迭代器使用的-&gt;first，但是对于哈希表unordered_map类型的数据就用的是.first</h2><p>答：引用就使用.first，指针就使用-&gt;first。<br><strong>引用与指针：</strong><br><strong>使用方式</strong>：<br>引用在使用时就像是被引用的变量本身一样，不需要使用*符号进行解引用。比如，a &#x3D; 10; 就相当于 b &#x3D; 10; 因为a和b在内存中存储的是同一个地址。<br>指针：指针在使用时需要使用*符号进行解引用，才能访问存储在该地址上的变量。比如，*p &#x3D; 10; 就相当于 a &#x3D; 10; 因为p存储的是a变量的内存地址。<br><strong>那么引用有什么卵用呢？</strong><br>引用在函数调用时可以避免复制大量的内存，因为它们是其所引用的变量的别名。在函数中对引用的修改会直接反映在原始变量上。</p>
+<h2 id="2-排列与组合问题"><a href="#2-排列与组合问题" class="headerlink" title="2.排列与组合问题"></a>2.排列与组合问题</h2><p>排列问题：在背包中每个物体只能选择一次，所以遍历的顺序无所谓，先背包空间还是先物体种类遍历都无所谓<br>组合问题：背包中的物体可以选无数次，所以外侧必须为背包空间，而内侧为物体种类，保证从小到大每个组合种类都已经被遍历到，然后向上推进。</p>
+<pre><code>    class Solution &#123;
+            public:
+            int combinationSum4(vector&lt;int&gt;&amp; nums, int target) &#123;
+                    vector&lt;int&gt;dp(target+1,0);
+                    dp[0]=1;
+                    for(int i = 0;i&lt;=target;i++)&#123;
+                    for(int j =0;j&lt;nums.size();j++)&#123;
+                            if (i - nums[j] &gt;= 0 &amp;&amp; dp[i] &lt; INT_MAX - dp[i - nums[j]])&#123;
+                            dp[i]+=dp[i-nums[j]];
+                            &#125;
+                    &#125;
+                    &#125;
+                    return dp[target];
+            &#125;
+    &#125;;
+</code></pre>
+<h1 id="8-图论"><a href="#8-图论" class="headerlink" title="8.图论"></a>8.图论</h1><h2 id="1-两个图的存储方式"><a href="#1-两个图的存储方式" class="headerlink" title="1.两个图的存储方式"></a>1.两个图的存储方式</h2><ul>
+<li>邻接表：数组+链表，从边的数量来表示图，有多少边申请对应大小的链表</li>
+<li>邻接矩阵：一个二维数组，有多少节点就申请多大的二维矩阵，如果有n个节点，就申请n*n大小的二维矩阵</li>
+</ul>
+<h2 id="2-图的遍历方式"><a href="#2-图的遍历方式" class="headerlink" title="2.图的遍历方式"></a>2.图的遍历方式</h2><ul>
+<li>1.<strong>深度优先遍历</strong> dfs：<strong>dfs</strong>是可一个方向去搜，不到黄河不回头，直到遇到绝境了，搜不下去了，再换方向（换方向的过程就涉及到了回溯）<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240713161012.png"><br>表达的图：<ul>
+<li><p>节点1 指向 节点3 和 节点5</p>
+</li>
+<li><p>节点2 指向 节点4、节点3、节点5</p>
+</li>
+<li><p>节点3 指向 节点4</p>
+</li>
+<li><p>节点4指向节点1</p>
+<pre><code>// 节点编号从1到n，所以申请 n+1 这么大的数组
+vector&lt;list&lt;int&gt;&gt; graph(n + 1); // 邻接表，list为C++里的链表
+while (m--) &#123;
+        cin &gt;&gt; s &gt;&gt; t;
+        // 使用邻接表 ，表示 s -&gt; t 是相连的
+        graph[s].push_back(t);
+&#125;
+</code></pre>
+</li>
+</ul>
+</li>
+<li>2.<strong>广度优先遍历</strong> bfs：bfs是先把本节点所连接的所有节点遍历一遍，走到下一个节点的时候，再把连接节点的所有节点遍历一遍，搜索方向更像是广度，四面八方的搜索过程。<br>有点类似二叉树的深度遍历和层序遍历</li>
+</ul>
+<h2 id="3-深度搜索三部曲"><a href="#3-深度搜索三部曲" class="headerlink" title="3.深度搜索三部曲"></a>3.深度搜索三部曲</h2><ul>
+<li>1.确认递归函数，参数</li>
+<li>2.确认终止条件</li>
+<li>3.处理目前搜索节点出发的路径</li>
+</ul>
+<h2 id="4-广度搜索更适用的题目"><a href="#4-广度搜索更适用的题目" class="headerlink" title="4.广度搜索更适用的题目"></a>4.广度搜索更适用的题目</h2><ul>
+<li>最短路径：广搜一圈一圈，只要最先到的就肯定是最短路径。</li>
+<li><h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1></li>
+</ul>
+<h2 id="1-为什么使用迭代器使用的-gt-first，但是对于哈希表unordered-map类型的数据就用的是-first"><a href="#1-为什么使用迭代器使用的-gt-first，但是对于哈希表unordered-map类型的数据就用的是-first" class="headerlink" title="1.为什么使用迭代器使用的-&gt;first，但是对于哈希表unordered_map类型的数据就用的是.first"></a>1.为什么使用迭代器使用的-&gt;first，但是对于哈希表unordered_map类型的数据就用的是.first</h2><p>答：引用就使用.first，指针就使用-&gt;first。<br><strong>引用与指针：</strong><br><strong>使用方式</strong>：<br>引用在使用时就像是被引用的变量本身一样，不需要使用*符号进行解引用。比如，a &#x3D; 10; 就相当于 b &#x3D; 10; 因为a和b在内存中存储的是同一个地址。<br>指针：指针在使用时需要使用*符号进行解引用，才能访问存储在该地址上的变量。比如，*p &#x3D; 10; 就相当于 a &#x3D; 10; 因为p存储的是a变量的内存地址。<br><strong>那么引用有什么卵用呢？</strong><br>引用在函数调用时可以避免复制大量的内存，因为它们是其所引用的变量的别名。在函数中对引用的修改会直接反映在原始变量上。</p>
 <h2 id="2-怎么对哈希表的第二个数值进行升序排列"><a href="#2-怎么对哈希表的第二个数值进行升序排列" class="headerlink" title="2.怎么对哈希表的第二个数值进行升序排列"></a>2.怎么对哈希表的第二个数值进行升序排列</h2><p>  正常情况下是无法直接使用sort对哈希表的第二个数值进行升序排序的，想要排序需要处理以下几步<br>  1.将哈希表转化为pair形式</p>
 <pre><code>    unordermap&lt;int,int&gt; a;
     vector&lt;pair&lt;int,int&gt;&gt;vec(a.begin(),map.end());
