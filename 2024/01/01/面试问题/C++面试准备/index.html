@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-07-09 22:58:56</span>
+        <span class="pc">2024-07-14 22:48:04</span>
     </span>
     
     
@@ -1170,6 +1170,44 @@ int* intPtr = reinterpret_cast&lt;int*&gt;(doublePtr);  // 转回原始类型
 <li>实现多态性：允许通过基类指针或引用调用派生类的实现。</li>
 <li>设计接口和抽象类：定义抽象接口，使得不同子类可以实现相同的接口。</li>
 </ul>
+<h3 id="48-vector-list-异同"><a href="#48-vector-list-异同" class="headerlink" title="48.vector list 异同"></a>48.vector list 异同</h3><p><strong>List</strong></p>
+<ul>
+<li>List是一个双向链表的容器，每个元素都由一个节点表示</li>
+<li><strong>插入和删除元素</strong>的时间复杂度为O(1)</li>
+<li>由于不具备随机访问特性，只能通过迭代器逐个遍历，时间复杂度为O(n)</li>
+</ul>
+<p><strong>vector</strong></p>
+<ul>
+<li>vector是一个动态数组的容器，元素的存储是<strong>连续的</strong>。</li>
+<li>插入和删除元素的时间复杂度为O(n)，因为可能需要移动其他元素，尤其是在中间位置插入或删除元素时。</li>
+<li>访问元素方面，由于具备随机访问特性，可以通过下标访问元素，时间复杂度为O(1)。</li>
+<li>vector在增加元素时，如果超过自身最大的容量，vector则将自身的容量扩充为&#x3D;&#x3D;原来的两倍&#x3D;&#x3D;。扩充空间需要经过的步骤：<strong>重新配置空间，元素移动，释放旧的内存空间</strong>。一旦vector空间重新配置，则指向<strong>原来vector的所有迭代器都失效</strong>了，因为vector的地址改变了。</li>
+</ul>
+<h3 id="49-vector-deque的区别"><a href="#49-vector-deque的区别" class="headerlink" title="49.vector deque的区别"></a>49.vector deque的区别</h3><p>deque：双端队列</p>
+<ul>
+<li>双端操作：可以在头部和尾部进行高效的插入和删除操作。</li>
+<li><strong>分段结构</strong>：内部实现采用分段的数据结构，只需要移动对应段内的元素，而不需要移动整个容器中的元素。</li>
+<li><strong>支持随机访问</strong>：支持通过索引进行随机访问，可以在常量时间内访问任意位置的元素。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240714223324.png"></li>
+</ul>
+<p><strong>Deque和vector的区别</strong>：</p>
+<ul>
+<li><strong>插入和删除操作</strong>：Deque支持在头部和尾部高效地插入和删除元素，而Vector只能在尾部进行高效操作。</li>
+<li><strong>内部实现</strong>：Deque采用&#x3D;&#x3D;分段&#x3D;&#x3D;的数据结构，而Vector是一块连续的存储空间。</li>
+<li><strong>内存分配方式</strong>：Deque在扩容时能更高效地利用内存，并避免频繁的重分配，而Vector需要重新分配整块连续的内存空间。</li>
+<li><strong>随机访问性能</strong>：Vector的随机访问性能更好，而Deque的随机访问相对较低。</li>
+</ul>
+<h3 id="49-迭代器删除元素"><a href="#49-迭代器删除元素" class="headerlink" title="49.迭代器删除元素"></a>49.迭代器删除元素</h3><ul>
+<li><strong>1.vector&#x2F;deque容器</strong>：对于 std::vector 和 std::deque，当使用 erase 删除元素时，所有指向被删除元素之后的迭代器和引用都会失效。因此，在删除元素后，必须重新获取有效的迭代器。因为删除元素后vector容器会相亲啊移动元素来导致迭代器失效</li>
+<li><strong>2.map和set容器</strong>：对于 std::set 和 std::map，删除元素时只有指向被删除元素的迭代器失效，其他迭代器仍然有效。因此，可以安全地删除元素而不影响其他迭代器。</li>
+<li><strong>3.list容器</strong>：对于 std::list，删除元素时只有指向被删除元素的迭代器失效，其他迭代器仍然有效。这样就可以更加安全地删除元素而不需要担心其他迭代器的有效性。</li>
+</ul>
+<h3 id="50-几种模板插入的时间复杂度"><a href="#50-几种模板插入的时间复杂度" class="headerlink" title="50.几种模板插入的时间复杂度"></a>50.几种模板插入的时间复杂度</h3><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240714224646.png"></p>
+<h3 id="51-prioriry-queue优先级队列的底层数据结构是什么？操作的时间复杂度是什么？"><a href="#51-prioriry-queue优先级队列的底层数据结构是什么？操作的时间复杂度是什么？" class="headerlink" title="51.prioriry_queue优先级队列的底层数据结构是什么？操作的时间复杂度是什么？"></a>51.prioriry_queue优先级队列的底层数据结构是什么？操作的时间复杂度是什么？</h3><p>priority_queue（优先队列）在C++中可以使用堆（heap）作为其底层数据结构。堆是一种<strong>完全二叉树</strong>，具有以下性质：对于任意节点i，其父节点的值大于等于（或小于等于）其子节点的值。<br>因此操作复杂度为：</p>
+<ul>
+<li>插入操作（push）：O(log N)，其中N是优先队列中元素的数量。</li>
+<li>删除顶部元素（pop）：O(log N)，其中N是优先队列中元素的数量。</li>
+<li>查找顶部元素（top）：O(1)。</li>
+</ul>
 
             </div>
 
@@ -1183,13 +1221,13 @@ int* intPtr = reinterpret_cast&lt;int*&gt;(doublePtr);  // 转回原始类型
                         <div class="article-prev">
                             <a class="prev"
                                rel="prev"
-                               href="/2024/01/01/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/"
+                               href="/2024/01/01/%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0/"
                             >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                                 <span class="title flex-center">
-                                <span class="post-nav-title-item">计算机网络问题</span>
+                                <span class="post-nav-title-item">驱动实现</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                             </a>
@@ -1199,10 +1237,10 @@ int* intPtr = reinterpret_cast&lt;int*&gt;(doublePtr);  // 转回原始类型
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2023/07/05/markdown%E8%AF%AD%E6%B3%95/"
+                               href="/2024/01/01/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">markdown语法</span>
+                                <span class="post-nav-title-item">计算机网络问题</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">

@@ -9,7 +9,7 @@
     
     <title>
         
-            markdown语法 |
+            笔试八股题目 |
         
         学习笔记
     </title>
@@ -135,7 +135,7 @@
         <div class="article-content-container">
 
             <div class="article-title">
-                <span class="title-hover-animation">markdown语法</span>
+                <span class="title-hover-animation">笔试八股题目</span>
             </div>
 
             
@@ -157,13 +157,13 @@
         
             <i class="fa-regular fa-calendar-plus"></i>&nbsp;
         
-        <span class="pc">2023-07-05 21:31:24</span>
-        <span class="mobile">2023-07-05 21:31</span>
+        <span class="pc">2024-08-06 11:31:55</span>
+        <span class="mobile">2024-08-06 11:31</span>
     </span>
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-10-09 22:36:19</span>
+        <span class="pc">2024-08-06 22:52:14</span>
     </span>
     
     
@@ -183,78 +183,65 @@
             <div class="article-content keep-markdown-body">
                 
 
-                <p>1.标题</p>
-<h1 id="最高级标题"><a href="#最高级标题" class="headerlink" title="最高级标题"></a>最高级标题</h1><h2 id="二阶标题"><a href="#二阶标题" class="headerlink" title="二阶标题"></a>二阶标题</h2><p>2.字体<br><strong>这是加粗</strong><br><strong>这也是加粗</strong><br><em>这是倾斜</em><br><em>这也是倾斜</em><br><em><strong>这是加粗倾斜</strong></em><br><del>这是加删除线</del><br>3. 分割线</p>
-<hr>
-<hr>
-<hr>
-<p>4.引用</p>
-<blockquote>
-<p>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,<br>consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<br>Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
-</blockquote>
-<p>ao<br>5.列表 </p>
-<ul>
-<li>列表内容</li>
-</ul>
-<ul>
-<li>列表内容</li>
-</ul>
-<ul>
-<li><p>列表内容<br>列表可以嵌套，上一级和下一级之间敲三个空格即可。</p>
-</li>
-<li><p>一级无序列表内容</p>
-<ul>
-<li>二级无序列表内容</li>
-<li>二级无序列表内容</li>
-<li>二级无序列表内容</li>
-</ul>
-</li>
-</ul>
-<p>6.表格</p>
-<table>
-<thead>
-<tr>
-<th>表头</th>
-<th align="center">表头</th>
-<th align="right">表头</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>内容</td>
-<td align="center">内容</td>
-<td align="right">内容</td>
-</tr>
-<tr>
-<td>内容</td>
-<td align="center">内容</td>
-<td align="right">内容</td>
-</tr>
-<tr>
-<td>7.代码 三个空格</td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>这是一个普通段落：</td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-</tbody></table>
-<pre><code>这是一个代码区块。
-</code></pre>
-<p>(当然，前面要有一个空行和前面的文字分隔开)</p>
-<p>1.字体<br><font face="黑体">我是黑体字</font><br><font face="微软雅黑">我是微软雅黑</font><br><font face="STCAIYUN">我是华文彩云</font><br><font color=red>我是红色</font><br><font color=#008000>我是绿色</font><br><font color=Blue>我是蓝色</font><br><font size=5>我是尺寸</font><br><font face="黑体" color=green size=5>我是黑体，绿色，尺寸为5</font><br>2.加入背景色</p>
-<table><tr><td bgcolor=yellow>背景色yellow</td></tr></table>
-3.字体对齐
-<center>居中</center>
-<p align="left">左对齐</p>
-<p align="right">右对齐</p>
-4.上下标
-H<sub>2</sub>O  CO<sub>2</sub>
-爆米<sup>TM</sup>
+                <h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806113231.png"><br>解：<br>只有给对象分配内存才调用构造函数，*p这至是一个指针,没有指向任何空间,更么有分配内存,不会调构造</p>
+<h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806113558.png"><br>解：<br>A. 成员个数：一个类的成员变量（包括数据成员和对象成员）的数量直接影响类的大小。成员变量越多，类的实例占用的内存就越大。<br>B. 函数个数：成员函数的数量本身并不直接影响类的实例大小，因为成员函数存储在代码段中，&#x3D;&#x3D;不会占用对象的内存&#x3D;&#x3D;。<br>C. 是否有虚函数：虚函数会影响类的大小，因为含有虚函数的类需要一个虚函数表指针（vptr）来指向虚函数表（vtable），这个指针会占用类实例的内存。<br>D. 虚函数个数：虚函数的数量会影响虚函数表的大小，但不会直接增加每个类实例的大小，只是增加了vtable的大小。<br>E. 静态变量个数：静态变量是类级别的，不是对象级别的，所以静态变量个数不会影响单个类实例的大小。<br>F. 对齐方式：内存对齐是指为了提高内存访问效率，编译器会在类成员之间插入适当的填充字节，使得成员变量在内存中按照特定的边界对齐，这会影响类的大小。</p>
+<h2 id="3"><a href="#3" class="headerlink" title="3"></a>3</h2><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806114702.png"><br>解：<br>答案是语句4。<br>在C++中，当子类（派生类）重载基类（父类）中的某个函数时，这个重载的函数会隐藏基类中所有同名但参数不同的函数。</p>
+<h1 id="4"><a href="#4" class="headerlink" title="4"></a>4</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806142147.png"><br>解：在这里分为两个部分，一个是*p作为的字符串变量，而”hello,world”作为一个字符串&#x3D;&#x3D;字面量&#x3D;&#x3D;则是存储在只读存储区中。同时如果字面量较为简单例如int a &#x3D;1，编译时通常会直接嵌入到生成的代码中，而复杂的常量，他们会存储在制度存储区中。</p>
+<h1 id="5"><a href="#5" class="headerlink" title="5"></a>5</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806142318.png"><br>解：<br>带..的都不重载，其余无法重载的还有-&gt;*,sizeof,#这些</p>
+<h1 id="6"><a href="#6" class="headerlink" title="6"></a>6</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806142841.png"><br>解：<br>函数指针声明以及调用问题：<br><strong>声明</strong></p>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
 
-<p>1.超链接<br>This is <a class="link"   target="_blank" rel="noopener" href="http://example.com/"  title="Title">an example<i class="fas fa-external-link-alt"></i></a> inline link.</p>
-<p><a class="link"   target="_blank" rel="noopener" href="http://example.net/" >This link<i class="fas fa-external-link-alt"></i></a> has no title attribute.<br>2.自动链接<br><a class="link"   target="_blank" rel="noopener" href="http://example.com/" >http://example.com/<i class="fas fa-external-link-alt"></i></a></p>
+int fun6(int x) &#123;
+    return x * 2;
+&#125;
+
+int (*pf)(int) = fun6;
+</code></pre>
+<p><strong>调用</strong></p>
+<ul>
+<li>1.直接使用函数指针调用int result1 &#x3D; pf(10);</li>
+<li>2.使用解引用运算符调用int result2 &#x3D; (*pf)(10);(pf)(10)</li>
+<li>3.使用函数名调用result3 &#x3D; fun6(10);</li>
+</ul>
+<h1 id="7"><a href="#7" class="headerlink" title="7"></a>7</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806150952.png"><br>解：<br>value &#x3D; 1024 二进制表示为：00000000 00000000 00000100 00000000。<br>接着是这句话：bool condition &#x3D; *( (bool*)(&amp;value) );这句话是什么意思呢，通过bool*强制转换，读取value的最低字节也就是00000000,所以condition被赋值为false</p>
+<h1 id="8"><a href="#8" class="headerlink" title="8"></a>8</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806211742.png"><br>解：<br>这道题引出的知识点，什么情况初始化会是0什么情况初始化为随机值。</p>
+<ul>
+<li>1.全局和静态变量：全局和静态变量在程序启动时分配内存，并在 BSS 段（未初始化数据段）或数据段中分配。默认初始化为0</li>
+<li>2.局部变量数组：对于这些数组，如果没有显式初始化，它们的元素是未初始化的，其内容是未定义的（通常为内存中的随机值）。这意味着它们可能包含在该内存位置之前存储的任何数据。</li>
+<li>3.显式初始化：无论数组是全局、静态还是局部，如果显式初始化数组，则未初始化的元素将被默认初始化为零。</li>
+</ul>
+<h1 id="9"><a href="#9" class="headerlink" title="9"></a>9</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806212032.png"></p>
+<p>解：<br>这道题正好来捋一下所有的容器查找的复杂度</p>
+<ul>
+<li>1.vector</li>
+<li>2.deque</li>
+<li>3.list</li>
+<li>4.set：插入删除元素+查找元素O(log n)</li>
+<li>5.unordered_set:插入和查找元素O(1)</li>
+</ul>
+<h1 id="10"><a href="#10" class="headerlink" title="10"></a>10</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806213109.png"></p>
+<p>解：<br>只能使用成员函数重载的运算符有：&#x3D;、()、[]、-&gt;、new、delete。</p>
+<h1 id="11"><a href="#11" class="headerlink" title="11"></a>11</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806213808.png"><br>解：<br>经典的函数和指针传递问题，但是一直都没太搞懂&#x3D;&#x3D;，这次争取给搞明白，传递的其实还是s的形参，并没有影响到main中s的值，main中的s仍然还是指向a，既然如此应该怎么才能做到从函数中来影响main中传递至此的值呢？</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void fun(int *p1, int *p2, int **s) &#123;
+    *s = (int *)malloc(sizeof(int)); // 修改实参s的值
+    **s = *p1 + *(p2++); // 修改实参s所指向的值
+&#125;
+
+int main() &#123;
+    int a[2] = &#123;1, 2&#125;, b[2] = &#123;10, 20&#125;, *s = a;
+    fun(a, b, &amp;s); // 传引用调用，传递的是s的地址
+    printf(&quot;%d\n&quot;, *s); // 输出11，因为s现在指向的是分配的新内存
+    free(s); // 释放分配的内存
+    return 0;
+&#125;
+</code></pre>
+<p>也就是说原来的s传递相当于是形参传递，但是如果传递过来地址的话再用*s这样就可以对地址对应的值改变了，如果把题中的s&#x3D;blabla删掉其实也是可以正常加和的。 </p>
+<h1 id="12"><a href="#12" class="headerlink" title="12"></a>12</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806224350.png"><br>解：<br>这里的基类中的构造函数被声明在了protected中，因此Base无法直接实例化。</p>
+<h1 id="13"><a href="#13" class="headerlink" title="13"></a>13</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806225207.png"></p>
 
             </div>
 
@@ -265,29 +252,14 @@ H<sub>2</sub>O  CO<sub>2</sub>
             
                 <div class="article-nav">
                     
-                        <div class="article-prev">
-                            <a class="prev"
-                               rel="prev"
-                               href="/2024/01/01/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/"
-                            >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                                <span class="title flex-center">
-                                <span class="post-nav-title-item">计算机网络问题</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                            </a>
-                        </div>
-                    
                     
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2023/07/02/%E6%A0%91%E8%8E%93%E6%B4%BE/"
+                               href="/2024/06/30/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/%E9%9D%A2%E8%AF%95%E9%AB%98%E9%A2%91%E6%89%8B%E6%92%95%E4%BB%A3%E7%A0%81/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">树莓派</span>
+                                <span class="post-nav-title-item">面试高频手撕代码</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">
