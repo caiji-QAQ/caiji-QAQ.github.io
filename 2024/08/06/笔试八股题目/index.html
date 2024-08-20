@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-08-06 22:52:14</span>
+        <span class="pc">2024-08-08 17:30:52</span>
     </span>
     
     
@@ -242,6 +242,44 @@ int main() &#123;
 <p>也就是说原来的s传递相当于是形参传递，但是如果传递过来地址的话再用*s这样就可以对地址对应的值改变了，如果把题中的s&#x3D;blabla删掉其实也是可以正常加和的。 </p>
 <h1 id="12"><a href="#12" class="headerlink" title="12"></a>12</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806224350.png"><br>解：<br>这里的基类中的构造函数被声明在了protected中，因此Base无法直接实例化。</p>
 <h1 id="13"><a href="#13" class="headerlink" title="13"></a>13</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806225207.png"></p>
+<h1 id="14"><a href="#14" class="headerlink" title="14"></a>14</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240808163543.png"><br>解：<br>C++允许嵌套调用，但是不允许嵌套定义，这道题写的是定义。</p>
+<h1 id="15"><a href="#15" class="headerlink" title="15"></a>15</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240808163741.png"></p>
+<p>解：<br>this指针只有类的成员函数才有，而友元函数并不是成员函数所以友元函数无法被继承，没有this指针。</p>
+<h1 id="16"><a href="#16" class="headerlink" title="16"></a>16</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240808164921.png"></p>
+<p>解：<br>最常见的是：二进制、八进制、十进制、十六进制。</p>
+<ul>
+<li>二进制：0b</li>
+<li>八进制：0</li>
+<li>十进制：10</li>
+<li>十六进制：0x</li>
+</ul>
+<h1 id="17"><a href="#17" class="headerlink" title="17"></a>17</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240808165257.png"><br>解：<br>fork()系统调用：<br>fork()系统调用用于创建一个新进程，称为子进程。<br>新的子进程是调用fork()的进程（父进程）的副本。<br>父进程和子进程都会从fork()调用返回：<br>父进程返回子进程的进程ID（PID）。<br>子进程返回0。<br>每一次fork都会将当前的进程当做父进程创建一次子进程因此最后是32</p>
+<h1 id="18"><a href="#18" class="headerlink" title="18"></a>18</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240808165650.png"><br>解：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240808165710.png"></p>
+<ul>
+<li>空类：在C++中，即使一个类没有任何成员变量和成员函数，它也会占用内存。为了确保每个对象有一个独特的地址，&#x3D;&#x3D;空类的大小通常为1字节&#x3D;&#x3D;</li>
+<li>构造函数：添加构造函数不会改变类的大小。构造函数只是用来初始化对象的，在类的大小计算中&#x3D;&#x3D;不占用额外的空间&#x3D;&#x3D;。</li>
+<li>虚函数：相当于加入了一个虚函数表指针，32位上大小为4字节</li>
+</ul>
+<p>为什么空类的那一个字节没有了呢，因为虚函数表指针（vptr）会覆盖空类的那一个字节，因为类的最小对齐要求通常是指针的大小。由于C++编译器的对齐要求，虚指针通常会放在类对象的开始位置，这就覆盖了原来空类占用的那一个字节。</p>
+<h1 id="19"><a href="#19" class="headerlink" title="19"></a>19</h1><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240808172327.png"><br>解：<br><strong>这里说的类型转换是什么意思？</strong><br>在C++中，带有单个参数的构造函数具有类型转换作用是指，这样的构造函数可以被隐式调用来将该参数类型转换为该类类型。这种类型转换作用是隐式的，编译器会在需要该类对象的地方自动调用该构造函数，进行类型转换。<br>例如：</p>
+<pre><code>class MyClass &#123;
+public:
+    MyClass(int x) &#123;
+        // 构造函数代码
+    &#125;
+&#125;;
+void func(MyClass obj) &#123;
+// 函数代码
+&#125;
+
+int main() &#123;
+    MyClass obj1 = 10;  // 隐式调用构造函数，将 int 转换为 MyClass
+    func(10);           // 隐式调用构造函数，将 int 转换为 MyClass
+
+    return 0;
+&#125;
+</code></pre>
+<p>对于这道题来说：该题该选项是在<strong>混淆转换构造函数</strong>与<strong>类型转换函数</strong>的区别。   <strong>类型转换函数</strong>的作用是将一个类的对象转换成另一个类型的数据  而<strong>转换构造函数</strong>是单参数的构造函数，它可以将一个指定类型的数据转换为类的对象，但是不能反过来将一个类的对象转换为一个其他类型的数据。构造函数是没有类型转换作用的。</p>
 
             </div>
 
@@ -252,11 +290,26 @@ int main() &#123;
             
                 <div class="article-nav">
                     
+                        <div class="article-prev">
+                            <a class="prev"
+                               rel="prev"
+                               href="/2024/08/15/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/%E9%9D%A2%E8%AF%95%E9%A1%B9%E7%9B%AE%E5%89%96%E6%9E%90/"
+                            >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                                <span class="title flex-center">
+                                <span class="post-nav-title-item">面试项目剖析</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                            </a>
+                        </div>
+                    
                     
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2024/06/30/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/%E9%9D%A2%E8%AF%95%E9%AB%98%E9%A2%91%E6%89%8B%E6%92%95%E4%BB%A3%E7%A0%81/"
+                               href="/2024/06/30/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/%E9%9D%A2%E8%AF%95%E9%AB%98%E9%A2%91%E6%89%8B%E6%92%95%E4%BB%A3%E7%A0%81/"
                             >
                             <span class="title flex-center">
                                 <span class="post-nav-title-item">面试高频手撕代码</span>

@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-06-30 22:32:16</span>
+        <span class="pc">2024-08-18 10:39:27</span>
     </span>
     
     
@@ -183,7 +183,101 @@
             <div class="article-content keep-markdown-body">
                 
 
-                
+                <h2 id="1-给你两个绝对路径地址，然后你去把file1中的内容拷贝到file2中。"><a href="#1-给你两个绝对路径地址，然后你去把file1中的内容拷贝到file2中。" class="headerlink" title="1.给你两个绝对路径地址，然后你去把file1中的内容拷贝到file2中。"></a>1.给你两个绝对路径地址，然后你去把file1中的内容拷贝到file2中。</h2><p>ofstream：用于文件的写入：</p>
+<ul>
+<li><p>1.创建ofstream对象：</p>
+<pre><code>  ofstream outputFile;
+</code></pre>
+</li>
+<li><p>2.打开文件并写入内容：</p>
+<pre><code>  outputFile.open(&quot;example.txt&quot;); // 打开名为example.txt的文件进行写入
+
+  if (outputFile.is_open()) &#123;
+      outputFile &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endl; // 将字符串写入文件
+      outputFile &lt;&lt; &quot;This is a sample text.&quot; &lt;&lt; std::endl;
+  &#125; else &#123;
+      std::cout &lt;&lt; &quot;Failed to open the file.&quot; &lt;&lt; std::endl; // 如果文件打开失败，输出错误信息
+  &#125;
+
+  outputFile.close(); // 关闭文件流
+</code></pre>
+</li>
+</ul>
+<p>ifstream：用于文件的读取：</p>
+<ul>
+<li><p>1.创建ifstream inputFile</p>
+</li>
+<li><p>2.打开文件并读取内容：</p>
+<pre><code>  inputFile.open(&quot;example.txt&quot;); // 打开名为example.txt的文件进行读取
+
+  if (inputFile.is_open()) &#123;
+      std::string line;
+      while (std::getline(inputFile, line)) &#123;
+          std::cout &lt;&lt; line &lt;&lt; std::endl; // 输出文件中的每一行内容
+      &#125;
+  &#125; else &#123;
+      std::cout &lt;&lt; &quot;Failed to open the file.&quot; &lt;&lt; std::endl; // 如果文件无法打开，输出错误信息
+  &#125;
+
+  inputFile.close(); // 关闭文件流
+</code></pre>
+</li>
+</ul>
+<p><em><strong>getline</strong></em></p>
+<ul>
+<li><p>1.std::getline(输入流, 目标字符串);<br>getline(std::cin, line):从输入中读取一行文本，同时将其存在line。</p>
+</li>
+<li><p>2.从文件中读取一行</p>
+<pre><code>while (std::getline(file, line)) &#123;
+  std::cout &lt;&lt; line &lt;&lt; std::endl;
+&#125;
+</code></pre>
+</li>
+<li><p>3.自定义分隔符</p>
+<pre><code>  std::getline(stream, word, &#39;,&#39;)
+</code></pre>
+</li>
+</ul>
+<p>代码：</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+
+int main() &#123;
+std::string file1Path, file2Path;
+
+std::cout &lt;&lt; &quot;请输入第一个文件的绝对路径 (file1): &quot;;
+std::cin &gt;&gt; file1Path;
+
+std::cout &lt;&lt; &quot;请输入第二个文件的绝对路径 (file2): &quot;;
+std::cin &gt;&gt; file2Path;
+
+std::ifstream file1(file1Path);
+if (!file1) &#123;
+    std::cerr &lt;&lt; &quot;无法打开文件: &quot; &lt;&lt; file1Path &lt;&lt; std::endl;
+    return 1;
+&#125;
+
+std::ofstream file2(file2Path);
+if (!file2) &#123;
+    std::cerr &lt;&lt; &quot;无法打开文件: &quot; &lt;&lt; file2Path &lt;&lt; std::endl;
+    return 1;
+&#125;
+
+std::string line;
+while (std::getline(file1, line)) &#123;
+    file2 &lt;&lt; line &lt;&lt; &quot;\n&quot;;
+&#125;
+
+file1.close();
+file2.close();
+
+std::cout &lt;&lt; &quot;文件拷贝成功！&quot; &lt;&lt; std::endl;
+
+return 0;
+</code></pre>
+<p>}</p>
+
             </div>
 
             

@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-07-14 22:39:07</span>
+        <span class="pc">2024-08-14 16:14:11</span>
     </span>
     
     
@@ -280,7 +280,7 @@ int main() &#123;
 </li>
 <li><p>返回的是整个数据类型或变量占用的内存空间大小。<br>strlen：</p>
 </li>
-<li><p>用于获取以’\0’结尾的字符串的实际长度。</p>
+<li><p>用于获取以’\0’结尾的<strong>字符串</strong>的实际长度。</p>
 </li>
 <li><p>在运行时计算，需要遍历字符串的内容来确定长度。</p>
 </li>
@@ -468,7 +468,15 @@ int main() &#123;
     return 0;
 &#125;
 </code></pre>
-<h3 id="17-如果我想在函数中声明一个内存，同时想返回给主函数一个指针应该怎么做？"><a href="#17-如果我想在函数中声明一个内存，同时想返回给主函数一个指针应该怎么做？" class="headerlink" title="17.如果我想在函数中声明一个内存，同时想返回给主函数一个指针应该怎么做？"></a>17.如果我想在函数中声明一个内存，同时想返回给主函数一个指针应该怎么做？</h3><p>答：正常写就行，因为函数中new出来的内存函数不会销毁，如下：<br>shared_ptr&lt;int[]&gt; allocateMemory(int size) {<br>    std::shared_ptr&lt;int[]&gt; ptr(new int[size]);<br>    for (int i &#x3D; 0; i &lt; size; ++i) {<br>        ptr[i] &#x3D; i * 10; &#x2F;&#x2F; 初始化数组<br>    }<br>    return ptr;<br>}</p>
+<h3 id="17-如果我想在函数中声明一个内存，同时想返回给主函数一个指针应该怎么做？"><a href="#17-如果我想在函数中声明一个内存，同时想返回给主函数一个指针应该怎么做？" class="headerlink" title="17.如果我想在函数中声明一个内存，同时想返回给主函数一个指针应该怎么做？"></a>17.如果我想在函数中声明一个内存，同时想返回给主函数一个指针应该怎么做？</h3><p>答：正常写就行，因为函数中new出来的内存函数不会销毁，如下：</p>
+<pre><code>shared_ptr&lt;int[]&gt; allocateMemory(int size) &#123;
+    std::shared_ptr&lt;int[]&gt; ptr(new int[size]);
+    for (int i = 0; i &lt; size; ++i) &#123;
+        ptr[i] = i * 10; // 初始化数组
+    &#125;
+    return ptr;
+&#125;
+</code></pre>
 <h3 id="18-内存碎片"><a href="#18-内存碎片" class="headerlink" title="18.内存碎片"></a>18.内存碎片</h3><p>内存碎片是指在内存管理过程中产生的未被有效利用的零散、<strong>不连续的内存空间</strong>。主要分为两种类型：内部碎片和外部碎片。</p>
 <ul>
 <li><strong>内部碎片</strong>：是由于固定大小的内存分配方式或<strong>对齐</strong>要求等原因导致的未被利用的小空间。当分配给进程的内存块大于所需的大小时，其中的剩余空间就成为了内部碎片。</li>
@@ -478,6 +486,16 @@ int main() &#123;
 <p><strong>内存池的好处</strong>：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240630230235.png"><br>假设系统依次分配了16,16,4,8,8字节，接着释放了16字节和8字节归还给了系统（红色表示还未归还给系统），那么现在堆区空闲了一个16字节的空间和一个8字节的空间。这是如果用户要想申请出一个24字节的空间，那么系统就无法分配连续的空间给用户。这就是内存碎片的问题。</p>
 <h3 id="20-初始化为0的全局变量在bss还是data"><a href="#20-初始化为0的全局变量在bss还是data" class="headerlink" title="20.初始化为0的全局变量在bss还是data"></a>20.初始化为0的全局变量在bss还是data</h3><p>初始化为0的全局变量通常会被分配到程序的BSS（Block Started by Symbol）段。BSS段是用于存放未初始化或初始化为0的全局变量和静态变量的一部分内存空间。在程序加载时，系统会自动将BSS段中的变量初始化为0。</p>
 <p>已经明确初始化为非零值的全局变量会被分配到程序的数据（Data）段。Data段用于存放已经初始化的全局变量和静态变量。<br>总结来说，<strong>初始化为0的全局变量</strong>通常会被分配到<strong>BSS段</strong>，而已初始化为<strong>非零值的全局变量</strong>则会被分配到<strong>Data段</strong>。<br>BSS段包含未初始化的全局变量和静态变量，程序启动时这些变量会&#x3D;&#x3D;自动初始化为零&#x3D;&#x3D;。当程序加载时，操作系统可以简单地将BSS段清零，而<strong>不需要从磁盘读取数据</strong>，节省了可执行文件的空间。</p>
+<h3 id="21-常见的预定义宏"><a href="#21-常见的预定义宏" class="headerlink" title="21.常见的预定义宏"></a>21.常见的预定义宏</h3><ul>
+<li><p>1.__FILE__<br>展开为当前源文件的名称（字符串形式）。</p>
+</li>
+<li><p>2.__LINE__<br>展开为当前行号（整数形式）。</p>
+</li>
+<li><p>3.__DATE__<br>展开为编译时的日期（字符串形式），格式为 “MMM DD YYYY”，例如 “Aug 13 2024”。</p>
+</li>
+<li><p>4.__TIME__<br>展开为编译时的时间（字符串形式），格式为 “HH:MM:SS”。</p>
+</li>
+</ul>
 
             </div>
 

@@ -9,7 +9,7 @@
     
     <title>
         
-            linux 指令学习 |
+            嵌入式硬件准备 |
         
         学习笔记
     </title>
@@ -135,7 +135,7 @@
         <div class="article-content-container">
 
             <div class="article-title">
-                <span class="title-hover-animation">linux 指令学习</span>
+                <span class="title-hover-animation">嵌入式硬件准备</span>
             </div>
 
             
@@ -157,13 +157,13 @@
         
             <i class="fa-regular fa-calendar-plus"></i>&nbsp;
         
-        <span class="pc">2023-06-03 17:13:52</span>
-        <span class="mobile">2023-06-03 17:13</span>
+        <span class="pc">2024-08-19 10:58:48</span>
+        <span class="mobile">2024-08-19 10:58</span>
     </span>
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-06-03 19:58:33</span>
+        <span class="pc">2024-08-19 11:30:08</span>
     </span>
     
     
@@ -183,8 +183,26 @@
             <div class="article-content keep-markdown-body">
                 
 
-                <p>#11章 正则表达式与文件格式化处理<br>正则表达式的作用：通过一些特殊字符的辅助可以让用户可以更轻易完成“查找、删除、替代”等特殊字符的处理<br>##语系<br>不同语系输出结果<br>[LANG&#x3D;C]输出0 1 2 3 4… A B C D… Z a b c d…z<br>[LAND&#x3D;zh_CN]输出0 1 2 3 4… a A b B…z Z</p>
-<p>##grep<br>用途：查找<br>用法：<br>1.查找特定字符串<br>2.<br>#12章</p>
+                <h2 id="1-串口UART与RS232、RS485的区别"><a href="#1-串口UART与RS232、RS485的区别" class="headerlink" title="1.串口UART与RS232、RS485的区别"></a>1.串口UART与RS232、RS485的区别</h2><p>UART、RS232、RS485都是用于串行通信的技术和标准。UART是串口通信中的一种，常见的串口还有RS232、RS422、RS485。</p>
+<h3 id="1-UART"><a href="#1-UART" class="headerlink" title="1.UART"></a>1.UART</h3><p>UART：一种<strong>双向、串行、异步</strong>的通信总线，UART一般使用3根线，分别是发送线（TX）、接收线（RX）和地线（GND）<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819110441.png"><br>全双工通信，常用于控制系统与外设通信，包括控制器与控制器，控制器与终端设备等。</p>
+<ul>
+<li><p>1.数据帧格式<br>UART在协议层中规定了数据帧的格式容，具体包括起始位、数据位、校验位以及停止位<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819110557.png"></p>
+</li>
+<li><p>2.通信协议</p>
+<ul>
+<li>1.空闲位：空闲时数据线位高电平状态</li>
+<li>2.起始位：uart检测到高电平向低电平转换时，说明已经开始</li>
+<li>3.数据位：一般都是8位</li>
+<li>4.校验位：用于校验是否传输正常<br>几种方式：<br>（1）无校验<br>（2）奇校验：在奇校验中，校验位（parity bit）被设置为确保数据位中的 1 的数量是奇数。如果数据位中的 1 的数量已经是奇数，校验位被设置为 0，以使总的位数为奇数。<br>（3）偶校验：同理</li>
+<li>5.停止位：数据传输结束的标志，停止位长度可选，可以是1位、1.5位、2位的高电平。</li>
+</ul>
+</li>
+<li><p>2.RS232<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819110137.png"><br>一共有9个引脚<br>-3V ~ -15V表示逻辑1，+3V ~ +15V表示逻辑0。可做到双向传输，全双工通讯，为异步数据传输方式，最高传输速率可达到20Kbps。</p>
+</li>
+<li><p>3.RS485<br>RS485 使用&#x3D;&#x3D;差分信号&#x3D;&#x3D;，这意味着数据传输通过两条信号线（A 和 B）进行。<br><strong>以U &#x3D; A - B 的电压值为划分依据</strong><br>发送端：逻辑1：+2V ~ +6V；逻辑0：-6V ~ -2V<br>接收端：逻辑1：&gt;&#x3D; 200mv；逻辑0：&lt;&#x3D; -200mv<br>RS485使用的是压差信号，用两线电压的差值来区分逻辑1或0 。使用压差信号，抗干扰能力比较强，传输距离能达到上千米。前面两种电平传输最远就几十米。抗干扰能力比较强<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819111904.png"></p>
+</li>
+</ul>
+<h2 id="2-TTL电平是什么？"><a href="#2-TTL电平是什么？" class="headerlink" title="2.TTL电平是什么？"></a>2.TTL电平是什么？</h2><p>TL（Transistor-Transistor Logic）电平是一种基于晶体管-晶体管逻辑的电平标准。TTL电平信号在逻辑高电平时通常为3.3V或5V，在逻辑低电平时为0V。</p>
 
             </div>
 
@@ -198,13 +216,13 @@
                         <div class="article-prev">
                             <a class="prev"
                                rel="prev"
-                               href="/2023/06/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/"
+                               href="/2024/08/19/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/linux%E5%86%85%E6%A0%B8%E5%87%86%E5%A4%87/"
                             >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                                 <span class="title flex-center">
-                                <span class="post-nav-title-item">计算机系统</span>
+                                <span class="post-nav-title-item">linux内核准备</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                             </a>
@@ -214,10 +232,10 @@
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2023/06/03/hexo%E5%91%BD%E4%BB%A4/"
+                               href="/2024/08/15/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/%E9%9D%A2%E8%AF%95%E9%A1%B9%E7%9B%AE%E5%89%96%E6%9E%90/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">hexo命令</span>
+                                <span class="post-nav-title-item">面试项目剖析</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">

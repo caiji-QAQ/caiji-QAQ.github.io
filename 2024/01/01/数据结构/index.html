@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-07-14 11:50:22</span>
+        <span class="pc">2024-08-19 10:56:21</span>
     </span>
     
     
@@ -274,6 +274,29 @@ static bool cmp(int a,int b)&#123;
 </code></pre>
 </li>
 </ul>
+<h2 id="6-有点小好用之-string-x3D-gt-1-2-3-4-5-6-转为vector"><a href="#6-有点小好用之-string-x3D-gt-1-2-3-4-5-6-转为vector" class="headerlink" title="6.有点小好用之(string)&#x3D;&gt;[1,2,3,4,5,6]转为vector"></a>6.有点小好用之(string)&#x3D;&gt;[1,2,3,4,5,6]转为vector</h2><pre><code>    #include&lt;iostream&gt;
+    #include&lt;vector&gt;
+    #include&lt;sstream&gt;
+    #include&lt;string&gt;
+    using namespace std;
+
+    int main()&#123;
+    string s=&quot;[1,234,56,78]&quot;;
+    s.erase(s.begin());
+    s.erase(s.end()-1);
+    cout&lt;&lt;s&lt;&lt;endl;
+    string tmp;
+    vector&lt;int&gt; nums;
+    //将字符串转为字符串流，这样才能输入到getline中
+    stringstream ss(s);
+    while(getline(ss,tmp,&#39;,&#39;))&#123;
+    nums.push_back(stoi(tmp));
+    &#125;
+    for(int i = 0;i&lt;nums.size();i++)&#123;
+            cout&lt;&lt;nums[i]&lt;&lt;endl;
+    &#125;
+    &#125;
+</code></pre>
 <h1 id="1-C-哈希表"><a href="#1-C-哈希表" class="headerlink" title="1.C++哈希表"></a>1.C++哈希表</h1><p>leetcode:1</p>
 <h2 id="哈希表概念"><a href="#哈希表概念" class="headerlink" title="哈希表概念"></a>哈希表概念</h2><p>“散列表（Hash table，也叫哈希表），是根据键（Key）而直接访问在内存存储位置的数据结构。也就是说，它通过计算一个关于键值的函数，将所需查询的数据映射到表中一个位置来访问记录，这<strong>加快了查找速度</strong>。这个映射函数称做散列函数，存放记录的数组称做散列。类似python里的字典。</p>
 <p>哈希表一般使用两种方法：1.数组+链表 2.数组+二叉树</p>
@@ -552,9 +575,225 @@ while (m--) &#123;
 </ul>
 <h2 id="4-广度搜索更适用的题目"><a href="#4-广度搜索更适用的题目" class="headerlink" title="4.广度搜索更适用的题目"></a>4.广度搜索更适用的题目</h2><ul>
 <li>最短路径：广搜一圈一圈，只要最先到的就肯定是最短路径。</li>
-<li><h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1></li>
 </ul>
-<h2 id="1-为什么使用迭代器使用的-gt-first，但是对于哈希表unordered-map类型的数据就用的是-first"><a href="#1-为什么使用迭代器使用的-gt-first，但是对于哈希表unordered-map类型的数据就用的是-first" class="headerlink" title="1.为什么使用迭代器使用的-&gt;first，但是对于哈希表unordered_map类型的数据就用的是.first"></a>1.为什么使用迭代器使用的-&gt;first，但是对于哈希表unordered_map类型的数据就用的是.first</h2><p>答：引用就使用.first，指针就使用-&gt;first。<br><strong>引用与指针：</strong><br><strong>使用方式</strong>：<br>引用在使用时就像是被引用的变量本身一样，不需要使用*符号进行解引用。比如，a &#x3D; 10; 就相当于 b &#x3D; 10; 因为a和b在内存中存储的是同一个地址。<br>指针：指针在使用时需要使用*符号进行解引用，才能访问存储在该地址上的变量。比如，*p &#x3D; 10; 就相当于 a &#x3D; 10; 因为p存储的是a变量的内存地址。<br><strong>那么引用有什么卵用呢？</strong><br>引用在函数调用时可以避免复制大量的内存，因为它们是其所引用的变量的别名。在函数中对引用的修改会直接反映在原始变量上。</p>
+<p>上面都是一些具体的解题思路：接下来来点八股数据结构会考的问题</p>
+<h1 id="八股"><a href="#八股" class="headerlink" title="八股"></a>八股</h1><h2 id="1-哈夫曼树"><a href="#1-哈夫曼树" class="headerlink" title="1.哈夫曼树"></a>1.哈夫曼树</h2><p>哈夫曼树构造取最小值的两个节点，然后后面将这两个节点求和合并为一个节点，然后重复这个步骤</p>
+<h3 id="1-哈夫曼带权路径长度计算"><a href="#1-哈夫曼带权路径长度计算" class="headerlink" title="1.哈夫曼带权路径长度计算"></a>1.哈夫曼带权路径长度计算</h3><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240810214428.png"><br>例如上面这个树，A有两个路径，E也有两个路径（从根节点来说），所以可以写出以下式子：5*2+10*2+15*1</p>
+<h3 id="2-哈夫曼编码"><a href="#2-哈夫曼编码" class="headerlink" title="2.哈夫曼编码"></a>2.哈夫曼编码</h3><p>哈夫曼编码是一个以频率来看的编码形式，先构造成哈夫曼树，接着从上到下写下来。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240810215018.png"></p>
+<p>将左子树设为0，右子树设为1，，从跟根节点一路写下来，就是我们得到的哈夫曼编码。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240810215037.png"></p>
+<h2 id="2-查找"><a href="#2-查找" class="headerlink" title="2.查找"></a>2.查找</h2><p>重新归拢一下《大话数据结构的内容》</p>
+<h3 id="1-有序表查找"><a href="#1-有序表查找" class="headerlink" title="1.有序表查找"></a>1.有序表查找</h3><p>有序表都有一个缺点就是要求有序，有序的<strong>插入和删除效率就明显很差</strong></p>
+<ul>
+<li><p>1.<strong>折半查找</strong>：<br>折半查找，找到了就停手不继续找了，如果最后没有找到的话就无了。<br><strong>时间复杂度</strong>：logn（因为这个就是一个二叉树）下面的两种查找方式计算复杂度也都是&#x3D;&#x3D;logn&#x3D;&#x3D;</p>
+<pre><code>  int main()&#123;
+  vector&lt;int&gt; vec = &#123;0,1,2,3,4,5,6,7,8,9,10&#125;;
+  int target = 8;
+  int left = 1;
+  int right =11;
+  while(left&lt;=right)&#123;
+          int mid = (left+right)/2;
+          if(vec[mid]&gt;target)right = mid-1;
+          else if (vec[mid]&lt;target)left = mid+1;
+          else&#123;
+          cout&lt;&lt;mid;
+          break;
+          &#125;
+  &#125;
+  cout&lt;&lt;&quot;not find&quot;&lt;&lt;endl;
+  &#125;
+</code></pre>
+</li>
+<li><p>2.<strong>插值查找</strong>：实际上只是折半查找的翻版，更改mid的取值方式</p>
+</li>
+<li><p>3.<strong>斐波那契查找</strong>：根据数量在斐波那契数列中的位置来判定，F&#x3D;{0,1,1,2,3,5,8,13….}这样子，如果我输入一个数量为10的数列，则F[6]&lt; n &lt; F[7]，计算从F[7]&#x3D;13为基础，要把10后面的值给补全。</p>
+</li>
+</ul>
+<h3 id="2-二叉排序树"><a href="#2-二叉排序树" class="headerlink" title="2.二叉排序树"></a>2.二叉排序树</h3><p>由于有序才好查找，但是线性表的删除和插入的效率太烂了，所以换成二叉树的形式。<br>二叉排序树：又称二叉查找树，有以下特性：</p>
+<ul>
+<li>1.若他的左子树不空，则左子树上所有节点都要小于根节点的值</li>
+<li>2.右子树不空，则右子树所有节点都要大于根节点的值</li>
+<li>3.左右子树也都是二叉排序树</li>
+</ul>
+<h4 id="1-构造二叉排序树"><a href="#1-构造二叉排序树" class="headerlink" title="1.构造二叉排序树"></a>1.构造二叉排序树</h4><h4 id="2-二叉排序树插入节点"><a href="#2-二叉排序树插入节点" class="headerlink" title="2.二叉排序树插入节点"></a>2.二叉排序树插入节点</h4><h4 id="3-二叉排序树删除节点"><a href="#3-二叉排序树删除节点" class="headerlink" title="3.二叉排序树删除节点"></a>3.二叉排序树删除节点</h4><ul>
+<li>1.第一种情况：叶子节点，叶子节点没有子树，所以删掉就删掉了</li>
+<li>2.第二种情况：只有一个子树，该子树直接接到之前这个节点接的节点上就好了</li>
+<li>3.第三种情况：既有左子树又有右子树，这个就比较麻烦了<ul>
+<li>找出左子树中最大或者右子树中最小的值val</li>
+<li>将当前节点的值替换为val</li>
+<li>在左子树或者右子树中找到val删除<br>&#x3D;&#x3D;(这块还是得重新再来几遍)&#x3D;&#x3D;</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-平衡二叉树（AVL树）"><a href="#3-平衡二叉树（AVL树）" class="headerlink" title="3.平衡二叉树（AVL树）"></a>3.平衡二叉树（AVL树）</h3><p>平衡二叉树 左右子树高度之差的绝对值不超过1 ，左子树高度-右子树高度的值被称为平衡因子BF</p>
+<h3 id="4-哈希表"><a href="#4-哈希表" class="headerlink" title="4.哈希表"></a>4.哈希表</h3><p>散列技术：记录的存储位置和他的关键字之间建立一个确定的对应关系f，使得每个关键字key对应一个存储位置f(key)，散列函数也称为哈希函数。采用散列技术将记录存储在一块连续的存储空间中，这块存储空间称为<strong>哈希表</strong>。</p>
+<h4 id="1-散列函数的构造方法"><a href="#1-散列函数的构造方法" class="headerlink" title="1.散列函数的构造方法"></a>1.散列函数的构造方法</h4><p>构造方法五花八门，本质就是通过将数字直接映射到一个存储地址上。</p>
+<h4 id="2-散列冲突的解决办法"><a href="#2-散列冲突的解决办法" class="headerlink" title="2.散列冲突的解决办法"></a>2.散列冲突的解决办法</h4><ul>
+<li>1.开放定址法<ul>
+<li>1.线性探测法：如果位置已经被占上了，那就直接依次向后推，直到后面出现了空位占位。f&#x3D;(k+di)MODm(di &#x3D; 1,2,3,4,5..m-1)</li>
+<li>2.二次探测法<br>类似上面的的方法，但是式子改为平方：f&#x3D;(k+di)MODm(di &#x3D; 1^2,-1^2,2^2,-2^2,…)</li>
+<li>3.随机探测法<br>di直接全是伪随机数</li>
+</ul>
+</li>
+<li>2.再散列函数法<br>实现准备多个散列函数，如果发生了哈希冲突就换一个继续算</li>
+<li>3.链地址法<br>不换位置了，在地址后面加链表，只要重名了就在链表后面加内容</li>
+<li>4.公共溢出区法<br>冲突的丢到溢出表里去，如果基本表查找到了最好，如果没查找到，那就去溢出表顺序查找。</li>
+</ul>
+<h2 id="3-排序"><a href="#3-排序" class="headerlink" title="3.排序"></a>3.排序</h2><p>这里我把所有会涉及到的排序问题都重新整理一遍</p>
+<h3 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="1.冒泡排序"></a>1.冒泡排序</h3><p>从前向后两两比较排序，如果逆向就交换，依次类推。<br><strong>时间复杂度</strong>：O(n^2^)</p>
+<pre><code>    class Solution&#123;
+    public:
+    void sort(vector&lt;int&gt;&amp; num)&#123;
+            int len = num.size();
+            for(int i=0;i&lt;len;i++)&#123;
+            for(int j=len-1;j&gt;i;j--)&#123;
+                    if(num[j]&lt;num[j-1])swap(num[j],num[j-1]);
+            &#125;
+            &#125;
+    &#125;
+    &#125;;
+</code></pre>
+<h3 id="2-简单选择排序"><a href="#2-简单选择排序" class="headerlink" title="2.简单选择排序"></a>2.简单选择排序</h3><p>和冒泡函数区别不大，只是将直接swap转为了判断最小值，接着记录最小值的位置</p>
+<h3 id="3-直接插入排序"><a href="#3-直接插入排序" class="headerlink" title="3.直接插入排序"></a>3.直接插入排序</h3><p>基本操作是将一个记录插入到排好序的有序表中<br><strong>步骤</strong>：</p>
+<ul>
+<li>1.先开辟一个用于存储的空间</li>
+<li>2.将需要调整的数存储下来</li>
+<li>3.由于该值之前的都已经被调序为有序表，所以只需要插入该值就好，以此类推成功插入。</li>
+</ul>
+<p>时间复杂度:O(n^2^)</p>
+<pre><code>    class Solution&#123;
+    public:
+    void sort(vector&lt;int&gt;&amp; num)&#123;
+            int length = num.size();
+            //在vector最前面的位置插入一个空位
+            num.insert(num.begin(),0);
+            int j = 0;
+            for(int i = 2;i&lt;=length;i++)&#123;
+            if(num[i]&lt;num[i-1])&#123;
+                    num[0] = num[i];
+                    for(j = i-1;num[j]&gt;num[0];j--)&#123;
+                    num[j+1] = num[j];
+                    &#125;
+                    num[j+1] = num[0]; 
+            &#125;
+            &#125;
+            num.erase(num.begin());
+    &#125;
+    &#125;;
+</code></pre>
+<h3 id="4-希尔排序"><a href="#4-希尔排序" class="headerlink" title="4.希尔排序"></a>4.希尔排序</h3><p>就是先把序列变得相对比较对，后面再通过最后之前的inc&#x3D;1从头到后排一遍最终排序。<br>时间复杂度：log(n^2&#x2F;3^)</p>
+<pre><code>    class Solution&#123;
+    public:
+    void sort(vector&lt;int&gt;&amp; num)&#123;
+            int inc = num.size();
+            while(inc&gt;1)&#123;
+            inc = inc/3+1;
+            for(int i=0;i&lt;num.size()-inc;i++)&#123;
+                    if(num[i]&gt;num[i+inc])swap(num[i],num[i+inc]);
+            &#125;
+            int a= 1;
+            &#125;
+    &#125;
+</code></pre>
+<p>};</p>
+<h3 id="5-堆排序"><a href="#5-堆排序" class="headerlink" title="5.堆排序"></a>5.堆排序</h3><p>分类：大顶堆和小顶堆，大顶堆堆顶元素就是最大值<br>步骤：</p>
+<ul>
+<li><p>1.构造一个大顶堆，保证非叶子节点都是大顶堆分布</p>
+</li>
+<li><p>2.数组第一个值与最后一个调换，同时重新堆排序（这次算上所有可用的元素）。</p>
+<pre><code>  class Solution&#123;
+  public:
+  void heap(vector&lt;int&gt;&amp; num,int n,int i)&#123;
+          int left = 2*i+1;
+          int right = 2*i+2;
+          int large = i;
+          if(left&lt;n &amp;&amp;num[left]&gt;num[large])&#123;
+          large = left;
+          &#125;
+          if(right&lt;n &amp;&amp;num[right]&gt;num[large])&#123;
+          large = right;
+          &#125;
+          if(large != i)&#123;
+          swap(num[i],num[large]);
+          heap(num,n,large);
+          &#125;
+  &#125;
+  void sort(vector&lt;int&gt;&amp; num)&#123;
+          int length = num.size();
+          for(int i = length/2-1;i&gt;=0;i--)&#123;
+          heap(num,length,i);
+          &#125;
+          for(int i = num.size()-1;i&gt;=0;i--)&#123;
+          swap(num[0],num[i]);
+          heap(num,i,0);
+          &#125;
+  &#125;
+  &#125;;
+</code></pre>
+</li>
+</ul>
+<h3 id="6-归并排序"><a href="#6-归并排序" class="headerlink" title="6.归并排序"></a>6.归并排序</h3><p>主要思想是将整个数组分成1的小数组，然后将小数组排序后1+1&#x3D;2，2+2&#x3D;4….慢慢合成一整个已经排序好的大数组</p>
+<pre><code>    class Solution&#123;
+    public:
+    void guibing(vector&lt;int&gt;&amp;vec,int left,int mid,int right)&#123;
+            vector&lt;int&gt;ll(mid-left+1);
+            vector&lt;int&gt;rr(right-mid);
+            for(int i = 0;i&lt;ll.size();i++)&#123;
+            ll[i] = vec[left+i];
+            &#125;
+            for(int i = 0;i&lt;rr.size();i++)&#123;
+            rr[i] = vec[mid+i+1];
+            &#125;
+            int i = 0,j=0,k=left;
+            while(i&lt;ll.size()&amp;&amp;j&lt;rr.size())&#123;
+            if(ll[i]&lt;rr[j])&#123;
+                    vec[k++]=ll[i++];
+            &#125;
+            else&#123;
+                    vec[k++]=rr[j++];
+            &#125;
+            &#125;   
+            while(i&lt;ll.size())&#123;
+            vec[k++]=ll[i++];
+            &#125;
+            while(j&lt;rr.size())&#123;
+            vec[k++]=rr[j++];
+            &#125;
+    &#125;
+    void sort(vector&lt;int&gt;&amp;vec,int left,int right)&#123;
+            if(left&lt;right)&#123;
+            int mid = (left+right)/2;
+            sort(vec,left,mid);
+            sort(vec,mid+1,right);
+            guibing(vec,left,mid,right);
+            &#125;
+    &#125;
+    &#125;;
+</code></pre>
+<h3 id="7-快速排序"><a href="#7-快速排序" class="headerlink" title="7.快速排序"></a>7.快速排序</h3><p>快速排序先将最左的元素设为key，然后将左右指针比较大小分别交换位置，接着将key赋值给二者相同的地方，这样就被分为了全都比key小和全都比key大两个部分，然后递归调用这个函数，对得到的这两个vec重新排序，以此类推。</p>
+<pre><code>    class Solution&#123;
+    public:
+    void sort(vector&lt;int&gt;&amp;vec,int left,int right)&#123;
+            if(left&gt;=right)return ;
+            int begin = left;
+            int end = right;
+            int key = vec[left];
+            while(begin&lt;end)&#123;
+            while(end&gt;begin&amp;&amp;vec[end]&gt;=key)&#123;
+                    end--;
+            &#125;
+            vec[begin] =vec[end];
+            while(end&gt;begin&amp;&amp;vec[begin]&lt;=key)&#123;
+                    begin++;
+            &#125;
+            vec[end] = vec[begin];
+            &#125;
+            vec[begin] = key;
+            sort(vec,left,begin-1);
+            sort(vec,begin+1,right);
+    &#125;
+    &#125;;
+</code></pre>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="1-为什么使用迭代器使用的-gt-first，但是对于哈希表unordered-map类型的数据就用的是-first"><a href="#1-为什么使用迭代器使用的-gt-first，但是对于哈希表unordered-map类型的数据就用的是-first" class="headerlink" title="1.为什么使用迭代器使用的-&gt;first，但是对于哈希表unordered_map类型的数据就用的是.first"></a>1.为什么使用迭代器使用的-&gt;first，但是对于哈希表unordered_map类型的数据就用的是.first</h2><p>答：引用就使用.first，指针就使用-&gt;first。<br><strong>引用与指针：</strong><br><strong>使用方式</strong>：<br>引用在使用时就像是被引用的变量本身一样，不需要使用*符号进行解引用。比如，a &#x3D; 10; 就相当于 b &#x3D; 10; 因为a和b在内存中存储的是同一个地址。<br>指针：指针在使用时需要使用*符号进行解引用，才能访问存储在该地址上的变量。比如，*p &#x3D; 10; 就相当于 a &#x3D; 10; 因为p存储的是a变量的内存地址。<br><strong>那么引用有什么卵用呢？</strong><br>引用在函数调用时可以避免复制大量的内存，因为它们是其所引用的变量的别名。在函数中对引用的修改会直接反映在原始变量上。</p>
 <h2 id="2-怎么对哈希表的第二个数值进行升序排列"><a href="#2-怎么对哈希表的第二个数值进行升序排列" class="headerlink" title="2.怎么对哈希表的第二个数值进行升序排列"></a>2.怎么对哈希表的第二个数值进行升序排列</h2><p>  正常情况下是无法直接使用sort对哈希表的第二个数值进行升序排序的，想要排序需要处理以下几步<br>  1.将哈希表转化为pair形式</p>
 <pre><code>    unordermap&lt;int,int&gt; a;
     vector&lt;pair&lt;int,int&gt;&gt;vec(a.begin(),map.end());
@@ -567,7 +806,46 @@ while (m--) &#123;
 <p>接着带入到sort里</p>
 <pre><code>    sort(vec.begin(),vec.end(),cmp);
 </code></pre>
-
+<h2 id="3-红黑树与平衡二叉树的差别"><a href="#3-红黑树与平衡二叉树的差别" class="headerlink" title="3.红黑树与平衡二叉树的差别"></a>3.红黑树与平衡二叉树的差别</h2><h3 id="1-平衡二叉树"><a href="#1-平衡二叉树" class="headerlink" title="1.平衡二叉树"></a>1.平衡二叉树</h3><ul>
+<li>规则1：每个节点最多只有两个子节点（二叉）</li>
+<li>规则2：每个节点的值比它的左子树所有的节点大，比它的右子树所有节点小（有序）</li>
+<li><strong>规则3</strong>：每个节点左子树的高度与右子树高度之差的绝对值不超过1</li>
+</ul>
+<h4 id="1-如何构造平衡二叉树"><a href="#1-如何构造平衡二叉树" class="headerlink" title="1.如何构造平衡二叉树"></a>1.如何构造平衡二叉树</h4><p>左左：右旋解决<br>左右：先左旋再右旋<br>右右：左旋解决<br>右左：先右旋再左旋</p>
+<p><em><strong>左左：</strong></em><br>插入前二叉树是平衡&#x3D;的，但是插入后不平衡了，同时不平衡是由于3号的<strong>左孩子</strong>节点新增了一个<strong>左孩子</strong>，所以被叫做左左，应对的方法是<strong>右旋</strong><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240818104601.png"><br>右旋后：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240818104807.png"></p>
+<p><em><strong>左右：</strong></em><br>如果3号是新插入的节点，在未插入之前，二叉树是平衡的，插入之后4号节点左右不平衡了，这种不平衡是34号的<strong>左孩子</strong>节点，新增了一个<strong>右孩子</strong>,我们的方法是<strong>先左旋再右旋</strong>。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240818104921.png"><br>结果：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240818104952.png"></p>
+<h3 id="2-红黑树"><a href="#2-红黑树" class="headerlink" title="2.红黑树"></a>2.红黑树</h3><p>红黑树的规则：<br>规则1: 每个节点不是黑色就是红色<br>规则2： 根节点为黑色<br>规则3：红色节点的父节点和子节点不能为红色<br>规则4：所有的叶子节点都是黑色（空节点视为叶子节点NIL）<br>规则5：每个节点到叶子节点的每个路径黑色节点的个数都相等。</p>
+<h4 id="1-平衡二叉树和红黑树的区别"><a href="#1-平衡二叉树和红黑树的区别" class="headerlink" title="1.平衡二叉树和红黑树的区别"></a>1.平衡二叉树和红黑树的区别</h4><ul>
+<li>平衡二叉树的左右子树的高度差绝对值不超过1，但是<strong>红黑树在某些时刻可能会超过1，只要符合红黑树的五个条件即可</strong>。</li>
+<li>二叉树只要不平衡就会进行旋转，而红黑树不符合规则时，有些情况只用改变颜色不用旋转，就能达到平衡。</li>
+</ul>
+<p>红黑树保持平衡的操作：变色+旋转</p>
+<h4 id="2-红黑树保持平衡操作："><a href="#2-红黑树保持平衡操作：" class="headerlink" title="2.红黑树保持平衡操作："></a>2.红黑树保持平衡操作：</h4><ul>
+<li><p>变色：<br>此时这个为树的一部分，这是违反了子节点与父节点不能为红色<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240818144917.png"><br>使用变色来解决<br>第一步：将父节点3和叔节点8变黑<br>第二步，将奶奶节点5变红。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240818145035.png"></p>
+</li>
+<li><p>旋转：<br>如果变色的方法不可用，那么我们需要使用旋转的方法。红黑树的旋转和平衡二叉树的旋转一样，只不过多了变色的步骤。<br>如果红色节点的<strong>父节点为红色，叔节点为黑色</strong>，那么我们就需要使用旋转的方法。<br>（1）左左<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240818145145.png"><br>右旋之后我们将原来的父节点变黑，将原来的奶奶节点变红<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240818145205.png"><br>（2）左右<br>右旋再左旋：如图是红黑树的一部分，8号节点的父节点为红色，叔节点为黑色。8号节点为右节点，8号节点的父节点为左节点，所以符合左右的情况。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240818145249.png"><br>使用左转右转再变色<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240818145322.png"></p>
+</li>
+</ul>
+<h4 id="3-构造红黑树"><a href="#3-构造红黑树" class="headerlink" title="3.构造红黑树"></a>3.构造红黑树</h4><p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44780082/article/details/112239269?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522172396309616800225586124%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=172396309616800225586124&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-112239269-null-null.142%5Ev100%5Epc_search_result_base5&utm_term=%E7%BA%A2%E9%BB%91%E6%A0%91%E5%92%8C%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91&spm=1018.2226.3001.4187" >红黑树与平衡二叉树<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="4-面试回答版"><a href="#4-面试回答版" class="headerlink" title="4.面试回答版"></a>4.面试回答版</h4><p><strong>怎么实现插入操作</strong>：</p>
+<ul>
+<li>将新插入的节点设为红色。</li>
+<li>若违反了红黑树性质4，则进行一系列旋转和变换来修正。</li>
+<li>最后将根节点设为黑色。</li>
+</ul>
+<p><strong>怎么实现删除操作</strong>：</p>
+<ul>
+<li>若被删除节点有两个非空子节点，则找到其后继节点（右子树的最小值或左子树的最大值），用后继节点替代原节点，再删除后继节点。</li>
+<li>若被删除节点只有一个子节点或没有子节点，则直接删除。</li>
+<li>删除后，若违反了红黑树性质4，则进行一系列旋转和变换来修正。</li>
+</ul>
+<h4 id="5-所以为什么map使用的是红黑树而不是平衡二叉树呢？"><a href="#5-所以为什么map使用的是红黑树而不是平衡二叉树呢？" class="headerlink" title="5.所以为什么map使用的是红黑树而不是平衡二叉树呢？"></a>5.所以为什么map使用的是红黑树而不是平衡二叉树呢？</h4><p><strong>1.性能</strong>：</p>
+<ul>
+<li>红黑树：红黑树是一种 弱平衡 二叉搜索树。在红黑树中，通过允许树的某些部分稍微不平衡，红黑树在<strong>插入和删除节点时，旋转次数较少</strong>。</li>
+<li>AVL树：AVL 树是一种 严格平衡 的二叉搜索树，在任何时候 AVL 树的每个节点的两个子树高度差不超过 1。尽管 AVL 树的<strong>查找效率比红黑树稍好</strong>，因为它更严格地保持平衡，但在插入和删除节点时，AVL 树往往需要<strong>更多的旋转操作</strong>以保持平衡，从而使这些操作的开销更大。<br><strong>2.查询功能</strong><br>AVL树要比红黑树的效率更高，但对于混合的插入、删除和查询操作，性能提升可能不足以抵消插入和删除操作的额外开销。</li>
+</ul>
+<p>因此红黑树的设计目标是在插入、删除和查询操作之间取得较好的平衡。虽然查询性能略逊于 AVL 树，但它在插入和删除操作的性能上更优，从而使其在综合应用场景中具有更好的表现。所以map选择使用红黑树而不是平衡二叉树</p>
+<h2 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h2>
             </div>
 
             
@@ -580,13 +858,13 @@ while (m--) &#123;
                         <div class="article-prev">
                             <a class="prev"
                                rel="prev"
-                               href="/2024/05/05/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E9%97%AE%E9%A2%98/"
+                               href="/2024/01/01/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B/"
                             >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                                 <span class="title flex-center">
-                                <span class="post-nav-title-item">计算机操作系统问题</span>
+                                <span class="post-nav-title-item">《网络是怎样连接的》</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                             </a>
@@ -596,10 +874,10 @@ while (m--) &#123;
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2024/01/01/%E7%BD%91%E7%BB%9C/"
+                               href="/2024/01/01/%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">《网络是怎样连接的》</span>
+                                <span class="post-nav-title-item">驱动实现</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">
