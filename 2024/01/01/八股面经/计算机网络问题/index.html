@@ -130,308 +130,407 @@
             <div class="main-content">
 
                 
-                    $avatarWidth = 3rem
-$arrow-icon-width = 1rem
-$post-nav-max-width = 14rem
-$article-title-font-size = 1.6rem
-$toc-container-width = 15rem
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
 
+            <div class="article-title">
+                <span class="title-hover-animation">计算机网络问题</span>
+            </div>
 
-.post-page-container {
-  position relative
-  display flex
-  justify-content space-between
-  box-sizing border-box
-  width 100%
-  height 100%
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/avatar.svg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">caijiQAQ</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            
+<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        
+            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
+        
+        <span class="pc">2024-01-01 09:28:41</span>
+        <span class="mobile">2024-01-01 09:28</span>
+    </span>
+    
+        <span class="article-update-date article-meta-item">
+        <i class="fas fa-file-pen"></i>&nbsp;
+        <span class="pc">2024-08-19 16:06:45</span>
+    </span>
+    
+    
+    
 
+    
+    
+    
+    
+</div>
 
-  &.show-toc {
-    .toc-content-container {
-      display block
-    }
+                        </div>
+                    </div>
+                </div>
+            
 
-    .article-content-container {
-      width 'calc(100% - %s)' % $toc-container-width
-    }
-  }
+            <div class="article-content keep-markdown-body">
+                
 
+                <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="1-计算机网络的体系："><a href="#1-计算机网络的体系：" class="headerlink" title="1.计算机网络的体系："></a>1.计算机网络的体系：</h3><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407101814.png"><br><strong>OSI7层模型：</strong><br>OSI 七层模型是国际标准化组织（International Organization for Standardization）制定的一个用于计算机或通信系统间互联的标准体系。</p>
+<ul>
+<li><p>应用层：应用层:是面向用户的 APP，承载用户的数据，微信聊天的文字、图片，抖音观看的视频等都属于应用层数据，常见的协议有：HTTP FTP  SMTP SNMP DNS.</p>
+</li>
+<li><p>表示层：<strong>计算机用自己的编码方式</strong>，对用户的数据进行编码。如用jpeg 编码方式来表示各种图片数据，用MP3编码方式来表示各种声音数据。当然，某公司为了安全起见也可以独创一套只要自己才能识别的编码方式来表示数据，不一样的格式。</p>
+</li>
+<li><p>会话层：两个程序之间的接口。例如APP可以调用微信支付，就是二者之间的会话层接口。 为什么美团就不能用支付宝支付呢？因为二者没有打通会话层这一层的关系。（API）</p>
+</li>
+<li><p>运输层：<strong>用于建立 TCP 或 UDP连接</strong>，并给数据报文打上端口号。<br>TCP 或 UDP 的连接区别是，TCP 传输<strong>可靠性高但是速度慢延迟高</strong>，UDP 刚好相反。根据不同的应用场景按需选择。给报文打上端口号的作用是，<strong>接收方可以识别报文属于什么应用程序</strong>，如 80 是网页的数据，4000是 QQ的数据，</p>
+</li>
+<li><p>网络层：IP地址和路由选择。给数据包打上IP地址，用于路由转发。有了IP地址，网络设备才知道数据包应该发往互联网上的哪个位置。<br><em><strong>网络层传输的流程:</strong></em> 在手机想要转发一个包时，需要提供目标地址，目标地址将会给<strong>路由器</strong>（也就是网关），其中路由器内部有路由表，可以查询到我应该发送给哪一个路由器。</p>
+</li>
+<li><p>数据链路层:数据链路层通常简称为链路层。将网络层传下来的IP数据包组装成帧，并再相邻节点的链路上传送帧<br>路由器将包丢给交换机之后。交换机通过看MAC地址来判断应该发送给哪台电脑。<br><em><strong>为什么不能直接使用路由器直接连接到电脑上？</strong></em></p>
+<ul>
+<li>局域网可以快速地进行数据交换。使用交换机可以创建一个局域网，连接多台设备，在一个局域网内设备之间可以进行更快速的数据交换。</li>
+<li>易于IP地址的管理：： 在一个局域网中，通常使用相同的IP地址子网，并且通过交换机连接到同一个网络。而路由器通常用于连接不同的子网或不同的网络，因此在一个局域网内直接连接到路由器可能会导致IP地址冲突或配置复杂。</li>
+</ul>
+<p><em><strong>常见的协议</strong></em><br>以太网；PPP：一种点对点的数据链路层协议，多用与广域网；</p>
+</li>
+<li><p>物理层：使用封装的包转换物理信号使用网线发送出去</p>
+</li>
+</ul>
+<p>TCP&#x2F;IP标准模型：应用层，传输层，网络层，网络接口层<br>TCP&#x2F;IP对等模型:应用层，传输层，网络层，数据链路层，物理层</p>
+<h3 id="2-每一层常见的网络协议"><a href="#2-每一层常见的网络协议" class="headerlink" title="2.每一层常见的网络协议"></a>2.每一层常见的网络协议</h3><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407102630.png"><br>HTTP、DNS是应用层的协议<br>TCP、UDP协议是传输层的协议标准。</p>
+<h3 id="3-数据各层之间的传输"><a href="#3-数据各层之间的传输" class="headerlink" title="3. 数据各层之间的传输"></a>3. 数据各层之间的传输</h3><p>发送方，从上层到下层层层包装；接收方，从下层到上层层层解开包装。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407104250.png"></p>
+<h3 id="4-TCP与UDP的报头"><a href="#4-TCP与UDP的报头" class="headerlink" title="4. TCP与UDP的报头"></a>4. TCP与UDP的报头</h3><p><strong>TCP报头：</strong><br>源端口：标识那个应用程序发送出来的。<br>目标端口：标识哪个应用程序接收。<br>序列号：标记报文传输报文的序号<br>确认号：用于收到报文的确认<br>头部长度：并不代表数据多长<br>控制位：包含FIN、ACK、SYN等标志位<br>Window：窗口TCP的流量控制，这个值表明当前<strong>接收端可接收的最大的数据总数</strong>(以字节为单位)。窗口最大为65535字节。长度为16比特。这个值是可变的，滑动端口机制。<br>校验字段：用于校验数据传输是否有损坏。<br><strong>UDP头部</strong><br>源端口：标识哪个应用程序发送。<br>目标端口：表示哪个应用程序接收<br>报文总长度。</p>
+<p>总结下来就是TCP会加很多的可靠性确认的东西在报头里，而UDP则非常简单，为了保证传输的速度。</p>
+<h3 id="5-TCP三次握手"><a href="#5-TCP三次握手" class="headerlink" title="5.TCP三次握手"></a>5.TCP三次握手</h3><p>发数据之前的确认过程，在传输数据之前通过确认的步骤来建立TCP连接。<br><em><strong>为什么是3次握手呢</strong></em>：因为TCP协议是要建立一个双向的连接。<br>1.PC1向PC2发送握手请求：其中SYN位置位代表了这是一个请求的序列，同时发送一个序列号Seq，这个序列号是随便选的<br>2.PC2 ACK置位返还回去<br>3.PC1 再发送一个SYN置位的包来确认PC2的连接请求<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407113855.png"></p>
+<h3 id="6-确认机制"><a href="#6-确认机制" class="headerlink" title="6.确认机制"></a>6.确认机制</h3><p>通过计算序列号与载荷长度之和返还回来来确认自己接收的数据大小。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407114329.png"></p>
+<h3 id="7-TCP的滑动窗口"><a href="#7-TCP的滑动窗口" class="headerlink" title="7.TCP的滑动窗口"></a>7.TCP的滑动窗口</h3><p>发送端会给自己能发送的最大的数据量，接收端则会返还一个自己所能接受的最大数据量。同时这个量也会因为接收端设置的win大小来动态变化。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407114648.png"></p>
+<h3 id="8-TCP四次挥手"><a href="#8-TCP四次挥手" class="headerlink" title="8.TCP四次挥手"></a>8.TCP四次挥手</h3><p>1.PC1将FIN置位 申请断开连接<br>2.PC2设置ACK位 返还回去，但是通信是双向的，无法直接停止发送，需要将所有的内容全部发送完之后才能断开连接。<br>3.PC2将所有的内容全部发送完，将FIN置位发送回去<br>4.PC1向PC2发送一个确认收到的信号<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407114937.png"></p>
+<h3 id="9-以太网MAC地址"><a href="#9-以太网MAC地址" class="headerlink" title="9.以太网MAC地址"></a>9.以太网MAC地址</h3><p>MAC地址：全球唯一，每个网卡独有，前三位是表示厂家<br>ARP协议：<br>1.hostA发送请求报文（这是一个广播包），请求得到hostB的MAC地址，hostB听到了这个广播包之后再把自己的MAC地址发给hostA<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407150823.png"></p>
+<h3 id="10-数据如何封装"><a href="#10-数据如何封装" class="headerlink" title="10.数据如何封装"></a>10.数据如何封装</h3><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407151611.png"></p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><h3 id="1-TCP和UDP的区别？"><a href="#1-TCP和UDP的区别？" class="headerlink" title="1.TCP和UDP的区别？"></a>1.TCP和UDP的区别？</h3><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407153148.png"><br><em><strong>报文和字节流的区别</strong></em>：</p>
+<ul>
+<li>结构vs无结构：报文有结构化的数据单元，字节流是一个没有明确定义结构的连续字节序列</li>
+<li>完整性： 报文在传输过程中作为一个完整的消息单元进行传输和处理，而字节流则以连续的字节序列的形式进行传输，接收端需要根据上下文和协议来解析和处理。</li>
+</ul>
+<h3 id="2-DNS和IP地址的区别"><a href="#2-DNS和IP地址的区别" class="headerlink" title="2.DNS和IP地址的区别"></a>2.DNS和IP地址的区别</h3><p>DNS是域名就像是<a class="link"   target="_blank" rel="noopener" href="http://www.baidu.com这样子,而ip地址是用于在互联网上唯一标识计算机或其他网络设备的数字地址.因此域名更像是ip地址的别名.dns由一系列分布式的dns服务器组成,这些服务器相互合作来处理dns查询请求,并将域名解析为ip地址./" >www.baidu.com这样子，而IP地址是用于在互联网上唯一标识计算机或其他网络设备的数字地址。因此域名更像是IP地址的别名。DNS由一系列分布式的DNS服务器组成，这些服务器相互合作来处理DNS查询请求，并将域名解析为IP地址。<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="3-三次握手的过程"><a href="#3-三次握手的过程" class="headerlink" title="3.三次握手的过程"></a>3.三次握手的过程</h3><ul>
+<li>1.主机发送SYN&#x3D;1同步序列号的报文段，以及初始序列号seq</li>
+<li>2.从机接收到信号，接着发送SYN&#x3D;1信号与ACK（acknowledge，确认）信号和自身的seq与报文ack将原有序列的值+1</li>
+<li>3.主机返回ACK信号，同时seq设为返回的x+1与ack报文设置为y+1</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407155001.png"></p>
+<h3 id="4-为什么是三次握手，不是二次握手"><a href="#4-为什么是三次握手，不是二次握手" class="headerlink" title="4.为什么是三次握手，不是二次握手"></a>4.为什么是三次握手，不是二次握手</h3><ul>
+<li>1.双方均确认自己与对方的发送与接受能力正常</li>
+<li>2.令双方都拿到了双方的初始序列号，三次握手可以令双方的序列号都得到了确认，如果只是两次握手就只有发起方的序列号会得到确认。</li>
+<li>3.防止已过期的连接请求报文突然又传送到服务器，因而产生错误和资源浪费。<br>在双方两次握手即可建立连接的情况下，假设客户端发送A报文段请求建立连接，由于网络原因造成A暂时无法到达服务器，服务器接收不到请求报文段就不会返回确认报文段。客户端在长时间得不到应答的情况下重新发送请求报文段 B，这次B顺利到达服务器，服务器随即返回确认报文并进入 ESTABLISHED 状态，客户端在收到 确认报文后也进入 ESTABLISHED 状态，双方建立连接并传输数据，之后正常断开连接。此时姗姗来迟的A报文段才到达服务器，服务器随即返回确认报文并进入 ESTABLISHED 状态，但是已经进入 CLOSED 状态的客户端无法再接受确认报文段，更无法进入 ESTABLISHED 状态，<strong>这将导致服务器长时间单方面等待，造成资源浪费。</strong></li>
+</ul>
+<h3 id="5-三次握手连接阶段，最后一次ACK包丢失，会发生什么？"><a href="#5-三次握手连接阶段，最后一次ACK包丢失，会发生什么？" class="headerlink" title="5.三次握手连接阶段，最后一次ACK包丢失，会发生什么？"></a>5.三次握手连接阶段，最后一次ACK包丢失，会发生什么？</h3><ul>
+<li>1.要求重发：第三次的ACK在网络中丢失，那么服务端该TCP连接的状态为SYN_RECV,并且会根据 TCP的超时重传机制，会等待3秒、6秒、12秒后重新发送SYN+ACK包，以便客户端重新发送ACK包。</li>
+<li>2.重发次数过多仍然未收到客户端返回的ACK应答，则自动关闭</li>
+</ul>
+<h3 id="6-详细介绍一下四次挥手的过程"><a href="#6-详细介绍一下四次挥手的过程" class="headerlink" title="6.详细介绍一下四次挥手的过程"></a>6.详细介绍一下四次挥手的过程</h3><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407161324.png"><br>最后还有一个时间等待2MSL的步骤。<br><em><strong>那么为什么最后这里要有一个TIME_WAIT等待环节而不是直接关闭呢？</strong></em></p>
+<ul>
+<li>1.确保ACK报文可以直接到达服务端，让服务端正常关闭连接。如果ACK报文由于某些原因并没有到达服务端，客户端就需要有些时间来等待服务端发送的<strong>重发请求</strong>，如果直接关闭那么就没有办法收到确认，也就无法关闭了。<br>MSL是报文段在网络存货的最长时间，等待两倍的最长报文段生存时间</li>
+<li>2.防止已失效的连接请求报文段出现后面的连接中。硬等让报文在网络上死完。<br>TCP 要求在 2MSL 内<strong>不使用相同的序列号</strong>。客户端在发送完最后一个 ACK报文段后，再经过时间2MSL，就可以保证本连接持续的时间内产生的所有报文段都从网络中消失。这样就可以使下一个连接中不会出现这种旧的连接请求报文段。或者即使收到这些过时的报文，也可以不处理它。</li>
+</ul>
+<h3 id="7-如果建立了连接，但是客户端出现障碍了怎么办。"><a href="#7-如果建立了连接，但是客户端出现障碍了怎么办。" class="headerlink" title="7.如果建立了连接，但是客户端出现障碍了怎么办。"></a>7.如果建立了连接，但是客户端出现障碍了怎么办。</h3><p>建立了连接但是一句话不说导致狠狠等待。<br>答：通过定时器+超时重试机制。通过定时器过一段时时间发送一段报文，如果连续发送的报文段都没有得到回应，则认为连接已经断开。<br>具体而言，TCP 设有一个保活计时器。服务器每收到一次客户端的数据，都会重新复位这个计时器，时间通常是设置为2小时。若2小时还没有收到客户端的任何数据，服务器就开始重试:每隔 75 分钟发送一个探测报文段，若一连发送 10 个探测报文后客户端依然没有回应，那么服务器就认为连接已经断开了。</p>
+<h3 id="8-TIME-WAIT状态过多会怎么样？"><a href="#8-TIME-WAIT状态过多会怎么样？" class="headerlink" title="8.TIME-WAIT状态过多会怎么样？"></a>8.TIME-WAIT状态过多会怎么样？</h3><p>从服务器来讲，短时间内关闭了大量的Client连接，就会造成服务器上出现大量的TIME_WAIT连接，严重消耗着服务器的资源，此时部分客户端就会显示连接不上。从客户端来讲，客户端TIME WAIT过多，就会导致端口资源被占用，因为端口就65536个，被占满就会导致无法创建新的连接。<br>解决方法：</p>
+<ul>
+<li>1.服务器可以设置 SO REUSEADDR 套接字选项来避免 TIME WAIT状态，此套接字选项告诉内核,即使此端口正忙(处于 TIME WAIT状态)，也请继续并重用它。</li>
+<li>2.强制关闭，发送RST包越过TIME_WAIT状态，直接进入close状态</li>
+<li>3.调整系统内核参数，修改&#x2F;etc&#x2F;sysctl.conf文件，即修改net.ipv4.tcp_tw_reuse 和tcp_timestamps</li>
+</ul>
+<h3 id="9-TCP协议如何保证可靠性"><a href="#9-TCP协议如何保证可靠性" class="headerlink" title="9.TCP协议如何保证可靠性"></a>9.TCP协议如何保证可靠性</h3><ul>
+<li>1.<strong>检验和</strong>：通过检验和的方式，接收端可以检测出来数据是否有差错和异常，如果有错就丢弃TCP段，重新发送。</li>
+<li>2.<strong>序列号&#x2F;确认应答</strong>：序列号的作用不仅仅是应答的作用，有了序列号能够将接收到的数据根据序列号排序，并且去掉重复序列号的数据。<br>TCP传输的过程中，每次接收方收到数据后，都会对传输方进行确认应答。也就是发送ACK报文，这个ACK报文当中带有对应的确认序列号，告诉发送方，接收到了哪些数据，下一次的数据从哪里发。</li>
+<li>3.<strong>滑动窗口</strong>:滑动窗口既提高了报文传输的效率，也避免了发送方发送过多的数据而导致接收方无法正常处理的异常</li>
+<li>4.<strong>超时重传</strong>:超时重传是指发送出去的数据包到接收到确认包之间的时间，如果超过了这个时间会被认为是丢包了，需要重传。最大超时时间是动态计算的。</li>
+<li>5.<strong>拥塞控制</strong>:在数据传输过程中，可能由于网络状态的问题，造成网络拥堵，此时引入拥塞控制机制，在保证TCP可靠性的同时，提高性能。</li>
+<li>6.<strong>流量控制</strong>:如果主机A一直向主机B发送数据，不考虑主机B的接受能力，则可能导致主机B的接受缓冲区满了而无法再接受数据，从而会导致大量的数据丢包，引发重传机制。而在重传的过程中，若主机B的接收缓冲区情况仍未好转，则会将大量的时间浪费在重传数据上，降低传送数据的效率。所以引入流量控制机制，主机B通过告诉主机A自己接收缓冲区的大小，来使主机A控制发送的数据量。流量控制与TCP协议报头中的窗口大小有关。</li>
+</ul>
+<h3 id="10-讲解下TCP滑动窗口"><a href="#10-讲解下TCP滑动窗口" class="headerlink" title="10.讲解下TCP滑动窗口"></a>10.讲解下TCP滑动窗口</h3><p>在进行数据传输时，如果传输的数据比较大，就需要拆分为多个数据包进行发送。TCP 协议需要对数据进行确认后，才可以发送下一个数据包。这样一来，就会在等待确认应答包环节浪费时间。为了避免这种情况，TCP引入了窗口概念。<strong>窗口大小指的是不需要等待确零包而可以继续发送数据包的最大值</strong>。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240407165806.png"><br>滑动窗口里面也分为两块，一块是<strong>已经发送但是未被确认的分组</strong>，另一块是<strong>窗口内等待发送的分组</strong>。<br><font style = "color:red">滑动窗口的大小</font>取决于拥塞控制窗口和流量控制窗口的两者间的最小值</p>
+<h3 id="11-计算机网络有哪两种通信方式"><a href="#11-计算机网络有哪两种通信方式" class="headerlink" title="11.计算机网络有哪两种通信方式"></a>11.计算机网络有哪两种通信方式</h3><p><strong>客户-服务器模型</strong>：</p>
+<ul>
+<li>客户端是服务的请求方，服务器是服务的提供方。客户端发送请求，服务器接收并处理请求，并将结果返回给客户端。这种方式适用于Web应用、数据库访问等场景。</li>
+</ul>
+<p><strong>对等连接(P2P)模型</strong>：</p>
+<ul>
+<li>两台主机之间的通信不区分谁是服务请求方和谁是服务提供方。两个或多个计算机之间的通信是对等的，可以相互交换信息和资源。这种方式广泛应用于文件共享、实时通信和分布式计算等场景。</li>
+</ul>
+<h3 id="12-子网掩码和网关"><a href="#12-子网掩码和网关" class="headerlink" title="12.子网掩码和网关"></a>12.子网掩码和网关</h3><p>子网掩码是IP地址中用来区分网络部分和主机部分的一个数值</p>
+<ul>
+<li><p><strong>IP地址</strong>：由32位二进制数表示，通常以四个8位二进制数（即四个字节）组成的形式表示，如 192.168.1.1。它分为两个部分：网络部分（标识网络）和主机部分（标识网络中的特定设备）。</p>
+</li>
+<li><p><strong>子网掩码</strong>：也是一个32位的二进制数，用来划分IP地址的网络部分和主机部分。在子网掩码中，连续的1表示网络部分，连续的0表示主机部分。例如，子网掩码 255.255.255.0 对应的二进制形式是 11111111.11111111.11111111.00000000，这表示前24位为网络部分，后8位为主机部分。</p>
+</li>
+</ul>
+<p>网关</p>
+<ul>
+<li><strong>网关</strong>是一个网络设备，它负责连接本地网络与其他网络，通常是连接到因特网的出口设备。网关设备接收本地网络内的请求，并将这些请求转发到外部网络（如互联网）或其他子网。</li>
+<li><strong>默认网关</strong>（Default Gateway）：在计算机网络中，当一台设备试图与位于不同网络的另一台设备通信时，如果没有指定特定的路由，那么它会将数据包发送到默认网关。默认网关通常是路由器的IP地址，它可以引导数据包到达外部网络。</li>
+</ul>
+<h3 id="13-什么是TCP-x2F-IP"><a href="#13-什么是TCP-x2F-IP" class="headerlink" title="13.什么是TCP&#x2F;IP"></a>13.什么是TCP&#x2F;IP</h3><p><strong>TCP&#x2F;IP是一种网络通信协议，它是互联网中最常用的协议之一。TCP&#x2F;IP有两个基本的协议：TCP（传输控制协议）和IP（互联网协议）。</strong></p>
+<ul>
+<li><strong>TCP</strong>（Transmission Control Protocol，传输控制协议）是一种可靠的、面向连接的协议。它负责在网络上将数据分割成小的数据包，并且确保这些数据包按照正确的顺序传输到目标设备。TCP还提供了丢包重传、拥塞控制和流量控制等功能，以保证数据的可靠传输。</li>
+<li><strong>IP</strong>（Internet Protocol，互联网协议）是一种网络层协议，它负责在网络上将数据包从源设备路由到目标设备。IP使用唯一的IP地址标识设备，并且通过路由器将数据包从一个网络传递到另一个网络。IP还负责处理分组的分片和重组，以适应不同网络的最大传输单元（MTU）。</li>
+</ul>
+<p>TCP应用于传输层，用于保证数据包的可靠传递错误检查。而IP协议则是用于网络层中，主要是负责包在不同网络之间路由和转发，根据目标IP地址决定数据包的传输路径。</p>
+<h3 id="14-TCP的可靠机制"><a href="#14-TCP的可靠机制" class="headerlink" title="14.TCP的可靠机制"></a>14.TCP的可靠机制</h3><p>主要TCP可靠机制体现在：序列号和确认机制，超时重传机制，滑动窗口，拥塞控制机制，数据校验和错误检测这几点上。</p>
+<ul>
+<li><p><strong>序列号和确认机制</strong>：<br>TCP报文使用序列号和确认号字段来实现数据的可靠传输。发送方的TCP将每个字节的数据进行编号，并按序发送。接收方根据接收到的字节进行确认，并回复确认号，表示期望接收的下一个字节的序列号。如果发送方未收到确认，或者收到的数据有丢失、重复或损坏，发送方将重传数据。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240810222942.png"></p>
+</li>
+<li><p><strong>超时重传机制：</strong><br>TCP使用超时重传机制来处理丢失的数据或确认。发送方设置一个定时器，在发送数据后等待一段时间，如果在该时间内未收到确认，发送方会假设数据丢失，并<strong>重传数据</strong>。接收方通过确认号来判断是否有丢失的数据，如果接收到重复的数据，将丢弃并发送确认。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240810223226.png"></p>
+</li>
+<li><p><strong>滑动窗口：</strong><br>TCP使用滑动窗口机制来进行流量控制。每个TCP报文中包含一个窗口大小字段，发送方根据接收方的窗口大小来控制发送的数据量。接收方根据自身处理能力和可用缓冲区大小来设置窗口大小，发送方根据接收方窗口大小来调整发送速率，以避免数据的拥塞和丢失。</p>
+</li>
+<li><p><strong>拥塞控制机制：</strong><br>TCP使用拥塞控制机制来适应网络拥塞情况。通过动态调整发送速率和窗口大小，TCP可以避免网络拥塞并提供公平共享带宽。TCP使用拥塞窗口和慢启动、拥塞避免、快速重传、快速恢复等算法来控制拥塞，并根据网络状况进行自适应调整。</p>
+</li>
+<li><p><strong>数据校验和错误检测：</strong><br>TCP使用校验和字段来检测数据在传输过程中的错误。接收方在接收到TCP报文后计算校验和，如果校验和不匹配，则认为数据出现错误，并请求发送方重新发送数据</p>
+</li>
+</ul>
+<h3 id="15-什么是TCP粘包现象？"><a href="#15-什么是TCP粘包现象？" class="headerlink" title="15.什么是TCP粘包现象？"></a>15.什么是TCP粘包现象？</h3><p>tcp粘包是指发送方发送的若干包数据到接收方接受时粘成一包，从接收缓冲去看，后一包数据的头紧接着前一包数据的尾。粘包会导致消息边界不清晰和数据丢失或混乱。<br><strong>产生原因：</strong><br>发送方原因：发送端发送数据较快：如果发送方发送数据的速度较快，且每次发送的数据量较小，TCP 可能会将这些小数据包合并成一个较大的数据包进行传输，以提高传输效率。接收方接收数据时，就会收到一个包含多个消息的粘连数据包。<br>接收方原因：接收端接收数据较慢：当tcp接收分组的速度大于应用程序读分组的速度，多个包就会被存至缓存，应用程序读时，就会读到多个首尾相接粘到一起的包<br><strong>如何处理</strong><br>在应用层协议中引入机制来明确消息边界：</p>
+<ul>
+<li>1.定长消息：<br>如果每条消息的长度是固定的，可以根据固定的长度读取数据，这样接收方就可以确定消息的边界。</li>
+<li>2.使用特殊分隔符：<br>在每条消息的末尾添加一个特殊的分隔符（如换行符 \n 或其他特定字符），接收方可以通过检查分隔符来确定消息的边界。</li>
+<li>3.消息头标识：<br>在每条消息的前面加上一个固定长度的消息头，消息头中包含表示消息长度的字段。接收方先读取消息头，解析出消息的长度，再根据长度读取消息内容。</li>
+</ul>
+<h3 id="16-TCP的ACK机制有什么好处？"><a href="#16-TCP的ACK机制有什么好处？" class="headerlink" title="16.TCP的ACK机制有什么好处？"></a>16.TCP的ACK机制有什么好处？</h3><p>TCP的ACK（确认）机制是指在TCP连接中，接收方通过发送ACK报文来确认已成功接收到发送方的数据。ACK机制的主要作用是保证数据的可靠传输和实现流量控制。</p>
+<ul>
+<li>1.<strong>可靠性确认</strong>：可以确认已经接受到了发送方的数据。确保发送的数据不会丢失</li>
+<li>2.<strong>流量控制</strong>：ACK机制可以帮助控制数据发送的速率。在接收方的ACK报文中，会包含一个窗口字段（接收窗口），表示接收方所能接收的数据量。发送方根据接收窗口的大小来调整发送数据的速率，以避免发送方持续发送过多的数据，导致接收方无法及时处理和接收，从而实现流量控制，避免网络拥塞和数据丢失。</li>
+<li>3.<strong>乱序处理</strong>：ACK机制可以用于处理乱序到达的数据包。接收方在收到乱序的数据包后，可以通过发送ACK报文来通知发送方已经接收到哪些数据包，以便发送方进行数据包的重排和重传，确保数据的顺序性。</li>
+<li>4.<strong>建立和维护连接</strong>：通过ACK机制，发送方和接收方可以相互确认对方的存在和可达性，进而建立和维护TCP连接。</li>
+</ul>
+<h3 id="17-如何让UDP也变的可靠"><a href="#17-如何让UDP也变的可靠" class="headerlink" title="17.如何让UDP也变的可靠"></a>17.如何让UDP也变的可靠</h3><ul>
+<li>1.<strong>应用层实现可靠性</strong>：应用程序可以在应用层上通过一些机制来实现UDP的可靠性。例如，发送方可以在发送数据前对数据进行冗余校验，接收方可以检查校验和，并请求重传丢失的数据。</li>
+<li>2.<strong>增加ACK机制</strong>：发送方可以在UDP上实现类似TCP的ACK机制来确认接收到的数据包。当接收方接收到数据包时，发送一个ACK（确认）回执给发送方，告知数据包已成功接收。</li>
+<li>3.<strong>重传机制</strong>：周期检查是否获取到ACK的数据包，如果没有则进行重传令其变得可靠</li>
+<li>4.<strong>使用确认机制</strong>：接收方可以在接收到数据包后向发送方发送确认消息，告知发送方已成功接收。发送方在收到确认消息后，才会发送下一个数据包。</li>
+</ul>
+<h3 id="18-UDP为什么没有粘包？"><a href="#18-UDP为什么没有粘包？" class="headerlink" title="18.UDP为什么没有粘包？"></a>18.UDP为什么没有粘包？</h3><p>TCP为了保证可靠传输并减少额外的开销（每次发包都要验证），采用了<strong>基于流的传输</strong>，基于流的传输不认为消息是一条一条的，是无保护消息边界的（保护消息边界：指传输协议把数据当做一条独立的消息在网上传输，接收端一次只能接受一条独立的消息）。</p>
+<p>UDP则是<strong>面向消息传输的</strong>，是有保护消息边界的，接收方一次只接受一条独立的信息，所以不存在粘包问题。</p>
+<h3 id="19-socket网络编程步骤"><a href="#19-socket网络编程步骤" class="headerlink" title="19.socket网络编程步骤"></a>19.socket网络编程步骤</h3><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240815112707.png"><br><strong>bind()</strong>:绑定套接字到指定的IP地址和端口号：使用bind()函数，传入套接字、本地地址和端口号。</p>
+<h3 id="20-socket属于网络的哪个层"><a href="#20-socket属于网络的哪个层" class="headerlink" title="20.socket属于网络的哪个层"></a>20.socket属于网络的哪个层</h3><p>Socket属于<strong>传输层</strong>。</p>
+<ul>
+<li>1.Socket是应用程序和网络传输层之间的接口，它提供了一套编程接口，允许应用程序通过传输协议（如TCP或UDP）进行网络通信。通过Socket，应用程序可以创建连接、发送和接收数据。</li>
+<li>2.具体来说，当应用程序使用TCP协议时，它可以使用Socket接口来建立一个TCP连接，并通过Socket发送和接收可靠的字节流数据。当应用程序使用UDP协议时，它可以使用Socket接口来发送和接收不可靠的数据报。</li>
+<li>3.由于Socket直接与传输协议交互，并提供了对传输层功能的访问，因此它被认为属于传输层。它将应用程序和网络层之间进行了解耦，使得应用程序可以方便地进行网络通信操作，无需关注底层的网络细节。</li>
+</ul>
+<h3 id="21-什么是长连接、短连接"><a href="#21-什么是长连接、短连接" class="headerlink" title="21.什么是长连接、短连接"></a>21.什么是长连接、短连接</h3><p><strong>长连接（Keep-Alive连接）</strong>：</p>
+<ul>
+<li>长连接指在一次连接中可以进行多次数据传输的连接方式。在建立连接后，客户端和服务器保持该连接，可以连续发送和接收数据。</li>
+<li>长连接通常使用TCP协议，因为TCP是一种可靠的、面向连接的协议，适合长时间的持续通信。</li>
+<li>长连接可以减少连接的建立和关闭的开销，提高通信效率，适用于实时性较高、频繁通信的场景，如聊天应用、实时数据传输等。</li>
+</ul>
+<p><strong>短连接</strong>：</p>
+<ul>
+<li>短连接是一次性的、即时的连接。在完成一次数据传输后，连接会被立即关闭。</li>
+<li>短连接可以使用TCP或UDP协议，但&#x3D;&#x3D;更常见的是使用UDP协议&#x3D;&#x3D;，因为UDP是一种无连接的协议，不需要保持持久连接。</li>
+<li>短连接适用于数据传输较少的场景，如发送一次请求获取某个资源，数据传输完成后连接<strong>即可关闭</strong>。</li>
+</ul>
+<h3 id="22-如何应对短连接、高并发的场景？"><a href="#22-如何应对短连接、高并发的场景？" class="headerlink" title="22.如何应对短连接、高并发的场景？"></a>22.如何应对短连接、高并发的场景？</h3><ul>
+<li>1.<strong>优化主机系统设置</strong>：降低SYN timeout时间，以便尽快释放占用的半连接。使用SYN cookie设置，为每个连接请求的IP地址分配一个Cookie，当连续收到一个IP地址的重复SYN报文时，认为可能受到攻击，并拒绝来自该IP地址的后续包。</li>
+<li>2.<strong>使用长连接</strong>：在使用长连接的情况下，客户端和服务器之间的TCP连接在一个网页打开后不会立即关闭，而是保持连接状态，如果客户端再次访问服务器上的网页，可以继续使用已经建立的连接，避免<strong>频繁建立和关闭连接的开销</strong>。</li>
+</ul>
+<p><strong>处理手段</strong>：<br>1.采用多IO复用模型：使用select、epoll等多路复用技术处理多个连接的读写操作。这样可以在一个线程或进程内同时处理多个连接，提高系统的并发能力。<br>2.使用队列进行削峰和缓存：引入消息队列，将请求加入队列中，然后使用多个消费者进行处理。这种方式可以平滑处理峰值请求，并提高系统的可伸缩性和容错性。使用缓存来存储一些频繁访问的数据或计算结果，减少对后端系统的访问，提高系统响应速度。<br>3.采用多服务器负载均衡：使用负载均衡技术将请求分发到多个服务器上，确保每个服务器都能均衡处理请求，提高系统的吞吐量和可靠性。<br>4.使用缓存：使用缓存系统如Redis来缓存经常访问的数据，减少对后端系统的访问，提高系统的响应速度和并发处理能力。</p>
+<h3 id="23-什么是洪泛攻击？"><a href="#23-什么是洪泛攻击？" class="headerlink" title="23.什么是洪泛攻击？"></a>23.什么是洪泛攻击？</h3><p>洪泛攻击（Flood Attack）是一种旨在压倒目标系统的网络攻击形式。在洪泛攻击中，攻击者发送大量的请求或数据包到目标系统，使其资源（如带宽、处理能力、存储空间等）被消耗殆尽，导致服务无法正常响应合法用户的请求。</p>
+<p><em><strong>洪泛攻击什么方式？</strong></em></p>
+<ul>
+<li>1.TCP SYN Flood：攻击者发送大量的TCP连接请求（SYN包）到目标系统上，但不完整建立连接，从而消耗系统资源。</li>
+<li>2.UDP Flood：攻击者发送大量的UDP数据包到目标系统上，由于UDP是无连接协议，目标系统会试图处理这些数据包，导致资源耗尽。</li>
+<li>3.ICMP Flood：攻击者发送大量的ICMP请求（Ping）到目标系统上，使其消耗大量的带宽和处理能力。</li>
+</ul>
+<p><em><strong>怎么预防洪泛攻击？</strong></em></p>
+<ul>
+<li>1.<strong>降低SYN timeout时间</strong>：将主机系统的SYN timeout时间设置为较短的值，可以使主机更快地释放占用的半连接资源。这样可以减小洪泛攻击造成的资源占用，提高系统的可用性。</li>
+<li>2.<strong>使用SYN cookie</strong>：采用SYN cookie技术可以有效抵御SYN洪泛攻击。当主机收到SYN请求时，使用加密算法和时间信息生成一个特定的Cookie，并将其发送给客户端。客户端在后续的ACK请求中返回该Cookie作为验证，从而<strong>识别和拒绝恶意的洪泛攻击请求</strong>。</li>
+<li>3.<strong>使用防火墙和DDoS防护设备</strong>：设置防火墙规则和使用专门的DDoS防护设备，可以帮助识别和过滤恶意洪泛攻击流量，保护主机系统的正常运行。防火墙可以通过过滤源IP地址、端口、协议等信息来限制来自恶意攻击者的访问。</li>
+<li>4.<strong>使用长连接</strong>：在通信协议中采用长连接的方式可以减少连接建立和释放的开销。长连接可以使得客户端和服务器之间复用已经建立的连接，减少了频繁建立和关闭连接的次数，从而降低了洪泛攻击对主机系统的压力。</li>
+</ul>
+<h3 id="24-简述一下Nagle算法"><a href="#24-简述一下Nagle算法" class="headerlink" title="24.简述一下Nagle算法"></a>24.简述一下Nagle算法</h3><p>Nagle算法是一种改善TCP传输效率的流量控制算法。它的目标是减少带宽的浪费，提高网络传输效率。Nagle算法在发送端对数据进行缓冲和合并，在一定条件下将多个小数据包合并成一个较大的数据包进行发送。</p>
+<p>Nagle算法的工作原理如下：</p>
+<ul>
+<li>1.<strong>数据缓冲</strong>：当应用程序发送了一个小数据包时，TCP协议栈会将数据先放入**发</li>
+<li>送缓冲区**而不是立即发送。这样可以积累一些数据，减少单个数据包的数量。</li>
+<li>2.<strong>数据合并</strong>：在缓冲区中积累了一定量的数据之后，TCP协议栈会检查是否可以发送数据。判断的依据是，要么已经收到了对之前数据包的ACK确认，要么达到了最大传输窗口的半满状态。</li>
+<li>3.<strong>发送数据</strong>：当合并的数据包满足发送条件时，TCP协议栈将缓冲区中的数据一次性发送出去。</li>
+</ul>
+<p>Nagle算法通过缓冲和合并数据，<strong>减少小数据包的发送次数</strong>，提高带宽利用率。但在特定场景下，需要权衡实时性和传输效率，选择是否启用或禁用Nagle算法</p>
+<h3 id="25-ARP协议是为了解决？"><a href="#25-ARP协议是为了解决？" class="headerlink" title="25.ARP协议是为了解决？"></a>25.ARP协议是为了解决？</h3><p>MAC 地址和 IP 地址之间的映射。<br>ARP（地址解析协议）用于将网络中的 IP 地址映射为物理网络的 MAC 地址。当一台设备需要发送数据到另一个设备时，它需要知道对方的 MAC 地址。ARP 协议通过广播 IP 地址，询问网络上与之对应的 MAC 地址，然后将二者进行映射。</p>
+<h3 id="26-什么是http协议？"><a href="#26-什么是http协议？" class="headerlink" title="26.什么是http协议？"></a>26.什么是http协议？</h3><p>HTTP（Hyper Text Transfer Protocol）： 全称<strong>超文本传输协议</strong>，是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。<br>HTTP 是一种应用层协议，是基于 TCP&#x2F;IP 通信协议来传递数据的，其中 HTTP1.0、HTTP1.1、HTTP2.0 均为 TCP 实现，HTTP3.0 基于 UDP 实现。现主流使用 HTTP1.0 和 HTTP3.0。</p>
+<h4 id="1-http协议的工作过程"><a href="#1-http协议的工作过程" class="headerlink" title="1.http协议的工作过程"></a>1.http协议的工作过程</h4><p>当我们在浏览器输入一个网址，此时浏览器就会给对应的服务器发送一个 <strong>HTTP 请求</strong>，对应的服务器收到这个请求之后，经过计算处理，就会返回一个 <strong>HTTP 响应</strong>。并且当我们访问一个网站时，可能涉及不止一次的 HTTP 请求和响应的交互过程。<br><strong>http协议的重要特点：一发一收，一问一答。</strong><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819143257.png"></p>
+<h4 id="2-http协议的格式"><a href="#2-http协议的格式" class="headerlink" title="2.http协议的格式"></a>2.http协议的格式</h4><p>http请求格式：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819143531.png"><br>http响应格式:<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819143545.png"></p>
+<p><em><strong>为什么 HTTP 报文中要存在空行呢？</strong></em></p>
+<ul>
+<li>因为 HTTP 协议并没有规定报头部分的键值对<strong>有多少个</strong>，使用空行就相当于是报文的结束标记或报文和正文之间的分隔符</li>
+<li>HTTP 在传输层依赖 TCP 协议，TCP 是面向<strong>字节流</strong>的。如果没有这个空行，就会出现”粘包问题”</li>
+</ul>
+<h4 id="3-http请求"><a href="#3-http请求" class="headerlink" title="3.http请求"></a>3.http请求</h4><ul>
+<li><p>1.认识URL<br>URL其实就是俗称的网址，互连网上的每个文件都有一个唯一的 URL，它包含的信息指出文件的位置以及浏览器应该怎么处理它。</p>
+</li>
+<li><p>2.解释“方法”<br>方法就是HTTP请求报文中的首行的第一个部分，这里有一堆方法，但是常用到的其实就只有两个 <strong>GET 和 POST</strong></p>
+<p><strong>GET</strong>：GET 是最常用的 HTTP 方法，常用于获取服务器上的某个资源。<br>GET请求的特点：<br>首行里面的第一个部分就是 GET</p>
+</li>
+</ul>
+<p>URL 里面的 query string 可以为空，也可以不为空<br>GET 请求的 header 有若干个键值对结构<br>GET 请求的 body 一般是空的<br><strong>POST</strong>：POST 方法也是一种常见的方法，多用于提交用户输入的数据给服务器（如登录页面）</p>
+<h4 id="4-GET和POST的区别"><a href="#4-GET和POST的区别" class="headerlink" title="4.GET和POST的区别"></a>4.GET和POST的区别</h4><p>GET 和 POST 其实没有本质区别，使用 GET 的场景完全可以使用 POST 代替，使用 POST 的场景一样可以使用 GET 代替。但是在具体的使用上，还是存在一些细节的区别</p>
+<ul>
+<li>GET 习惯上会把客户端的数据通过 query string 来传输（body 部分是空的）；POST 习惯上会把客户端的数据通过 body 来传输（query string 部分是空的）</li>
+<li>GET 习惯上用于从服务器获取数据；POST 习惯上是客户端给服务器提交数据</li>
+<li>一般情况，程序员会把 GET 请求的处理，实现成“幂等”的；对于 POST 请求的处理，不要求实现成“幂等”</li>
+<li>GET 请求可以被缓存，可以被浏览器保存到收藏夹中；POST 请求不能被缓存</li>
+</ul>
+<h3 id="27-socket和http的区别和应用场景"><a href="#27-socket和http的区别和应用场景" class="headerlink" title="27.socket和http的区别和应用场景"></a>27.socket和http的区别和应用场景</h3><p><strong>Socket（套接字）</strong>： Socket是一种通用的网络编程接口，它提供了一种在计算机网络上进行通信的方式。Socket允许不同计算机之间的进程通过网络进行数据传输和交流。它提供了底层的数据传输功能，可以实现点对点的数据传输。</p>
+<p><strong>socket的特点</strong></p>
+<ul>
+<li>1.基于传输层协议，如TCP、UDP</li>
+<li>2.提供了底层的数据传输接口，可以直接读写数据。</li>
+<li>3.可以实现实时的双向数据传输。</li>
+<li>4.灵活性高，可以自定义通信协议。<br>Socket的应用场景： Socket适用于需要实时、双向通信的场景，例如实时聊天、实时游戏、视频流传输等。它可以在网络上直接传输数据，可以自定义通信协议，适用于各种特定需求的应用。</li>
+</ul>
+<p><strong>HTTP（超文本传输协议）</strong>： HTTP是一种应用层协议，它建立在Socket之上，用于在Web上进行数据传输。HTTP是一种无状态、请求-响应的协议，客户端发送请求，服务器返回响应。HTTP通常使用TCP作为传输层协议。</p>
+<p><strong>HTTP的特点</strong></p>
+<ul>
+<li>1.基于请求-响应模型，客户端发送请求，服务器返回响应。</li>
+<li>2.使用URL来标识资源。</li>
+<li>3.无状态，每个请求都是独立的，服务器不会保留客户端的状态信息。</li>
+<li>4.支持多种请求方法，如GET、POST、PUT、DELETE等。</li>
+</ul>
+<h3 id="28-什么是http的请求体？"><a href="#28-什么是http的请求体？" class="headerlink" title="28.什么是http的请求体？"></a>28.什么是http的请求体？</h3><p>HTTP请求由请求方法（HTTP Method）、URL、协议版本和请求首部字段组成。<br>以下是HTTP请求的基本结构：</p>
+<ul>
+<li>请求方法（HTTP Method）：指示服务器应该执行的操作类型。常见的HTTP请求方法包括：<strong>GET：获取资源POST：提交数据，创建资源</strong>PUT：更新资源DELETE：删除资源HEAD：获取资源的头部信息OPTIONS：获取服务器支持的请求方法和功能PATCH：对资源进行部分更新</li>
+<li>URL（Uniform Resource Locator）：指定要请求的资源的地址。URL由协议、主机名、端口号和路径组成，例如：<a class="link"   target="_blank" rel="noopener" href="http://example.com/api/users%E3%80%82" >http://example.com/api/users。<i class="fas fa-external-link-alt"></i></a></li>
+<li>协议版本：指定使用的HTTP协议版本。常见的协议版本包括HTTP&#x2F;1.1和HTTP&#x2F;2。</li>
+<li>请求首部字段：包含了请求的附加信息，以键值对的形式出现。常见的请求首部字段包括：Host：指定服务器的主机名和端口号User-Agent：标识客户端的用户代理信息Content-Type：指定请求体的数据类型Content-Length：指定请求体的长度Authorization：用于身份验证的凭据Cookie：包含客户端的Cookie信息Accept：指定客户端能够接受的响应内容类型Referer：指示请求的来源URL</li>
+<li>请求体：可选的，包含了请求的数据内容。它通常在POST、PUT等请求方法中使用，用于向服务器提交数据。</li>
+</ul>
+<h3 id="29-http和https的区别？"><a href="#29-http和https的区别？" class="headerlink" title="29.http和https的区别？"></a>29.http和https的区别？</h3><ul>
+<li>1.HTTP（Hypertext Transfer Protocol）是一种用于在客户端和服务器之间传输数据的协议。它是基于TCP&#x2F;IP协议的应用层协议。</li>
+<li>2.HTTP是明文传输协议，数据在传输过程中不加密，容易被窃听和篡改。</li>
+<li>3.HTTPS（Hypertext Transfer Protocol Secure）是具有安全性的<strong>TLS（Transport Layer Security）加密传输协议</strong>。</li>
+<li>4.HTTPS通过使用<strong>SSL或TLS协议对数据进行加密和身份验证</strong>，提供了更高的安全性。</li>
+<li>5.HTTPS在建立连接方面，除了三次握手之外，还需要进行<strong>SSL握手</strong>，用于协商加密使用的对称密钥。</li>
+<li>6.使用HTTPS需要服务器申请并安装数字证书，确保浏览器能够验证服务器的身份，并确保通信的安全性。</li>
+<li>7.HTTP默认使用<strong>端口80</strong>进行通信，而HTTPS默认使用<strong>端口443</strong>进行通信。</li>
+</ul>
+<h3 id="30-HTTPS的加密原理"><a href="#30-HTTPS的加密原理" class="headerlink" title="30.HTTPS的加密原理"></a>30.HTTPS的加密原理</h3><p>客户端与服务器端使用握手协议来建立安全连接：</p>
+<ul>
+<li>1.客户端发送一个安全连接请求</li>
+<li>2.服务器将自己的<strong>数字证书</strong>发送给客户端。证书包含<strong>服务器的公钥。</strong></li>
+<li>3.客户端验证服务器的证书，包括确认证书的合法性和验证证书颁发机构的信任。</li>
+<li>4.客户端生成一个随机的对称密钥，此对称密钥将用于后续的通信加密。</li>
+<li>5.客户端使用服务器的<strong>公钥</strong>加密该对称密钥，并将加密后的密钥发送给服务器。</li>
+<li>6.服务器使用自己的私钥解密客户端发来的对称密钥。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819152025.png"></li>
+</ul>
+<p><em><strong>对称加密与非对称加密</strong></em></p>
+<ul>
+<li>1.对称加密<br>对称加密使用同一个密钥来加密和解密数据。换句话说，发件人和收件人都使用相同的密钥。</li>
+<li>2.非对称加密<br>对称加密使用一对密钥：公钥 和 私钥。公钥用于加密，私钥用于解密。</li>
+</ul>
+<h3 id="31-说说HTTP的工作原理"><a href="#31-说说HTTP的工作原理" class="headerlink" title="31.说说HTTP的工作原理"></a>31.说说HTTP的工作原理</h3><p>1.<strong>建立连接</strong>：在发送请求和接收响应之前，客户端和服务器需要建立一个TCP&#x2F;IP连接。这个过程称为三次握手。<br>2.<strong>发送请求报文</strong>：客户端将请求包装成一个HTTP请求报文，并通过建立的TCP&#x2F;IP连接发送给服务器。请求报文包括请求行（URL和HTTP方法）、请求头（包含请求的附加信息）和请求体（对于POST方法，包含要发送的数据）。<br>3.<strong>服务器处理请求</strong>：服务器接收到请求报文后，根据请求行和头部中的信息，处理请求。它可能会查询数据库、读取文件或执行其他操作来生成响应。<br>4.<strong>发送响应报文</strong>：服务器将生成的响应信息打包成一个HTTP响应报文，并通过TCP&#x2F;IP连接发送给客户端。响应报文包括响应状态码、响应头（包含响应的附加信息）和响应体（包含实际的响应数据）。200表示成功，404表示资源未找到。<br>5.<strong>关闭连接</strong>：在响应发送完成后，服务器和客户端都可以选择关闭连接，释放资源。也可以选择保持持久连接，以便在后续请求中复用。</p>
+<h3 id="32-HTTP的无连接是什么意思？"><a href="#32-HTTP的无连接是什么意思？" class="headerlink" title="32.HTTP的无连接是什么意思？"></a>32.HTTP的无连接是什么意思？</h3><p>HTTP的无连接（Connectionless）指的是每次 HTTP 请求都是独立的，<strong>没有持久连接状态</strong>。这意味着在 HTTP 请求的每个阶段都需要建立一个新的连接，发送请求并接收响应后立即关闭连接。</p>
+<ul>
+<li>短暂会话：每个HTTP请求-响应交互都是短暂的，服务器在接收到请求并发送响应后立即关闭连接。</li>
+<li>无状态：HTTP不跟踪客户端的状态信息，每个请求都是独立的，服务器不记住之前的请求。</li>
+<li>可扩展性和灵活性：每次请求都是独立的</li>
+</ul>
+<h3 id="33-HTTP的无状态是什么意思？"><a href="#33-HTTP的无状态是什么意思？" class="headerlink" title="33.HTTP的无状态是什么意思？"></a>33.HTTP的无状态是什么意思？</h3><p>HTTP的无状态（Stateless）指的是服务器在处理客户端请求时，<strong>不保存关于客户端的任何状态信息</strong>。每个HTTP请求都是独立的，服务器不能从之前的请求中推断出客户端的上下文或状态。<br>具体来说，无状态意味着以下几点：</p>
+<ul>
+<li>1.<strong>每个请求都是独立的</strong>：服务器不能确定两个请求是否来自同一个客户端，因为它没有保存关于客户端的状态信息。</li>
+<li>2.<strong>服务器不存储客户端状态</strong>：服务器不会保存客户端的任何状态信息，如登录状态、会话数据等。每个请求都需要提供足够的信息来完成处理。</li>
+<li>3.<strong>无法跟踪客户端会话</strong>：由于服务器不存储客户端状态，它无法跟踪客户端的会话，也无法确保在多个请求之间保持用户身份验证状态。</li>
+</ul>
+<h3 id="34-在浏览器地址栏键入URL，按下回车之后会经历哪些流程？"><a href="#34-在浏览器地址栏键入URL，按下回车之后会经历哪些流程？" class="headerlink" title="34.在浏览器地址栏键入URL，按下回车之后会经历哪些流程？"></a>34.在浏览器地址栏键入URL，按下回车之后会经历哪些流程？</h3><ul>
+<li>1.<strong>URL解析</strong>：浏览器解析URL，提取出域名。</li>
+<li>2.<strong>DNS解析</strong>：浏览器向DNS服务器发送请求，将域名解析为对应的IP地址。</li>
+<li>3.<strong>建立TCP连接</strong>：浏览器使用获取到的IP地址和默认的HTTP端口（通常为80）建立TCP连接。</li>
+<li>4.<strong>发起HTTP请求</strong>：浏览器发送HTTP请求，包括请求方法（如GET、POST等）、路径、查询参数、请求头（如User-Agent、Accept等）和请求体（如POST请求中的数据）。</li>
+<li>5.<strong>服务器响应</strong>：目标服务器接收到请求后，处理请求并生成HTTP响应，包括响应状态码、响应头和响应体。</li>
+<li>6.<strong>接收响应</strong>：浏览器接收到响应，解析响应头和响应体。</li>
+<li>7.<strong>渲染页面</strong>：如果响应是一个HTML页面，浏览器解析HTML、加载CSS和JavaScript文件，并构建DOM树和CSSOM树，最终渲染页面。</li>
+<li>8.<strong>关闭连接</strong>：请求和响应完成后，浏览器关闭TCP连接，释放资源。</li>
+</ul>
+<h3 id="35-对称加密和非对称加密的区别？"><a href="#35-对称加密和非对称加密的区别？" class="headerlink" title="35.对称加密和非对称加密的区别？"></a>35.对称加密和非对称加密的区别？</h3><p><strong>公钥加密（非对称加密）</strong>：</p>
+<ul>
+<li>a. 服务器端生成一对密钥：公钥和私钥。</li>
+<li>b. 服务器将公钥放在数字证书中并发送给客户端。</li>
+<li>c. 客户端接收到服务器发来的数字证书后，验证证书的合法性，包括证书是否由可信机构签发、证书是否过期等。</li>
+<li>d. 客户端从证书中获取服务器的公钥，用于后续的加密操作。</li>
+<li>e. 客户端使用服务器的公钥对一个随机生成的<strong>对称密钥</strong>进行加密，并将加密后的密钥发送给服务器。</li>
+<li>f. 服务器使用私钥对加密后的对称密钥进行解密，获取对称密钥。</li>
+</ul>
+<p><strong>对称密钥加密</strong>：</p>
+<ul>
+<li>a. 客户端和服务器通过握手过程<strong>协商一个对称密钥</strong>，该对称密钥只在本次通信过程中使用。</li>
+<li>b. 客户端和服务器使用对称密钥对通信的数据进行加密和解密。</li>
+</ul>
+<h3 id="36-HTTP为什么要比HTTPS要更安全？"><a href="#36-HTTP为什么要比HTTPS要更安全？" class="headerlink" title="36.HTTP为什么要比HTTPS要更安全？"></a>36.HTTP为什么要比HTTPS要更安全？</h3><ul>
+<li><strong>数据加密</strong>：HTTPS使用SSL&#x2F;TLS协议对通信进行加密，而HTTP不对通信进行加密，数据传输是明文的。</li>
+<li><strong>身份验证</strong>：HTTPS使用<strong>数字证书对服务器进行身份验证</strong>，确保客户端连接到真实的服务器。HTTP没有身份验证机制，容易被中间人攻击。</li>
+<li><strong>数据完整性</strong>：HTTPS使用<strong>消息摘要算法和数字签名</strong>来确保数据的完整性，防止数据在传输过程中被篡改。HTTP没有数据完整性保护，数据容易被篡改。</li>
+<li><strong>默认端口号</strong>：HTTPS使用默认的<strong>安全端口</strong>443，而HTTP使用端口80。</li>
+<li>排名和SEO影响：搜索引擎更倾向于将采用HTTPS的网站排名更高，HTTP网站可能在搜索结果中排名较低。</li>
+</ul>
 
-  +keep-tablet() {
-    .toc-content-container {
-      display none !important
-    }
+            </div>
 
-    .article-content-container {
-      width 100% !important
-    }
-  }
+            
 
+            
 
-  .article-content-container {
-    position relative
-    box-sizing border-box
-    width 100%
-    height 100%
-    keep-container(false, 0, 0, 2rem, 2rem)
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                               rel="prev"
+                               href="/2024/01/01/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/C++%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/"
+                            >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                                <span class="title flex-center">
+                                <span class="post-nav-title-item">C++面试</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                               rel="next"
+                               href="/2023/07/05/markdown%E8%AF%AD%E6%B3%95/"
+                            >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">markdown语法</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                                <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
 
-    +keep-mobile() {
-      padding 1.2rem 0.2rem
-      box-shadow none
+            
+        </div>
 
-      &:hover {
-        box-shadow none
-      }
-    }
-
-
-    .article-title {
-      color var(--text-color-2)
-      font-weight 600
-      font-size $article-title-font-size
-
-      +keep-tablet() {
-        font-size $article-title-font-size * 0.9
-      }
-
-      +keep-mobile() {
-        font-size $article-title-font-size * 0.8
-      }
-    }
-
-
-    .article-header {
-      position relative
-      box-sizing border-box
-      width 100%
-      height $avatarWidth
-      padding-left $avatarWidth
-
-      .avatar {
-        position absolute
-        top 0
-        left 0
-        box-sizing border-box
-        width $avatarWidth
-        height $avatarWidth
-        padding 0.1rem
-        border 1px solid var(--border-color)
-        border-radius 50%
-
-        img {
-          width 100%
-          height 100%
-          background var(--avatar-background-color)
-          border-radius 50%
-        }
-      }
-
-
-      .info {
-        display flex
-        flex-direction column
-        justify-content space-between
-        box-sizing border-box
-        width 100%
-        height 100%
-        margin-left 0.8rem
-        padding 0.2rem 0
-
-        .author {
-          display flex
-          align-items center
-          font-weight 600
-          font-size 1.18rem
-
-          .name {
-            color var(--text-color-3)
-          }
-
-          .author-label {
-            margin-left 0.8rem
-            padding 0 0.4rem
-            color #fff
-            font-weight 500
-            font-size 0.8rem
-            background var(--selection-color)
-            border-radius 0.4rem
-          }
-        }
-      }
-    }
-
-
-    .article-header
-    .article-header-meta-info {
-      margin-top 1rem
-      +keep-tablet() {
-        transform scale(0.9)
-        transform-origin left top
-      }
-    }
-
-
-    .article-content {
-      margin-top $component-spacing-value
-      padding-bottom 2rem
-      color var(--text-color-3)
-      word-wrap break-word
-
-      .article-aging-tips {
-        position relative
-        display none
-        box-sizing border-box
-        margin-bottom 1.8rem
-        padding 1rem
-        color var(--article-aging-tips-color)
-        line-height 1.6
-        background var(--article-aging-tips-background-color)
-        border 0.1rem solid var(--article-aging-tips-border-color)
-        border-radius 0.4rem
-
-        i {
-          margin-right 0.4rem
-          color var(--article-aging-tips-color)
-        }
-
-        .days {
-          color var(--article-aging-tips-color)
-        }
-      }
-
-      if (hexo-config('post.copyright_info') == true || hexo-config('copyright_info.enable') == true) {
-        border-bottom 0.1rem dashed var(--border-color)
-      }
-    }
-
-
-    .post-tags-box {
-      display none
-      justify-content center
-      margin-top 1.6rem
-      font-size 1.1rem
-
-      +keep-tablet() {
-        display flex
-      }
-
-      +keep-mobile() {
-        margin-top 1.2rem
-        font-size 1rem
-      }
-
-
-      .tag-item {
-        margin 0 0.25rem
-      }
-    }
-
-
-    .post-copyright-info {
-      width 100%
-      margin-top $component-spacing-value
-
-      +keep-tablet() {
-        margin-top $component-spacing-value * 0.8
-      }
-    }
-
-
-    .article-nav {
-      height 2.8rem
-      margin-top $component-spacing-value
-
-      .article-prev
-      .article-next {
-        box-sizing border-box
-        max-width $post-nav-max-width
-        height 100%
-
-        keep-container(true, 1.03, 1.03, 0.8rem, 0)
-
-        a {
-          position relative
-          display block
-          box-sizing border-box
-          width 100%
-          height 100%
-
-          &.prev {
-            padding-left $arrow-icon-width
-          }
-
-          &.next {
-            padding-right $arrow-icon-width
-          }
-
-          .arrow-icon {
-            position absolute
-            top 0
-            width $arrow-icon-width
-            height 100%
-
-            &.left {
-              left 0
-            }
-
-            &.right {
-              right 0
-            }
-          }
-
-          .title {
-            width 100%
-            height 100%
-          }
-        }
-      }
-
-      .article-prev {
-        float left
-      }
-
-      .article-next {
-        float right
-      }
-
-      .post-nav-item {
-        display none
-
-        +keep-tablet() {
-          display inline-block
-        }
-      }
-
-
-      .post-nav-title-item {
-        overflow hidden
-        white-space nowrap
-        text-overflow ellipsis
-
-        +keep-tablet() {
-          display none
-        }
-      }
-    }
-  }
-
-
-  .toc-content-container {
-    position sticky
-    top $header-height + $component-spacing-value
-    display none
-    box-sizing border-box
-    width $toc-container-width
-    max-height 'calc(100vh - %s)' % ($header-height + $component-spacing-value)
-    padding 2rem 0 2rem 1.4rem
-    transition-t("top, display, max-height", "0, 0, 0", "0.2, 0.1, 0.2", "ease, ease, ease")
-
-    .header-shrink & {
-      top $header-shrink-height + $component-spacing-value
-      max-height 'calc(100vh - %s)' % ($header-shrink-height + $component-spacing-value)
-    }
-  }
-}
+        
+    </div>
+</div>
 
 
                 

@@ -130,308 +130,251 @@
             <div class="main-content">
 
                 
-                    $avatarWidth = 3rem
-$arrow-icon-width = 1rem
-$post-nav-max-width = 14rem
-$article-title-font-size = 1.6rem
-$toc-container-width = 15rem
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
 
+            <div class="article-title">
+                <span class="title-hover-animation">面试项目剖析</span>
+            </div>
 
-.post-page-container {
-  position relative
-  display flex
-  justify-content space-between
-  box-sizing border-box
-  width 100%
-  height 100%
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/avatar.svg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">caijiQAQ</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            
+<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        
+            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
+        
+        <span class="pc">2024-08-15 16:07:15</span>
+        <span class="mobile">2024-08-15 16:07</span>
+    </span>
+    
+        <span class="article-update-date article-meta-item">
+        <i class="fas fa-file-pen"></i>&nbsp;
+        <span class="pc">2024-08-21 14:46:24</span>
+    </span>
+    
+    
+    
 
+    
+    
+    
+    
+</div>
 
-  &.show-toc {
-    .toc-content-container {
-      display block
-    }
+                        </div>
+                    </div>
+                </div>
+            
 
-    .article-content-container {
-      width 'calc(100% - %s)' % $toc-container-width
-    }
-  }
+            <div class="article-content keep-markdown-body">
+                
 
+                <h2 id="1-AI部署实习"><a href="#1-AI部署实习" class="headerlink" title="1.AI部署实习"></a>1.AI部署实习</h2><h3 id="1-介绍你的实习工作以及有什么收获"><a href="#1-介绍你的实习工作以及有什么收获" class="headerlink" title="1.介绍你的实习工作以及有什么收获"></a>1.介绍你的实习工作以及有什么收获</h3><p>主要做了两个部分的工作。</p>
+<ul>
+<li>1.第一个部分是优化量化模型。使用ArtStudio仿真工具对原始的模型精度进行混合量化，同时拥有较快的推理速度以及推理精度。</li>
+<li>2.第二个部分是使用C++程序实现了模型推理的工作。启动IFC<strong>硬件图像量化</strong>功能，实现模型参数读取、模型导入以及基于NPU<strong>硬件对齐格式</strong>的图像输入预处理和后处理功能，并在NPU AR9341开发板和AR眼镜上进行模型推理验证。</li>
+</ul>
+<h3 id="2-得到了什么"><a href="#2-得到了什么" class="headerlink" title="2.得到了什么"></a>2.得到了什么</h3><ul>
+<li>1.<strong>混合量化部分</strong>：接触了混合精度量化，以及了解到模型不同层的参数量化对结果的影响大小。首先先查看模型各层的计算量和参数量（FLOPs,浮点运算次数）大小，从模型耗费计算量大小从大到小依次尝试，一般来说都是卷积层+全连接层（因为它们占据了模型中大部分的计算资源和参数），看模型中不同层进行量化会带来的影响。同时测试下来来看8bit的量化一般用在中间部分，模型头和尾还是使用16bit会有较高的精度。</li>
+<li>2.<strong>模型推理部分</strong>：接触到了AI部署的C++工程代码，对C++编程有了更深的理解（更像是搭积木，一步一步继承，让代码更具有普适性），同时了解了模型部署在NPU上的不同流程包括图像预处理后处理、模型导入。</li>
+</ul>
+<h3 id="3-项目难点"><a href="#3-项目难点" class="headerlink" title="3.项目难点"></a>3.项目难点</h3><p>“说一说项目的难点吧”<br>主要是有三个难点：</p>
+<ul>
+<li>1.<strong>读懂工程源码+理解</strong>：是读懂工程代码，同时也要搞懂步骤背后的意思</li>
+<li>2.<strong>硬件调试问题</strong>：另一个是部署过程中经常出现的硬件不稳定的问题，比如opencv明明是从模型输入变量地址声明的变量但是赋值之后经过检测却仍然赋值失败，后面使用的memcpy。前一次调试的时候报错模型已经挂了，但是不知道，导致后面模型不管怎么改完全输入不进去，因为显示在运行，模型并没有退出。通过cat &#x2F;proc&#x2F;arnpu&#x2F;state，显示NPU状态。</li>
+<li>3.<strong>硬件对齐</strong>：前处理，也需要保证256*256的stride后处理过程中硬件排布为分块、带跨度的 blocking-NHWC，想要获取结果需要理解他排布规律，12——&gt;16，再包括分块，common块和final块。都是为了NPU的速度。</li>
+</ul>
+<h3 id="4-问题准备"><a href="#4-问题准备" class="headerlink" title="4.问题准备"></a>4.问题准备</h3><h4 id="1-怎么调试的？"><a href="#1-怎么调试的？" class="headerlink" title="1.怎么调试的？"></a>1.怎么调试的？</h4><p>在有板子的sdk工程下，写一个Makefile，得到可执行文件。然后从服务器上下载下来，传输到板子上进行调试。编译，下载，传输，调试。</p>
+<h4 id="2-什么是ifc"><a href="#2-什么是ifc" class="headerlink" title="2.什么是ifc"></a>2.什么是ifc</h4><p>  ifc：中间格式转化。这里用到的地方是正常如果要是向模型中输入图像是需要输入的量化图像，这样的话就得让用于手动来调整为量化图像，但是启用了ifc之后，就可以向声明的ifc地址输入图像，这样的话就避免了一个手动量化图像的步骤。</p>
+<h4 id="3-量化原理、量化分类"><a href="#3-量化原理、量化分类" class="headerlink" title="3.量化原理、量化分类"></a>3.量化原理、量化分类</h4><h4 id="4-Makefile"><a href="#4-Makefile" class="headerlink" title="4.Makefile"></a>4.Makefile</h4><ul>
+<li>1.makefile的结构<ul>
+<li><p>1.<strong>目标</strong>：最终可执行文件</p>
+</li>
+<li><p>2.<strong>依赖</strong>：依赖项列在目标后，通常是源文件或头文件</p>
+</li>
+<li><p>3.<strong>规则</strong>：规则指定了如何从依赖生成目标。通常是一系列的命令，比如<strong>编译或链接</strong>的命令</p>
+<pre><code>myprogram: main.o utils.o
+  g++ -o myprogram main.o utils.o
+</code></pre>
+</li>
+<li><p>4.<strong>变量</strong>：变量用于简化 Makefile，允许在多个地方使用相同的值，如编译器选项、源文件列表等</p>
+<pre><code>CC = g++
+CFLAGS = -Wall -g
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-感觉会上C-八股"><a href="#5-感觉会上C-八股" class="headerlink" title="5.感觉会上C++八股"></a>5.感觉会上C++八股</h4><h4 id="6-x3D-x3D-git使用-x3D-x3D"><a href="#6-x3D-x3D-git使用-x3D-x3D" class="headerlink" title="6.&#x3D;&#x3D;git使用&#x3D;&#x3D;"></a>6.&#x3D;&#x3D;git使用&#x3D;&#x3D;</h4><h4 id="7-docker的使用"><a href="#7-docker的使用" class="headerlink" title="7.docker的使用"></a>7.docker的使用</h4><h2 id="2-基于物理信息神经网络的嵌入式EIT系统"><a href="#2-基于物理信息神经网络的嵌入式EIT系统" class="headerlink" title="2.基于物理信息神经网络的嵌入式EIT系统"></a>2.基于物理信息神经网络的嵌入式EIT系统</h2><h3 id="1-介绍一下项目"><a href="#1-介绍一下项目" class="headerlink" title="1.介绍一下项目"></a>1.介绍一下项目</h3><p>主要做了三个部分的工作<br>1.<strong>物理信息神经网络的构建</strong>：EIT的物理条件融入到ResNet网络的训练过程中，减少了他的收敛所需的数据量。<br>2.<strong>模型轻量化处理</strong>：对于训练的模型轻量化处理，里面也用到了深度可分离卷积对网络结构改造、静态量化以及结构化剪枝的方法。<br>3.<strong>嵌入式系统的实现</strong>：基于Qt设计了一个人机用户交互界面，其中也用到了多线程与多进程的方法来分别进行数据采集传输、图像显示以及python中的模型推理，这几部分工作，最后将所成的图像效果显示在LCD上。</p>
+<h3 id="2-项目难点"><a href="#2-项目难点" class="headerlink" title="2.项目难点"></a>2.项目难点</h3><p>这个项目难点主要体现在两个部分：</p>
+<ul>
+<li>1.第一个难点是神经网络与现在研究课题EIT相结合，将EIT的边界物理信息融入到损失函数中，并且改变了训练的流程，弥补了正常直接训练EIT的数据量不足的问题，同时也减少了数据收敛所需的数据量。</li>
+<li>2.第二个难点实在模型部署在树莓派上的时候，由于需要同时进行数据采集、成像显示以及模型推理，Qt上使用了多线程来实现数据采集以及成像显示，而开了另一个进程来实现模型在接收到数据后的推理。多进程这里也是用到了信号量以及共享内存的方法来实现python数据的获取以及将推理后结果的传回。</li>
+</ul>
+<h3 id="3-问题准备"><a href="#3-问题准备" class="headerlink" title="3.问题准备"></a>3.问题准备</h3><h4 id="1-介绍一下EIT-x2F-物理信息神经网络是个什么东西"><a href="#1-介绍一下EIT-x2F-物理信息神经网络是个什么东西" class="headerlink" title="1.介绍一下EIT&#x2F;物理信息神经网络是个什么东西"></a>1.介绍一下EIT&#x2F;物理信息神经网络是个什么东西</h4><h4 id="2-模型轻量化有哪些种类"><a href="#2-模型轻量化有哪些种类" class="headerlink" title="2.模型轻量化有哪些种类"></a>2.模型轻量化有哪些种类</h4><p>主要分为：剪枝、量化、修改模型结构、蒸馏这几个。（后面再简单的介绍一下各个都有什么用）</p>
+<h4 id="3-介绍一下深度可分离卷积"><a href="#3-介绍一下深度可分离卷积" class="headerlink" title="3.介绍一下深度可分离卷积"></a>3.介绍一下深度可分离卷积</h4><p>深度可分离卷积，主要是将卷积分离为了<strong>逐深度卷积</strong>和<strong>逐点卷积</strong>两个，将一个原始卷积计算的乘法变成了加法+乘法，计算量也因此降低。</p>
+<ul>
+<li><p><strong>标准卷积</strong>：标准卷积，利用若干个多通道卷积核对输入的多通道图像进行处理，输出的feature map既提取了<strong>通道特征</strong>，又提取了<strong>空间特征</strong>。计算量也就是： 4 * 3 * 3 * 3 &#x3D; 108<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240815214340.png"></p>
+</li>
+<li><p><strong>逐深度卷积</strong>：深度维度不变，改变H&#x2F;W也就是输入特征图通道数&#x3D;卷积核个数&#x3D;输出特征图个数。提取空间特征。计算量也就是：3 * 3 * 3 &#x3D;27</p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240815213935.png"></p>
+<ul>
+<li><strong>逐点卷积</strong>：简单理解，逐点卷积就是W&#x2F;H维度不变，改变channel。提取通道特征。计算量为：1 * 1 * 3 * 4 &#x3D; 12</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240815214048.png"></p>
+<p>所以深度可分离卷积就是先深度卷积再逐点卷积，将提取空间特征与提取通道特征两步分离开来，计算量与所占空间也显著降低。</p>
+<h4 id="4-量化的原理以及种类"><a href="#4-量化的原理以及种类" class="headerlink" title="4.量化的原理以及种类"></a>4.量化的原理以及种类</h4><p>简单来说就是将float32的32位数据使用int8的形式来表示。</p>
+<ul>
+<li><p>1.线性量化<br>数学表达式：r&#x3D;Round(S(q−Z))。<br>q为原始的float32数值<br>z（zero_point）偏移量<br>S（scale）flaot32的缩放因子</p>
+</li>
+<li><p>2.对称与非对称量化：区别在于是否最小值为0点</p>
+</li>
+<li><p>3.逐层量化、逐组量化和逐通道量化</p>
+</li>
+<li><p>4.静态量化与动态量化<br><strong>动态量化</strong>：当网络训练完成后，其权重值已经确定，故权重的量化因子已经确定，但是对于不同的输入值来说，其缩放因子是动态计算的（“动态”的由来）。动态是指量化过程发生在推理时。也就是说面对不同输入时，每一层都会动态变化。这些参数是基于当前输入数据的动态范围计算的。</p>
+<p><strong>静态量化</strong>：静态量化（Static quantization）与动态量化的区别在于其输入的缩放因子计算方法不同，静态量化的模型在使用前有fine-tuning的过程（校准缩放因子）：<strong>准备部分输入（对于图像分类模型就是准备一些图片</strong>，其他任务类似），使用静态量化后的模型进行预测，在此过程中量化模型的缩放因子会根据输入数据的分布进行调整。</p>
+</li>
+</ul>
+<h4 id="5-剪枝的原理以及种类"><a href="#5-剪枝的原理以及种类" class="headerlink" title="5.剪枝的原理以及种类"></a>5.剪枝的原理以及种类</h4><p>剪枝本质上都是权重小于一个值，然后归为0，但是如果想让剪枝空间减少那就只能使用结构化剪枝。<br>非结构化剪枝：分为weight剪枝、神经元剪枝、filter剪枝。<br>结构化剪枝：通道剪枝等，相当于直接把一个channel全给去掉。</p>
+<h4 id="6-多进程多线程八股"><a href="#6-多进程多线程八股" class="headerlink" title="6.多进程多线程八股"></a>6.多进程多线程八股</h4><h2 id="3-信号失真度测量装置"><a href="#3-信号失真度测量装置" class="headerlink" title="3.信号失真度测量装置"></a>3.信号失真度测量装置</h2><h3 id="1-介绍一下项目-1"><a href="#1-介绍一下项目-1" class="headerlink" title="1.介绍一下项目"></a>1.介绍一下项目</h3><p>这是一个本科电赛做的一个项目，我这边主要完成的工作是软件单片机相关的工作，负责采集队友设计好的硬件非线性失真电路（上削顶等）生成的信号，同时AD采集并经过傅里叶变换计算总谐波失真，最后将结果显示到LCD屏幕上。</p>
+<h3 id="2-项目难点-1"><a href="#2-项目难点-1" class="headerlink" title="2.项目难点"></a>2.项目难点</h3><p>主要是FFT算法的编写，开始使用的DFT算法，但是DFT算法计算速度较慢，后面为了保证系统的实时性，也是重新编写了FFT算法。</p>
+<h3 id="3-问题准备-1"><a href="#3-问题准备-1" class="headerlink" title="3.问题准备"></a>3.问题准备</h3><h4 id="1-FFT算法"><a href="#1-FFT算法" class="headerlink" title="1.FFT算法"></a>1.FFT算法</h4><h4 id="2-LCD显示——引申通信协议——I2C接口、SPI接口、UART"><a href="#2-LCD显示——引申通信协议——I2C接口、SPI接口、UART" class="headerlink" title="2.LCD显示——引申通信协议——I2C接口、SPI接口、UART"></a>2.LCD显示——引申通信协议——I2C接口、SPI接口、UART</h4><h3 id="1-通信协议分类"><a href="#1-通信协议分类" class="headerlink" title="1.通信协议分类"></a>1.通信协议分类</h3><p>并行通信，串行通信<br>并行通信：同一时刻发送多位的数据<br>优点：发送速度快；缺点：传输距离端，资源多<br>串行通信：同一根线发送8位数据<br>优点：传输距离远，不占用资源 确定：发送速度慢</p>
+<h3 id="2-通信方式分类"><a href="#2-通信方式分类" class="headerlink" title="2.通信方式分类"></a>2.通信方式分类</h3><p>通信方式的分类有：全双工、半双工、单工<br>单工通信：只能接受或者发送<br>半双工：同一时刻下只能发送或者接收，理论上一条线就可以，但是实际上还是两条线用起来会更方便。但你用一条信道的话会影响消息的<strong>及时性</strong>，所以用两条，既能提升通信效率，又能避免冲突<br>全双工通信：同一时刻只能接收又能发送：至少两根线。</p>
+<h3 id="3-SPI协议"><a href="#3-SPI协议" class="headerlink" title="3.SPI协议"></a>3.SPI协议</h3><h4 id="3-1-SPI通信协议的介绍"><a href="#3-1-SPI通信协议的介绍" class="headerlink" title="3.1 SPI通信协议的介绍"></a>3.1 SPI通信协议的介绍</h4><p>SPI是串行外设接口：SPI是一种<strong>高速的、全双工、同步</strong>的通信总线，并且在芯片的管脚上只占用四根线<br>数据采集的时机一般是选择在时钟信号的<strong>上升沿</strong>或者<strong>下降沿</strong>。<br>SPI总线包含4条逻辑线：</p>
+<ul>
+<li>MISO：Master input slave output 主机输入，从机输出（数据来自从机）；</li>
+<li>MOSI：Master output slave input 主机输出，从机输入（数据来自主机）；</li>
+<li>SCLK ：Serial Clock 串行时钟信号，由主机产生发送给从机；</li>
+<li>CS：Chip Select 片选信号，由主机发送，以控制与哪个从机通信，通常是低电平有效信号。<br>在传输开始前还需要确定CPOL（时钟极性)&#x2F;CPHA（时钟相位）及通讯模式<br>CPOL：确定没有数据传输电平状态<br>CPHA：决定数据位传输是第一个SCLK开始还是从第二个边缘开始</li>
+</ul>
+<h4 id="3-2-SPI通信传输的流程"><a href="#3-2-SPI通信传输的流程" class="headerlink" title="3.2 SPI通信传输的流程"></a>3.2 SPI通信传输的流程</h4><ul>
+<li>1.主机先将CS信号拉低，这样保证开始接收数据，告诉哪一个SPI设备我现在要开始采集了。</li>
+<li>2.接收端检测时钟边沿信号，读取数据线上的数据，得到一位数据。</li>
+<li>3.主机发送从机：主机将会产生相应时钟信号，数据一位一位通过MOSI信号线发送到从机</li>
+<li>4.主机接收从机：从机将会通过MISO信号线返回数据供主机接收<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406212221.png"></li>
+</ul>
+<h4 id="3-3-SPI的优缺点"><a href="#3-3-SPI的优缺点" class="headerlink" title="3.3 SPI的优缺点"></a>3.3 SPI的优缺点</h4><p><strong>a.优点</strong>：</p>
+<ul>
+<li>全双工串行通信</li>
+<li>告诉数据传输速率</li>
+<li>非常简单的硬件结构。从机不需要唯一地址（与I2C不同）；从机使用主机时钟，不需要精密时钟振荡器&#x2F;晶振（与UART不同）；不需要收发器（与CAN不同）。<br><strong>b.缺点</strong>：</li>
+<li>没有硬件从机应答信号，不知道发送是否是对的</li>
+<li>通常仅支持一个主设备</li>
+<li>需要4根引脚</li>
+<li>与CAN总线相比，传输距离较短</li>
+</ul>
+<h3 id="4-IIC协议"><a href="#4-IIC协议" class="headerlink" title="4.IIC协议"></a>4.IIC协议</h3><h4 id="4-1-IIC协议简介"><a href="#4-1-IIC协议简介" class="headerlink" title="4.1 IIC协议简介"></a>4.1 IIC协议简介</h4><p>I2C（IIC）属于两线式串行总线，属于（一主多从一个主设备（Master），多个从设备（Slave））的总线结构，总线上的每个设备都有一个特定的设备地址，以区分同一I2C总线上的其他设备。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406213016.png"><br>物理I2C接口有两根双向线，**<font style = "color:red">串行时钟线（SCL）和串行数据线（SDA）</font>** 组成，可用于发送和接收数据，但是通信都是由主设备发起，从设备被动响应，实现数据的传输。</p>
+<h5 id="a-IIC有五种传输效率"><a href="#a-IIC有五种传输效率" class="headerlink" title="a.IIC有五种传输效率"></a>a.IIC有五种传输效率</h5><p>不同的器件支持不同的速率<br>标准模式、快速模式、快速模式+、高速模式、超快模式。</p>
+<h5 id="b-4种信号"><a href="#b-4种信号" class="headerlink" title="b.4种信号"></a>b.4种信号</h5><p>I2C协议最基础的几种信号：起始、停止、应答和非应答信号。</p>
+<ul>
+<li>1.起始信号：SCL为高，而SDA由高转为低</li>
+<li>2.停止信号：SCL为高，而SDA由低转高<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406213423.png"></li>
+<li>3.应答信号：<br>I2C最大的一个特点就是有完善的应答机制，从机接收到主机的数据时，会回复一个应答信号来通知主机表示“我收到了”。<br>应答信号出现在1个字节传输完成之后，即第9个SCL时钟周期内，此时主机需要<strong>释放SDA总线</strong>，把总线控制权交给从机，由于上拉电阻的作用，此时总线为高电平，如果从机正确的收到了主机发来的数据，<font style = "color:red">会把SDA拉低，表示应答响应</font>。</li>
+<li>4.非应答信号：<br>当第9个SCL时钟周期时，SDA保持高电平，表示非应答信号。</li>
+<li>5.有效性<br>I2C协议对数据的采样发生在SCL高电平期间，除了起始和停止信号，在数据传输期间，SCL为高电平时，SDA必须保持稳定，不允许改变，在SCL低电平时才可以进行变化。（毕竟如果在SCL为高的时候改变不就相当于是代表了起始信号和应答信号了)<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406213732.png"></li>
+<li>6.写&#x2F;读操作<br>2C中心以启动信号START来掌管总线，以停止信号STOP来释放总线；启动信号START后紧接着发送一个地址字节，其中7位为被控器件的地址码，一位为读&#x2F;写控制位R&#x2F;W，R&#x2F;W位为0表示由主控向被控器件写数据，R&#x2F;W为1表示由主控向被控器件读数据；当被控器件检测到收到的地址与自己的地址相同时，在第9个时钟期间反馈应答信号。<br>写操作：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406214347.png"><br>读操作：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406214405.png"></li>
+</ul>
+<h3 id="5-CAN协议"><a href="#5-CAN协议" class="headerlink" title="5.CAN协议"></a>5.CAN协议</h3><h4 id="5-1-CAN协议介绍"><a href="#5-1-CAN协议介绍" class="headerlink" title="5.1 CAN协议介绍"></a>5.1 CAN协议介绍</h4><p>控制器局域网总线（CAN，Controller Area Network）是一种用于实时应用的串行通讯协议总线，它可以使用双绞线来传输信号，是世界上应用最广泛的现场总线之一。CAN协议的特性包括完整性的串行数据通讯、提供实时支持、<strong>传输速率高达1Mb&#x2F;s</strong>、同时具有<strong>11位的寻址以及检错能力</strong>。</p>
+<p>CAN 控制器根据CAN_L和CAN_H上的电位差来判断总线电平。总线电平分为显性电平和隐性电平，二者必居其一。发送方通过使总线电平发生变化，将消息发送给接收方。<br>显性电平对应逻辑:0，CAN_H和CAN_L之差为2V左右。<br>隐性电平对应逻辑:1，CAN_H和CAN_L之差为0V。<br><strong>帧种类：</strong><br>有以下5种类型的帧进行的<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406215924.png"></p>
+<h4 id="5-2CAN"><a href="#5-2CAN" class="headerlink" title="5.2CAN"></a>5.2CAN</h4><p>CAN通讯并不是以时钟信号来进行同步的，它是一种异步半双工通讯。</p>
+<p>CAN的组成一般有两种方式：<br>1：CPU与CAN控制器集成到一起、再外接CAN收发器；<br>2：另一种是CPU与CAN控制器分开的，使用的时候需要配置CAN接口电路，比较麻烦。</p>
+<h4 id="5-3-数据传输实现"><a href="#5-3-数据传输实现" class="headerlink" title="5.3 数据传输实现"></a>5.3 数据传输实现</h4><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240816104310.png"><br>由上图可知，CAN通信是通过两根线完成的：</p>
+<ul>
+<li><p>一条是黄色的CAN_High</p>
+</li>
+<li><p>一条是绿色的CAN_Low<br>当High-Low&lt;0.5V是隐性的，表现得为高电平<br>当H-L&gt;0.9V是显性的，表现为低电平。<br>CAN使用的是<strong>差分信号</strong>，所有单元输出为隐性总线上才为隐性。</p>
+</li>
+</ul>
+<h4 id="5-4-通信的整个过程"><a href="#5-4-通信的整个过程" class="headerlink" title="5.4 通信的整个过程"></a>5.4 通信的整个过程</h4><p>那么是如何通过一个节点的MCU向总线上那么多节点中的某个节点进行发送信息的？一个节点又是如何知道某个信息是发给自己的或者不是发给自己的？这里或许让你想起 IIC 中以地址方式进行主从点对点的通信，但其实在CAN中<strong>并无地址</strong>的概念。</p>
+<ul>
+<li><p>1.空闲状态<br>在CAN协议中，当总线上的上出现连续的11位隐性电平（两根线电压差小于0.5V），表示总线就处于空闲状态。</p>
+</li>
+<li><p>2.开始数据传输<br>每次发送数据前，节点都会监听总线的状态，如果总线状态为空闲时，它就会立即向总线上发送自己的数据，这个数据里不仅有数据，还有本身的ID信息或者其他的控制指令，应称为数据包(数据帧)，也叫做报文。当报文被传输到其它节点时，只要这些节点按格式去解读，就能还原出原始数据。</p>
+<p> 报文: 在原始数据段的前面加上传输起始标签、片选(识别)标签、控制标签，在数据的尾段加上 CRC 校验标签、应答标签和传输结束标签。类似这样的数据包就被称为 CAN 的数据帧。为了更有效地控制通讯，CAN 一共规定了 5 种类型的帧，帧也称为报文。</p>
+<p> CAN总线的传输过程(<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/u010037269/article/details/123849779?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522172377594816800172523647%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=172377594816800172523647&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-123849779-null-null.142%5Ev100%5Epc_search_result_base5&utm_term=can%E6%80%BB%E7%BA%BF&spm=1018.2226.3001.4187" >https://blog.csdn.net/u010037269/article/details/123849779?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522172377594816800172523647%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=172377594816800172523647&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-123849779-null-null.142^v100^pc_search_result_base5&amp;utm_term=can%E6%80%BB%E7%BA%BF&amp;spm=1018.2226.3001.4187<i class="fas fa-external-link-alt"></i></a>)</p>
+</li>
+</ul>
+<h3 id="6-UART-串口通信"><a href="#6-UART-串口通信" class="headerlink" title="6.UART 串口通信"></a>6.UART 串口通信</h3><p>通用异步收发传输器（Universal Asynchronous Receiver&#x2F;Transmitter)，通常称作UART。<br><strong>注：同步串行与异步串行通信</strong><br>这两个就看是否共用一个时钟。在异步通信中，每个字符要用起始位和停止位作为字符开始和结束的标志，以致占用了时间。所以在数据块传送时，为提高通信速度，常去掉这些标志，而采用同步通信。<br>UART在<strong>发送数据</strong>时，将并行数据转换成串行数据来传输；<br>UART在<strong>接收数据</strong>时，将接收到的串行数据转换成并行数据。</p>
+<p>COM口是指针对串行通信协议的一种端口，是PC上异步串行通信口的简写，大部分为9针孔D型。COM口里分RS232，RS422和RS485，传输功能依次递增。<br>当单片机 1 想给单片机 2 发送数据时，比如发送一个 0xE4 这个数据，用二进制形式表 示就是 0b11100100，在 <em><strong>UART 通信过程中，是低位先发，高位后发的原则</strong></em> ，那么就让 TXD 首先拉低电平，持续一段时间，发送一位 0，然后继续拉低，再持续一段时间，又发送了一 位 0，然后拉高电平，持续一段时间，发了一位 1……一直到把 8 位二进制数字 0b11100100 全部发送完毕。这里就涉及到了一个问题，就是持续的这“一段时间”到底是多久？由此便引入了通信中的一个重要概念——<strong>波特率</strong>。</p>
+<p>波特率就是发送二进制数据位的速率，习惯上用 baud 表示，<strong>即发送一位二进制数据的持续时间&#x3D;1&#x2F;baud</strong>。在通信之前，单片机 1 和单片机 2 首先都要明确的约定好它们之间的通 信波特率，必须保持一致，收发双方才能正常实现通信。</p>
+<p>在 UART 通信的时候，一个字节是 8 位，规定当没有通信信号发生时，通信线路保持高电平，当要发送数据之前，<em><strong>先发一位 0 表示起始位</strong></em>，然后发送 8 位数据位，数据位是先低后高的顺序，数据位发完后再发一位 1 表示停止位。这样本来要发送一个字节的 8 位数据，而实际上我们一共发送了 10 位，多出来的两位其中一位起始位，一位停止位。而接收方呢，原本一直保持的高电平，一旦检测到了一位低电平，那就知道了要开始准备接收数据了，接收到 8 位数据位后，<em><strong>然后检测到停止位</strong></em>，再准备下一个数据的接收。如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406215650.png"></p>
+<p>UART&#x2F;SPI&#x2F;IIC的区别<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406220414.png"></p>
+<h4 id="3-用到了DMA讲讲这是什么，以及怎么用的。"><a href="#3-用到了DMA讲讲这是什么，以及怎么用的。" class="headerlink" title="3.用到了DMA讲讲这是什么，以及怎么用的。"></a>3.用到了DMA讲讲这是什么，以及怎么用的。</h4><p>DMA（Direct Memory Access，直接内存访问）是一种计算机体系结构功能，允许外设直接访问系统内存，而<strong>不需要经过 CPU 的干预</strong>。DMA 的主要目的是提高数据传输的效率，减少 CPU 的负担，使得 CPU 可以将更多的时间用于执行其他任务，而不是忙于数据的搬运。<br>通过减少 CPU 的参与，DMA 可以提高数据传输的效率，并且减少 CPU 的工作负荷，特别适合大量数据传输的场景，如音频处理、数据采集等。</p>
+<p><strong>如何使用</strong>：初始化DMA控制器——&gt;配置DMA通道(选择外设、设置传输方向、设置传输的源地址和目标地址，以及设置数据大小)——&gt;启动DMA传输</p>
+<h2 id="4-基于深度学习的模式识别智能车"><a href="#4-基于深度学习的模式识别智能车" class="headerlink" title="4.基于深度学习的模式识别智能车"></a>4.基于深度学习的模式识别智能车</h2><h3 id="1-介绍下项目"><a href="#1-介绍下项目" class="headerlink" title="1.介绍下项目"></a>1.介绍下项目</h3><p>这是20年参加的智能车比赛，比赛主要要求小车要以尽可能快的速度完成车道线任务，同时完成识别特殊标志物和停车、倒车等功能。我在这里主要完成的有车道线与识别标志物数据采集以及速度提升功能实现着几个步骤。</p>
+<h3 id="2-难点"><a href="#2-难点" class="headerlink" title="2.难点"></a>2.难点</h3><p>怎么保证跑的快，同时满足车道线任务，pid调参。</p>
+<h3 id="3-问题准备-2"><a href="#3-问题准备-2" class="headerlink" title="3.问题准备"></a>3.问题准备</h3><ul>
+<li>1.具体是什么流程？<br>上面是百度发的paddlepaddle板子，通过单目摄像头采集到数据，转换为二值化图像，同时输入到深度学习模型中，分别搭载车道线模型以及检测模型。如果有检测的数值则触发对应的开环控制模块。</li>
+<li>2.PID算法</li>
+<li>3.yolo模型（感觉这个可以先不需要了解）</li>
+<li>4.可以讲解下蓝牙是怎么连接的嘛？</li>
+</ul>
 
-  +keep-tablet() {
-    .toc-content-container {
-      display none !important
-    }
+            </div>
 
-    .article-content-container {
-      width 100% !important
-    }
-  }
+            
 
+            
 
-  .article-content-container {
-    position relative
-    box-sizing border-box
-    width 100%
-    height 100%
-    keep-container(false, 0, 0, 2rem, 2rem)
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                               rel="prev"
+                               href="/2024/08/19/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6%E5%87%86%E5%A4%87/"
+                            >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                                <span class="title flex-center">
+                                <span class="post-nav-title-item">嵌入式硬件准备</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                               rel="next"
+                               href="/2024/08/06/%E7%AC%94%E8%AF%95%E5%85%AB%E8%82%A1%E9%A2%98%E7%9B%AE/"
+                            >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">笔试八股题目</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                                <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
 
-    +keep-mobile() {
-      padding 1.2rem 0.2rem
-      box-shadow none
+            
+        </div>
 
-      &:hover {
-        box-shadow none
-      }
-    }
-
-
-    .article-title {
-      color var(--text-color-2)
-      font-weight 600
-      font-size $article-title-font-size
-
-      +keep-tablet() {
-        font-size $article-title-font-size * 0.9
-      }
-
-      +keep-mobile() {
-        font-size $article-title-font-size * 0.8
-      }
-    }
-
-
-    .article-header {
-      position relative
-      box-sizing border-box
-      width 100%
-      height $avatarWidth
-      padding-left $avatarWidth
-
-      .avatar {
-        position absolute
-        top 0
-        left 0
-        box-sizing border-box
-        width $avatarWidth
-        height $avatarWidth
-        padding 0.1rem
-        border 1px solid var(--border-color)
-        border-radius 50%
-
-        img {
-          width 100%
-          height 100%
-          background var(--avatar-background-color)
-          border-radius 50%
-        }
-      }
-
-
-      .info {
-        display flex
-        flex-direction column
-        justify-content space-between
-        box-sizing border-box
-        width 100%
-        height 100%
-        margin-left 0.8rem
-        padding 0.2rem 0
-
-        .author {
-          display flex
-          align-items center
-          font-weight 600
-          font-size 1.18rem
-
-          .name {
-            color var(--text-color-3)
-          }
-
-          .author-label {
-            margin-left 0.8rem
-            padding 0 0.4rem
-            color #fff
-            font-weight 500
-            font-size 0.8rem
-            background var(--selection-color)
-            border-radius 0.4rem
-          }
-        }
-      }
-    }
-
-
-    .article-header
-    .article-header-meta-info {
-      margin-top 1rem
-      +keep-tablet() {
-        transform scale(0.9)
-        transform-origin left top
-      }
-    }
-
-
-    .article-content {
-      margin-top $component-spacing-value
-      padding-bottom 2rem
-      color var(--text-color-3)
-      word-wrap break-word
-
-      .article-aging-tips {
-        position relative
-        display none
-        box-sizing border-box
-        margin-bottom 1.8rem
-        padding 1rem
-        color var(--article-aging-tips-color)
-        line-height 1.6
-        background var(--article-aging-tips-background-color)
-        border 0.1rem solid var(--article-aging-tips-border-color)
-        border-radius 0.4rem
-
-        i {
-          margin-right 0.4rem
-          color var(--article-aging-tips-color)
-        }
-
-        .days {
-          color var(--article-aging-tips-color)
-        }
-      }
-
-      if (hexo-config('post.copyright_info') == true || hexo-config('copyright_info.enable') == true) {
-        border-bottom 0.1rem dashed var(--border-color)
-      }
-    }
-
-
-    .post-tags-box {
-      display none
-      justify-content center
-      margin-top 1.6rem
-      font-size 1.1rem
-
-      +keep-tablet() {
-        display flex
-      }
-
-      +keep-mobile() {
-        margin-top 1.2rem
-        font-size 1rem
-      }
-
-
-      .tag-item {
-        margin 0 0.25rem
-      }
-    }
-
-
-    .post-copyright-info {
-      width 100%
-      margin-top $component-spacing-value
-
-      +keep-tablet() {
-        margin-top $component-spacing-value * 0.8
-      }
-    }
-
-
-    .article-nav {
-      height 2.8rem
-      margin-top $component-spacing-value
-
-      .article-prev
-      .article-next {
-        box-sizing border-box
-        max-width $post-nav-max-width
-        height 100%
-
-        keep-container(true, 1.03, 1.03, 0.8rem, 0)
-
-        a {
-          position relative
-          display block
-          box-sizing border-box
-          width 100%
-          height 100%
-
-          &.prev {
-            padding-left $arrow-icon-width
-          }
-
-          &.next {
-            padding-right $arrow-icon-width
-          }
-
-          .arrow-icon {
-            position absolute
-            top 0
-            width $arrow-icon-width
-            height 100%
-
-            &.left {
-              left 0
-            }
-
-            &.right {
-              right 0
-            }
-          }
-
-          .title {
-            width 100%
-            height 100%
-          }
-        }
-      }
-
-      .article-prev {
-        float left
-      }
-
-      .article-next {
-        float right
-      }
-
-      .post-nav-item {
-        display none
-
-        +keep-tablet() {
-          display inline-block
-        }
-      }
-
-
-      .post-nav-title-item {
-        overflow hidden
-        white-space nowrap
-        text-overflow ellipsis
-
-        +keep-tablet() {
-          display none
-        }
-      }
-    }
-  }
-
-
-  .toc-content-container {
-    position sticky
-    top $header-height + $component-spacing-value
-    display none
-    box-sizing border-box
-    width $toc-container-width
-    max-height 'calc(100vh - %s)' % ($header-height + $component-spacing-value)
-    padding 2rem 0 2rem 1.4rem
-    transition-t("top, display, max-height", "0, 0, 0", "0.2, 0.1, 0.2", "ease, ease, ease")
-
-    .header-shrink & {
-      top $header-shrink-height + $component-spacing-value
-      max-height 'calc(100vh - %s)' % ($header-shrink-height + $component-spacing-value)
-    }
-  }
-}
+        
+    </div>
+</div>
 
 
                 

@@ -130,308 +130,157 @@
             <div class="main-content">
 
                 
-                    $avatarWidth = 3rem
-$arrow-icon-width = 1rem
-$post-nav-max-width = 14rem
-$article-title-font-size = 1.6rem
-$toc-container-width = 15rem
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
 
+            <div class="article-title">
+                <span class="title-hover-animation">内核裁剪与移植</span>
+            </div>
 
-.post-page-container {
-  position relative
-  display flex
-  justify-content space-between
-  box-sizing border-box
-  width 100%
-  height 100%
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/avatar.svg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">caijiQAQ</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            
+<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        
+            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
+        
+        <span class="pc">2024-06-19 21:07:14</span>
+        <span class="mobile">2024-06-19 21:07</span>
+    </span>
+    
+        <span class="article-update-date article-meta-item">
+        <i class="fas fa-file-pen"></i>&nbsp;
+        <span class="pc">2024-06-23 11:05:20</span>
+    </span>
+    
+    
+    
 
+    
+    
+    
+    
+</div>
 
-  &.show-toc {
-    .toc-content-container {
-      display block
-    }
+                        </div>
+                    </div>
+                </div>
+            
 
-    .article-content-container {
-      width 'calc(100% - %s)' % $toc-container-width
-    }
-  }
+            <div class="article-content keep-markdown-body">
+                
 
+                <p>使用的开发板是正点原子imx6ullmini的开发板</p>
+<h1 id="1-Linux启动流程"><a href="#1-Linux启动流程" class="headerlink" title="1.Linux启动流程"></a>1.Linux启动流程</h1><h1 id="2-boot"><a href="#2-boot" class="headerlink" title="2.boot"></a>2.boot</h1><h2 id="1-uboot之间的区别："><a href="#1-uboot之间的区别：" class="headerlink" title="1.uboot之间的区别："></a>1.uboot之间的区别：</h2><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240619211353.png"></p>
+<p><strong>问：为什么开发板厂商仍然需要自己再搞一个uboot呢？</strong><br>因为半导体厂商给的uboot是针对自家的评估板的，所以如果购买了第三方开发板后仍然使用半导体厂商提供的uboot，有些外设驱动可能不支持，就需要自己移植了。</p>
+<h2 id="2-uboot的启动流程"><a href="#2-uboot的启动流程" class="headerlink" title="2.uboot的启动流程"></a>2.uboot的启动流程</h2><p>这个流程源码实在是有点太长了，有时间再深入研究吧</p>
+<h2 id="3-uboot的移植"><a href="#3-uboot的移植" class="headerlink" title="3.uboot的移植"></a>3.uboot的移植</h2><p>uboot 的移植并不是说我们完完全全的<strong>从零开始将 uboot 移植</strong>到我们现在所使用的开发板或者开发平台上。这个对于我们来说基本是不可能的，这个工作一般是半导体厂商做的，半导体厂商负责将 uboot 移植到他们的芯片上，因此半导体厂商都会自己做一个开发板，这个开发板就叫做原厂开发板，比如大家学习STM32的时候听说过的discover开发板就是ST自己做的。半导体厂商会将 uboot 移植到他们自己的原厂开发板上，测试好以后就会将这个 uboot 发布出去，这就是大家常说的原厂 <strong>BSP</strong> 包。所以做产品一般就会参考原厂的开发板做硬件，然后在原厂提供的 BSP 包上做修改，将 uboot 或者 linux kernel 移植到我们的硬件上。</p>
+<p><strong>uboot移植的一般流程</strong>：</p>
+<ul>
+<li>① 在 uboot 中找到参考的开发平台，一般是原厂的开发板。</li>
+<li>② 参考原厂开发板移植 uboot 到我们所使用的开发板上。</li>
+</ul>
+<p>感觉看这个教程一大堆感觉什么也学不到啊，先放弃uboot，先学习一下内核裁剪</p>
+<h1 id="3-内核裁剪"><a href="#3-内核裁剪" class="headerlink" title="3.内核裁剪"></a>3.内核裁剪</h1><h2 id="1-正常编译内核的流程"><a href="#1-正常编译内核的流程" class="headerlink" title="1.正常编译内核的流程"></a>1.正常编译内核的流程</h2><p><strong>先下载源码，编写脚本，主要完成的操作有</strong>：</p>
+<ul>
+<li><p>1.清除之前的编译痕迹</p>
+</li>
+<li><p>2.defconfig:一般由平台厂商提供，内核编译用做.config的<strong>参考</strong>,一般有平台厂商提供，文件位于 &#x2F;kernel&#x2F;..&#x2F;arch&#x2F;arm&#x2F;configs&#x2F;xxx_defconfig</p>
+</li>
+<li><p>3.menuconfig配置编译</p>
+</li>
+<li><p>4.开始编译指定几个核来编译</p>
+<pre><code>  #!/bin/sh
+  make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
+  make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- imx_v7_defconfig
+  make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
+  make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- all -j16
+</code></pre>
+</li>
+</ul>
+<p><strong>编译源码后的文件夹如下所示</strong>：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240622211651.png"><br><strong>介绍几个重要的文件夹</strong></p>
+<ul>
+<li><ol>
+<li><strong>arch</strong><br>这个目录是和架构有关的目录，比如 arm、arm64、avr32、x86 等等架构。每种架构都对应一个目录，在这些目录中又有很多子目录，比如 boot、common、configs 等等。其中在架构下的子目录会用于控制系统引导、系统调用、动态调频、主频设置等。<br><code>arch/arm/configs</code> 目录是<strong>不同平台的默认配置文件</strong>：xxx_defconfig。<br><code>arch/arm/boot/dts</code>目录里是设备树文件<br><code>arch/arm/boot</code> 目录下会保存编译出来的 Image 和 zImage 镜像文件，而zImage 就是我们要用的 linux 镜像文件。<br>注：&#x3D;&#x3D;<strong>Image</strong>&#x3D;&#x3D; 是未经压缩的 Linux 内核镜像，它直接包含了编译后的内核代码和数据。&#x3D;&#x3D;<strong>zImage</strong>&#x3D;&#x3D; 是压缩后的 Linux 内核镜像，它使用了 gzip 压缩，并包含一个小的解压缩程序。<br><code>arch/arm/mach-xxx</code> 目录分别为相应平台的驱动和初始化文件，比如mach-imx 目录里面就是imx系列 CPU 的驱动和初始化文件。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li><strong>block</strong><br>block 是 Linux 下块设备目录，像 SD 卡、EMMC、NAND、硬盘等存储设备就属于块设备，block 目录中存放着管理块设备的相关文件。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li><strong>drivers</strong><br>驱动目录文件，此目录根据驱动类型的不同，分门别类进行整理，比如 drivers&#x2F;i2c 就是 I2C相关驱动目录，drivers&#x2F;gpio 就是 GPIO 相关的驱动目录，这是我们学习的重点。</li>
+</ol>
+</li>
+<li><ol start="4">
+<li><strong>fs</strong><br>此目录存放文件系统，比如 fs&#x2F;ext2、fs&#x2F;ext4、fs&#x2F;f2fs 等，分别是 ext2、ext4 和 f2fs 等文件系统。</li>
+</ol>
+</li>
+</ul>
+<h2 id="2-内核裁剪选项说明"><a href="#2-内核裁剪选项说明" class="headerlink" title="2.内核裁剪选项说明"></a>2.内核裁剪选项说明</h2><p>启动menuconfig，自定义设置，这里源码使用的是linux 4.1.15版本的源码<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240623110226.png"><br>进入第二个Gerneral setup中开始设置</p>
 
-  +keep-tablet() {
-    .toc-content-container {
-      display none !important
-    }
+            </div>
 
-    .article-content-container {
-      width 100% !important
-    }
-  }
+            
 
+            
 
-  .article-content-container {
-    position relative
-    box-sizing border-box
-    width 100%
-    height 100%
-    keep-container(false, 0, 0, 2rem, 2rem)
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                               rel="prev"
+                               href="/2024/06/30/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/%E9%9D%A2%E8%AF%95%E9%AB%98%E9%A2%91%E6%89%8B%E6%92%95%E4%BB%A3%E7%A0%81/"
+                            >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                                <span class="title flex-center">
+                                <span class="post-nav-title-item">面试高频手撕代码</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                               rel="next"
+                               href="/2024/06/16/docker%E7%BC%96%E7%A8%8B/"
+                            >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">docker编程</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                                <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
 
-    +keep-mobile() {
-      padding 1.2rem 0.2rem
-      box-shadow none
+            
+        </div>
 
-      &:hover {
-        box-shadow none
-      }
-    }
-
-
-    .article-title {
-      color var(--text-color-2)
-      font-weight 600
-      font-size $article-title-font-size
-
-      +keep-tablet() {
-        font-size $article-title-font-size * 0.9
-      }
-
-      +keep-mobile() {
-        font-size $article-title-font-size * 0.8
-      }
-    }
-
-
-    .article-header {
-      position relative
-      box-sizing border-box
-      width 100%
-      height $avatarWidth
-      padding-left $avatarWidth
-
-      .avatar {
-        position absolute
-        top 0
-        left 0
-        box-sizing border-box
-        width $avatarWidth
-        height $avatarWidth
-        padding 0.1rem
-        border 1px solid var(--border-color)
-        border-radius 50%
-
-        img {
-          width 100%
-          height 100%
-          background var(--avatar-background-color)
-          border-radius 50%
-        }
-      }
-
-
-      .info {
-        display flex
-        flex-direction column
-        justify-content space-between
-        box-sizing border-box
-        width 100%
-        height 100%
-        margin-left 0.8rem
-        padding 0.2rem 0
-
-        .author {
-          display flex
-          align-items center
-          font-weight 600
-          font-size 1.18rem
-
-          .name {
-            color var(--text-color-3)
-          }
-
-          .author-label {
-            margin-left 0.8rem
-            padding 0 0.4rem
-            color #fff
-            font-weight 500
-            font-size 0.8rem
-            background var(--selection-color)
-            border-radius 0.4rem
-          }
-        }
-      }
-    }
-
-
-    .article-header
-    .article-header-meta-info {
-      margin-top 1rem
-      +keep-tablet() {
-        transform scale(0.9)
-        transform-origin left top
-      }
-    }
-
-
-    .article-content {
-      margin-top $component-spacing-value
-      padding-bottom 2rem
-      color var(--text-color-3)
-      word-wrap break-word
-
-      .article-aging-tips {
-        position relative
-        display none
-        box-sizing border-box
-        margin-bottom 1.8rem
-        padding 1rem
-        color var(--article-aging-tips-color)
-        line-height 1.6
-        background var(--article-aging-tips-background-color)
-        border 0.1rem solid var(--article-aging-tips-border-color)
-        border-radius 0.4rem
-
-        i {
-          margin-right 0.4rem
-          color var(--article-aging-tips-color)
-        }
-
-        .days {
-          color var(--article-aging-tips-color)
-        }
-      }
-
-      if (hexo-config('post.copyright_info') == true || hexo-config('copyright_info.enable') == true) {
-        border-bottom 0.1rem dashed var(--border-color)
-      }
-    }
-
-
-    .post-tags-box {
-      display none
-      justify-content center
-      margin-top 1.6rem
-      font-size 1.1rem
-
-      +keep-tablet() {
-        display flex
-      }
-
-      +keep-mobile() {
-        margin-top 1.2rem
-        font-size 1rem
-      }
-
-
-      .tag-item {
-        margin 0 0.25rem
-      }
-    }
-
-
-    .post-copyright-info {
-      width 100%
-      margin-top $component-spacing-value
-
-      +keep-tablet() {
-        margin-top $component-spacing-value * 0.8
-      }
-    }
-
-
-    .article-nav {
-      height 2.8rem
-      margin-top $component-spacing-value
-
-      .article-prev
-      .article-next {
-        box-sizing border-box
-        max-width $post-nav-max-width
-        height 100%
-
-        keep-container(true, 1.03, 1.03, 0.8rem, 0)
-
-        a {
-          position relative
-          display block
-          box-sizing border-box
-          width 100%
-          height 100%
-
-          &.prev {
-            padding-left $arrow-icon-width
-          }
-
-          &.next {
-            padding-right $arrow-icon-width
-          }
-
-          .arrow-icon {
-            position absolute
-            top 0
-            width $arrow-icon-width
-            height 100%
-
-            &.left {
-              left 0
-            }
-
-            &.right {
-              right 0
-            }
-          }
-
-          .title {
-            width 100%
-            height 100%
-          }
-        }
-      }
-
-      .article-prev {
-        float left
-      }
-
-      .article-next {
-        float right
-      }
-
-      .post-nav-item {
-        display none
-
-        +keep-tablet() {
-          display inline-block
-        }
-      }
-
-
-      .post-nav-title-item {
-        overflow hidden
-        white-space nowrap
-        text-overflow ellipsis
-
-        +keep-tablet() {
-          display none
-        }
-      }
-    }
-  }
-
-
-  .toc-content-container {
-    position sticky
-    top $header-height + $component-spacing-value
-    display none
-    box-sizing border-box
-    width $toc-container-width
-    max-height 'calc(100vh - %s)' % ($header-height + $component-spacing-value)
-    padding 2rem 0 2rem 1.4rem
-    transition-t("top, display, max-height", "0, 0, 0", "0.2, 0.1, 0.2", "ease, ease, ease")
-
-    .header-shrink & {
-      top $header-shrink-height + $component-spacing-value
-      max-height 'calc(100vh - %s)' % ($header-shrink-height + $component-spacing-value)
-    }
-  }
-}
+        
+    </div>
+</div>
 
 
                 
