@@ -130,129 +130,308 @@
             <div class="main-content">
 
                 
-                    <div class="fade-in-down-animation">
-    <div class="post-page-container">
-        <div class="article-content-container">
+                    $avatarWidth = 3rem
+$arrow-icon-width = 1rem
+$post-nav-max-width = 14rem
+$article-title-font-size = 1.6rem
+$toc-container-width = 15rem
 
-            <div class="article-title">
-                <span class="title-hover-animation">嵌入式硬件准备</span>
-            </div>
 
-            
-                <div class="article-header">
-                    <div class="avatar">
-                        <img src="/images/avatar.svg">
-                    </div>
-                    <div class="info">
-                        <div class="author">
-                            <span class="name">caijiQAQ</span>
-                            
-                                <span class="author-label">Lv3</span>
-                            
-                        </div>
-                        <div class="meta-info">
-                            
-<div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        
-            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
-        
-        <span class="pc">2024-08-19 10:58:48</span>
-        <span class="mobile">2024-08-19 10:58</span>
-    </span>
-    
-        <span class="article-update-date article-meta-item">
-        <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-08-19 11:30:08</span>
-    </span>
-    
-    
-    
+.post-page-container {
+  position relative
+  display flex
+  justify-content space-between
+  box-sizing border-box
+  width 100%
+  height 100%
 
-    
-    
-    
-    
-</div>
 
-                        </div>
-                    </div>
-                </div>
-            
+  &.show-toc {
+    .toc-content-container {
+      display block
+    }
 
-            <div class="article-content keep-markdown-body">
-                
+    .article-content-container {
+      width 'calc(100% - %s)' % $toc-container-width
+    }
+  }
 
-                <h2 id="1-串口UART与RS232、RS485的区别"><a href="#1-串口UART与RS232、RS485的区别" class="headerlink" title="1.串口UART与RS232、RS485的区别"></a>1.串口UART与RS232、RS485的区别</h2><p>UART、RS232、RS485都是用于串行通信的技术和标准。UART是串口通信中的一种，常见的串口还有RS232、RS422、RS485。</p>
-<h3 id="1-UART"><a href="#1-UART" class="headerlink" title="1.UART"></a>1.UART</h3><p>UART：一种<strong>双向、串行、异步</strong>的通信总线，UART一般使用3根线，分别是发送线（TX）、接收线（RX）和地线（GND）<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819110441.png"><br>全双工通信，常用于控制系统与外设通信，包括控制器与控制器，控制器与终端设备等。</p>
-<ul>
-<li><p>1.数据帧格式<br>UART在协议层中规定了数据帧的格式容，具体包括起始位、数据位、校验位以及停止位<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819110557.png"></p>
-</li>
-<li><p>2.通信协议</p>
-<ul>
-<li>1.空闲位：空闲时数据线位高电平状态</li>
-<li>2.起始位：uart检测到高电平向低电平转换时，说明已经开始</li>
-<li>3.数据位：一般都是8位</li>
-<li>4.校验位：用于校验是否传输正常<br>几种方式：<br>（1）无校验<br>（2）奇校验：在奇校验中，校验位（parity bit）被设置为确保数据位中的 1 的数量是奇数。如果数据位中的 1 的数量已经是奇数，校验位被设置为 0，以使总的位数为奇数。<br>（3）偶校验：同理</li>
-<li>5.停止位：数据传输结束的标志，停止位长度可选，可以是1位、1.5位、2位的高电平。</li>
-</ul>
-</li>
-<li><p>2.RS232<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819110137.png"><br>一共有9个引脚<br>-3V ~ -15V表示逻辑1，+3V ~ +15V表示逻辑0。可做到双向传输，全双工通讯，为异步数据传输方式，最高传输速率可达到20Kbps。</p>
-</li>
-<li><p>3.RS485<br>RS485 使用&#x3D;&#x3D;差分信号&#x3D;&#x3D;，这意味着数据传输通过两条信号线（A 和 B）进行。<br><strong>以U &#x3D; A - B 的电压值为划分依据</strong><br>发送端：逻辑1：+2V ~ +6V；逻辑0：-6V ~ -2V<br>接收端：逻辑1：&gt;&#x3D; 200mv；逻辑0：&lt;&#x3D; -200mv<br>RS485使用的是压差信号，用两线电压的差值来区分逻辑1或0 。使用压差信号，抗干扰能力比较强，传输距离能达到上千米。前面两种电平传输最远就几十米。抗干扰能力比较强<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819111904.png"></p>
-</li>
-</ul>
-<h2 id="2-TTL电平是什么？"><a href="#2-TTL电平是什么？" class="headerlink" title="2.TTL电平是什么？"></a>2.TTL电平是什么？</h2><p>TL（Transistor-Transistor Logic）电平是一种基于晶体管-晶体管逻辑的电平标准。TTL电平信号在逻辑高电平时通常为3.3V或5V，在逻辑低电平时为0V。</p>
 
-            </div>
+  +keep-tablet() {
+    .toc-content-container {
+      display none !important
+    }
 
-            
+    .article-content-container {
+      width 100% !important
+    }
+  }
 
-            
 
-            
-                <div class="article-nav">
-                    
-                        <div class="article-prev">
-                            <a class="prev"
-                               rel="prev"
-                               href="/2024/08/19/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/linux%E5%86%85%E6%A0%B8%E5%87%86%E5%A4%87/"
-                            >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                                <span class="title flex-center">
-                                <span class="post-nav-title-item">linux内核准备</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                            </a>
-                        </div>
-                    
-                    
-                        <div class="article-next">
-                            <a class="next"
-                               rel="next"
-                               href="/2024/08/15/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/%E9%9D%A2%E8%AF%95%E9%A1%B9%E7%9B%AE%E5%89%96%E6%9E%90/"
-                            >
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">面试项目剖析</span>
-                                <span class="post-nav-item">Next posts</span>
-                            </span>
-                                <span class="right arrow-icon flex-center">
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                            </a>
-                        </div>
-                    
-                </div>
-            
+  .article-content-container {
+    position relative
+    box-sizing border-box
+    width 100%
+    height 100%
+    keep-container(false, 0, 0, 2rem, 2rem)
 
-            
-        </div>
+    +keep-mobile() {
+      padding 1.2rem 0.2rem
+      box-shadow none
 
-        
-    </div>
-</div>
+      &:hover {
+        box-shadow none
+      }
+    }
+
+
+    .article-title {
+      color var(--text-color-2)
+      font-weight 600
+      font-size $article-title-font-size
+
+      +keep-tablet() {
+        font-size $article-title-font-size * 0.9
+      }
+
+      +keep-mobile() {
+        font-size $article-title-font-size * 0.8
+      }
+    }
+
+
+    .article-header {
+      position relative
+      box-sizing border-box
+      width 100%
+      height $avatarWidth
+      padding-left $avatarWidth
+
+      .avatar {
+        position absolute
+        top 0
+        left 0
+        box-sizing border-box
+        width $avatarWidth
+        height $avatarWidth
+        padding 0.1rem
+        border 1px solid var(--border-color)
+        border-radius 50%
+
+        img {
+          width 100%
+          height 100%
+          background var(--avatar-background-color)
+          border-radius 50%
+        }
+      }
+
+
+      .info {
+        display flex
+        flex-direction column
+        justify-content space-between
+        box-sizing border-box
+        width 100%
+        height 100%
+        margin-left 0.8rem
+        padding 0.2rem 0
+
+        .author {
+          display flex
+          align-items center
+          font-weight 600
+          font-size 1.18rem
+
+          .name {
+            color var(--text-color-3)
+          }
+
+          .author-label {
+            margin-left 0.8rem
+            padding 0 0.4rem
+            color #fff
+            font-weight 500
+            font-size 0.8rem
+            background var(--selection-color)
+            border-radius 0.4rem
+          }
+        }
+      }
+    }
+
+
+    .article-header
+    .article-header-meta-info {
+      margin-top 1rem
+      +keep-tablet() {
+        transform scale(0.9)
+        transform-origin left top
+      }
+    }
+
+
+    .article-content {
+      margin-top $component-spacing-value
+      padding-bottom 2rem
+      color var(--text-color-3)
+      word-wrap break-word
+
+      .article-aging-tips {
+        position relative
+        display none
+        box-sizing border-box
+        margin-bottom 1.8rem
+        padding 1rem
+        color var(--article-aging-tips-color)
+        line-height 1.6
+        background var(--article-aging-tips-background-color)
+        border 0.1rem solid var(--article-aging-tips-border-color)
+        border-radius 0.4rem
+
+        i {
+          margin-right 0.4rem
+          color var(--article-aging-tips-color)
+        }
+
+        .days {
+          color var(--article-aging-tips-color)
+        }
+      }
+
+      if (hexo-config('post.copyright_info') == true || hexo-config('copyright_info.enable') == true) {
+        border-bottom 0.1rem dashed var(--border-color)
+      }
+    }
+
+
+    .post-tags-box {
+      display none
+      justify-content center
+      margin-top 1.6rem
+      font-size 1.1rem
+
+      +keep-tablet() {
+        display flex
+      }
+
+      +keep-mobile() {
+        margin-top 1.2rem
+        font-size 1rem
+      }
+
+
+      .tag-item {
+        margin 0 0.25rem
+      }
+    }
+
+
+    .post-copyright-info {
+      width 100%
+      margin-top $component-spacing-value
+
+      +keep-tablet() {
+        margin-top $component-spacing-value * 0.8
+      }
+    }
+
+
+    .article-nav {
+      height 2.8rem
+      margin-top $component-spacing-value
+
+      .article-prev
+      .article-next {
+        box-sizing border-box
+        max-width $post-nav-max-width
+        height 100%
+
+        keep-container(true, 1.03, 1.03, 0.8rem, 0)
+
+        a {
+          position relative
+          display block
+          box-sizing border-box
+          width 100%
+          height 100%
+
+          &.prev {
+            padding-left $arrow-icon-width
+          }
+
+          &.next {
+            padding-right $arrow-icon-width
+          }
+
+          .arrow-icon {
+            position absolute
+            top 0
+            width $arrow-icon-width
+            height 100%
+
+            &.left {
+              left 0
+            }
+
+            &.right {
+              right 0
+            }
+          }
+
+          .title {
+            width 100%
+            height 100%
+          }
+        }
+      }
+
+      .article-prev {
+        float left
+      }
+
+      .article-next {
+        float right
+      }
+
+      .post-nav-item {
+        display none
+
+        +keep-tablet() {
+          display inline-block
+        }
+      }
+
+
+      .post-nav-title-item {
+        overflow hidden
+        white-space nowrap
+        text-overflow ellipsis
+
+        +keep-tablet() {
+          display none
+        }
+      }
+    }
+  }
+
+
+  .toc-content-container {
+    position sticky
+    top $header-height + $component-spacing-value
+    display none
+    box-sizing border-box
+    width $toc-container-width
+    max-height 'calc(100vh - %s)' % ($header-height + $component-spacing-value)
+    padding 2rem 0 2rem 1.4rem
+    transition-t("top, display, max-height", "0, 0, 0", "0.2, 0.1, 0.2", "ease, ease, ease")
+
+    .header-shrink & {
+      top $header-shrink-height + $component-spacing-value
+      max-height 'calc(100vh - %s)' % ($header-shrink-height + $component-spacing-value)
+    }
+  }
+}
 
 
                 

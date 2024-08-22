@@ -130,917 +130,308 @@
             <div class="main-content">
 
                 
-                    <div class="fade-in-down-animation">
-    <div class="post-page-container">
-        <div class="article-content-container">
-
-            <div class="article-title">
-                <span class="title-hover-animation">驱动实现</span>
-            </div>
-
-            
-                <div class="article-header">
-                    <div class="avatar">
-                        <img src="/images/avatar.svg">
-                    </div>
-                    <div class="info">
-                        <div class="author">
-                            <span class="name">caijiQAQ</span>
-                            
-                                <span class="author-label">Lv3</span>
-                            
-                        </div>
-                        <div class="meta-info">
-                            
-<div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        
-            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
-        
-        <span class="pc">2024-01-01 09:28:41</span>
-        <span class="mobile">2024-01-01 09:28</span>
-    </span>
-    
-        <span class="article-update-date article-meta-item">
-        <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-08-16 10:39:59</span>
-    </span>
-    
-    
-    
-
-    
-    
-    
-    
-</div>
-
-                        </div>
-                    </div>
-                </div>
-            
-
-            <div class="article-content keep-markdown-body">
-                
-
-                <p>根据csdn中胖哥王老师一步步实现一遍，现在看的有点混乱</p>
-<h2 id="01-环境搭建与helloworld"><a href="#01-环境搭建与helloworld" class="headerlink" title="01 环境搭建与helloworld"></a>01 环境搭建与helloworld</h2><p>直接跳过了，之前环境已经搭完了</p>
-<h2 id="02-驱动与设备的分离设计"><a href="#02-驱动与设备的分离设计" class="headerlink" title="02 驱动与设备的分离设计"></a>02 驱动与设备的分离设计</h2><p>驱动与设备干湿分离，驱动和设备分开写能让写出的驱动更有效、更好移植。<br>总体可以理解为：driver是执行函数，device为传入参数</p>
-<h3 id="1-总线驱动模型原理："><a href="#1-总线驱动模型原理：" class="headerlink" title="1.总线驱动模型原理："></a>1.总线驱动模型原理：</h3><p>总线管理两个链表，一个是驱动的链表，一个    是设备的链表，无论是先注册驱动还是先注册设备都无所谓，因为后注册的会拿去比较前面先注册的链表，直到相匹配。</p>
-<h3 id="2-driver部分的编程设计分为两个部分："><a href="#2-driver部分的编程设计分为两个部分：" class="headerlink" title="2.driver部分的编程设计分为两个部分："></a>2.driver部分的编程设计分为两个部分：</h3><ul>
-<li><p>1.driver模块的注册<br> platform_driver_register(&amp;hello_driver);</p>
-</li>
-<li><p>2.driver在总线上(platform_driver)的注册：在总线上注册需要定义一个driver的结构体</p>
-<pre><code>  static struct platform_driver hello_driver = 
-  &#123;
-      .probe      = hello_probe,
-      .remove     = hello_remove,
-      .driver     = 
-      &#123;
-          .name   = &quot;100ask_led&quot;,
-      &#125;,
-  &#125;;
-</code></pre>
-<p>  其中.probe就是定义driver需要做什么事情的函数</p>
-</li>
-</ul>
-<p>platform_driver平台驱动总线结构体里面可以定义的内容：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231214210442.png"></p>
-<ul>
-<li><p>3.注册driver对应的module<br>将所声明的结构体定义在__init以及__exit的函数中</p>
-<pre><code>  platform_driver_register(&amp;hello_driver); 
-</code></pre>
-<p>  最后module_init以及module_exit</p>
-</li>
-</ul>
-<h3 id="3-device部分的编程设计同样分为两个部分"><a href="#3-device部分的编程设计同样分为两个部分" class="headerlink" title="3.device部分的编程设计同样分为两个部分"></a>3.device部分的编程设计同样分为两个部分</h3><ul>
-<li><p>1.device模块注册<br>module_init+module_exit<br>注册时也一定要使用platform_device_register(&amp;hello_dev);  </p>
-</li>
-<li><p>2.device在总线上(platform_device)的注册：与platform_driver类似，但只需要去声明自己的设备名称</p>
-<pre><code>  static struct platform_device hello_dev = 
-  &#123;
-      .name = &quot;100ask_led&quot;,
-      .dev = 
-      &#123;
-          .release = hello_dev_release,
-      &#125;,
-  &#125;;
-</code></pre>
-<p>  platform_devic结构体可以声明的内容：</p>
-</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231214211235.png"></p>
-<ul>
-<li><p>3.注册device对应的module<br>将结构体定义在__init以及__exit函数中</p>
-<pre><code>  platform_device_register(&amp;hello_dev); 
-</code></pre>
-<p>  最后module_init以及module_exit</p>
-</li>
-</ul>
-<p><font style="background:yellow"><strong>总结一下</strong></font>声明了两个模块，一个是driver模块，一个是device模块，driver模块声明的总线是platform_driver_register，device模块声明的总线是platform_device_register</p>
-<p>当两者都成功加载后，两个功能都会挂载到一个统一的虚拟总线上，接着会执行driver结构体中定义的.probe函数，而传入的参数也就是device结构体</p>
-<pre><code>static struct platform_device hello_dev = 
-&#123;
-    .name = &quot;100ask_led&quot;,
-    .dev = 
-    &#123;
-        .release = hello_dev_release,
-    &#125;,
-&#125;;
-</code></pre>
-<p>两者也可以通过在device结构体中定义.resource 并且在probe函数中使用platform_get_resource来实现两者之间的参数传递</p>
-<h3 id="4-驱动与设备的匹配"><a href="#4-驱动与设备的匹配" class="headerlink" title="4.驱动与设备的匹配"></a>4.驱动与设备的匹配</h3><p>driver和device是如何匹配上的呢？<br>下面有几种匹配的方法：</p>
-<ul>
-<li><p>1.驱动名字相同<br><strong>driver结构体声明:</strong></p>
-<pre><code>  static struct platform_driver hello_driver = 
-  &#123;
-      .probe      = hello_probe,
-      .remove     = hello_remove,
-      .driver     = 
-      &#123;
-          .name   = &quot;100ask_led&quot;,
-      &#125;,
-  &#125;;
-</code></pre>
-<p>  <strong>device结构体声明：</strong></p>
-<pre><code>  static struct platform_device hello_dev = 
-  &#123;
-      .name = &quot;100ask_led&quot;,
-      .dev = 
-      &#123;
-          .release = hello_dev_release,
-      &#125;,
-  &#125;;
-</code></pre>
-<p>  名字都是100ask_led直接就可以匹配到</p>
-</li>
-<li><p>2.device中直接调用.driver_override指定匹配的驱动<br>  （device指定driver）<br>为了防止多个设备都同样要调用一个驱动，第一个方法直接pass，第二种方法手动调用，从device指定对应的driver！</p>
-<pre><code>  static struct platform_device led_dev = &#123;
-      .name = &quot;100ask_led1&quot;,
-      .dev = &#123;
-              .release = led_dev_release,
-      &#125;,
-      .driver_override = &quot;100ask_led&quot;,
-  &#125;;
-</code></pre>
-<p>  driver_opverride直接强行指定驱动</p>
-</li>
-<li><p>3.id_table：（驱动指定device列表）<br>在驱动中指定一个设备列表，如果device在这个指定的id_table里，就可以匹配上了</p>
-<pre><code>  static const struct platform_device_id led_id_table[] = &#123;
-      &#123;&quot;hellodevice1&quot;,   1&#125;,
-      &#123;&quot;hellodevice2&quot;, 2&#125;,
-      &#123;&quot;hellodevice3&quot;, 3&#125;,
-      &#123; &#125;,
-  &#125;;
-
-  static struct platform_driver led_driver = &#123;
-      .probe      = led_probe,
-      .remove   
-        = led_remove,
-      .driver     = &#123;
-          .name   = &quot;100ask_led&quot;,
-      &#125;,
-      .id_table = led_id_table,
-  &#125;;
-</code></pre>
-<p>  device里就得用上面id_table的名字</p>
-<pre><code>  static struct platform_device led_dev = &#123;
-      .name = &quot;hellodevice1&quot;,
-      .dev = &#123;
-              .release = led_dev_release,
-      &#125;,
-  &#125;;
-</code></pre>
-</li>
-</ul>
-<p><font style="background:yellow"><strong>总结一下</strong></font><br>第一种方法只使用与一对一的指定，第二种方法在device端指定了driver，第三种方法在driver端指定了device<br><strong>结果：</strong><br>分离的思想是将device与driver分别编程，在对接之后调用probe函数的内容。<br>这里先insmod了hello_driver后insmod了hello_device，同时probe函数在hello_drvier上在对接上之后，运行了probe函数里的内容<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240225154046.png"></p>
-<h2 id="03-设备树"><a href="#03-设备树" class="headerlink" title="03 设备树"></a>03 设备树</h2><p>DTS( device tree source)文件通过DTC工具编译为DTB(device tree blob)文件，系统启动时候，会通过解析dtb文件，自动来创建节点和设备。<br>用户编写的是dts文件，而内核使用的是dtb文件<br>设备树是用来替代device模块的</p>
-<h3 id="1-而dtsi文件是什么呢？"><a href="#1-而dtsi文件是什么呢？" class="headerlink" title="1.而dtsi文件是什么呢？"></a>1.而dtsi文件是什么呢？</h3><p>设备树文件不需要我们从零写出来，内核支持了某款芯片比如imx6ull，在内核的arch&#x2F;arm&#x2F;boot&#x2F;dts目录下就有了能用的设备树<font style="background:yellow"><strong>模板</strong></font>，一般命名为xxxx.dtsi。“i”表示“include”，被别的文件引用的。</p>
-<h3 id="2-设备树编写所会遇到的属性"><a href="#2-设备树编写所会遇到的属性" class="headerlink" title="2.设备树编写所会遇到的属性"></a>2.设备树编写所会遇到的属性</h3><ul>
-<li><p>1.\ 是根节点的意思，同时根节点一般不带有看名字<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240227205351.png"></p>
-</li>
-<li><p>2.别名：sd_io_1v8_reg: sd_io_1v8_reg {}<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240227205754.png"></p>
-</li>
-<li><p>3.大括号下包含一个大括号的意思就是属性<br>  这里就是led1是led的一个属性</p>
-<pre><code>  led&#123;
-      led1&#123;&#125;
-  &#125;
-</code></pre>
-</li>
-<li><p>4 compatible就是用来表示可以兼容ABC等驱动，而 model是用来准确定义这个硬件是什么</p>
-<pre><code>  比如根节点中可以这样写：
-  / &#123;
-      compatible = &quot;samsung,smdk2440&quot;, &quot;samsung,mini2440&quot;;
-      model = &quot;jz2440_v3&quot;;
-  &#125;;
-  它表示这个单板，可以兼容内核中的“smdk2440”，也兼容“mini2440”。
-  从compatible属性中可以知道它兼容哪些板，但是它到底是什么板？用model属性来明确。
-</code></pre>
-</li>
-<li><p>5.reg<br>reg的本意是register，用来表示寄存器地址。<br>但是在设备树里，它可以用来描述一段空间。反正对于ARM系统，寄存器和内存是统一编址的，即访问寄存器时用某块地址，访问内存时用某块地址，在访问方法上没有区别。<br>reg属性的值，是一系列的“address size”，用多少个32位的数来表示address和size，由其父节点的#address-cells、#size-cells决定。</p>
-<pre><code>  示例：
-  /dts-v1/;
-  / &#123;
-      #address-cells = &lt;1&gt;;
-      #size-cells = &lt;1&gt;; 
-      memory &#123;
-          reg = &lt;0x80000000 0x20000000&gt;;
-      &#125;;
-  &#125;;
-</code></pre>
-</li>
-<li><p>6.常用的节点<br><strong>根节点</strong><br>  dts文件中必须有一个根节点：<br>  &#x2F;dts-v1&#x2F;;<br>  &#x2F; {<br>      model &#x3D; “SMDK24440”;<br>      compatible &#x3D; “samsung,smdk2440”;<br><br>      #address-cells &#x3D; &lt;1&gt;;<br>      #size-cells &#x3D; &lt;1&gt;;<br>  };<br>  根节点中必须有这些属性：</p>
-<pre><code>  #address-cells // 在它的子节点的reg属性中, 使用多少个u32整数来描述地址(address)
-  #size-cells   		// 在它的子节点的reg属性中, 使用多少个u32整数来描述大小(size)
-  compatible   	// 定义一系列的字符串, 用来指定内核中哪个machine_desc可以支持本设备
-                              // 即这个板子兼容哪些平台 
-                              // uImage : smdk2410 smdk2440 mini2440     ==&gt; machine_desc         
-                  
-  model       // 咱这个板子是什么
-                      // 比如有2款板子配置基本一致, 它们的compatible是一样的
-                      // 那么就通过model来分辨这2款板子
-</code></pre>
-<p>  <strong>chosen节点</strong></p>
-<pre><code>  我们可以通过设备树文件给内核传入一些参数，这要在chosen节点中设置bootargs属性：
-  chosen &#123;
-      bootargs = &quot;noinitrd root=/dev/mtdblock4 rw init=/linuxrc console=ttySAC0,115200&quot;;
-  &#125;;
-</code></pre>
-</li>
-</ul>
-<h3 id="3-编译设备树"><a href="#3-编译设备树" class="headerlink" title="3.编译设备树"></a>3.编译设备树</h3><ul>
-<li><p>1.内核中直接make</p>
-<pre><code>  make  dtbs  V=1
-</code></pre>
-</li>
-<li><p>2.手动编译&#x2F;反编译<br><font style="color:red">不推荐手动使用dtc工具编译喵</font><br>内核目录下scripts&#x2F;dtc&#x2F;dtc是设备树的编译工具，直接使用它的话，包含其他文件时不能使用“#include”，而必须使用“&#x2F;incldue”。</p>
-<pre><code>  编译、反编译的示例命令如下，“-I”指定输入格式，“-O”指定输出格式，“-o”指定输出文件：
-  ./scripts/dtc/dtc -I dts -O dtb -o tmp.dtb arch/arm/boot/dts/xxx.dts  // 编译dts为dtb
-  ./scripts/dtc/dtc -I dtb -O dts -o tmp.dts arch/arm/boot/dts/xxx.dtb  // 反编译dtb为dts
-</code></pre>
-</li>
-<li><p>3.更换设备树文件dtb<br>设备树文件是：内核源码目录中arch&#x2F;arm&#x2F;boot&#x2F;dts&#x2F;stm32mp157c-100ask-512d-lcd-v1.dtb<br>可以通过nfs ssh等方式把新编译出来的方式拷贝到开发板 <font style="color:red">&#x2F;boot目录下 替换掉原来的</font>。</p>
-</li>
-</ul>
-<h3 id="4-内核对设备树的处理"><a href="#4-内核对设备树的处理" class="headerlink" title="4.内核对设备树的处理"></a>4.内核对设备树的处理</h3><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240227202416.png"><br>① dts在PC机上被编译为dtb文件；<br>② u-boot把dtb文件传给内核；<br>③ 内核解析dtb文件，把每一个节点都转换为device_node结构体；<br>④<font style="color:red"> 对于某些device_node结构体</font>，会被转换为platform_device结构体</p>
-<ul>
-<li><p><strong>1.哪些设备树节点会被转换为platform_device？</strong><br>  A. 根节点下含有compatile属性的子节点</p>
-<p>  B. 含有特定compatile属性的节点的子节点</p>
-</li>
-</ul>
-<p>如果一个节点的compatile属性，它的值是这<font style="color:red">4者之一：“simple-bus”,“simple-mfd”,“isa”,“arm,amba-bus”</font>,那么它的子结点(需含compatile属性)也可以转换为platform_device。<br>C. <font style="color:red">总线I2C、SPI节点下的子节点：不转换为platform_device</font><br>某个总线下到子节点，应该交给对应的总线驱动程序来处理, 它们不应该被转换为platform_device。</p>
-<h3 id="5-platform-device如何与platform-driver配对"><a href="#5-platform-device如何与platform-driver配对" class="headerlink" title="5.platform_device如何与platform_driver配对"></a>5.platform_device如何与platform_driver配对</h3><p>从设备树转换得来的platform_device会被注册进内核里，以后当我们每注册一个platform_driver时，它们就会两两确定能否配对，如果能配对成功就调用platform_driver的probe函数。<br><strong>比较设备树信息platform_device. dev.of_node和platform_driver.driver.of_match_table</strong></p>
-<pre><code>如果一个platform_driver支持设备树，它的platform_driver.driver.of_match_table是一个数组，类型如下：
-platform_driver.driver.of_match_table:
-struct of_device_id &#123;
-    char	name[32];
-    char	type[32];
-    char	compatible[128];
-    const void *data;
-&#125;;
-</code></pre>
-<ul>
-<li>首先，如果of_match_table中含有compatible值，就跟dev的compatile属性比较，若一致则成功，否则返回失败；</li>
-<li>其次，如果of_match_table中含有type值，就跟dev的device_type属性比较，若一致则成功，否则返回失败；</li>
-<li>最后，如果of_match_table中含有name值，就跟dev的name属性比较，若一致则成功，否则返回失败。</li>
-</ul>
-<p><strong>举个例子：</strong></p>
-<pre><code>static const struct of_device_id dts_device_ids[] = &#123;
-    &#123; .compatible = &quot;100ask,led&quot;, &#125;,
-    &#123;/* sentinel */&#125;
-&#125;;
+                    $avatarWidth = 3rem
+$arrow-icon-width = 1rem
+$post-nav-max-width = 14rem
+$article-title-font-size = 1.6rem
+$toc-container-width = 15rem
 
 
-/* A. 实现platform_driver  */
-static struct platform_driver led_driver = &#123;
-    .probe      = led_probe,
-    .remove     = led_remove,
-    .driver     = &#123;
-        .name   = &quot;100ask_led&quot;,
-        .of_match_table = dts_device_ids,
-    &#125;,
-    .id_table = led_id_table,
-&#125;;
-</code></pre>
-<p>在这里就是就是driver的匹配device中的.compatible参数</p>
-<p>值的注意的是：<br>而设备树中建议不再使用devcie_type和name属性，所以基本上只使用设备节点的compatible属性来寻找匹配的platform_driver。</p>
-<ul>
-<li>最后比较：platform_device.name和platform_driver.driver.name<br>platform_driver.id_table可能为空，<br>这时可以根据platform_driver.driver.name来寻找同名的platform_device。</li>
-</ul>
-<h3 id="6-参数传递"><a href="#6-参数传递" class="headerlink" title="6.参数传递"></a>6.参数传递</h3><p>普通device与设备树创建的device节点是不一样的，device可以通过platform_get_resource来得到参数<br>例：如果是普通的platform_device就使用platform_get_resource来获取参数，如果是设备树节点就使用设备树的接口来访问节点。</p>
-<pre><code>if (!pdev-&gt;dev.of_node)  /* 普通的platform_device */
-&#123;
-    res = platform_get_resource(pdev, IORESOURCE_IRQ, i++);
-    if (!res)
-        return -EINVAL;
-    minor = g_ledcnt;
-    leds_desc[minor].pin = res-&gt;start;
-&#125;
-else
-&#123;
-    of_property_read_string(pdev-&gt;dev.of_node, &quot;pin&quot;, &amp;tmp_str);
-    printk(&quot;pin = %s\n&quot;, tmp_str);
-    minor = g_ledcnt;
-    leds_desc[minor].pin = tmp_str[6] - &#39;0&#39;;
-&#125;
-</code></pre>
-<p>接口还有以下几个：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240228204242.png"></p>
-<h3 id="7-实战一哈"><a href="#7-实战一哈" class="headerlink" title="7.实战一哈"></a>7.实战一哈</h3><ul>
-<li><p><strong>1.修改dts内容，加一个myled_for_test_ok</strong></p>
-<pre><code>  myled_for_test_ok&#123;
-      compatible=&quot;100ask,led&quot;;
-      status= &quot;okay&quot;;
-      pin=&quot;gpio5_3&quot;;
-  &#125;;
-</code></pre>
-</li>
-<li><p><strong>2.编译dts内容</strong></p>
-<pre><code>  /源代码目录/:ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- KERNEL=kernel7 make dtbs 
-</code></pre>
-</li>
-<li><p><strong>3.将编译出的dtb文件装载到树莓派上：</strong><br>  设备树节点以及在单板上所在的路径<br>  <img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240229203433.png"><br>  设备树文件以及所在的路径<br>  <img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240229203530.png"><br>  因为dtb文件都是由bootloader启动的时候装载的所以在这里我们就可以直接修改，但是也因为这样在修改之后我们得重启才能看是否发挥了作用。<br>  重启之后我们再回到这个地方查看节点，发现我们之前设置的那个myled_for_test_ok的节点赫然在列！<br>  <img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240229203941.png"><br>  cd进去探索一圈，也发现了我们之前在里面设置的一堆属性也成为了节点下的一些文件通过cat可以看到我们当时设置的内容：<br>  <img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240229204236.png"><br>  或者用</p>
-<pre><code>  ls /proc/device-tree
-</code></pre>
-<p>  这句话也行来打印出设备树节点的名称</p>
-</li>
-<li><p><strong>4.设置of_match_table 让driver与device相互匹配</strong><br>突然找不到kernel了就很离谱<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240229210617.png"><br>解：发现是权限不够，使用<font style="color:red">sudo make</font>就好了<br>这里就是要将设备树的文件与driver相匹配上，使用这个of_device_table属性来匹配这两个模块。如果匹配上了这里就会调用driver里面的probe函数，和之前不用设备树的情况是一样的。</p>
-<pre><code>  这段代码输入进去会报两个错误：
-  static const struct of_device_id dts_device_ids[] = &#123;
-      &#123; .compatible = &quot;100ask,led&quot;, &#125;,//use for match the device tree
-      &#123;/* sentinel */&#125;
-  &#125;;
-
-  static struct platform_driver hello_driver = 
-  &#123;
-      .probe      = hello_probe,
-      .remove     = hello_remove,
-      .driver     = 
-      &#123;
-          .name   = &quot;100ask_led&quot;,
-          .of_match_table = dts_device_ids,
-      &#125;,
-  &#125;;
-</code></pre>
-<p>  <strong>注：识别不到of_device_id这个结构体</strong><br>  解：缺少头文件#include&lt;linux&#x2F;of.h&gt;<br>  结果：<br>  <img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240302162036.png"><br>  打印出了init里面的内容也打印出了probe里的内容，说明二者联通成功了。<br>  采用了软硬分离的思想，所以只需要将platform_device文件替换为设备树了。<br>  <strong><font style="color:red">看平台总线（platform)注册的驱动</font></strong></p>
-<pre><code>  ls /sys/bus/platform/drivers
-</code></pre>
-<p>  一点解惑：platform的声明的一系列平台总线是针对硬件设备与驱动之间的联系，而想要与sysfs文件系统中相交互还需要声明device节点(device_create)。总的来说，平台总线节点描述了硬件设备的属性和配置，而device_create 创建的设备节点允许将设备关联到sysfs文件系统中的一个节点，使得<strong>用户空间</strong>可以通过这个节点来访问设备。两者之间的关系是平台设备节点描述了设备的硬件属性和配置，而device_create 创建的设备节点将设备暴露给用户空间。而与用户空间相连的设备节点一般是在&#x2F;sys&#x2F;devices的目录下。<br>  也就是说：设备树platform下面这一堆的声明是告诉设备，我有这些设备节点，调用就是driver的事，但是如果想要控制就必须要提供一个接口，这个接口也就是device_create所产生的节点，</p>
-</li>
-<li><p><strong>5.读入底层设备树的内容</strong><br>  需要完成platformdevice的读取，如果是设备树文件就使用of_property_read_string(pdev-&gt;dev.of_node,想要读取的属性,字符串输入的参数) 来读取内容</p>
-<pre><code>      static int led_probe(struct platform_device *pdev)
-  &#123;	
-      int minor;
-      int i = 0;
-      const char *tmp_str;
-
-      struct resource *res;
-          
-      printk(&quot;%s %s %d\n&quot;, __FILE__, __FUNCTION__, __LINE__);
-      of_property_read_string(pdev-&gt;dev.of_node, &quot;pin&quot;, &amp;tmp_str);
-      printk(&quot;pin = %s\n&quot;, tmp_str);
-      
-      return 0;
-  &#125;
-</code></pre>
-<p>  普通的platform_device设备节点(非设备树调用)使用platform_get_resource(pdev,IORESOURCE_IRQ,i++)，因此设备树platform有-&gt;dev.of_node的节点，而非设备树节点则没有这个节点，也可以通过这个来判断一下设备的类型。</p>
-<h3 id="8-捋一下如果想要用户与底层想交互整个的流程"><a href="#8-捋一下如果想要用户与底层想交互整个的流程" class="headerlink" title="8.捋一下如果想要用户与底层想交互整个的流程"></a>8.捋一下如果想要用户与底层想交互整个的流程</h3><ul>
-<li><p>1.用户与驱动相互交互层面：需要创建一个字符设备节点和一个用于管理下面字符节点的class，最后通过device_create在sysfs文件系统中创建一个设备节点将设备关联在这个节点下，将class与字符设备节点对应的设备号相连。</p>
-</li>
-<li><p>2.驱动与底层硬件交互层面：需要创建一个platform_device，来连接获取设备树文件与driver之间的联通。</p>
-</li>
-<li><p>3.最终在probe函数中相汇合</p>
-<pre><code>  static int __init led_init(void)
-  &#123;
-      int err;
-      
-      printk(&quot;%s %s line %d\n&quot;, __FILE__, __FUNCTION__, __LINE__);
-      major = register_chrdev(0, &quot;100ask_led&quot;, &amp;led_drv);  /* /dev/led */
+.post-page-container {
+  position relative
+  display flex
+  justify-content space-between
+  box-sizing border-box
+  width 100%
+  height 100%
 
 
-      /* 7.1 辅助信息 */
-      led_class = class_create(THIS_MODULE, &quot;100ask_led_class&quot;);
-      err = PTR_ERR(led_class);
-      if (IS_ERR(led_class)) &#123;
-          printk(&quot;%s %s line %d\n&quot;, __FILE__, __FUNCTION__, __LINE__);
-          unregister_chrdev(major, &quot;led&quot;);
-          return -1;
-      &#125;
+  &.show-toc {
+    .toc-content-container {
+      display block
+    }
 
-      /* C. 注册platform_driver	*/
-      err = platform_driver_register(&amp;led_driver); 
-      
-      return err;
-  &#125;
-</code></pre>
-</li>
-<li><p>4.瞎几把写的：<br>  声明之后的各个文件所在的地址：<br>  device_create:&#x2F;dev&#x2F;</p>
-</li>
-</ul>
-<h3 id="9-用户层面user与底层platform-device交互实例："><a href="#9-用户层面user与底层platform-device交互实例：" class="headerlink" title="9.用户层面user与底层platform_device交互实例："></a>9.用户层面user与底层platform_device交互实例：</h3><p>  由于树莓派地址和中文手册上的地址会有不一样，树莓派对芯片手册上的地址进行了进一步的映射，因此会有不同，<font style="background:yellow">想要看映射后的地址查看 cat &#x2F;proc&#x2F;iomem</font><br>  <img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240303160727.png"></p>
-</li>
-</ul>
-<h2 id="04-中断"><a href="#04-中断" class="headerlink" title="04 中断"></a>04 中断</h2><p>本章是为了完成一个按键中断驱动，来学习中断的相关知识。<br><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/OnlyLove_/article/details/122639787?ops_request_misc=&request_id=&biz_id=102&utm_term=linux%E9%A9%B1%E5%8A%A8%E4%B8%AD%E6%96%AD&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-3-122639787.142%5Ev99%5Epc_search_result_base5&spm=1018.2226.3001.4187" >这篇文章<i class="fas fa-external-link-alt"></i></a>写的不错可以参考：</p>
-<h3 id="0-GPIO子系统"><a href="#0-GPIO子系统" class="headerlink" title="0.GPIO子系统"></a>0.GPIO子系统</h3><p>之前的方法都是通过直接对寄存器地址来对GPIO读写，手动查询转化地址十分不方便，因此我们使用GPIO子系统<br>所以这些工作在芯片的BSP工程师就已经给封装过了，GPIO子系统就可以为我们提供一组接口，</p>
-<ul>
-<li>通过读取设备树，</li>
-<li>用来获取GPIO，配置GPIO的方向，设置高低电平等。<br>GPIP子系统提供的函数：包含获取、读值、写值、释放等操作</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>功能</th>
-<th>标准操作</th>
-<th>带资源自动回收操作</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>获得GPIO</td>
-<td>gpiod_get</td>
-<td>devm_gpiod_get</td>
-</tr>
-<tr>
-<td>获得GPIO</td>
-<td>gpiod_get_index</td>
-<td>devm_gpiod_get_index</td>
-</tr>
-<tr>
-<td>获得GPIO</td>
-<td>gpiod_get_array</td>
-<td>devm_gpiod_get_array</td>
-</tr>
-<tr>
-<td>设置方向 入</td>
-<td>gpiod_direction_input</td>
-<td></td>
-</tr>
-<tr>
-<td>设置方向 出</td>
-<td>gpiod_direction_output</td>
-<td></td>
-</tr>
-<tr>
-<td>读值</td>
-<td>gpiod_get_value</td>
-<td></td>
-</tr>
-<tr>
-<td>写值</td>
-<td>gpiod_set_value</td>
-<td></td>
-</tr>
-<tr>
-<td>释放GPIO</td>
-<td>gpiod_put</td>
-<td>devm_gpiod_put</td>
-</tr>
-<tr>
-<td>释放GPIO</td>
-<td>gpiod_put_array</td>
-<td>devm_gpiod_put_array</td>
-</tr>
-<tr>
-<td><strong>另外的中断会用到的函数：</strong></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<pre><code>int of_get_gpio_flags(struct device_node *np, int index, enum of_gpio_flags *flags)
-作用 ： 从设备树中获取GPIO引脚的标志信息的函数
-传入参数 ：
-    np ：设备节点
-    index ： 节点中的索引
-    flags ： 存储有效电平的信息
-返回值 ： GPIO的引脚号
-</code></pre>
-<p>有前缀“devm_”的含义是“设备资源管理”(Managed Device Resource)，这是一种<strong>自动释放资源</strong>的机制。它的思想是“资源是属于设备的，设备不存在时资源就可以自动释放”。</p>
-<h3 id="1-中断的概念"><a href="#1-中断的概念" class="headerlink" title="1.中断的概念"></a>1.中断的概念</h3><p>中断是指在CPU正常运行期间，由于内外部事件或由程序预先安排的事件引起的 CPU 暂时停止正在运行的程序，转而为该内部或外部事件或预先安排的事件服务的程序中去，服务完毕后再返回去继续运行被暂时中断的程序。Linux中通常分为<strong>外部中断</strong>（又叫硬件中断）和<strong>内部中断（又叫异常）</strong>。</p>
-<p>软件对硬件进行配置后，软件期望等待硬件的某种状态（比如，收到了数据），这里有两种方式，一种是轮询（polling）： CPU 不断的去读硬件状态。另一种是当硬件完成某种事件后，给 CPU 一个中断，让 CPU 停下手上的事情，去处理这个中断。很显然，中断的交互方式提高了系统的吞吐。当 CPU 收到一个中断 （IRQ）的时候，会去执行该中断对应的处理函数（ISR）。普通情况下，会有一个中断向量表，向量表中定义了 CPU 对应的每一个外设资源的中断处理程序的入口，当发生对应的中断的时候， CPU 直接跳转到这个入口执行程序。也就是中断上下文。（注意：中断上下文中，不可阻塞睡眠）。</p>
-<h3 id="2-linux中的中断-top-x2F-bottom"><a href="#2-linux中的中断-top-x2F-bottom" class="headerlink" title="2.linux中的中断 top&#x2F;bottom"></a>2.linux中的中断 top&#x2F;bottom</h3><p>有些中断十分紧急需要尽快完成(top)，而有些中断可以推迟到现在手头的任务完成之后完成(bottom)</p>
-<h3 id="3-中断程序接口"><a href="#3-中断程序接口" class="headerlink" title="3.中断程序接口"></a>3.中断程序接口</h3><p>向系统申请一个中端处理的程序：</p>
-<pre><code>request_irq(unsigned int irq, irq_handler_t handler, unsigned long flags, const char *name, void *dev)
-</code></pre>
-<p>其中参数：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240324102826.png"></p>
-<h3 id="4-中断-休眠唤醒法"><a href="#4-中断-休眠唤醒法" class="headerlink" title="4.中断 休眠唤醒法"></a>4.中断 休眠唤醒法</h3><p>  轮循去读当然不是最好的办法，相比而言，中断效率就提高了。我们在读取这个值的时候，如果没有发生等到我们想要的结果，就不会返回值，直到我们收到想要的结果，例如一个上升沿或者一个下降沿。<br>声明一个中断需要完成下面的步骤：</p>
-<ul>
-<li><p>1.获取GPIO以及中断号</p>
-<pre><code>  struct device_node *node = pdev-&gt;dev.of_node;
-  gpio_num = of_get_gpio_flags(node, 0, &amp;flag);
-  button_handle = gpiod_get(&amp;pdev-&gt;dev, NULL, 0);
-  gpiod_direction_input(button_handle);
-  button_irq = gpio_to_irq(gpio_num);
-</code></pre>
-<p>  of_get_gpio_flags:用于获取设备树中的GPIO编号和设置<br>  gpiod_get:用于获取GPIO描述符<font style="color:red">上面返回的两个int值都是用于描述GPIO，只是接口不同</font><br>  gpio_to_irq：申请中断号</p>
-</li>
-<li><p>2.请求中断并绑定中断处理函数</p>
-<pre><code>  request_irq(button_irq, gpio_button_isr, IRQF_TRIGGER_RISING, &quot;pgg_button_irq&quot;, NULL);
-</code></pre>
-</li>
-<li><p>3.编写中断处理函数</p>
-<pre><code>  static irqreturn_t gpio_button_isr(int irq, void *dev_id)
-  &#123;
-      int val;
-      val = gpiod_get_value(button_handle);
-      printk(&quot;key value %d\n&quot;,  val);
-      g_button_value = val;
-      wake_up_interruptible(&amp;gpio_key_wait);
-      return IRQ_HANDLED;
-  &#125;
-</code></pre>
-<p>  wake_up_interruptible就是只在唤醒调用特定条件的进程中调用，用于解决wait_event_interruptible的阻塞。这个本身和中断无关</p>
-</li>
-</ul>
-<h3 id="5-异步通知"><a href="#5-异步通知" class="headerlink" title="5.异步通知"></a>5.异步通知</h3><p>struct fasync_struct *key_fasync;</p>
-<ul>
-<li><p>1.中断处理函数中向应用层发送信号</p>
-<pre><code>  kill_fasync(&amp;key_fasync,SIGIO,POLLIN)
-</code></pre>
-</li>
-<li><p>2.定义一个fasync函数 （固定写法）</p>
-<pre><code>  static int key_drv_fasync(int fd, struct file *file, int on)
-  &#123;
-      printk(KERN_INFO &quot;%s %s line is %d \r\n&quot;, __FILE__, __FUNCTION__, __LINE__);
-      if(fasync_helper(fd, file, on, &amp;key_fasync) &gt;= 0)
-          return 0;
-      else
-          return -EIO;
-  &#125;
-</code></pre>
-<p>  在file_operation结构体中加入一个</p>
-<pre><code>      static struct file_operations key_drv =
-  &#123;
-      .owner = THIS_MODULE,
-      .read  = key_drv_read,
-      .poll  = key_drv_poll,
-      .fasync = key_drv_fasync,
-  &#125;;
-</code></pre>
-</li>
-</ul>
-<h3 id="5-轮询Poll、异步通知、等待队列的差别"><a href="#5-轮询Poll、异步通知、等待队列的差别" class="headerlink" title="5.轮询Poll、异步通知、等待队列的差别"></a>5.轮询Poll、异步通知、等待队列的差别</h3><ul>
-<li>1.等待队列一个进程会再没有数据可读时被挂起，进程会一直等待响应</li>
-<li>2.轮询：用户主动来检测设备的状态</li>
-<li>3.异步通知：特定事件发生时会直接来提醒</li>
-</ul>
-<p>问：设备树文件中双引号””与尖号&lt;&gt;的区别 </p>
-<ul>
-<li>双引号””：用于表示属性值：例如model &#x3D; “My Device”，无实际效益</li>
-<li>尖括号 &lt;&gt;： 尖括号内的字符串通常用于表示设备节点的路径或者标识符。例如&lt;&amp;uart0&gt;<br>总结：双引号是来显示定义的属性值，而尖括号是将各个节点相连接，有实际的作用。</li>
-</ul>
-<h2 id="05-IIC驱动"><a href="#05-IIC驱动" class="headerlink" title=" 05 IIC驱动"></a> 05 IIC驱动</h2><p>前面的中断由于手里的设备实在是太短缺先放放，先来学习一下iic驱动吧<br>首先先看一下 最常见的这些通信协议：iic，spi，uart，can</p>
-<h3 id="1-IIC"><a href="#1-IIC" class="headerlink" title="1. IIC"></a>1. IIC</h3><p>I2C（同步半双工）通讯协议</p>
-<h4 id="1-1-物理层"><a href="#1-1-物理层" class="headerlink" title="1.1 物理层"></a>1.1 物理层</h4><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240324170613.png"><br>特点：<br>1.它是一个支持多设备的总线。“总线”指多个设备共用的信号线。在一个 I2C 通讯总线中，可连接多个 I2C 通讯设备<br>2.一个 I2C 总线只使用两条总线线路，<font style="color:red"> 一条双向串行数据线(SDA) ，一条串行时钟线(SCL)</font>。数据线即用来表示数据，时钟线用于数据收发同步。<br>3.每个连接到总线的设备都有一个独立的地址<br>4.多个主机同时使用总线时，为了防止数据冲突，会利用仲裁方式决定由哪个设备占用总线</p>
-<h4 id="1-2协议层"><a href="#1-2协议层" class="headerlink" title="1.2协议层"></a>1.2协议层</h4><p>I2C 总线在传送数据过程中共有三种类型信号， 它们分别是：起始信号、停止信号和应答信号。</p>
-<ul>
-<li><strong>1.通信的起始与终止信号</strong><br>I2C 总线在传送数据过程中共有三种类型信号， 它们分别是：起始信号、停止信号和应答信号。<br>1.SCL 为高电平时，SDA 由高电平向低电平跳变，开始传送数据。<br>2.停止信号：SCL 为高电平时，SDA 由低电平向高电平跳变，结束传送数据。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240324171926.png"></li>
-<li><strong>2.数据有效性</strong><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240324172249.png"></li>
-<li><strong>3.响应信号</strong><br>响应包括“应答(ACK)”和“非应答(NACK)”两种信号。若希望对方继续发送数据，则需要向对方发送“应答(ACK)”信号，发送方会继续发送下一个数据；若接收端希望结束数据传输，则向对方发送“非应答(NACK)”信号，发送方接收到该信号后会产生一个停止信号，结束信号传输。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240324172559.png"></li>
-</ul>
-<h4 id="1-3-基本读写过程"><a href="#1-3-基本读写过程" class="headerlink" title="1.3 基本读写过程"></a>1.3 基本读写过程</h4><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240324194938.png"></p>
-<h3 id="2-IIC编写过程"><a href="#2-IIC编写过程" class="headerlink" title="2.IIC编写过程"></a>2.IIC编写过程</h3><p>一般分为两个驱动：一个是对芯片驱动（这个需要查看芯片手册），一个是总线驱动这个是每个芯片厂家提前设置好的所以并不需要我们操心，我们主要是操心在如何通过芯片手册保证对芯片的驱动<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240326202956.png"></p>
-<p><strong>0.IIC开启</strong><br>开始一直probe不上哥们也是非常的纳闷，最后使用i2cdetect -l发现总线里只有i2c -20 与i2c -21这两个总线，最后在&#x2F;boot&#x2F;config.txt里把这句话注释去掉就行了 ：dtparam&#x3D;i2c_arm&#x3D;on<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240326220547.png"><br>最后i2c-1的总线也是成功出现了。<br>解释：i2c-20和i2c-21通常对应于特定的硬件总线，它们可能是为特定用途预留或者是系统内部使用的总线，而不是一般用户会用到的I2C总线。具体来说，这些编号高的I2C设备可能是树莓派固件或硬件的一部分，用于内部通信，或者是为了支持某些特定的扩展功能预留的。如果树莓派想要另接入其他的设备，就得开启I2C总线来与外部设备通信，这样才会让系统加载I2C设备。<br><strong>1.IIC初始化</strong><br>设备树上reg地址的选择，<font style="color:red">这个地方的reg并不是随便写的：</font><br>下面这个是ssd1315的手册中指定地点的地方：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240326222948.png"><br>这里提到的只有7位0111101，I2C协议中的设备地址通常是7位长，在发送到I2C总线上时，这7位地址会被放入到数据帧的前7位，而第8位则用来指示是读操作还是写操作。因此，7位地址需要左移一位来为读&#x2F;写位留出空间，形成一个8位的数据帧。所以分为前3和后4，因此这里应该是0x3C</p>
-<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240325202638.png"><br>最终在设备树上i2c总线上声明：(必须要声明成@addr的形式，否则就会报错)</p>
-<pre><code>oled@76&#123; 
-    compatible = &quot;wzw,lcd12864&quot;;
-    reg = &lt;0x76&gt;;// device address
-    status= &quot;okay&quot;;
-&#125;;
-</code></pre>
-<p>还是按原有步骤将设备树文件丢到&#x2F;boot文件中，reboot<br>接下来查看是否安装成功<br>首先先查找是否有定义的oled</p>
-<pre><code>find / -name &quot;*oled&quot;
-</code></pre>
-<p>最后找到了oled在这个文件夹下，&#x2F;sys&#x2F;firmware&#x2F;devicetree&#x2F;base&#x2F;soc&#x2F;i2c@7e804000&#x2F;oled@76<br>接着cd到这个文件夹下<br>输入来查看reg参数：</p>
-<pre><code>hexdump reg
-</code></pre>
-<p>输出：0000000 0000 7600<br>0000004<br>最后输出表明了设备树生成没有问题，指定了对应的lcd地址</p>
-<p><strong>2.编写一个最基础的i2c_driver的驱动程序</strong></p>
-<ul>
-<li><p>主要需要注意的是probe函数输入的是i2c_client结果提的数据，以及对应id</p>
-</li>
-<li><p>与platform_driver类似，这里声明的是i2c_driver</p>
-</li>
-<li><p>最终是固定格式的init以及exit<br>以下是代码：</p>
-<pre><code>  #include &lt;linux/kernel.h&gt;
-  #include &lt;linux/init.h&gt;
-  #include &lt;linux/module.h&gt;
-  #include &lt;linux/slab.h&gt;
-  #include &lt;linux/delay.h&gt;
-  #include &lt;linux/mutex.h&gt;
-  #include &lt;linux/mod_devicetable.h&gt;
-  #include &lt;linux/log2.h&gt;
-  #include &lt;linux/bitops.h&gt;
-  #include &lt;linux/jiffies.h&gt;
-  #include &lt;linux/of.h&gt;
-  #include &lt;linux/acpi.h&gt;
-  #include &lt;linux/i2c.h&gt;
-  #include &lt;asm/uaccess.h&gt;
+    .article-content-container {
+      width 'calc(100% - %s)' % $toc-container-width
+    }
+  }
 
 
-  static int oled_probe(struct i2c_client *client, const struct i2c_device_id *id)
-  &#123;
-      printk(&quot;%s %s %d\n&quot;, __FILE__, __FUNCTION__, __LINE__);
+  +keep-tablet() {
+    .toc-content-container {
+      display none !important
+    }
 
-      return 0;
-  &#125;
-
-  static void oled_remove(struct i2c_client *client)
-  &#123;
-      printk(&quot;%s %s %d\n&quot;, __FILE__, __FUNCTION__, __LINE__);
-  &#125;
-
-  static const struct of_device_id oled_of_match[] = &#123;
-      &#123;.compatible = &quot;wzw,lcd12864&quot;&#125;,
-      &#123;&#125;
-  &#125;;
+    .article-content-container {
+      width 100% !important
+    }
+  }
 
 
-  static struct i2c_driver oled_drv = &#123;
-      .driver = &#123;
-          .name = &quot;oled&quot;,
-          .of_match_table	 = oled_of_match,
-      &#125;,
-      .probe  = oled_probe,
-      .remove  = oled_remove,
-  &#125;;
+  .article-content-container {
+    position relative
+    box-sizing border-box
+    width 100%
+    height 100%
+    keep-container(false, 0, 0, 2rem, 2rem)
 
-  static int oled_init(void)
-  &#123;
-      printk(&quot;%s %s %d\n&quot;, __FILE__, __FUNCTION__, __LINE__);
-      return i2c_add_driver(&amp;oled_drv);;
-  &#125;
+    +keep-mobile() {
+      padding 1.2rem 0.2rem
+      box-shadow none
 
-  static void oled_exit(void)
-  &#123;
-      printk(&quot;%s %s %d\n&quot;, __FILE__, __FUNCTION__, __LINE__);
-      i2c_del_driver(&amp;oled_drv);
-  &#125;
+      &:hover {
+        box-shadow none
+      }
+    }
 
-  module_init(oled_init);
-  module_exit(oled_exit);
 
-  MODULE_LICENSE(&quot;GPL&quot;);
-</code></pre>
-</li>
-</ul>
-<p>3.接下来是与用户端进行交互<br>这里引入了<font style="color:red">用于处理设备的IO控制操作IOCTL</font>，这个操作的好处就是.unlocked_ioctl函数用于处理无锁的IO控制操作，这意味着它在内核中不会阻塞其他进程的执行。对于支持多线程的驱动程序，通常会使用.unlocked_ioctl来处理IO控制操作，以避免锁定整个内核空间。</p>
-<ul>
-<li><p><strong>1.用户端ioctl的接口使用：</strong><br>在驱动程序中实现的ioctl函数体内，实际上是有一个switch{case}结构，每一个case对应一个命令码，做出一些相应的操作。怎么实现这些操作，这是每一个程序员自己的事情，因为设备都是特定的，这里也没法说。关键在于怎么样组织命令码，因为在ioctl中命令码是唯一联系用户程序命令和驱动程序支持的途径</p>
-<pre><code>  #define IOC_AT24C02_READ  100
-  #define IOC_AT24C02_WRITE 101
+    .article-title {
+      color var(--text-color-2)
+      font-weight 600
+      font-size $article-title-font-size
 
-  #include &lt;sys/ioctl.h&gt;
-  int (*ioctl) (struct inode *inode, struct file *filp, unsigned int cmd, unsigned long arg)
-  ioctl(fd, IOC_AT24C02_WRITE, buf);
-</code></pre>
-</li>
-</ul>
-<p>cmd控制指令通常由以下的形式：<br>#define CMD_NAME _IO(type, nr)<br>#define CMD_NAME _IOW(type, nr, dtype)<br>#define CMD_NAME _IOR(type, nr, dtype)<br>#define CMD_NAME _IOWR(type, nr, dtype)<br>其中，CMD_NAME是命令的名称，type是命令的类型，nr是命令的序号，dtype是数据类型。</p>
-<ul>
-<li>_IO：表示命令不传递任何数据，仅表示操作。比如查询设备状态。</li>
-<li>_IOW：表示命令向设备写入数据，用户空间传递数据给设备。</li>
-<li>_IOR：表示命令从设备读取数据，设备传递数据给用户空间。</li>
-<li>_IOWR：表示命令既向设备写入数据，又从设备读取数据。</li>
-</ul>
-<p><strong>其实这些只要和drv里switch连上就行感觉并没有特定的方法</strong><br><strong>Ioctl 的command编号的约定方法：</strong></p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>type</th>
-<th>Number</th>
-<th>Direction</th>
-<th>size</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>位数</td>
-<td>8bits</td>
-<td>8bits</td>
-<td>2bits</td>
-<td>13&#x2F;14bits</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p><strong>2.驱动程序的ioctl的接口</strong><br>驱动程序一般都是通过cmd的选择来选择是写还是读，</p>
-<pre><code>  static long at24c02_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
-  &#123;	
-      copy_from_user(ker_buf, usr_buf, 8);
-      switch (cmd)
-      &#123;
-          case IOC_AT24C02_READ:
-          &#123;
-          &#125;
-          case IOC_AT24C02_WRITE:
-          &#123;
-          &#125;
-      &#125;
-  &#125;
-</code></pre>
-</li>
-<li><p><strong>3.下载了个gpio用于查看树莓派各个接口的作用</strong><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240327210535.png"><br>后面还得看看如果已经有现有的i2c驱动了应该怎么解决</p>
-</li>
-</ul>
-<h3 id="3-还得学习一下framebuffer，要不传输数据什么的太麻烦了"><a href="#3-还得学习一下framebuffer，要不传输数据什么的太麻烦了" class="headerlink" title="3.还得学习一下framebuffer，要不传输数据什么的太麻烦了"></a>3.还得学习一下framebuffer，要不传输数据什么的太麻烦了</h3><p>通常作为LCD控制器或者其他显示设备的驱动，FrameBuffer驱动是一个字符设备，设备节点是&#x2F;dev&#x2F;fbX，主设备号为29，次设备号递增，用户可以将Framebuffer看成是显示内存的一个映像，将其映射到进程地址空间之后，就可以直接进行读写操作，而写操作可以立即反应在屏幕上。<br>frambuffer就是linux内核驱动申请的一片内存空间，然后lcd内有一片sram，cpu内部有个lcd控制器，它有个单独的dma用来将frambuffer中的数据拷贝到lcd的sram中去 拷贝到lcd的sram中的数据就会显示在lcd上，LCD驱动和framebuffer驱动没有必然的联系，它只是驱动LCD正常工作的，比如有信号传过来，那么LCD驱动负责把信号转成显示屏上的内容，至于什么内容这就是应用层要处理的。<br>总的来说：framebuffer的存在可以直接完成对led的初始化，相当于是先声明一个内存区域，接着在声明的内存区域中绘制图像，接着将图像显示在屏幕上。</p>
-<h2 id="06-SPI总线"><a href="#06-SPI总线" class="headerlink" title="06 SPI总线"></a>06 SPI总线</h2><h3 id="1-spi介绍"><a href="#1-spi介绍" class="headerlink" title="1.spi介绍"></a>1.spi介绍</h3><p>SPI的一个独特优势是数据可以不间断地传输。可以在连续流中发送或接收任意数量的位。使用I2C和UART，数据以数据包形式发送，限制为特定数量的位。开始和停止条件定义了每个数据包的开始和结束，因此数据在传输过程中会中断。<br>通过SPI通信的设备处于主从关系中，主机一般为控制设备(微控制器)，而从机（通常是传感器、显示器等），最简单的一对一关系如下：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240404170502.png"></p>
-<ul>
-<li>MOSI（主输出&#x2F;从输入）：主机将数据发送到从机的线路。</li>
-<li>MISO（主输入&#x2F;从输出）：从机将数据发送到主机的线路。</li>
-<li>SCLK（时钟）：时钟信号的线。</li>
-<li>SS&#x2F;CS（从机选择&#x2F;芯片选择）：主机选择线，用于选择要将数据发送到哪个从机。<br>SPI会有4中不同的模式来确定数据采样以及切换的时机。<br><strong>总机对子机传输数据</strong></li>
-<li>1.主机输出时钟信号：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240404171111.png"></li>
-<li>2.主机将 SS&#x2F;CS 引脚切换到低电平状态，来激活从机：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240404171138.png"></li>
-<li><ol start="3">
-<li>主机沿 MOSI 线路一次一位地将数据发送到从站。从机读取接收到的位：高位先读到<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240404171159.png"></li>
-</ol>
-</li>
-<li><ol start="4">
-<li>如果需要响应，从机沿MISO线一次一位地将数据返回给主机。主机在接收到位时读取：低位先读到<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240404171233.png"></li>
-</ol>
-</li>
-</ul>
-<h2 id="07-做一个项目"><a href="#07-做一个项目" class="headerlink" title="07 做一个项目"></a>07 做一个项目</h2><p>做简历想要做个驱动的项目放到简历里会好看一些，于是打算将SR04与I2C的LCD屏缝在一起当做一个项目：测距系统。测距系统主要包含了两个功能，一个是sr04测距模块的驱动，另一个则是lcd模块的编写。</p>
-<h3 id="1-SR04的设备树以及对应的driver中的引用"><a href="#1-SR04的设备树以及对应的driver中的引用" class="headerlink" title="1.SR04的设备树以及对应的driver中的引用"></a>1.SR04的设备树以及对应的driver中的引用</h3><p><strong>设备树</strong>：由于SR04这个设备是超声测距，需要两个引脚。</p>
-<pre><code>    mysr04&#123;
-    compatible=&quot;wzw,sr04&quot;;
-    status= &quot;okay&quot;;
-    sr04-gpios =&lt;&amp;gpio 17 GPIO_ACTIVE_HIGH&gt;,
-                                &lt;&amp;gpio 18 GPIO_ACTIVE_HIGH&gt;;
-&#125;;
-</code></pre>
-<p><strong>driver中的引用：</strong> 这里需要使用gpio_get_index来提取设备树中提到的GPIO引脚，如果设备树种的引脚只声明了一个那么就只需要使用gpio_get。同时这里的GPIOD_OUT_HIGH是初始化这个GPIO引脚的输出为1，如果是GPIOD_OUT_LOW就是初始化为0。同时这里的名字也对应着设备树中声明的sr04-gpios这里gpios前面这个名称。</p>
-<pre><code>struct gpio_desc *trip, *echo;
-trip= gpiod_get_index(dev, &quot;sr04&quot;, 0, GPIOD_OUT_HIGH);
-echo= gpiod_get_index(dev, &quot;sr04&quot;, 1, GPIOD_OUT_HIGH);
-</code></pre>
-<h3 id="2-SR04的驱动以及中断"><a href="#2-SR04的驱动以及中断" class="headerlink" title="2.SR04的驱动以及中断"></a>2.SR04的驱动以及中断</h3><p><strong>SR04的驱动</strong><br>使用gpiod_set_value来对sr04.trip这个引脚打出100us的高电平脉冲。</p>
-<pre><code>gpiod_set_value(sr04.trip,1);
-udelay(100);
-gpiod_set_value(sr04.trip,0);
-</code></pre>
-<p>接着使用gpiod_get_value来获取另一个引脚sr04.echo返回的电平。<br><strong>设置等待队列</strong><br>使用static DECLARE_WAIT_QUEUE_HEAD(sr04_wait); 来获取一个等待队列<br>接着在函数中声明出等待队列的满足条件，wait_event_interruptible这个函数想要从等待过程中被激活<font style='color:red'>需要满足两个条件</font>：1.接收到唤醒函数的信号wake_up_interruptible(&amp;sr04_wait);	2.满足wait中的条件这里也就是dataready为1</p>
-<pre><code>wait_event_interruptible(sr04_wait, dataready);
-</code></pre>
-<p><strong>设置中断函数</strong><br>1.请求得到一个中断请求号，将GPIO线路转换为对应的中断请求号</p>
-<pre><code>sr04.echo_irq = gpiod_to_irq(sr04.echo);
-</code></pre>
-<p>2.请求一个中断并且设置对应的触发方式。这句话也就是在echo这个引脚中出现上升沿以及下降沿时就会触发中断，其中sr04_isr为这个中断处理函数</p>
-<pre><code>request_irq(sr04.echo_irq , sr04_isr, IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING, &quot;mysr04_irq&quot;, NULL);
-</code></pre>
-<p>3.中断处理函数<br>最后的返回值：IRQ_HANDLED，代表着中断事件被成功处理，内核将清楚对应的中断标志，并执行先前被挂起的进程。<br>当然如果出现了一些以外的情况也可以返回IRQ_NONE来表示中断出岔子了没有成功解决。</p>
-<pre><code>static irqreturn_t sr04_isr(int irq, void *dev_id)
-&#123;
-    printk(&quot;revice irq %d\n&quot;,  irq);
-    int val =gpiod_get_value(sr04.echo);
-        if (val) /* 上升沿 */
-    &#123;
-        /* 1. 记录数据 */
-        a = ktime_get_ns();
-        printk(&quot;revice irq up a=%llu\n&quot;,a);
-    &#125;
-    else /* 下降沿 */
-    &#123;
-        b = ktime_get_ns();
-        printk(&quot;revice irq down b=%llu\n&quot;,b);
-        wake_up_interruptible(&amp;sr04_wait);	
-        printk(&quot;revice irq %llu\n&quot;,b-a);
-        dataready =1;
-    &#125;
-    return IRQ_HANDLED;
-&#125;
-</code></pre>
-<h2 id="08-通信相关的知识学习"><a href="#08-通信相关的知识学习" class="headerlink" title="08 通信相关的知识学习"></a>08 通信相关的知识学习</h2><h3 id="1-通信协议分类"><a href="#1-通信协议分类" class="headerlink" title="1.通信协议分类"></a>1.通信协议分类</h3><p>并行通信，串行通信<br>并行通信：同一时刻发送多位的数据<br>优点：发送速度快；缺点：传输距离端，资源多<br>串行通信：同一根线发送8位数据<br>优点：传输距离远，不占用资源 确定：发送速度慢</p>
-<h3 id="2-通信方式分类"><a href="#2-通信方式分类" class="headerlink" title="2.通信方式分类"></a>2.通信方式分类</h3><p>通信方式的分类有：全双工、半双工、单工<br>单工通信：只能接受或者发送<br>半双工：同一时刻下只能发送或者接收，理论上一条线就可以，但是实际上还是两条线用起来会更方便。但你用一条信道的话会影响消息的<strong>及时性</strong>，所以用两条，既能提升通信效率，又能避免冲突<br>全双工通信：同一时刻只能接收又能发送：至少两根线。</p>
-<h3 id="3-SPI协议"><a href="#3-SPI协议" class="headerlink" title="3.SPI协议"></a>3.SPI协议</h3><h4 id="3-1-SPI通信协议的介绍"><a href="#3-1-SPI通信协议的介绍" class="headerlink" title="3.1 SPI通信协议的介绍"></a>3.1 SPI通信协议的介绍</h4><p>SPI是串行外设接口：SPI是一种<strong>高速的、全双工、同步</strong>的通信总线，并且在芯片的管脚上只占用四根线<br>数据采集的时机一般是选择在时钟信号的<strong>上升沿</strong>或者<strong>下降沿</strong>。<br>SPI总线包含4条逻辑线：</p>
-<ul>
-<li>MISO：Master input slave output 主机输入，从机输出（数据来自从机）；</li>
-<li>MOSI：Master output slave input 主机输出，从机输入（数据来自主机）；</li>
-<li>SCLK ：Serial Clock 串行时钟信号，由主机产生发送给从机；</li>
-<li>CS：Chip Select 片选信号，由主机发送，以控制与哪个从机通信，通常是低电平有效信号。<br>在传输开始前还需要确定CPOL（时钟极性)&#x2F;CPHA（时钟相位）及通讯模式<br>CPOL：确定没有数据传输电平状态<br>CPHA：决定数据位传输是第一个SCLK开始还是从第二个边缘开始</li>
-</ul>
-<h4 id="3-2-SPI通信传输的流程"><a href="#3-2-SPI通信传输的流程" class="headerlink" title="3.2 SPI通信传输的流程"></a>3.2 SPI通信传输的流程</h4><ul>
-<li>1.主机先将CS信号拉低，这样保证开始接收数据，告诉哪一个SPI设备我现在要开始采集了。</li>
-<li>2.接收端检测时钟边沿信号，读取数据线上的数据，得到一位数据。</li>
-<li>3.主机发送从机：主机将会产生相应时钟信号，数据一位一位通过MOSI信号线发送到从机</li>
-<li>4.主机接收从机：从机将会通过MISO信号线返回数据供主机接收<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406212221.png"></li>
-</ul>
-<h4 id="3-3-SPI的优缺点"><a href="#3-3-SPI的优缺点" class="headerlink" title="3.3 SPI的优缺点"></a>3.3 SPI的优缺点</h4><p><strong>a.优点</strong>：</p>
-<ul>
-<li>全双工串行通信</li>
-<li>告诉数据传输速率</li>
-<li>非常简单的硬件结构。从机不需要唯一地址（与I2C不同）；从机使用主机时钟，不需要精密时钟振荡器&#x2F;晶振（与UART不同）；不需要收发器（与CAN不同）。<br><strong>b.缺点</strong>：</li>
-<li>没有硬件从机应答信号，不知道发送是否是对的</li>
-<li>通常仅支持一个主设备</li>
-<li>需要4根引脚</li>
-<li>与CAN总线相比，传输距离较短</li>
-</ul>
-<h3 id="4-IIC协议"><a href="#4-IIC协议" class="headerlink" title="4.IIC协议"></a>4.IIC协议</h3><h4 id="4-1-IIC协议简介"><a href="#4-1-IIC协议简介" class="headerlink" title="4.1 IIC协议简介"></a>4.1 IIC协议简介</h4><p>I2C（IIC）属于两线式串行总线，属于（一主多从一个主设备（Master），多个从设备（Slave））的总线结构，总线上的每个设备都有一个特定的设备地址，以区分同一I2C总线上的其他设备。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406213016.png"><br>物理I2C接口有两根双向线，**<font style = "color:red">串行时钟线（SCL）和串行数据线（SDA）</font>** 组成，可用于发送和接收数据，但是通信都是由主设备发起，从设备被动响应，实现数据的传输。</p>
-<h5 id="a-IIC有五种传输效率"><a href="#a-IIC有五种传输效率" class="headerlink" title="a.IIC有五种传输效率"></a>a.IIC有五种传输效率</h5><p>不同的器件支持不同的速率<br>标准模式、快速模式、快速模式+、高速模式、超快模式。</p>
-<h5 id="b-4种信号"><a href="#b-4种信号" class="headerlink" title="b.4种信号"></a>b.4种信号</h5><p>I2C协议最基础的几种信号：起始、停止、应答和非应答信号。</p>
-<ul>
-<li>1.起始信号：SCL为高，而SDA由高转为低</li>
-<li>2.停止信号：SCL为高，而SDA由低转高<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406213423.png"></li>
-<li>3.应答信号：<br>I2C最大的一个特点就是有完善的应答机制，从机接收到主机的数据时，会回复一个应答信号来通知主机表示“我收到了”。<br>应答信号出现在1个字节传输完成之后，即第9个SCL时钟周期内，此时主机需要<strong>释放SDA总线</strong>，把总线控制权交给从机，由于上拉电阻的作用，此时总线为高电平，如果从机正确的收到了主机发来的数据，<font style = "color:red">会把SDA拉低，表示应答响应</font>。</li>
-<li>4.非应答信号：<br>当第9个SCL时钟周期时，SDA保持高电平，表示非应答信号。</li>
-<li>5.有效性<br>I2C协议对数据的采样发生在SCL高电平期间，除了起始和停止信号，在数据传输期间，SCL为高电平时，SDA必须保持稳定，不允许改变，在SCL低电平时才可以进行变化。（毕竟如果在SCL为高的时候改变不就相当于是代表了起始信号和应答信号了)<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406213732.png"></li>
-<li>6.写&#x2F;读操作<br>2C中心以启动信号START来掌管总线，以停止信号STOP来释放总线；启动信号START后紧接着发送一个地址字节，其中7位为被控器件的地址码，一位为读&#x2F;写控制位R&#x2F;W，R&#x2F;W位为0表示由主控向被控器件写数据，R&#x2F;W为1表示由主控向被控器件读数据；当被控器件检测到收到的地址与自己的地址相同时，在第9个时钟期间反馈应答信号。<br>写操作：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406214347.png"><br>读操作：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406214405.png"></li>
-</ul>
-<h3 id="5-CAN协议"><a href="#5-CAN协议" class="headerlink" title="5.CAN协议"></a>5.CAN协议</h3><h4 id="5-1-CAN协议介绍"><a href="#5-1-CAN协议介绍" class="headerlink" title="5.1 CAN协议介绍"></a>5.1 CAN协议介绍</h4><p>控制器局域网总线（CAN，Controller Area Network）是一种用于实时应用的串行通讯协议总线，它可以使用双绞线来传输信号，是世界上应用最广泛的现场总线之一。CAN协议的特性包括完整性的串行数据通讯、提供实时支持、<strong>传输速率高达1Mb&#x2F;s</strong>、同时具有<strong>11位的寻址以及检错能力</strong>。</p>
-<p>CAN 控制器根据CAN_L和CAN_H上的电位差来判断总线电平。总线电平分为显性电平和隐性电平，二者必居其一。发送方通过使总线电平发生变化，将消息发送给接收方。<br>显性电平对应逻辑:0，CAN_H和CAN_L之差为2V左右。<br>隐性电平对应逻辑:1，CAN_H和CAN_L之差为0V。<br><strong>帧种类：</strong><br>有以下5种类型的帧进行的<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406215924.png"></p>
-<h3 id="6-UART-串口通信"><a href="#6-UART-串口通信" class="headerlink" title="6.UART 串口通信"></a>6.UART 串口通信</h3><p>通用异步收发传输器（Universal Asynchronous Receiver&#x2F;Transmitter)，通常称作UART。<br><strong>注：同步串行与异步串行通信</strong><br>这两个就看是否共用一个时钟。在异步通信中，每个字符要用起始位和停止位作为字符开始和结束的标志，以致占用了时间。所以在数据块传送时，为提高通信速度，常去掉这些标志，而采用同步通信。<br>UART在<strong>发送数据</strong>时，将并行数据转换成串行数据来传输；<br>UART在<strong>接收数据</strong>时，将接收到的串行数据转换成并行数据。</p>
-<p>COM口是指针对串行通信协议的一种端口，是PC上异步串行通信口的简写，大部分为9针孔D型。COM口里分RS232，RS422和RS485，传输功能依次递增。<br>当单片机 1 想给单片机 2 发送数据时，比如发送一个 0xE4 这个数据，用二进制形式表 示就是 0b11100100，在 <em><strong>UART 通信过程中，是低位先发，高位后发的原则</strong></em> ，那么就让 TXD 首先拉低电平，持续一段时间，发送一位 0，然后继续拉低，再持续一段时间，又发送了一 位 0，然后拉高电平，持续一段时间，发了一位 1……一直到把 8 位二进制数字 0b11100100 全部发送完毕。这里就涉及到了一个问题，就是持续的这“一段时间”到底是多久？由此便引入了通信中的一个重要概念——<strong>波特率</strong>。</p>
-<p>波特率就是发送二进制数据位的速率，习惯上用 baud 表示，<strong>即发送一位二进制数据的持续时间&#x3D;1&#x2F;baud</strong>。在通信之前，单片机 1 和单片机 2 首先都要明确的约定好它们之间的通 信波特率，必须保持一致，收发双方才能正常实现通信。</p>
-<p>在 UART 通信的时候，一个字节是 8 位，规定当没有通信信号发生时，通信线路保持高电平，当要发送数据之前，<em><strong>先发一位 0 表示起始位</strong></em>，然后发送 8 位数据位，数据位是先低后高的顺序，数据位发完后再发一位 1 表示停止位。这样本来要发送一个字节的 8 位数据，而实际上我们一共发送了 10 位，多出来的两位其中一位起始位，一位停止位。而接收方呢，原本一直保持的高电平，一旦检测到了一位低电平，那就知道了要开始准备接收数据了，接收到 8 位数据位后，<em><strong>然后检测到停止位</strong></em>，再准备下一个数据的接收。如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406215650.png"></p>
-<p>UART&#x2F;SPI&#x2F;IIC的区别<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406220414.png"></p>
-<h2 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h2><ol>
-<li><p>cat &#x2F;proc&#x2F;iomem 可以看到虚拟地址对应的地址</p>
-</li>
-<li><p>对于结构体的使用，如果结构体是以指针形式调用的则使用-&gt;来调用成员，如果结构体是以结构体来调用则直接使用.就可以</p>
-<pre><code> #include &lt;stdio.h&gt;
+      +keep-tablet() {
+        font-size $article-title-font-size * 0.9
+      }
 
- // 定义一个结构体
- struct Point &#123;
-     int x;
-     int y;
- &#125;;
+      +keep-mobile() {
+        font-size $article-title-font-size * 0.8
+      }
+    }
 
- int main() &#123;
-     // 使用结构体指针
-     struct Point *ptr;
-     struct Point p1 = &#123;10, 20&#125;;
-     ptr = &amp;p1;
 
-     // 使用 -&gt; 操作符访问结构体成员
-     printf(&quot;Using -&gt; operator:\n&quot;);
-     printf(&quot;x = %d, y = %d\n&quot;, ptr-&gt;x, ptr-&gt;y);
+    .article-header {
+      position relative
+      box-sizing border-box
+      width 100%
+      height $avatarWidth
+      padding-left $avatarWidth
 
-     // 使用结构体实例
-     struct Point p2 = &#123;30, 40&#125;;
+      .avatar {
+        position absolute
+        top 0
+        left 0
+        box-sizing border-box
+        width $avatarWidth
+        height $avatarWidth
+        padding 0.1rem
+        border 1px solid var(--border-color)
+        border-radius 50%
 
-     // 使用 . 操作符访问结构体成员
-     printf(&quot;\nUsing . operator:\n&quot;);
-     printf(&quot;x = %d, y = %d\n&quot;, p2.x, p2.y);
+        img {
+          width 100%
+          height 100%
+          background var(--avatar-background-color)
+          border-radius 50%
+        }
+      }
 
-     return 0;
- &#125;
-</code></pre>
-</li>
-</ol>
-<p>3.常用的函数</p>
-<ul>
-<li><ol>
-<li>long strtol(const char *str, char **endptr, int base);<br>用于输入字符串返回一个long值，用于将字符串转换为long型数字变量</li>
-</ol>
-</li>
-<li>2.与1对应int sprintf(char *str, const char *format, …); 适用于将一个无符号长长整型数格式化为字符串 上下两个互相转换</li>
-</ul>
 
-            </div>
+      .info {
+        display flex
+        flex-direction column
+        justify-content space-between
+        box-sizing border-box
+        width 100%
+        height 100%
+        margin-left 0.8rem
+        padding 0.2rem 0
 
-            
+        .author {
+          display flex
+          align-items center
+          font-weight 600
+          font-size 1.18rem
 
-            
+          .name {
+            color var(--text-color-3)
+          }
 
-            
-                <div class="article-nav">
-                    
-                        <div class="article-prev">
-                            <a class="prev"
-                               rel="prev"
-                               href="/2024/01/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"
-                            >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                                <span class="title flex-center">
-                                <span class="post-nav-title-item">数据结构</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                            </a>
-                        </div>
-                    
-                    
-                        <div class="article-next">
-                            <a class="next"
-                               rel="next"
-                               href="/2024/01/01/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/C++%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/"
-                            >
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">C++面试</span>
-                                <span class="post-nav-item">Next posts</span>
-                            </span>
-                                <span class="right arrow-icon flex-center">
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                            </a>
-                        </div>
-                    
-                </div>
-            
+          .author-label {
+            margin-left 0.8rem
+            padding 0 0.4rem
+            color #fff
+            font-weight 500
+            font-size 0.8rem
+            background var(--selection-color)
+            border-radius 0.4rem
+          }
+        }
+      }
+    }
 
-            
-        </div>
 
-        
-    </div>
-</div>
+    .article-header
+    .article-header-meta-info {
+      margin-top 1rem
+      +keep-tablet() {
+        transform scale(0.9)
+        transform-origin left top
+      }
+    }
+
+
+    .article-content {
+      margin-top $component-spacing-value
+      padding-bottom 2rem
+      color var(--text-color-3)
+      word-wrap break-word
+
+      .article-aging-tips {
+        position relative
+        display none
+        box-sizing border-box
+        margin-bottom 1.8rem
+        padding 1rem
+        color var(--article-aging-tips-color)
+        line-height 1.6
+        background var(--article-aging-tips-background-color)
+        border 0.1rem solid var(--article-aging-tips-border-color)
+        border-radius 0.4rem
+
+        i {
+          margin-right 0.4rem
+          color var(--article-aging-tips-color)
+        }
+
+        .days {
+          color var(--article-aging-tips-color)
+        }
+      }
+
+      if (hexo-config('post.copyright_info') == true || hexo-config('copyright_info.enable') == true) {
+        border-bottom 0.1rem dashed var(--border-color)
+      }
+    }
+
+
+    .post-tags-box {
+      display none
+      justify-content center
+      margin-top 1.6rem
+      font-size 1.1rem
+
+      +keep-tablet() {
+        display flex
+      }
+
+      +keep-mobile() {
+        margin-top 1.2rem
+        font-size 1rem
+      }
+
+
+      .tag-item {
+        margin 0 0.25rem
+      }
+    }
+
+
+    .post-copyright-info {
+      width 100%
+      margin-top $component-spacing-value
+
+      +keep-tablet() {
+        margin-top $component-spacing-value * 0.8
+      }
+    }
+
+
+    .article-nav {
+      height 2.8rem
+      margin-top $component-spacing-value
+
+      .article-prev
+      .article-next {
+        box-sizing border-box
+        max-width $post-nav-max-width
+        height 100%
+
+        keep-container(true, 1.03, 1.03, 0.8rem, 0)
+
+        a {
+          position relative
+          display block
+          box-sizing border-box
+          width 100%
+          height 100%
+
+          &.prev {
+            padding-left $arrow-icon-width
+          }
+
+          &.next {
+            padding-right $arrow-icon-width
+          }
+
+          .arrow-icon {
+            position absolute
+            top 0
+            width $arrow-icon-width
+            height 100%
+
+            &.left {
+              left 0
+            }
+
+            &.right {
+              right 0
+            }
+          }
+
+          .title {
+            width 100%
+            height 100%
+          }
+        }
+      }
+
+      .article-prev {
+        float left
+      }
+
+      .article-next {
+        float right
+      }
+
+      .post-nav-item {
+        display none
+
+        +keep-tablet() {
+          display inline-block
+        }
+      }
+
+
+      .post-nav-title-item {
+        overflow hidden
+        white-space nowrap
+        text-overflow ellipsis
+
+        +keep-tablet() {
+          display none
+        }
+      }
+    }
+  }
+
+
+  .toc-content-container {
+    position sticky
+    top $header-height + $component-spacing-value
+    display none
+    box-sizing border-box
+    width $toc-container-width
+    max-height 'calc(100vh - %s)' % ($header-height + $component-spacing-value)
+    padding 2rem 0 2rem 1.4rem
+    transition-t("top, display, max-height", "0, 0, 0", "0.2, 0.1, 0.2", "ease, ease, ease")
+
+    .header-shrink & {
+      top $header-shrink-height + $component-spacing-value
+      max-height 'calc(100vh - %s)' % ($header-shrink-height + $component-spacing-value)
+    }
+  }
+}
 
 
                 

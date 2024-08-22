@@ -130,123 +130,308 @@
             <div class="main-content">
 
                 
-                    <div class="fade-in-down-animation">
-    <div class="post-page-container">
-        <div class="article-content-container">
+                    $avatarWidth = 3rem
+$arrow-icon-width = 1rem
+$post-nav-max-width = 14rem
+$article-title-font-size = 1.6rem
+$toc-container-width = 15rem
 
-            <div class="article-title">
-                <span class="title-hover-animation">经济学习</span>
-            </div>
 
-            
-                <div class="article-header">
-                    <div class="avatar">
-                        <img src="/images/avatar.svg">
-                    </div>
-                    <div class="info">
-                        <div class="author">
-                            <span class="name">caijiQAQ</span>
-                            
-                                <span class="author-label">Lv3</span>
-                            
-                        </div>
-                        <div class="meta-info">
-                            
-<div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        
-            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
-        
-        <span class="pc">2023-06-23 09:21:14</span>
-        <span class="mobile">2023-06-23 09:21</span>
-    </span>
-    
-        <span class="article-update-date article-meta-item">
-        <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-07-27 11:47:56</span>
-    </span>
-    
-    
-    
+.post-page-container {
+  position relative
+  display flex
+  justify-content space-between
+  box-sizing border-box
+  width 100%
+  height 100%
 
-    
-    
-    
-    
-</div>
 
-                        </div>
-                    </div>
-                </div>
-            
+  &.show-toc {
+    .toc-content-container {
+      display block
+    }
 
-            <div class="article-content keep-markdown-body">
-                
+    .article-content-container {
+      width 'calc(100% - %s)' % $toc-container-width
+    }
+  }
 
-                <p>CPI(consumer price index)：一般指的是，CPI-U（城市CPI）</p>
-<h1 id="通缩"><a href="#通缩" class="headerlink" title="通缩"></a>通缩</h1><p>1.货币流通速度以及对应价格的关系 与 通缩<br>当一个群体对经济足够乐观，持续花钱提升了货币流通的速度，也就会令价格再次提升<br>当一个群体一直悲观时，就会减少花钱的欲望减少了货币流通的速度，因此价格也将持续走低。此时无论货币量多少都无法改变价格持续走低的现状，也就是通缩。<br>总结下其实就是，货币流动的速度体现的是供需关系，供需关系影响价格的变化。<br>2.当经济不景气的时候(通缩)，进入的循环(deflation spiral)<br>就业率很低→需求下降→供应下降、价格下降→利润下降→就业率进一步下降<br>即使此时发钱，也并不能解决经济下行的问题，主要是人们的信心不足的问题。即使发钱人们也会将钱存起来而不是花掉。</p>
-<h1 id="黄金"><a href="#黄金" class="headerlink" title="黄金"></a>黄金</h1><p>1.黄金属性<br>黄金是无限接近于货币的商品，具备货币属性但也同时具有商品的属性，对标利率与信用。<br>白银：9成<strong>商品</strong>，1成货币<br>金银比价：利率和商品需求之间的比价关系，不只是两条线<br>2.黄金与利率<br>实际利率：名义利率+通胀+两个的预期<br>名义利率：加息+降息<br>利率病：<br>信用 债务 利率：三者相互挂钩但是有时也会脱钩，因为利率有下限，但债务、信用损耗是无限的，<br>实际利率越低，累积时间越长，黄金累积的涨幅越大<br>黄金能抗通胀吗？从2002年后决定黄金的是名义利率，并不是物价水平所以黄金并不抗通胀。<br>全球化的问题：如果没有技术同质化就会产生，作为生产者就要承担原材料的上涨以及通胀问题，但输出品是通缩的。当中国通胀越来越厉害，美国通胀不变，也就是中国企业利润越来越低。使用自己的利润补贴了原材料的上涨，保证给美国人的订单价格很低。所以找到通胀的地方也就可以保证利润，让下一个地方通胀，保证继续享有低价商品。</p>
-<p>生产、加工、制造、出口，除了累积大量的顺差（黄金，黄金也可以当做是信用），容易出现通胀，类似曾经的中国。只要高生产、高就业才有真正意义上的高利率。经济越好利率越高。经济越低利率越低。利率低经济差就会导致收入、贫富、阶级<br>3.利率变动<br>当金融资产泡沫产生，外国资本开始撤离挤兑外汇储备时，央行应该怎么办？加息来保住本住外汇储备，加息能留住资金吗？并不能，加息会导致资产加速崩溃（加本币利率相当于加债务的利率，但收入没增，还债成本增加，资产也会因此坍塌），相当于使用本币资产去接走了转化成了外汇储备流出的。并不是资产被消耗掉了，而是资产变成了本币债务，本币债务利率再抬就容易发生资产坍塌，此时越加息崩的越厉害，资本流出也就越快。</p>
-<h1 id="资产负债表："><a href="#资产负债表：" class="headerlink" title="资产负债表："></a>资产负债表：</h1><p>资产负债表表示企业在一定日期的财务状况，会将合乎会计原则的资产、负债、股东权益”交易科目分为“资产”和“负债及股东权益”两大区块。报表左边是资产，右边是负债和所有者权益。这张表遵循一个恒等式，就是资产等于负债加所有者权益。<br><strong>右边的负债和所有者权益反映了融资策略和实力，负债是你的借贷状况，所有者权益是你的自有资金。</strong><br><strong>从报表的左边，看企业的生产经营策略。</strong>看所有企业的钱借来以后，做了什么事情：是买了固定资产还是投入到流动资产，还是买了无形资产，这些资产的比例结构是什么样的关系。比如说，商贸企业可能流动资产比例比较大，工业企业可能固定资产比例比较大，你进行生产得有机器、厂房、设备，就要进行大量投资，这个大量投资就列入固定资产中，那就能看出你的生产经营策略，看出钱来了以后往哪里花了，也能看出这个企业到底是什么类型的企业。</p>
-<p><strong>先抓总体的东西，然后再往下看：</strong><br>(1)股东对企业的所有权在哪儿?你投资了，这个钱体现在哪儿?到底有多少家底儿?体现在股本和保留盈余上，也就是所有者权益这块。</p>
-<p>(2)企业欠经营企业和金融机构的钱在哪儿?企业欠其他企业或个人的钱在哪儿?在应付抵押借款和其他应付款中。</p>
-<p>(3)你的账上有多少现钱?你就看流动资产中的银行存款。</p>
-<p>(4)别人欠你的钱在哪儿?在应收账款、其他应收款和预付账款中。</p>
-<p>(5)企业购买的股票和债券放在哪儿?放在长期投资和短期投资中。</p>
-<p>(6)企业的机器厂房设备在哪儿?在资本资产中。</p>
-<p>(7)企业购买了专利、土地使用权形成的资产是什么?就是形成无形资产了。</p>
-<p>(8)企业开办期间的费用放在哪儿?放在长期待摊费用中。</p>
-<h1 id="外汇管制"><a href="#外汇管制" class="headerlink" title="外汇管制"></a>外汇管制</h1><p>克鲁格曼的“不可能三角理论”，着套理论说的是一个国家的货币政策最多只能实现“资本自由流动、货币政策独立、固定汇率”这三点中的两点。外汇管制就是放弃了资本的自由流动来实现货币政策独立和固定汇率这两点的。而中国香港采取的货币政策是选择了资本的自由流动和固定汇率，放弃了货币政策独立，香港的货币政策是跟着美国走的，一般美国货币政策发生什么变动，香港立马跟随。而加拿大、英国等发达国家则选择了资本自由流动和货币政策独立放弃了固定汇率。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230727100444.png"></p>
 
-            </div>
+  +keep-tablet() {
+    .toc-content-container {
+      display none !important
+    }
 
-            
+    .article-content-container {
+      width 100% !important
+    }
+  }
 
-            
 
-            
-                <div class="article-nav">
-                    
-                        <div class="article-prev">
-                            <a class="prev"
-                               rel="prev"
-                               href="/2023/07/02/%E6%A0%91%E8%8E%93%E6%B4%BE/"
-                            >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                                <span class="title flex-center">
-                                <span class="post-nav-title-item">树莓派</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                            </a>
-                        </div>
-                    
-                    
-                        <div class="article-next">
-                            <a class="next"
-                               rel="next"
-                               href="/2023/06/03/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/"
-                            >
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">计算机系统</span>
-                                <span class="post-nav-item">Next posts</span>
-                            </span>
-                                <span class="right arrow-icon flex-center">
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                            </a>
-                        </div>
-                    
-                </div>
-            
+  .article-content-container {
+    position relative
+    box-sizing border-box
+    width 100%
+    height 100%
+    keep-container(false, 0, 0, 2rem, 2rem)
 
-            
-        </div>
+    +keep-mobile() {
+      padding 1.2rem 0.2rem
+      box-shadow none
 
-        
-    </div>
-</div>
+      &:hover {
+        box-shadow none
+      }
+    }
+
+
+    .article-title {
+      color var(--text-color-2)
+      font-weight 600
+      font-size $article-title-font-size
+
+      +keep-tablet() {
+        font-size $article-title-font-size * 0.9
+      }
+
+      +keep-mobile() {
+        font-size $article-title-font-size * 0.8
+      }
+    }
+
+
+    .article-header {
+      position relative
+      box-sizing border-box
+      width 100%
+      height $avatarWidth
+      padding-left $avatarWidth
+
+      .avatar {
+        position absolute
+        top 0
+        left 0
+        box-sizing border-box
+        width $avatarWidth
+        height $avatarWidth
+        padding 0.1rem
+        border 1px solid var(--border-color)
+        border-radius 50%
+
+        img {
+          width 100%
+          height 100%
+          background var(--avatar-background-color)
+          border-radius 50%
+        }
+      }
+
+
+      .info {
+        display flex
+        flex-direction column
+        justify-content space-between
+        box-sizing border-box
+        width 100%
+        height 100%
+        margin-left 0.8rem
+        padding 0.2rem 0
+
+        .author {
+          display flex
+          align-items center
+          font-weight 600
+          font-size 1.18rem
+
+          .name {
+            color var(--text-color-3)
+          }
+
+          .author-label {
+            margin-left 0.8rem
+            padding 0 0.4rem
+            color #fff
+            font-weight 500
+            font-size 0.8rem
+            background var(--selection-color)
+            border-radius 0.4rem
+          }
+        }
+      }
+    }
+
+
+    .article-header
+    .article-header-meta-info {
+      margin-top 1rem
+      +keep-tablet() {
+        transform scale(0.9)
+        transform-origin left top
+      }
+    }
+
+
+    .article-content {
+      margin-top $component-spacing-value
+      padding-bottom 2rem
+      color var(--text-color-3)
+      word-wrap break-word
+
+      .article-aging-tips {
+        position relative
+        display none
+        box-sizing border-box
+        margin-bottom 1.8rem
+        padding 1rem
+        color var(--article-aging-tips-color)
+        line-height 1.6
+        background var(--article-aging-tips-background-color)
+        border 0.1rem solid var(--article-aging-tips-border-color)
+        border-radius 0.4rem
+
+        i {
+          margin-right 0.4rem
+          color var(--article-aging-tips-color)
+        }
+
+        .days {
+          color var(--article-aging-tips-color)
+        }
+      }
+
+      if (hexo-config('post.copyright_info') == true || hexo-config('copyright_info.enable') == true) {
+        border-bottom 0.1rem dashed var(--border-color)
+      }
+    }
+
+
+    .post-tags-box {
+      display none
+      justify-content center
+      margin-top 1.6rem
+      font-size 1.1rem
+
+      +keep-tablet() {
+        display flex
+      }
+
+      +keep-mobile() {
+        margin-top 1.2rem
+        font-size 1rem
+      }
+
+
+      .tag-item {
+        margin 0 0.25rem
+      }
+    }
+
+
+    .post-copyright-info {
+      width 100%
+      margin-top $component-spacing-value
+
+      +keep-tablet() {
+        margin-top $component-spacing-value * 0.8
+      }
+    }
+
+
+    .article-nav {
+      height 2.8rem
+      margin-top $component-spacing-value
+
+      .article-prev
+      .article-next {
+        box-sizing border-box
+        max-width $post-nav-max-width
+        height 100%
+
+        keep-container(true, 1.03, 1.03, 0.8rem, 0)
+
+        a {
+          position relative
+          display block
+          box-sizing border-box
+          width 100%
+          height 100%
+
+          &.prev {
+            padding-left $arrow-icon-width
+          }
+
+          &.next {
+            padding-right $arrow-icon-width
+          }
+
+          .arrow-icon {
+            position absolute
+            top 0
+            width $arrow-icon-width
+            height 100%
+
+            &.left {
+              left 0
+            }
+
+            &.right {
+              right 0
+            }
+          }
+
+          .title {
+            width 100%
+            height 100%
+          }
+        }
+      }
+
+      .article-prev {
+        float left
+      }
+
+      .article-next {
+        float right
+      }
+
+      .post-nav-item {
+        display none
+
+        +keep-tablet() {
+          display inline-block
+        }
+      }
+
+
+      .post-nav-title-item {
+        overflow hidden
+        white-space nowrap
+        text-overflow ellipsis
+
+        +keep-tablet() {
+          display none
+        }
+      }
+    }
+  }
+
+
+  .toc-content-container {
+    position sticky
+    top $header-height + $component-spacing-value
+    display none
+    box-sizing border-box
+    width $toc-container-width
+    max-height 'calc(100vh - %s)' % ($header-height + $component-spacing-value)
+    padding 2rem 0 2rem 1.4rem
+    transition-t("top, display, max-height", "0, 0, 0", "0.2, 0.1, 0.2", "ease, ease, ease")
+
+    .header-shrink & {
+      top $header-shrink-height + $component-spacing-value
+      max-height 'calc(100vh - %s)' % ($header-shrink-height + $component-spacing-value)
+    }
+  }
+}
 
 
                 

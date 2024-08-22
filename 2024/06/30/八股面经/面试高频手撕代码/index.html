@@ -130,203 +130,308 @@
             <div class="main-content">
 
                 
-                    <div class="fade-in-down-animation">
-    <div class="post-page-container">
-        <div class="article-content-container">
+                    $avatarWidth = 3rem
+$arrow-icon-width = 1rem
+$post-nav-max-width = 14rem
+$article-title-font-size = 1.6rem
+$toc-container-width = 15rem
 
-            <div class="article-title">
-                <span class="title-hover-animation">面试高频手撕代码</span>
-            </div>
 
-            
-                <div class="article-header">
-                    <div class="avatar">
-                        <img src="/images/avatar.svg">
-                    </div>
-                    <div class="info">
-                        <div class="author">
-                            <span class="name">caijiQAQ</span>
-                            
-                                <span class="author-label">Lv3</span>
-                            
-                        </div>
-                        <div class="meta-info">
-                            
-<div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        
-            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
-        
-        <span class="pc">2024-06-30 22:32:08</span>
-        <span class="mobile">2024-06-30 22:32</span>
-    </span>
-    
-        <span class="article-update-date article-meta-item">
-        <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-08-18 10:39:27</span>
-    </span>
-    
-    
-    
+.post-page-container {
+  position relative
+  display flex
+  justify-content space-between
+  box-sizing border-box
+  width 100%
+  height 100%
 
-    
-    
-    
-    
-</div>
 
-                        </div>
-                    </div>
-                </div>
-            
+  &.show-toc {
+    .toc-content-container {
+      display block
+    }
 
-            <div class="article-content keep-markdown-body">
-                
+    .article-content-container {
+      width 'calc(100% - %s)' % $toc-container-width
+    }
+  }
 
-                <h2 id="1-给你两个绝对路径地址，然后你去把file1中的内容拷贝到file2中。"><a href="#1-给你两个绝对路径地址，然后你去把file1中的内容拷贝到file2中。" class="headerlink" title="1.给你两个绝对路径地址，然后你去把file1中的内容拷贝到file2中。"></a>1.给你两个绝对路径地址，然后你去把file1中的内容拷贝到file2中。</h2><p>ofstream：用于文件的写入：</p>
-<ul>
-<li><p>1.创建ofstream对象：</p>
-<pre><code>  ofstream outputFile;
-</code></pre>
-</li>
-<li><p>2.打开文件并写入内容：</p>
-<pre><code>  outputFile.open(&quot;example.txt&quot;); // 打开名为example.txt的文件进行写入
 
-  if (outputFile.is_open()) &#123;
-      outputFile &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endl; // 将字符串写入文件
-      outputFile &lt;&lt; &quot;This is a sample text.&quot; &lt;&lt; std::endl;
-  &#125; else &#123;
-      std::cout &lt;&lt; &quot;Failed to open the file.&quot; &lt;&lt; std::endl; // 如果文件打开失败，输出错误信息
-  &#125;
+  +keep-tablet() {
+    .toc-content-container {
+      display none !important
+    }
 
-  outputFile.close(); // 关闭文件流
-</code></pre>
-</li>
-</ul>
-<p>ifstream：用于文件的读取：</p>
-<ul>
-<li><p>1.创建ifstream inputFile</p>
-</li>
-<li><p>2.打开文件并读取内容：</p>
-<pre><code>  inputFile.open(&quot;example.txt&quot;); // 打开名为example.txt的文件进行读取
+    .article-content-container {
+      width 100% !important
+    }
+  }
 
-  if (inputFile.is_open()) &#123;
-      std::string line;
-      while (std::getline(inputFile, line)) &#123;
-          std::cout &lt;&lt; line &lt;&lt; std::endl; // 输出文件中的每一行内容
-      &#125;
-  &#125; else &#123;
-      std::cout &lt;&lt; &quot;Failed to open the file.&quot; &lt;&lt; std::endl; // 如果文件无法打开，输出错误信息
-  &#125;
 
-  inputFile.close(); // 关闭文件流
-</code></pre>
-</li>
-</ul>
-<p><em><strong>getline</strong></em></p>
-<ul>
-<li><p>1.std::getline(输入流, 目标字符串);<br>getline(std::cin, line):从输入中读取一行文本，同时将其存在line。</p>
-</li>
-<li><p>2.从文件中读取一行</p>
-<pre><code>while (std::getline(file, line)) &#123;
-  std::cout &lt;&lt; line &lt;&lt; std::endl;
-&#125;
-</code></pre>
-</li>
-<li><p>3.自定义分隔符</p>
-<pre><code>  std::getline(stream, word, &#39;,&#39;)
-</code></pre>
-</li>
-</ul>
-<p>代码：</p>
-<pre><code>#include &lt;iostream&gt;
-#include &lt;fstream&gt;
-#include &lt;string&gt;
+  .article-content-container {
+    position relative
+    box-sizing border-box
+    width 100%
+    height 100%
+    keep-container(false, 0, 0, 2rem, 2rem)
 
-int main() &#123;
-std::string file1Path, file2Path;
+    +keep-mobile() {
+      padding 1.2rem 0.2rem
+      box-shadow none
 
-std::cout &lt;&lt; &quot;请输入第一个文件的绝对路径 (file1): &quot;;
-std::cin &gt;&gt; file1Path;
+      &:hover {
+        box-shadow none
+      }
+    }
 
-std::cout &lt;&lt; &quot;请输入第二个文件的绝对路径 (file2): &quot;;
-std::cin &gt;&gt; file2Path;
 
-std::ifstream file1(file1Path);
-if (!file1) &#123;
-    std::cerr &lt;&lt; &quot;无法打开文件: &quot; &lt;&lt; file1Path &lt;&lt; std::endl;
-    return 1;
-&#125;
+    .article-title {
+      color var(--text-color-2)
+      font-weight 600
+      font-size $article-title-font-size
 
-std::ofstream file2(file2Path);
-if (!file2) &#123;
-    std::cerr &lt;&lt; &quot;无法打开文件: &quot; &lt;&lt; file2Path &lt;&lt; std::endl;
-    return 1;
-&#125;
+      +keep-tablet() {
+        font-size $article-title-font-size * 0.9
+      }
 
-std::string line;
-while (std::getline(file1, line)) &#123;
-    file2 &lt;&lt; line &lt;&lt; &quot;\n&quot;;
-&#125;
+      +keep-mobile() {
+        font-size $article-title-font-size * 0.8
+      }
+    }
 
-file1.close();
-file2.close();
 
-std::cout &lt;&lt; &quot;文件拷贝成功！&quot; &lt;&lt; std::endl;
+    .article-header {
+      position relative
+      box-sizing border-box
+      width 100%
+      height $avatarWidth
+      padding-left $avatarWidth
 
-return 0;
-</code></pre>
-<p>}</p>
+      .avatar {
+        position absolute
+        top 0
+        left 0
+        box-sizing border-box
+        width $avatarWidth
+        height $avatarWidth
+        padding 0.1rem
+        border 1px solid var(--border-color)
+        border-radius 50%
 
-            </div>
+        img {
+          width 100%
+          height 100%
+          background var(--avatar-background-color)
+          border-radius 50%
+        }
+      }
 
-            
 
-            
+      .info {
+        display flex
+        flex-direction column
+        justify-content space-between
+        box-sizing border-box
+        width 100%
+        height 100%
+        margin-left 0.8rem
+        padding 0.2rem 0
 
-            
-                <div class="article-nav">
-                    
-                        <div class="article-prev">
-                            <a class="prev"
-                               rel="prev"
-                               href="/2024/08/06/%E7%AC%94%E8%AF%95%E5%85%AB%E8%82%A1%E9%A2%98%E7%9B%AE/"
-                            >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                                <span class="title flex-center">
-                                <span class="post-nav-title-item">笔试八股题目</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                            </a>
-                        </div>
-                    
-                    
-                        <div class="article-next">
-                            <a class="next"
-                               rel="next"
-                               href="/2024/06/19/%E5%86%85%E6%A0%B8%E8%A3%81%E5%89%AA%E4%B8%8E%E7%A7%BB%E6%A4%8D/"
-                            >
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">内核裁剪与移植</span>
-                                <span class="post-nav-item">Next posts</span>
-                            </span>
-                                <span class="right arrow-icon flex-center">
-                              <i class="fas fa-chevron-right"></i>
-                            </span>
-                            </a>
-                        </div>
-                    
-                </div>
-            
+        .author {
+          display flex
+          align-items center
+          font-weight 600
+          font-size 1.18rem
 
-            
-        </div>
+          .name {
+            color var(--text-color-3)
+          }
 
-        
-    </div>
-</div>
+          .author-label {
+            margin-left 0.8rem
+            padding 0 0.4rem
+            color #fff
+            font-weight 500
+            font-size 0.8rem
+            background var(--selection-color)
+            border-radius 0.4rem
+          }
+        }
+      }
+    }
+
+
+    .article-header
+    .article-header-meta-info {
+      margin-top 1rem
+      +keep-tablet() {
+        transform scale(0.9)
+        transform-origin left top
+      }
+    }
+
+
+    .article-content {
+      margin-top $component-spacing-value
+      padding-bottom 2rem
+      color var(--text-color-3)
+      word-wrap break-word
+
+      .article-aging-tips {
+        position relative
+        display none
+        box-sizing border-box
+        margin-bottom 1.8rem
+        padding 1rem
+        color var(--article-aging-tips-color)
+        line-height 1.6
+        background var(--article-aging-tips-background-color)
+        border 0.1rem solid var(--article-aging-tips-border-color)
+        border-radius 0.4rem
+
+        i {
+          margin-right 0.4rem
+          color var(--article-aging-tips-color)
+        }
+
+        .days {
+          color var(--article-aging-tips-color)
+        }
+      }
+
+      if (hexo-config('post.copyright_info') == true || hexo-config('copyright_info.enable') == true) {
+        border-bottom 0.1rem dashed var(--border-color)
+      }
+    }
+
+
+    .post-tags-box {
+      display none
+      justify-content center
+      margin-top 1.6rem
+      font-size 1.1rem
+
+      +keep-tablet() {
+        display flex
+      }
+
+      +keep-mobile() {
+        margin-top 1.2rem
+        font-size 1rem
+      }
+
+
+      .tag-item {
+        margin 0 0.25rem
+      }
+    }
+
+
+    .post-copyright-info {
+      width 100%
+      margin-top $component-spacing-value
+
+      +keep-tablet() {
+        margin-top $component-spacing-value * 0.8
+      }
+    }
+
+
+    .article-nav {
+      height 2.8rem
+      margin-top $component-spacing-value
+
+      .article-prev
+      .article-next {
+        box-sizing border-box
+        max-width $post-nav-max-width
+        height 100%
+
+        keep-container(true, 1.03, 1.03, 0.8rem, 0)
+
+        a {
+          position relative
+          display block
+          box-sizing border-box
+          width 100%
+          height 100%
+
+          &.prev {
+            padding-left $arrow-icon-width
+          }
+
+          &.next {
+            padding-right $arrow-icon-width
+          }
+
+          .arrow-icon {
+            position absolute
+            top 0
+            width $arrow-icon-width
+            height 100%
+
+            &.left {
+              left 0
+            }
+
+            &.right {
+              right 0
+            }
+          }
+
+          .title {
+            width 100%
+            height 100%
+          }
+        }
+      }
+
+      .article-prev {
+        float left
+      }
+
+      .article-next {
+        float right
+      }
+
+      .post-nav-item {
+        display none
+
+        +keep-tablet() {
+          display inline-block
+        }
+      }
+
+
+      .post-nav-title-item {
+        overflow hidden
+        white-space nowrap
+        text-overflow ellipsis
+
+        +keep-tablet() {
+          display none
+        }
+      }
+    }
+  }
+
+
+  .toc-content-container {
+    position sticky
+    top $header-height + $component-spacing-value
+    display none
+    box-sizing border-box
+    width $toc-container-width
+    max-height 'calc(100vh - %s)' % ($header-height + $component-spacing-value)
+    padding 2rem 0 2rem 1.4rem
+    transition-t("top, display, max-height", "0, 0, 0", "0.2, 0.1, 0.2", "ease, ease, ease")
+
+    .header-shrink & {
+      top $header-shrink-height + $component-spacing-value
+      max-height 'calc(100vh - %s)' % ($header-shrink-height + $component-spacing-value)
+    }
+  }
+}
 
 
                 
