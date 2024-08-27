@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-06-26 20:31:21</span>
+        <span class="pc">2024-08-26 10:22:48</span>
     </span>
     
     
@@ -497,6 +497,34 @@ ret = ioctl(fd, VIDIOC_QBUF, &amp;readbuffer);
 </code></pre>
 </li>
 </ul>
+<p><em><strong>当客户端的数据流传输过来时，服务器处理数据较慢，数据流是如何传输和处理的？</strong></em></p>
+<ul>
+<li><p><strong>数据传输的顺序</strong>：TCP 保证了数据包的顺序，因此即使服务器处理较慢，客户端传输的数据流仍然是按顺序排队等待接收。</p>
+</li>
+<li><p><strong>阻塞行为</strong>：由于 recv() 函数是阻塞的，这意味着在服务器没有处理完当前接收到的数据之前，recv() 会一直等待，直到有新的数据可供读取为止。这就确保了服务器接收数据的顺序性。这也意味着，服务器处理速度的慢速可能会导致客户端无法快速地发送新数据，因为 TCP 的<strong>流量控制机制</strong>会根据接收端的处理能力进行调整，客户端可能会被迫减慢发送速度，以避免发送过多未被确认的数据。<br><strong>服务器处理慢导致的问题</strong>：</p>
+<ul>
+<li>数据积压：如果服务器处理数据的速度过慢，数据可能会在服务器的接收缓冲区中积压。当缓冲区满了之后，TCP 协议会通知客户端停止发送新数据，直到服务器处理了一部分数据并释放了缓冲区空间。</li>
+<li>顺序处理：服务器始终会<strong>按顺序处理接收到的数据流</strong>，因此不会出现跳过部分数据帧直接处理最新数据的情况。服务器会处理完一个完整的帧后再处理下一个。因此，如果服务器在处理某个数据帧时较慢，后续的数据帧将会在接收缓冲区中排队，等待被处理。</li>
+</ul>
+</li>
+</ul>
+<p><em><strong>处理方案</strong></em></p>
+<ul>
+<li>1.采集后TCP直接延迟一段时间再发送防止服务端处理不掉。</li>
+<li>2.传输TCP，与接收TCP传输过来的数据有大概1s的延迟700ms左右，所以会有延迟，opencvimshow延迟也只有10ms左右，所以出现延迟是因为传输的问题。同时之前除此以外会有一个超长的延时（4——5s）左右，是将缓存队列数量降为1 这样在处理速度较慢的情况下，可以更实时。</li>
+</ul>
+<p><em><strong>V4L2运行原理</strong></em><br><strong>缓存区的轮转使用</strong>：</p>
+<ul>
+<li>V4L2缓存队列中的每个缓存区都用于存储一帧视频数据。当你调用 VIDIOC_DQBUF 时，V4L2会从队列中给你一个已经填充好的缓存区，这个缓存区包含最新的采集数据。</li>
+<li>V4L2确实会保证你在 VIDIOC_DQBUF 时，得到的是队列中最早填充好的数据，但<strong>它不一定是“最新”的一帧</strong>（即使是最新填充的，也可能已经有一定的时间延迟），具体取决于队列的长度和你的处理速度。</li>
+</ul>
+<p><strong>队列大小对帧处理的影响</strong>:<br><strong>小队列</strong>：当队列比较小（例如4个缓存区），如果你的程序处理数据的速度比摄像头采集数据的速度慢，那么缓存区可能会很快被填满，导致摄像头需要等待缓存区的释放（即重新入队后才能继续采集）。在这种情况下，V4L2会尽量提供最新的数据，但由于处理速度慢，可能会发生丢帧。<br><strong>大队列</strong>：当队列比较大时，摄像头可以继续采集数据，即使你的程序处理速度较慢。这意味着你可能会处理稍微延迟的数据帧，因为队列中可能已经存储了多个等待处理的帧。</p>
+<ul>
+<li><strong>缓存队列大小影响的是帧的缓冲和处理延迟</strong>：队列越大，你可以缓冲更多的帧，这样可以减少丢帧的可能性，但增加了处理延迟的可能性。V4L2会按照队列中的<strong>顺序提供帧</strong>，因此，如果队列中有很多等待处理的帧，你可能处理的帧并不是最新的一帧。</li>
+<li><strong>最新帧与队列管理</strong>：虽然V4L2确实在 VIDIOC_DQBUF 时提供队列中最早的帧，但如果队列中有多个帧在等待处理，那么即使这个帧是队列中最“早”的，也是相对的最“新”的，但从实际采集的时间点来看，可能已经有一定的延迟。</li>
+</ul>
+<p><em><strong>丢帧与否</strong></em></p>
+<p>&#x3D;&#x3D;V4L2的采集速率。&#x3D;&#x3D;</p>
 <h1 id="三、按键驱动"><a href="#三、按键驱动" class="headerlink" title="三、按键驱动"></a>三、按键驱动</h1><p>（这里没有按键，就用之前的SR04来代替下，反正流程基本一样）<br>主要实现了按键触发中断，传给用户一个值。</p>
 <h2 id="1-设备树修改"><a href="#1-设备树修改" class="headerlink" title="1.设备树修改"></a>1.设备树修改</h2><p>声明一下用到了哪个GPIO以及对应的有效位</p>
 <pre><code>mysr04&#123;
@@ -534,6 +562,40 @@ ret = ioctl(fd, VIDIOC_QBUF, &amp;readbuffer);
     return 0;
 &#125;
 </code></pre>
+<h3 id="2-1-fasync驱动端的设置："><a href="#2-1-fasync驱动端的设置：" class="headerlink" title="2.1 fasync驱动端的设置："></a>2.1 fasync驱动端的设置：</h3><ul>
+<li><p>1.注册一个fasync_struct的结构体：<br>  struct fasync_struct *async_queue; &#x2F;&#x2F; 用于异步通知的队列</p>
+</li>
+<li><p>2.file_operation 中需要添加fasync操作，并注册异步操作</p>
+<p>  static struct file_operations gpio_button_drv &#x3D; {<br>  .owner   &#x3D; THIS_MODULE,<br>  .read    &#x3D; gpio_button_drv_read,<br>  .release &#x3D; gpio_button_drv_release, &#x2F;&#x2F; 添加释放函数<br>  .fasync  &#x3D; gpio_button_fasync,      &#x2F;&#x2F; 添加fasync操作<br>  };</p>
+</li>
+</ul>
+<p><em><strong>gpio_button_fasync函数实现</strong></em>：</p>
+<pre><code>    static int gpio_button_fasync(int fd, struct file *filp, int on)
+    &#123;
+        return fasync_helper(fd, filp, on, &amp;sr04.async_queue);
+    &#125;
+fasync_helper函数：是 Linux 内核中用于管理异步通知机制的一个辅助函数。它主要用于设置或移除与文件相关的异步 I/O 处理结构 (struct fasync_struct)，并将这些结构链接到一个链表中。当驱动程序中发生某个事件时，可以通过 kill_fasync 函数遍历这个链表并向所有注册了异步 I/O 的进程发送信号（通常是 SIGIO 信号）。如果用户程序随后调用 fcntl 设置异步通知，驱动程序的 fasync 函数会被调用。
+
+***设置异步通知：（非常的重要）***
+用户程序使用 fcntl(fd, F_SETFL, FASYNC) 启用异步通知，这会导致内核调用驱动程序中 file_operations 结构体中注册的 fasync 函数。fasync 函数负责将**当前文件描述符与 fasync_struct 结构关联起来**，并将其添加到设备的异步通知队列中。
+</code></pre>
+<ul>
+<li><p>3.中断处理或时间处理函数中发送SIGIO信号<br>在你的驱动程序中，当有事件需要通知用户空间时（例如硬件中断处理完成），使用 <strong>kill_fasync</strong> 函数向用户空间发送信号。</p>
+<pre><code>  static irqreturn_t my_irq_handler(int irq, void *dev_id)
+  &#123;
+      struct my_device_data *dev_data = dev_id;
+
+      // 处理中断...
+
+      // 向用户空间发送信号，通知事件发生
+      if (dev_data-&gt;async_queue)
+          kill_fasync(&amp;dev_data-&gt;async_queue, SIGIO, POLL_IN);
+
+      return IRQ_HANDLED;
+  &#125;
+</code></pre>
+</li>
+</ul>
 <h2 id="3-软件端（面向用户）"><a href="#3-软件端（面向用户）" class="headerlink" title="3.软件端（面向用户）"></a>3.软件端（面向用户）</h2><p>这里就到了比较主要的用法，为程序注册一个异步通知，当用户注册之后，就可以去做别的事情了，按键按下的时候，会触发中断并发消息给用户进程，这就免去了等待的过程，算是最有效率的做法了。</p>
 <ul>
 <li><p>1.用户的file_operation 结构体：</p>
@@ -560,52 +622,53 @@ ret = ioctl(fd, VIDIOC_QBUF, &amp;readbuffer);
 </code></pre>
 </li>
 <li><p>4.用户程序<br>当按键按下时，内核驱动程序会通过 kill_fasync 发送 SIGIO 信号给用户空间进程，用户空间进程可以通过信号处理程序处理该事件。flag &#x3D; 0的时候就则等待，flag&#x3D;1的时候则开始采集。<br>这里的fcntl是操作文件描述符的函数，实现的步骤有：1.设置进程为文件描述符的所有者，获取文件描述符当前标志，设置文件描述符的异步IO标志</p>
-<pre><code>  #include &lt;stdio.h&gt;
-  #include &lt;stdlib.h&gt;
+<pre><code>  #include &lt;signal.h&gt;
   #include &lt;unistd.h&gt;
   #include &lt;fcntl.h&gt;
-  #include &lt;signal.h&gt;
+  #include &lt;stdio.h&gt;
 
-  #define DEVICE_FILE &quot;/dev/async_button&quot;
-  int flag =0;
-  void signal_handler(int signum) &#123;
-      printf(&quot;Button pressed!\n&quot;);
-      flag =1;
+  void sigio_handler(int signo)
+  &#123;
+      // 处理从驱动程序接收到的异步事件
+      printf(&quot;Received SIGIO signal\n&quot;);
+
+      // 你可以在这里读取设备文件以获取更多信息...
   &#125;
 
-  int main() &#123;
-      int fd = open(DEVICE_FILE, O_RDWR);
-      if (fd &lt; 0) &#123;
-          perror(&quot;Failed to open the device&quot;);
-          return EXIT_FAILURE;
+  int main()
+  &#123;
+      int fd = open(&quot;/dev/my_device&quot;, O_RDWR);
+      if (fd == -1) &#123;
+          perror(&quot;Failed to open device&quot;);
+          return -1;
       &#125;
 
-      signal(SIGIO, signal_handler);//收到SIGIO的时候就会进入signal_handler函数
+      // 安装 SIGIO 信号处理程序
+      struct sigaction sa;
+      sa.sa_handler = sigio_handler;
+      sa.sa_flags = 0;
+      sigemptyset(&amp;sa.sa_mask);
+      sigaction(SIGIO, &amp;sa, NULL);
+
+      // 将当前进程设置为接收 SIGIO 信号的所有者
       fcntl(fd, F_SETOWN, getpid());
+
+      // 启用异步通知
       int flags = fcntl(fd, F_GETFL);
       fcntl(fd, F_SETFL, flags | FASYNC);
 
+      // 主循环，可以等待其他事件或处理其他任务
       while (1) &#123;
-          pause(); // 等待信号
+          pause();  // 等待信号
       &#125;
 
       close(fd);
       return 0;
   &#125;
 </code></pre>
-<ul>
-<li><p>1.<strong>注册信号处理程序</strong>：signal(SIGIO, signal_handler);<br>将 SIGIO 信号与 signal_handler 函数关联起来，使得进程在接收到 SIGIO 信号时能够调用 signal_handler 函数进行处理。<br>设置异步I&#x2F;O信号接收者：fcntl(fd, F_SETOWN, getpid());</p>
-</li>
-<li><p>2.将文件描述符 fd 的所有者<strong>设置为当前进程</strong>，使得当前进程成为该文件描述符的<strong>异步I&#x2F;O信号</strong>的接收者。</p>
 </li>
 </ul>
-</li>
-</ul>
-<p>获取文件描述符当前标志：int flags &#x3D; fcntl(fd, F_GETFL);</p>
-<ul>
-<li>3.<strong>获取文件描述符 fd 的当前标志</strong>，准备进行进一步设置。<br>启用异步模式：fcntl(fd, F_SETFL, flags | FASYNC);</li>
-<li>4.将文件描述符 fd <strong>设置为异步模式</strong>，使得当该文件描述符发生特定事件（如数据可读、可写）时，当前进程能够接收到 SIGIO 信号。</li>
-</ul>
+<p><strong>1.注册信号处理程序</strong>：<br>    <strong>signal(SIGIO, signal_handler);</strong> 将 SIGIO 信号与 signal_handler 函数关联起来。当进程收到 SIGIO 信号时，会调用 signal_handler 函数进行处理。<br><strong>2.将当前进程设置为接收 SIGIO 信号的所有者</strong>：<br><strong>fcntl(fd, F_SETOWN, getpid());</strong> 将当前进程（通过 getpid() 获取的进程 ID）设置为文件描述符 fd 的所有者，使得该进程能够接收到该文件描述符上发生的事件的 SIGIO 信号。<br><strong>3.获取文件描述符当前标志</strong>：<br><strong>int flags &#x3D; fcntl(fd, F_GETFL);</strong> 获取文件描述符 fd 的当前状态标志，通常包括访问模式（只读、只写等）和其他控制标志（如是否启用非阻塞模式）。<br><strong>4.启用异步模式</strong>：<br><strong>fcntl(fd, F_SETFL, flags | FASYNC);</strong> 将文件描述符 fd 设置为异步模式，即将 FASYNC 标志添加到文件描述符的状态标志中。这样，当文件描述符发生特定事件时，当前进程就会接收到 SIGIO 信号。</p>
 <h1 id="4-线程实现"><a href="#4-线程实现" class="headerlink" title="4.线程实现"></a>4.线程实现</h1><p>虽然说线程总体来说用法比较固定，但是还是第一次碰到条件变量这个东西，所以有必要记录一下（记录下之前已经碰到的有：共享内存，互斥锁）</p>
 <h2 id="1-条件变量："><a href="#1-条件变量：" class="headerlink" title="1.条件变量："></a>1.条件变量：</h2><p>举个例子：现在有3个进程thread1，thread2，thread4，有一个int类型的全局变量iCount，thread1&#x2F;2的功能是count+1，thread是当iCount的值大于等于100时，打印提示信息并重置iCount&#x3D;0。<br><strong>现在有一种普通的写法：</strong> thread1与thread2调用互斥锁来加1，同时thread4需要查询iCount的大小，这样的话就会严重拖累进度，因为thread4里如果没到100的话也没别的操作，只是访问一下，占用了很多其他CPU的资源。</p>
 <pre><code>thread1/2：

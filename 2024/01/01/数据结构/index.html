@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-08-19 10:56:21</span>
+        <span class="pc">2024-08-27 16:56:36</span>
     </span>
     
     
@@ -738,10 +738,10 @@ while (m--) &#123;
             vector&lt;int&gt;ll(mid-left+1);
             vector&lt;int&gt;rr(right-mid);
             for(int i = 0;i&lt;ll.size();i++)&#123;
-            ll[i] = vec[left+i];
+                    ll[i] = vec[left+i];
             &#125;
             for(int i = 0;i&lt;rr.size();i++)&#123;
-            rr[i] = vec[mid+i+1];
+                    rr[i] = vec[mid+i+1];
             &#125;
             int i = 0,j=0,k=left;
             while(i&lt;ll.size()&amp;&amp;j&lt;rr.size())&#123;
@@ -753,18 +753,18 @@ while (m--) &#123;
             &#125;
             &#125;   
             while(i&lt;ll.size())&#123;
-            vec[k++]=ll[i++];
+                    vec[k++]=ll[i++];
             &#125;
             while(j&lt;rr.size())&#123;
-            vec[k++]=rr[j++];
+                    vec[k++]=rr[j++];
             &#125;
     &#125;
     void sort(vector&lt;int&gt;&amp;vec,int left,int right)&#123;
             if(left&lt;right)&#123;
-            int mid = (left+right)/2;
-            sort(vec,left,mid);
-            sort(vec,mid+1,right);
-            guibing(vec,left,mid,right);
+                    int mid = (left+right)/2;
+                    sort(vec,left,mid);
+                    sort(vec,mid+1,right);
+                    guibing(vec,left,mid,right);
             &#125;
     &#125;
     &#125;;
@@ -778,14 +778,14 @@ while (m--) &#123;
             int end = right;
             int key = vec[left];
             while(begin&lt;end)&#123;
-            while(end&gt;begin&amp;&amp;vec[end]&gt;=key)&#123;
-                    end--;
-            &#125;
-            vec[begin] =vec[end];
-            while(end&gt;begin&amp;&amp;vec[begin]&lt;=key)&#123;
-                    begin++;
-            &#125;
-            vec[end] = vec[begin];
+                    while(end&gt;begin&amp;&amp;vec[end]&gt;=key)&#123;
+                            end--;
+                    &#125;
+                    vec[begin] =vec[end];
+                    while(end&gt;begin&amp;&amp;vec[begin]&lt;=key)&#123;
+                            begin++;
+                    &#125;
+                    vec[end] = vec[begin];
             &#125;
             vec[begin] = key;
             sort(vec,left,begin-1);
@@ -858,13 +858,13 @@ while (m--) &#123;
                         <div class="article-prev">
                             <a class="prev"
                                rel="prev"
-                               href="/2024/05/05/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E9%97%AE%E9%A2%98/"
+                               href="/2024/01/01/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B/"
                             >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                                 <span class="title flex-center">
-                                <span class="post-nav-title-item">计算机操作系统问题</span>
+                                <span class="post-nav-title-item">《网络是怎样连接的》</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                             </a>
@@ -874,10 +874,10 @@ while (m--) &#123;
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2024/01/01/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B/"
+                               href="/2024/01/01/%E9%A9%B1%E5%8A%A8%E5%AE%9E%E7%8E%B0/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">《网络是怎样连接的》</span>
+                                <span class="post-nav-title-item">驱动实现</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">
