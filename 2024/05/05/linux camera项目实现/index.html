@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-08-26 10:22:48</span>
+        <span class="pc">2024-08-28 17:32:25</span>
     </span>
     
     
@@ -361,6 +361,16 @@ ret = ioctl(fd, VIDIOC_DQBUF, &amp;readbuffer);//从缓冲队列获取一帧数�
 ret = ioctl(fd, VIDIOC_QBUF, &amp;readbuffer);
 </code></pre>
 <p><font style="color:red">至于这里是为什么使用之后还要放回去：只有将这帧队列的数据放回才能使用该帧的缓冲区来接收新的帧</font></p>
+<ul>
+<li>1.初始化和分配缓冲区：分配给缓冲区一帧数据</li>
+<li>2.启动视频流：在调用 VIDIOC_STREAMON 之后，视频设备开始采集视频数据，并<strong>自动</strong>将采集到的帧数据写入分配的缓冲区中。</li>
+<li>3.数据采集和传输循环：<ul>
+<li>在循环中，应用程序调用 VIDIOC_DQBUF 从队列中取出已经填充好的缓冲区（包含一帧数据）。</li>
+<li>之后，应用程序通过 send() 将这一帧数据发送到服务器。</li>
+<li>一旦发送完成，缓冲区被重新放入队列 (VIDIOC_QBUF)，以便视频设备继续使用该缓冲区采集下一帧数据。</li>
+</ul>
+</li>
+</ul>
 <h4 id="5-采集的整个流程"><a href="#5-采集的整个流程" class="headerlink" title="5.采集的整个流程"></a>5.采集的整个流程</h4><ul>
 <li><p>1.采集像素的格式</p>
 <pre><code>  struct v4l2_format vfmt;
@@ -719,6 +729,7 @@ thread4:
             pthread_mutex_unlock(&amp;mutex);
     &#125;
 </code></pre>
+<h1 id="补：树莓派细节信息"><a href="#补：树莓派细节信息" class="headerlink" title="补：树莓派细节信息"></a>补：树莓派细节信息</h1><p>树莓派 4B 使用的 处理器是 Broadcom BCM2711 ，它 基于ARM Cortex-A72 架构 。 该处理器采用 64 位执行模式 ，并支持 ARMv8-A 指令集 。 ARM Cortex-A72 架构是 ARM 公司推出的高性能处理器架构之一。</p>
 
             </div>
 

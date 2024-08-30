@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-08-26 22:47:23</span>
+        <span class="pc">2024-08-30 11:18:32</span>
     </span>
     
     
@@ -577,13 +577,33 @@ int main() &#123;
 <li>因为可以避免shared_ptr的循环引用。</li>
 <li>同时可以安全地观察一个由std::shared_ptr管理的对象，而不会增加引用计数，这意味着它不会<strong>延长对象的生命周期</strong>。这在需要访问对象但不想影响其生命周期时非常有用。</li>
 </ul>
-<h3 id="23-STL"><a href="#23-STL" class="headerlink" title="23.STL"></a>23.STL</h3><p>C++ STL（Standard Template Library，标准模板库）是C++语言的一个非常核心的组成部分，它提供了一系列的模板类和模板函数。这些模板类和函数可以帮助程序员更高效地处理数据结构和算法操作，而无需从头开始编写所有代码。<br>包含以下4个组成部分：<br>1.容器</p>
+<h3 id="23-STL"><a href="#23-STL" class="headerlink" title="23.STL"></a>23.STL</h3><p>C++ STL（Standard Template Library，标准模板库）是C++语言的一个非常核心的组成部分，它提供了一系列的模板类和模板函数。这些模板类和函数可以帮助程序员更高效地处理数据结构和算法操作，而无需从头开始编写所有代码。<br>包含以下4个组成部分：<br>1.<strong>容器</strong></p>
 <ul>
 <li>序列容器：如vector，list，deque</li>
 <li>关联容器：set，map，multiset，multimap</li>
 <li>无需容器：如unordered_set, unordered_map, unordered_multiset,unordered_multimap</li>
-<li>容器适配器（如stack, queue, priority_queue）<br>2.算法：例如sort，find<br>3.迭代器<br>4.函数对象</li>
+<li>容器适配器（如stack, queue, priority_queue）</li>
 </ul>
+<p>2.<strong>算法</strong>：例如sort，find<br>3.<strong>迭代器</strong><br>4.<strong>函数对象</strong>:<br>中的函数对象（Function Object，也称为仿函数，Functor）是指一种<strong>重载了 operator()</strong> 的类或结构体。<br>一个函数对象是一个包含 operator() 函数的类或结构体的实例。通过重载 operator()，你可以定义一个类似于函数的对象，并将其传递给算法或其他函数。</p>
+<pre><code>  #include &lt;iostream&gt;
+
+  // 定义一个函数对象类
+  class Add &#123;
+  public:
+  // 重载 operator()
+  int operator()(int a, int b) &#123;
+        return a + b;
+  &#125;
+  &#125;;
+
+  int main() &#123;
+  Add add; // 创建函数对象
+  int result = add(3, 4); // 像调用函数一样使用函数对象
+  std::cout &lt;&lt; &quot;Result: &quot; &lt;&lt; result &lt;&lt; std::endl;
+
+  return 0;
+  &#125;
+</code></pre>
 <h3 id="24-vector与list的区别："><a href="#24-vector与list的区别：" class="headerlink" title="24. vector与list的区别："></a>24. vector与list的区别：</h3><ul>
 <li>1.vector底层实现是<strong>数组</strong>；list是<strong>双向链表</strong></li>
 <li>2.vector是顺序内存,⽀持随机访问，list不⾏</li>
@@ -621,7 +641,17 @@ int main() &#123;
 <li>list来说，它使⽤了不连续分配的内存，并且它的erase⽅法也会返回下⼀个有效的迭代器，因此上⾯两种⽅法都可以使⽤。</li>
 </ul>
 <h3 id="28-C-11的新特性有哪些"><a href="#28-C-11的新特性有哪些" class="headerlink" title="28.C++11的新特性有哪些"></a>28.C++11的新特性有哪些</h3><p>1.语法改进<br>（1）统⼀的初始化⽅法<br>（2）成员变量默认初始化<br>（3）&#x3D;&#x3D;auto关键字&#x3D;&#x3D;： 允许编译器⾃动推断变ᰁ的类型，减少类型声明的冗余。<br>（4）decltype 求表达式的类型<br>（5）&#x3D;&#x3D;智能指针&#x3D;&#x3D; std::shared_ptr 和 std::unique_ptr<br>（6）&#x3D;&#x3D;空指针 nullptr&#x3D;&#x3D;: 提供了明确表示空指针的关键字，替代了传统的 NULL 。<br>（7）基于范围的for循环: 简化遍历容器元素的语法<br>（8）&#x3D;&#x3D;右值引⽤和move语义&#x3D;&#x3D; 引⼊右值引⽤和移动构造函数，允许⾼效地将资源从⼀个对象移动到另⼀个对象，提⾼性能。<br>2.标准库扩充<br>（9）&#x3D;&#x3D;⽆序容器（哈希表）&#x3D;&#x3D; ⽤法和功能同map⼀模⼀样，区别在于哈希表的效率更⾼<br>（10）正则表达式 可以认为正则表达式实质上是⼀个字符串，该字符串描述了⼀种特定模式的字符串<br>（11）&#x3D;&#x3D;Lambda表达式&#x3D;&#x3D;： 允许在代码中定义匿名函数</p>
-<h3 id="29-为什么析构函数用虚函数好一点"><a href="#29-为什么析构函数用虚函数好一点" class="headerlink" title="29.为什么析构函数用虚函数好一点"></a>29.为什么析构函数用虚函数好一点</h3><p>当基类指针指向⼦类对象时，如果&#x3D;&#x3D;基类的析构函数不是 virtual&#x3D;&#x3D;，那么⼦类的析构函数将不会被调⽤，⼦类的资源没有正确是释放，因此造成内存泄露。这里指的是在构造函数中new定义了堆内存，而在析构函数中定义了释放。而子类析构函数的失效会导致new没有对应的delete。</p>
+<h3 id="29-为什么析构函数用虚函数好一点"><a href="#29-为什么析构函数用虚函数好一点" class="headerlink" title="29.为什么析构函数用虚函数好一点"></a>29.为什么析构函数用虚函数好一点</h3><p>当基类指针指向⼦类对象时，如果&#x3D;&#x3D;基类的析构函数不是 virtual&#x3D;&#x3D;，那么⼦类的析构函数将不会被调⽤，⼦类的资源没有正确是释放，因此造成内存泄露。这里指的是在构造函数中new定义了堆内存，而在析构函数中定义了释放。而子类析构函数的失效会导致new没有对应的delete。<br>析构函数是虚函数的话即使是Base类型也会使用Derived的虚函数指针从而调用Derived的析构函数，但是如果不是析构函数那么就只会调用基类的析构函数了。当你通过基类指针调用虚函数时，<strong>编译器会在运行时查找指向的实际对象的虚函数表</strong>，并调用正确的函数实现。</p>
+<ul>
+<li>Base* obj &#x3D; new Derived();<br>这里new一个子类对象付给Base指针这样是合法的但是会有一些不方便，因为obj只能访问Base部分的变量，法访问派生类中新增的成员或方法。</li>
+<li>而反过来 Derived* obj &#x3D; new Base();<br>这句话是完全不合法的！！！！Base不包含Derived的对象，可能导致会导致未定义行为。同时虚函数调用也会出问题,如果基类有虚函数，派生类重写了这些虚函数，通过派生类指针调用虚函数时，实际上会调用基类版本的虚函数而不是派生类的。这是因为虚函数表指针（vtable）是基于对象类型的，而不是指针类型的。</li>
+</ul>
+<p><em><strong>虚函数表与析构函数调用</strong></em><br>当你通过基类指针删除一个派生类对象时，以下步骤会发生：</p>
+<ul>
+<li><strong>虚函数表查找</strong>：通过基类指针调用 delete 操作时，C++ 会查找指向的对象的虚函数表，找到对应的析构函数。</li>
+<li><strong>调用派生类析构函数</strong>：虚函数表中包含了派生类的析构函数的指针，因此会首先调用派生类的析构函数。</li>
+<li><strong>调用基类析构函数</strong>：派生类的析构函数执行完毕后，控制权会自动转移到基类的析构函数（如果有的话）。这就确保了基类的清理工作也会被正确完成。</li>
+</ul>
 <h3 id="30-lambda表达式"><a href="#30-lambda表达式" class="headerlink" title="30.lambda表达式"></a>30.lambda表达式</h3><p><strong>lambda表达式基本语法</strong>：</p>
 <pre><code>  [capture](parameters) -&gt; return_type &#123; body &#125;
 </code></pre>
@@ -838,7 +868,7 @@ d.print();
 <li><strong>静态绑定</strong>：早期绑定，是在编译时确定函数调用的具体实现。在静态绑定中，编译器在编译时就能够决定应该调用哪个函数。这种绑定方式通常用于非虚函数和普通函数调用。</li>
 <li><strong>动态绑定</strong>：动态绑定也称为晚期绑定（Late Binding），是在运行时确定函数调用的具体实现。动态绑定主要用于实现多态性，通常在类继承和虚函数的情况下使用。一般用在虚函数的实现。一般通过虚函数和指针或引用实现动态绑定。动态绑定可以根据对象的实际类型来调用对应的show函数。</li>
 </ul>
-<p><strong>区别</strong>：</p>
+<p>在C++中，静态成员变量和静态成员函数是可以被继承的。它们的继承机制和普通的成员变量和成员函数略有不同。让我们逐一解释。<br><strong>区别</strong>：</p>
 <ul>
 <li>静态绑定发生在<strong>编译期</strong>，动态绑定发生在<strong>运行期</strong></li>
 <li>对象的动态类型可以更改，但是静态类型无法更改</li>
@@ -1277,6 +1307,38 @@ MyClass obj2 = 10;  // 错误，因为构造函数是显式的
 </code></pre>
 <p>2.类型安全<br>目标：在保持通用性的同时，确保类型安全，避免类型转换导致的错误。<br>实现方式：模板在编译时对类型进行检查，确保使用的类型符合预期，从而减少运行时错误。例如，如果尝试将一个不支持 &gt; 操作符的类型传递给 max 模板，编译器会报错。</p>
 <p>3.提高程序效率<br>目标：减少代码冗余，避免多态性带来的额外开销。<br>实现方式：模板是<strong>编译时多态性</strong>（compile-time polymorphism）的实现形式，它不像虚函数那样需要运行时的开销。模板通过在编译时<strong>生成特定类型的代码</strong>，从而避免了运行时的开销，直接生成高效的特定类型的代码。</p>
+<h3 id="53-你现在用的是C-的哪个版本？-C-17-C-17和之前的有什么提升呢？"><a href="#53-你现在用的是C-的哪个版本？-C-17-C-17和之前的有什么提升呢？" class="headerlink" title="53.你现在用的是C++的哪个版本？(C++17)C++17和之前的有什么提升呢？"></a>53.你现在用的是C++的哪个版本？(C++17)C++17和之前的有什么提升呢？</h3><p>现在用的是C++17。<br>C++17和之前有什么优化：看不懂</p>
+<h3 id="54-constexpr关键字怎么用？"><a href="#54-constexpr关键字怎么用？" class="headerlink" title="54.constexpr关键字怎么用？"></a>54.constexpr关键字怎么用？</h3><p>constexpr函数指的是<strong>在编译的时候就能得到其返回值的函数</strong>，也就是说编译器将constexpr函数直接转换成其返回值，因此，constexpr函数都是被隐式地定义为<strong>内联函数</strong>。使用constexpr关键字来修饰constexpr函数。</p>
+<h4 id="1-使用方法"><a href="#1-使用方法" class="headerlink" title="1.使用方法"></a>1.使用方法</h4><pre><code>  constexpr int myFunc()
+  &#123;
+  return 1;
+  &#125;
+  constexpr int i = myFunc() * 4;
+</code></pre>
+<p>  编译器会将myFunc()函数用其返回值1来代替，在编译时就可知i的值是4。</p>
+<h4 id="2-注意事项"><a href="#2-注意事项" class="headerlink" title="2.注意事项"></a>2.注意事项</h4><ul>
+<li><p>1.constexpr函数的返回值类型必须是字面值类型</p>
+<pre><code>int g_i = 1;
+constexpr int myFunc()
+&#123;
+return g_i;
+&#125;
+</code></pre>
+</li>
+<li><p>2.constexpr函数的形参可以是非常量，但是实参必须是常量</p>
+<pre><code>constexpr int myFunc(int i)
+&#123;
+return i;
+&#125;
+constexpr int i = myFunc(1) * 4;
+</code></pre>
+<p>此时，myFunc()函数的实参是常量，在编译时可以直接被替换为1，程序不报错。</p>
+<pre><code>int j = 2;
+constexpr int i = myFunc(j) * 4;
+</code></pre>
+<p>此时，myFunc()函数的实参是非常量，程序报错信息为“error C2131: 表达式的计算结果不是常数”，将j定义为const int则不报错。</p>
+</li>
+</ul>
 
             </div>
 
