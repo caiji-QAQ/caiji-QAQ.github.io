@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-08-28 18:57:57</span>
+        <span class="pc">2024-09-13 13:56:10</span>
     </span>
     
     
@@ -638,7 +638,8 @@ while (m--) &#123;
 <li>3.链地址法<br>不换位置了，在地址后面加链表，只要重名了就在链表后面加内容</li>
 <li>4.公共溢出区法<br>冲突的丢到溢出表里去，如果基本表查找到了最好，如果没查找到，那就去溢出表顺序查找。</li>
 </ul>
-<h2 id="3-排序"><a href="#3-排序" class="headerlink" title="3.排序"></a>3.排序</h2><p>这里我把所有会涉及到的排序问题都重新整理一遍</p>
+<h3 id="5-多路查找树-B树"><a href="#5-多路查找树-B树" class="headerlink" title="5.多路查找树 B树"></a>5.多路查找树 B树</h3><p>应用场景：为了在较大空间快速查找，降低对外存设备的访问次数，所以需要B树来解决这种情况。每一个结点的孩子数可以多于2个，并且每一个结点处可以存储多个元素。</p>
+<h4 id="5-1-2-3树"><a href="#5-1-2-3树" class="headerlink" title="5.1 2-3树"></a>5.1 2-3树</h4><h2 id="3-排序"><a href="#3-排序" class="headerlink" title="3.排序"></a>3.排序</h2><p>这里我把所有会涉及到的排序问题都重新整理一遍</p>
 <h3 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="1.冒泡排序"></a>1.冒泡排序</h3><p>从前向后两两比较排序，如果逆向就交换，依次类推。<br><strong>时间复杂度</strong>：O(n^2^)</p>
 <pre><code>    class Solution&#123;
     public:

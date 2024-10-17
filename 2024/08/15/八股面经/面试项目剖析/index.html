@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-08-30 11:00:11</span>
+        <span class="pc">2024-10-17 10:12:50</span>
     </span>
     
     
@@ -186,11 +186,11 @@
                 <h2 id="1-AI部署实习"><a href="#1-AI部署实习" class="headerlink" title="1.AI部署实习"></a>1.AI部署实习</h2><h3 id="1-介绍你的实习工作以及有什么收获"><a href="#1-介绍你的实习工作以及有什么收获" class="headerlink" title="1.介绍你的实习工作以及有什么收获"></a>1.介绍你的实习工作以及有什么收获</h3><p>主要做了两个部分的工作。</p>
 <ul>
 <li>1.第一个部分是优化量化模型。使用ArtStudio仿真工具对原始的模型精度进行混合量化，同时拥有较快的推理速度以及推理精度。</li>
-<li>2.第二个部分是使用C++程序实现了模型推理的工作。启动IFC<strong>硬件图像量化</strong>功能，实现模型参数读取、模型导入以及基于NPU<strong>硬件对齐格式</strong>的图像输入预处理和后处理功能，并在NPU AR9341开发板和AR眼镜上进行模型推理验证。</li>
+<li>2.第二个部分是使用C++程序实现了模型部署的工作。启动IFC<strong>硬件图像量化</strong>功能，实现模型参数读取、模型导入以及基于NPU<strong>硬件对齐格式</strong>的图像输入预处理和后处理功能，并在NPU AR9341开发板和AR眼镜上进行模型推理验证。</li>
 </ul>
 <h3 id="你都干了什么"><a href="#你都干了什么" class="headerlink" title="你都干了什么"></a>你都干了什么</h3><ul>
 <li>1.调研：公司之前没有人做过混合精度相关的，让我来检测不同层量化所带来的影响，我是根据从计算量大小来排序，慢慢来不同层带来的变化。中间的层影响较小。</li>
-<li>2.模型部署你都干了什么：mentor提供了一些相对底层的库里面包含了许多包含<strong>NPU初始化</strong>（告诉下层runtime用的是npu，以及型号用的是artosyn）的对象。在初始化设置的过程中也有一些bug需要修改。同时我要根据底层的这些对象来声明自己的上层包括手点的检测以及识别手两个模型的实现的对象，主要实现的是参数设置、输入预处理和输出图像后处理这些步骤。为了保证NPU的运行速度还使用了NPU自带的resize功能来替代opencv库。</li>
+<li>2.模型部署你都干了什么：mentor提供了一些相对底层的库里面包含了许多包含<strong>NPU初始化</strong>（告诉下层runtime用的是npu，以及型号用的是artosyn）的对象。同时我要根据底层的这些对象来声明自己的上层包括手点的检测以及识别手两个模型的实现的对象，主要实现的是参数设置、输入预处理和输出图像后处理这些步骤。为了保证NPU的运行速度还使用了NPU自带的resize功能来替代opencv库。</li>
 </ul>
 <h3 id="2-得到了什么"><a href="#2-得到了什么" class="headerlink" title="2.得到了什么"></a>2.得到了什么</h3><ul>
 <li>1.<strong>混合量化部分</strong>：接触了混合精度量化，以及了解到模型不同层的参数量化对结果的影响大小。首先先查看模型各层的计算量和参数量（FLOPs,浮点运算次数）大小，从模型耗费计算量大小从大到小依次尝试，一般来说都是卷积层+全连接层（因为它们占据了模型中大部分的计算资源和参数），看模型中不同层进行量化会带来的影响。同时测试下来来看8bit的量化一般用在中间部分，模型头和尾还是使用16bit会有较高的精度。</li>
@@ -226,7 +226,8 @@ LDFLAGS
 </li>
 </ul>
 <p><strong>CXXFLAGS</strong> 是传递给 C++ 编译器的选项（CXX 通常指 C++ Compiler）。这些选项通常用于控制编译过程，包括优化级别、调试信息生成、预处理器定义等。<br><strong>LDFLAGS</strong> 是传递给链接器的选项。它们用于控制链接过程，包括指定库文件的位置、链接的库以及其他链接时的选项。</p>
-<h4 id="5-感觉会上C-八股"><a href="#5-感觉会上C-八股" class="headerlink" title="5.感觉会上C++八股"></a>5.感觉会上C++八股</h4><h4 id="6-x3D-x3D-git使用-x3D-x3D"><a href="#6-x3D-x3D-git使用-x3D-x3D" class="headerlink" title="6.&#x3D;&#x3D;git使用&#x3D;&#x3D;"></a>6.&#x3D;&#x3D;git使用&#x3D;&#x3D;</h4><h4 id="7-docker的使用"><a href="#7-docker的使用" class="headerlink" title="7.docker的使用"></a>7.docker的使用</h4><h2 id="2-基于物理信息神经网络的嵌入式EIT系统"><a href="#2-基于物理信息神经网络的嵌入式EIT系统" class="headerlink" title="2.基于物理信息神经网络的嵌入式EIT系统"></a>2.基于物理信息神经网络的嵌入式EIT系统</h2><h3 id="1-介绍一下项目"><a href="#1-介绍一下项目" class="headerlink" title="1.介绍一下项目"></a>1.介绍一下项目</h3><p>主要做了三个部分的工作<br>1.<strong>物理信息神经网络的构建</strong>：EIT的物理条件融入到ResNet网络的训练过程中，减少了他的收敛所需的数据量。<br>2.<strong>模型轻量化处理</strong>：对于训练的模型轻量化处理，里面也用到了深度可分离卷积对网络结构改造、静态量化以及结构化剪枝的方法。<br>3.<strong>嵌入式系统的实现</strong>：基于Qt设计了一个人机用户交互界面，其中也用到了多线程与多进程的方法来分别进行数据采集传输、图像显示以及python中的模型推理，这几部分工作，最后将所成的图像效果显示在LCD上。</p>
+<h4 id="5-感觉会上C-八股"><a href="#5-感觉会上C-八股" class="headerlink" title="5.感觉会上C++八股"></a>5.感觉会上C++八股</h4><h4 id="6-x3D-x3D-git使用-x3D-x3D"><a href="#6-x3D-x3D-git使用-x3D-x3D" class="headerlink" title="6.&#x3D;&#x3D;git使用&#x3D;&#x3D;"></a>6.&#x3D;&#x3D;git使用&#x3D;&#x3D;</h4><h4 id="7-docker的使用"><a href="#7-docker的使用" class="headerlink" title="7.docker的使用"></a>7.docker的使用</h4><h4 id="8-NPU是什么？"><a href="#8-NPU是什么？" class="headerlink" title="8.NPU是什么？"></a>8.NPU是什么？</h4><p>嵌入式神经网络处理器（NPU）采用“数据驱动并行计算”的架构，特别擅长处理视频、图像类的海量多媒体数据。NPU处理器包括了乘加、激活函数、二维数据运算、解压缩等模块。专门用于解决神经网络的硬件。</p>
+<h2 id="2-基于物理信息神经网络的嵌入式EIT系统"><a href="#2-基于物理信息神经网络的嵌入式EIT系统" class="headerlink" title="2.基于物理信息神经网络的嵌入式EIT系统"></a>2.基于物理信息神经网络的嵌入式EIT系统</h2><h3 id="1-介绍一下项目"><a href="#1-介绍一下项目" class="headerlink" title="1.介绍一下项目"></a>1.介绍一下项目</h3><p>主要做了三个部分的工作<br>1.<strong>物理信息神经网络的构建</strong>：EIT的物理条件融入到ResNet网络的训练过程中，减少了他的收敛所需的数据量。<br>2.<strong>模型轻量化处理</strong>：对于训练的模型轻量化处理，里面也用到了深度可分离卷积对网络结构改造、静态量化以及结构化剪枝的方法。<br>3.<strong>嵌入式系统的实现</strong>：基于Qt设计了一个人机用户交互界面，其中也用到了多线程与多进程的方法来分别进行数据采集传输、图像显示以及python中的模型推理，这几部分工作，最后将所成的图像效果显示在LCD（<strong>DSI框架</strong>）上。</p>
 <h3 id="2-项目难点"><a href="#2-项目难点" class="headerlink" title="2.项目难点"></a>2.项目难点</h3><p>这个项目难点主要体现在两个部分：</p>
 <ul>
 <li>1.第一个难点是神经网络与现在研究课题EIT相结合，将EIT的边界物理信息融入到损失函数中，并且改变了训练的流程，弥补了正常直接训练EIT的数据量不足的问题，同时也减少了数据收敛所需的数据量。</li>
@@ -268,7 +269,7 @@ LDFLAGS
 <li>MISO：Master input slave output 主机输入，从机输出（数据来自从机）；</li>
 <li>MOSI：Master output slave input 主机输出，从机输入（数据来自主机）；</li>
 <li>SCLK ：Serial Clock 串行时钟信号，由主机产生发送给从机；</li>
-<li>CS：Chip Select 片选信号，由主机发送，以控制与哪个从机通信，通常是低电平有效信号。<br>在传输开始前还需要确定CPOL（时钟极性)&#x2F;CPHA（时钟相位）及通讯模式<br>CPOL：确定没有数据传输电平状态<br>CPHA：决定数据位传输是第一个SCLK开始还是从第二个边缘开始</li>
+<li>CS：Chip Select 片选信号，由主机发送，以控制与哪个从机通信，通常是低电平有效信号。<br>在传输开始前还需要确定CPOL（时钟极性）&#x2F;CPHA（时钟相位）及通讯模式<br>CPOL：确定没有数据传输电平状态<br>CPHA：决定数据位传输是第一个SCLK开始还是从第二个边缘开始</li>
 </ul>
 <h4 id="3-2-SPI通信传输的流程"><a href="#3-2-SPI通信传输的流程" class="headerlink" title="3.2 SPI通信传输的流程"></a>3.2 SPI通信传输的流程</h4><ul>
 <li>1.主机先将CS信号拉低，这样保证开始接收数据，告诉哪一个SPI设备我现在要开始采集了。</li>
@@ -317,13 +318,34 @@ LDFLAGS
 <p> <a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/u010037269/article/details/123849779?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522172377594816800172523647%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=172377594816800172523647&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-123849779-null-null.142%5Ev100%5Epc_search_result_base5&utm_term=can%E6%80%BB%E7%BA%BF&spm=1018.2226.3001.4187" >CAN总线的传输过程<i class="fas fa-external-link-alt"></i></a></p>
 </li>
 </ul>
-<h3 id="6-UART-串口通信"><a href="#6-UART-串口通信" class="headerlink" title="6.UART 串口通信"></a>6.UART 串口通信</h3><p>通用异步收发传输器（Universal Asynchronous Receiver&#x2F;Transmitter)，通常称作UART。<br><strong>注：同步串行与异步串行通信</strong><br>这两个就看是否共用一个时钟。在异步通信中，每个字符要用起始位和停止位作为字符开始和结束的标志，以致占用了时间。所以在数据块传送时，为提高通信速度，常去掉这些标志，而采用同步通信。<br>UART在<strong>发送数据</strong>时，将并行数据转换成串行数据来传输；<br>UART在<strong>接收数据</strong>时，将接收到的串行数据转换成并行数据。</p>
+<p>两根线通过CAN的CAN的收发器来将逻辑1与逻辑0转发为一组差分信号。</p>
+<ul>
+<li>逻辑0，显性电平：两根线电压差为2V时，3.5V——1.5V</li>
+<li>逻辑1，隐形电平：两根线压差为0V，2.5V——2.5V</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240904203629.png"></p>
+<p><strong>差分信号的好处</strong>：</p>
+<ul>
+<li>如果受到干扰信号就会发生跳变，例如从0——1，因此这样并不适合长距离传输，差分信号共同作用因此压差不变。</li>
+</ul>
+<h4 id="5-5-CAN总线的数据帧："><a href="#5-5-CAN总线的数据帧：" class="headerlink" title="5.5 CAN总线的数据帧："></a>5.5 CAN总线的数据帧：</h4><p>  <img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240904204213.png"></p>
+<ul>
+<li>起始位</li>
+<li>识别码：总线上每一个设备都有一个识别码，相当于识别设备，也就是地址。这个识别位不仅代表了身份证也代表了优先级。当总线上同时出现逻辑0和逻辑1时，总线会置为逻辑0</li>
+<li>RTR位：区分数据帧（0）或者是远程请求帧（1）</li>
+<li>控制码（6位）：控制数据长度。包括IDE位（区分标准格式IDE&#x3D;0和拓展格式IDE&#x3D;1），空闲位（1位），DLC位：数据长度代码（4位），4位最多可以表示传输8个字节的信息（0000——1000）。</li>
+<li>数据码：传输的真实数据</li>
+<li>CRC：循环冗余码，用于检测数据是否传输正常</li>
+<li>CRC界定位：分割后面的数据</li>
+<li>结束码</li>
+</ul>
+<h3 id="6-UART-串口通信"><a href="#6-UART-串口通信" class="headerlink" title="6.UART 串口通信"></a>6.UART 串口通信</h3><p>通用异步收发传输器(Universal Asynchronous Receiver&#x2F;Transmitter)，通常称作UART。<br><strong>注：同步串行与异步串行通信</strong><br>这两个就看是否共用一个时钟。在异步通信中，每个字符要用起始位和停止位作为字符开始和结束的标志，以致占用了时间。所以在数据块传送时，为提高通信速度，常去掉这些标志，而采用同步通信。<br>UART在<strong>发送数据</strong>时，将并行数据转换成串行数据来传输；<br>UART在<strong>接收数据</strong>时，将接收到的串行数据转换成并行数据。</p>
 <p>COM口是指针对串行通信协议的一种端口，是PC上异步串行通信口的简写，大部分为9针孔D型。COM口里分RS232，RS422和RS485，传输功能依次递增。<br>当单片机 1 想给单片机 2 发送数据时，比如发送一个 0xE4 这个数据，用二进制形式表 示就是 0b11100100，在 <em><strong>UART 通信过程中，是低位先发，高位后发的原则</strong></em> ，那么就让 TXD 首先拉低电平，持续一段时间，发送一位 0，然后继续拉低，再持续一段时间，又发送了一 位 0，然后拉高电平，持续一段时间，发了一位 1……一直到把 8 位二进制数字 0b11100100 全部发送完毕。这里就涉及到了一个问题，就是持续的这“一段时间”到底是多久？由此便引入了通信中的一个重要概念——<strong>波特率</strong>。</p>
 <p>波特率就是发送二进制数据位的速率，习惯上用 baud 表示，<strong>即发送一位二进制数据的持续时间&#x3D;1&#x2F;baud</strong>。在通信之前，单片机 1 和单片机 2 首先都要明确的约定好它们之间的通 信波特率，必须保持一致，收发双方才能正常实现通信。</p>
 <p>在 UART 通信的时候，一个字节是 8 位，规定当没有通信信号发生时，通信线路保持高电平，当要发送数据之前，<em><strong>先发一位 0 表示起始位</strong></em>，然后发送 8 位数据位，数据位是先低后高的顺序，数据位发完后再发一位 1 表示停止位。这样本来要发送一个字节的 8 位数据，而实际上我们一共发送了 10 位，多出来的两位其中一位起始位，一位停止位。而接收方呢，原本一直保持的高电平，一旦检测到了一位低电平，那就知道了要开始准备接收数据了，接收到 8 位数据位后，<em><strong>然后检测到停止位</strong></em>，再准备下一个数据的接收。如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406215650.png"></p>
 <p>UART&#x2F;SPI&#x2F;IIC的区别<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240406220414.png"></p>
 <h4 id="3-用到了DMA讲讲这是什么，以及怎么用的。"><a href="#3-用到了DMA讲讲这是什么，以及怎么用的。" class="headerlink" title="3.用到了DMA讲讲这是什么，以及怎么用的。"></a>3.用到了DMA讲讲这是什么，以及怎么用的。</h4><p>DMA（Direct Memory Access，直接内存访问）是一种计算机体系结构功能，允许外设直接访问系统内存，而<strong>不需要经过 CPU 的干预</strong>。DMA 的主要目的是提高数据传输的效率，减少 CPU 的负担，使得 CPU 可以将更多的时间用于执行其他任务，而不是忙于数据的搬运。<br>通过减少 CPU 的参与，DMA 可以提高数据传输的效率，并且减少 CPU 的工作负荷，特别适合大量数据传输的场景，如音频处理、数据采集等。</p>
-<p><strong>如何使用</strong>：初始化DMA控制器——&gt;配置DMA通道(选择外设、设置传输方向、设置传输的源地址和目标地址，以及设置数据大小)——&gt;启动DMA传输</p>
+<p><strong>如何使用</strong>：初始化DMA控制器——&gt;配置DMA通道(选择外设、设置传输方向、设置传输的源地址和目标地址，以及设置数据大小)——&gt;启动DMA传输<br>为了避免发生冲突常见的解决办法有：环形缓冲区，双缓冲区。</p>
 <h2 id="4-基于深度学习的模式识别智能车"><a href="#4-基于深度学习的模式识别智能车" class="headerlink" title="4.基于深度学习的模式识别智能车"></a>4.基于深度学习的模式识别智能车</h2><h3 id="1-介绍下项目"><a href="#1-介绍下项目" class="headerlink" title="1.介绍下项目"></a>1.介绍下项目</h3><p>这是20年参加的智能车比赛，比赛主要要求小车要以尽可能快的速度完成车道线任务，同时完成识别特殊标志物和停车、倒车等功能。我在这里主要完成的有车道线与识别标志物数据采集以及速度提升功能实现着几个步骤。</p>
 <h3 id="2-难点"><a href="#2-难点" class="headerlink" title="2.难点"></a>2.难点</h3><p>怎么保证跑的快，同时满足车道线任务，pid调参。<br>0</p>
 <h3 id="3-问题准备-2"><a href="#3-问题准备-2" class="headerlink" title="3.问题准备"></a>3.问题准备</h3><ul>
@@ -337,10 +359,9 @@ LDFLAGS
 <ul>
 <li>1.驱动中断的编写</li>
 <li>2.解决socket包无法还原图像：因为socket的大小设置为1024，如果正常情况下就会直接用流将socket编的全部填满，但是</li>
-<li>3.遇到的问题是发现实时效率很低，感觉会有4s的延迟的样子，然后就打印不同位置的耗时，最终发现是V4L2架构的缓存队列设置的数量过大，因为TCP传输与接收这两个合在一起就将近1s，…（V4L2队列的原理），因此队列不宜过大，我最后直接设为1了，这样来看可以将延时缩短至1s。</li>
+<li>3.遇到的问题是发现实时效率很低，感觉会有4s的延迟的样子，然后就打印不同位置的耗时，最终发现是V4L2架构的缓存队列设置的数量过大，因为TCP传输与接收这两个合在一起就将近1s，…（V4L2队列的原理），因此队列不宜过大，我最后直接设为1了，这样来看可以将延时缩短至1s。<br>iperf</li>
 </ul>
-<h3 id="3-问题准备-3"><a href="#3-问题准备-3" class="headerlink" title="3.问题准备"></a>3.问题准备</h3><h2 id="话术"><a href="#话术" class="headerlink" title="话术"></a>话术</h2><h3 id="1-反问"><a href="#1-反问" class="headerlink" title="1.反问"></a>1.反问</h3><p>- </p>
-
+<h3 id="3-问题准备-3"><a href="#3-问题准备-3" class="headerlink" title="3.问题准备"></a>3.问题准备</h3><h2 id="话术"><a href="#话术" class="headerlink" title="话术"></a>话术</h2><h3 id="1-反问"><a href="#1-反问" class="headerlink" title="1.反问"></a>1.反问</h3>
             </div>
 
             

@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="caijiQAQ">
+    
+    <title>
+        
+            cuda学习 |
+        
+        学习笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"caiji-qaq.github.io","root":"/","language":"en"}
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066cc","logo":"/images/logo.svg","favicon":"/images/logo.svg","avatar":"/images/avatar.svg","font_size":null,"font_family":null,"hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"header_transparent":false,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","font_color":null,"hitokoto":false},"scroll":{"progress_bar":false,"percent":false}},"local_search":{"enable":false,"preload":false},"code_copy":{},"code_block":{"tools":{"enable":false,"style":"default"},"highlight_theme":"default"},"side_tools":{},"pjax":{"enable":false},"lazyload":{"enable":false},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.8"},"waline":{"server_url":null,"reaction":false,"version":2}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"enable":false,"wordcount":false,"min2read":false},"img_align":"left","copyright_info":false},"version":"3.6.1"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original article title","author":"Original article author","link":"Original article link"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+               学习笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            <div class="article-title">
+                <span class="title-hover-animation">cuda学习</span>
+            </div>
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/avatar.svg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">caijiQAQ</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            
+<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        
+            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
+        
+        <span class="pc">2024-09-29 22:04:00</span>
+        <span class="mobile">2024-09-29 22:04</span>
+    </span>
+    
+        <span class="article-update-date article-meta-item">
+        <i class="fas fa-file-pen"></i>&nbsp;
+        <span class="pc">2024-10-14 20:36:31</span>
+    </span>
+    
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content keep-markdown-body">
+                
+
+                <p>学习文章：<a class="link"   target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/34587739" >CUDA编程入门极简教程<i class="fas fa-external-link-alt"></i></a></p>
+<h1 id="1-基础知识"><a href="#1-基础知识" class="headerlink" title="1.基础知识"></a>1.基础知识</h1><p>GPU并不是一个独立运行的计算平台，而需要与CPU协同工作，可以看成是CPU的协处理器，因此当我们在说GPU并行计算时，其实是指的基于CPU+GPU的异构计算架构。在异构计算架构中，GPU与CPU通过PCIe总线连接在一起来协同工作，CPU所在位置称为为主机端（host），而GPU所在位置称为设备端（device），如下图所示。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240929220503.png"><br>可以看到GPU包括更多的运算核心，其特别适合数据并行的计算密集型任务，如大型矩阵运算，而CPU的运算核心较少，但是其可以实现复杂的逻辑运算，因此其适合控制密集型任务。另外，CPU上的线程是重量级的，上下文切换开销大，但是GPU由于存在很多核心，其线程是轻量级的。因此，<strong>基于CPU+GPU的异构计算平台可以优势互补</strong>，CPU负责处理逻辑复杂的串行程序，而GPU重点处理数据密集型的并行计算程序，从而发挥最大功效。</p>
+<h1 id="2-CUDA编程模型基础"><a href="#2-CUDA编程模型基础" class="headerlink" title="2.CUDA编程模型基础"></a>2.CUDA编程模型基础</h1><h2 id="2-1-整体流程"><a href="#2-1-整体流程" class="headerlink" title="2.1 整体流程"></a>2.1 整体流程</h2><p>CUDA编程模型是一个异构模型，需要CPU和GPU协同工作。在CUDA中，host和device是两个重要的概念，我们用&#x3D;&#x3D;host指代CPU及其内存，而用device指代GPU及其内存&#x3D;&#x3D;。CUDA程序中既包含host程序，又包含device程序，它们分别在CPU和GPU上运行。同时，host与device之间可以进行通信，这样它们之间可以进行数据拷贝。</p>
+<p>典型的CUDA程序的执行流程如下：</p>
+<ul>
+<li>分配host内存，并进行数据初始化；</li>
+<li>分配device内存，并从host将数据拷贝到device上；</li>
+<li>调用CUDA的核函数在device上完成指定的运算；</li>
+<li>将device上的运算结果拷贝到host上；</li>
+<li>释放device和host上分配的内存。</li>
+</ul>
+<p>最重要的一个过程是调用CUDA的核函数来执行并行计算，kernel是CUDA中一个重要的概念，kernel是在device上线程中并行执行的函数，核函数用__global__符号声明，在调用时需要用&lt;&lt;&lt;grid, block&gt;&gt;&gt;来指定kernel要执行的线程数量，&#x3D;&#x3D;在CUDA中，每一个线程都要执行核函数&#x3D;&#x3D;，并且每个线程会分配一个唯一的线程号thread ID，这个ID值可以通过核函数的内置变量threadIdx来获得。</p>
+<p>由于GPU实际上是异构模型，所以需要区分host和device上的代码，在CUDA中是通过函数类型限定词开区别host和device上的函数，主要的三个函数类型限定词如下：</p>
+<ul>
+<li>__global__：在device上执行，从host中调用（一些特定的GPU也可以从device上调用），返回类型必须是void，不支持可变参数参数，不能成为类成员函数。注意用__global__定义的kernel是异步的，这意味着host不会等待kernel执行完就执行下一步。</li>
+<li>__device__：在device上执行，单<strong>仅可以</strong>从device中调用，不可以和__global__同时用。</li>
+<li>__host__：在host上执行，<strong>仅可以</strong>从host上调用，一般省略不写，不可以和__global__同时用，但可和__device__，此时函数会在device和host都编译。</li>
+</ul>
+<h2 id="2-2-kernel的线程层次结构"><a href="#2-2-kernel的线程层次结构" class="headerlink" title="2.2 kernel的线程层次结构"></a>2.2 kernel的线程层次结构</h2><p>GPU上很多并行化的轻量级线程。接下来介绍一些基础概念：</p>
+<ol>
+<li><strong>网格</strong>（grid）：kernel在device上执行时实际上是启动很多线程，一个kernel所启动的所有线程称为一个网格，同一个网格上的线程共享相同的全局内存空间（怎么跟进程似的），grid是线程结构的第一层次。</li>
+<li><strong>线程块</strong>（block）：网格又可以分为很多线程块（block），一个线程块里面包含很多线程，这是第二个层次。</li>
+</ol>
+<p>例子：线程两层组织结构如下图所示，这是一个gird和block均为2-dim的线程组织。grid和block都是定义为dim3类型的变量，dim3可以看成是包含三个无符号整数（x，y，z）成员的结构体变量，在定义时，缺省值初始化为1。因此grid和block可以灵活地定义为1-dim，2-dim以及3-dim结构，对于图中结构（主要水平方向为x轴），定义的grid和block如下所示，kernel在调用时也必须通过执行配置&lt;&lt;&lt;grid, block&gt;&gt;&gt;来指定kernel所使用的线程数及结构。</p>
+<pre><code>dim3 grid(3, 2);
+dim3 block(5, 3);
+kernel_fun&lt;&lt;&lt; grid, block &gt;&gt;&gt;(prams...);
+</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240929222812.png"></p>
+<p>一个线程需要两个内置的坐标变量（blockIdx，threadIdx）来唯一标识，它们都是dim3类型变量，其中<strong>blockIdx指明线程所在grid中的位置，而threaIdx指明线程所在block中的位置</strong>，如图中的Thread (1,1)满足：</p>
+<pre><code>threadIdx.x = 1
+threadIdx.y = 1
+blockIdx.x = 1
+blockIdx.y = 1
+</code></pre>
+<p>同时由thread与block同时决定一个位置。</p>
+<h2 id="2-3-CUDA-内存模型"><a href="#2-3-CUDA-内存模型" class="headerlink" title="2.3 CUDA 内存模型"></a>2.3 CUDA 内存模型</h2><p>每个线程有自己的私有<strong>本地内存</strong>（Local Memory），而每个线程块有包含共享内存（Shared Memory）,可以被线程块中所有线程共享，其生命周期与线程块一致。此外，所有的线程都可以访问全局内存（Global Memory）。还可以访问一些只读内存块：常量内存（Constant Memory）和纹理内存（Texture Memory）。内存结构涉及到程序优化，这里不深入探讨它们。</p>
+<ul>
+<li>全局变量：全局内存是所有线程和所有块都可以访问的内存空间，容量最大，但访问速度相对较慢。全局变量就存储在全局内存中。</li>
+<li>常量内存：常量内存用于存储只读的常量数据，所有线程都可以访问，但只能由<strong>主机（CPU）写入</strong>。由于常量内存存在于专门的缓存中，访问速度比全局内存快，尤其是当多个线程同时读取相同的常量时。</li>
+<li>纹理内存：纹理内存通常用于图像处理和计算应用，它与全局内存一样是只读的，但<strong>通过专门的硬件（纹理单元）进行优化</strong>，能够在处理二维和三维数据时提高访问性能。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241001165933.png"></li>
+</ul>
+<h2 id="2-4-GPU硬件"><a href="#2-4-GPU硬件" class="headerlink" title="2.4 GPU硬件"></a>2.4 GPU硬件</h2><p>一个kernel实际上会启动很多线程，这些线程是逻辑上并行的，但是在物理层却并不一定。这其实和CPU的多线程有类似之处，多线程如果没有多核支持，在物理层也是无法实现并行的。GPU存在很多的CUDA核心，充分利用CUDA核心可以充分发挥GPU的并行计算能力。（CUDA核心：NVIDIA GPU中负责执行并行计算任务的基本计算单元。每个CUDA核心类似于CPU中的一个轻量级的计算线程，可以独立执行简单的算术运算或逻辑运算。）</p>
+<p>GPU硬件中的一个核心组件是SM（流式多处理器， Streaming Multiprocessor）SM的核心组件包括CUDA核心，共享内存，寄存器等，SM可以并发地执行数百个线程，并发能力就取决于SM所拥有的资源数。当一个kernel被执行时，它的gird中的线程块被分配到SM上，一个线程块只能在一个SM上被调度。SM一般可以调度多个线程块，这要看SM本身的能力。SM采用的是 SIMT (Single-Instruction, Multiple-Thread，单指令多线程)架构，基本的执行单元是线程束（warps），线程束包含32个线程，<strong>这些线程同时执行相同的指令</strong>。GPU规定线程束中所有线程在同一周期执行相同的指令，线程束分化会导致性能下降。当线程块被划分到某个SM上时，它将进一步划分为多个线程束，因为这才是SM的基本执行单元，但是一个SM同时并发的线程束数是有限的。这是因为资源限制，SM要为每个线程块分配共享内存，而也要为每个线程束中的线程分配独立的寄存器。所以SM的配置会影响其所支持的线程块和线程束并发数量。总之，就是网格和线程块只是逻辑划分，一个kernel的所有线程其实在物理层是不一定同时并发的。所以kernel的grid和block的配置不同，性能会出现差异，这点是要特别注意的。还有，由于SM的基本执行单元是包含32个线程的线程束，所以block大小一般要设置为32的倍数。</p>
+<p><strong>先看一下自己的GPU硬件配置</strong><br>GPU device：NVIDIA GeForce GTX 1650<br>SM的数量：14<br>每个线程块的共享内存大小：48 KB<br>每个线程块的最大线程数：1024<br>每个EM的最大线程数：1024<br>每个EM的最大线程束数：32</p>
+<h1 id="3-CUDA编程"><a href="#3-CUDA编程" class="headerlink" title="3.CUDA编程"></a>3.CUDA编程</h1><h2 id="3-1-hellocuda"><a href="#3-1-hellocuda" class="headerlink" title="3.1 hellocuda"></a>3.1 hellocuda</h2><p>cpuhello同时cuda声明block以及thread打印hello<br><strong>tips：</strong></p>
+<ul>
+<li><p>cudaDeviceSynchronize():它会强制主机等待所有GPU上的工作完成后再继续执行后续的代码。如果不调用 cudaDeviceSynchronize()，主机端可能会在内核完成之前退出，导致输出混乱。</p>
+</li>
+<li><p>这里gpu声明了2个block以及每个block中有3个thread，因此输出的时候就显示为下面的样子：<br>blockIdx.x: 0, threadIdx.x: 0<br>blockIdx.x: 0, threadIdx.x: 1<br>blockIdx.x: 0, threadIdx.x: 2<br>blockIdx.x: 1, threadIdx.x: 0<br>blockIdx.x: 1, threadIdx.x: 1<br>blockIdx.x: 1, threadIdx.x: 2</p>
+<pre><code>  #include &lt;stdio.h&gt;
+
+  void cpu()&#123;
+      printf(&quot;hello cpu===\n&quot;);
+  &#125;
+
+  // global 将在GPU上运行并可全局调用
+  __global__ void gpu()&#123;
+      // 打印当前线程所在的 block 和 thread 索引
+      printf(&quot;blockIdx.x: %d, threadIdx.x: %d\n&quot;, blockIdx.x, threadIdx.x);
+
+      // 只希望第一个block的第一个线程去打印
+      if (blockIdx.x == 0 &amp;&amp; threadIdx.x == 0) &#123;
+          printf(&quot;hello gpu\n&quot;);
+      &#125;
+  &#125;
+
+  int main() &#123;
+      cpu();  // CPU上的输出
+
+      // 在GPU上启动 kernel, 配置 &lt;&lt;&lt;block数，线程数&gt;&gt;&gt;
+      gpu&lt;&lt;&lt;2, 3&gt;&gt;&gt;();  // 两个 block，每个 block 有3个线程
+
+      // 等待GPU执行完成
+      cudaDeviceSynchronize();
+  &#125;
+</code></pre>
+</li>
+</ul>
+<p><em><strong>这里只使用了一维的网格和线程块，这次试试二维</strong></em><br>CUDA 支持多维度的网格和线程块，具体为<strong>1维、2维、或者3维</strong>。如果你只在 kernel 启动时指定了1维的配置（例如 &lt;&lt;&lt;2, 3&gt;&gt;&gt;），那么所有的 blockIdx.y、blockIdx.z 和 threadIdx.y、threadIdx.z 都默认是 0。<br>修改的话就需要使用<strong>dims3</strong>结构体来指定每个维度的大小。</p>
+<pre><code>#include &lt;stdio.h&gt;
+
+void cpu()&#123;
+    printf(&quot;hello cpu===\n&quot;);
+&#125;
+
+// global 将在GPU上运行并可全局调用
+__global__ void gpu()&#123;
+    // 打印当前线程所在的 block 和 thread 的 x 和 y 索引
+    printf(&quot;blockIdx.x: %d, blockIdx.y: %d, threadIdx.x: %d, threadIdx.y: %d\n&quot;, blockIdx.x, blockIdx.y, threadIdx.x, threadIdx.y);
+
+    // 只希望第一个block的第一个线程去打印
+    if (blockIdx.x == 0 &amp;&amp; blockIdx.y == 0 &amp;&amp; threadIdx.x == 0 &amp;&amp; threadIdx.y == 0) &#123;
+        printf(&quot;hello gpu\n&quot;);
+    &#125;
+&#125;
+
+int main() &#123;
+    cpu();  // CPU上的输出
+
+    // 在GPU上启动 kernel，使用二维网格和二维线程块
+    dim3 blocks(2, 2);   // 2x2个 block
+    dim3 threads(3, 3);  // 每个 block 中有3x3个线程
+
+    gpu&lt;&lt;&lt;blocks, threads&gt;&gt;&gt;();  // 启动 kernel
+
+    // 等待GPU执行完成
+    cudaDeviceSynchronize();
+&#125;
+</code></pre>
+<h2 id="3-2-与内存相关的函数"><a href="#3-2-与内存相关的函数" class="headerlink" title="3.2 与内存相关的函数"></a>3.2 与内存相关的函数</h2><ul>
+<li><p><strong>cudaMalloc()</strong>:分配GPU的内存<br><strong>原型：</strong></p>
+<pre><code>  cudaError_t cudaMalloc(void **devPtr, size_t size);
+</code></pre>
+<p>  devPtr：指向设备上分配的内存的指针。<br>  <em><strong>这里为什么要是指针的指针？</strong></em>：</p>
+<p>  在C语言中，如果你想在函数内部修改外部传入的指针，就需要传入指针的地址。因为我想要在函数中得到这个传回来的地址，如果还是传入*ptr的话，那么只是形参修改值并不会对原有值改变，所以需要指针的指针。<br>  size：要分配的字节数。<br><strong>特点：</strong></p>
+<ul>
+<li>内存分配在 GPU 的设备内存中，只能通过显式的数据传输从主机（CPU）访问数据。</li>
+<li>如果你想在 CPU 上使用这些数据，<strong>必须使用 cudaMemcpy() 将数据从设备内存复制到主机内存，或者反之亦然。</strong></li>
+</ul>
+</li>
+<li><p>**cudaMallocManaged()**：分配 <strong>统一内存</strong></p>
+<ul>
+<li>统一内存的一个重要特性是 CPU 和 GPU 都可以直接访问同一块内存，无需显式的数据传输操作。</li>
+<li>CUDA 运行时会<strong>自动在 CPU 和 GPU 之间管理数据</strong>的传输（也称为自动分页）。如果主机需要访问某个数据，CUDA 会自动从设备内存中将数据迁移过来，反之亦然。</li>
+<li>这种自动管理内存的机制让编程变得简单，不需要手动调用 cudaMemcpy()</li>
+</ul>
+</li>
+<li><p>**cudaMemcpy()**：在主机和设备之间进行数据传输。你可以把数据从主机拷贝到设备，也可以从设备拷贝回主机。</p>
+<ul>
+<li>原型<br>cudaError_t cudaMemcpy(void *dst, const void *src, size_t count, cudaMemcpyKind kind);<br>dst：目标内存地址。<br>src：源内存地址。<br>count：要传输的数据大小（以字节为单位）。<br>kind：拷贝的方向，有以下几种：<br>cudaMemcpyHostToDevice：从主机内存到设备内存。<br>cudaMemcpyDeviceToHost：从设备内存到主机内存。<br>cudaMemcpyDeviceToDevice：设备内存之间的复制。<br>cudaMemcpyHostToHost：主机内存之间的复制。</li>
+</ul>
+</li>
+</ul>
+<p><em><strong>什么时候用 cudaMalloc() vs cudaMallocManaged()?</strong></em></p>
+<ul>
+<li>cudaMalloc(): 当你需要精确控制内存传输的时机和方式，特别是在性能敏感的应用中，手动管理可能会更高效。</li>
+<li>cudaMallocManaged(): 适合简化开发工作，尤其是初学者或对于数据传输需求不严格的应用，自动分页可以让编程更简单。<br>你是否清楚这两者的区别了？如果没有问题，我们可以继续讲解其他函数或进入下一节课。</li>
+</ul>
+<h2 id="3-3-线程组织与内存模型"><a href="#3-3-线程组织与内存模型" class="headerlink" title="3.3 线程组织与内存模型"></a>3.3 线程组织与内存模型</h2><h3 id="1-线程索引"><a href="#1-线程索引" class="headerlink" title="1 线程索引"></a>1 线程索引</h3><p>每个线程在块内都有一个唯一的索引，用于区分不同线程。常用的索引维度有以下几种：</p>
+<ul>
+<li>threadIdx: 获取线程在线程块内的索引。</li>
+<li>blockIdx: 获取线程块在网格中的索引。</li>
+<li>blockDim: 获取每个块中包含的线程数量。</li>
+</ul>
+<p>一维网络和块，线程索引：</p>
+<pre><code>int idx = threadIdx.x + blockIdx.x * blockDim.x;
+</code></pre>
+<h3 id="2-CUDA内存模型"><a href="#2-CUDA内存模型" class="headerlink" title="2 CUDA内存模型"></a>2 CUDA内存模型</h3><p>CUDA提供多种内存类型</p>
+<ul>
+<li><strong>全局内存 (Global Memory)</strong>: GPU 上<strong>所有线程</strong>都可以访问，但访问速度较慢。通过 cudaMalloc() 分配的内存属于全局内存。</li>
+<li><strong>共享内存 (Shared Memory)</strong>: <strong>线程块内所有线程</strong>共享的高速内存，适合线程块内部的通信。共享内存速度比全局内存快，但只能在同一个线程块内部访问。</li>
+<li><strong>局部内存 (Local Memory)</strong>: 每个线程私有的内存，通常用于存储局部变量。虽然名为局部内存，但它实际上存储在设备的全局内存中。</li>
+<li><strong>常量内存 (Constant Memory)</strong>: 只读内存，适合存储在整个程序中不变的数据。它具有较高的访问效率。</li>
+<li>纹理内存 (Texture Memory): 专门用于处理二维纹理数据的只读内存。</li>
+</ul>
+<p>共享内存的配套操作：__syncthreads()函数</p>
+<ul>
+<li>作用：当一个线程块中的所有线程到达 __syncthreads() 这一行代码时，它们会停下来等待其他线程。只有当块中的所有线程都执行到 __syncthreads() 时，所有线程才会继续执行后续的代码。</li>
+<li>这确保了块内的所有线程在这条指令前的工作都已经完成，且数据状态是一致的。</li>
+</ul>
+<p>共享内存的使用：感觉类似静态static变量，然后后面在通过threadIdx来区分。</p>
+<pre><code>__shared__ int shared_a[5];
+__shared__ int shared_b[5];
+</code></pre>
+<h2 id="3-4-核函数计时"><a href="#3-4-核函数计时" class="headerlink" title="3.4 核函数计时"></a>3.4 核函数计时</h2><p>写出可运行的代码后，想要提高最高效率，就得有性能观测的手段</p>
+<h3 id="1-CPU计时"><a href="#1-CPU计时" class="headerlink" title="1 CPU计时"></a>1 CPU计时</h3><h3 id="2-Nsight-Systems分析"><a href="#2-Nsight-Systems分析" class="headerlink" title="2 Nsight Systems分析"></a>2 Nsight Systems分析</h3><p>NVIDIA Nsight Systems 是一种系统级别的调优工具，能够对程序使用到的 GPU、DLA、CPU、显存、线程等数据进行可视化，以帮助用户<strong>调查瓶颈</strong>，优化性能。<br><strong>步骤：</strong></p>
+<h4 id="1-nvcc编译，编译为gpu的可执行代码"><a href="#1-nvcc编译，编译为gpu的可执行代码" class="headerlink" title="1.nvcc编译，编译为gpu的可执行代码"></a>1.nvcc编译，编译为gpu的可执行代码</h4><pre><code>nvcc -o test test.cu
+</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241002214059.png"></p>
+<h4 id="2-使用NVDIA-Nsight-System-性能分析"><a href="#2-使用NVDIA-Nsight-System-性能分析" class="headerlink" title="2.使用NVDIA Nsight System 性能分析"></a>2.使用NVDIA Nsight System 性能分析</h4><ul>
+<li><p>1.运行nsys命令，生成一个report文件</p>
+<pre><code>  nsys profile -o report ./text.exe
+</code></pre>
+<p>  profile：告诉 Nsight Systems 运行一个性能分析。<br>  -o report：将分析结果保存为 report.nsys-rep 文件。</p>
+</li>
+</ul>
+<p>程序运行完成后，得到一个report.qdrep的文件（报告）</p>
+<ul>
+<li>2.使用 Nsight Systems GUI 查看报告</li>
+</ul>
+<p><strong>启动 Nsight Systems GUI：</strong><br>打开 “NVIDIA Nsight Systems” 应用程序，你可以通过 Windows 开始菜单找到它。</p>
+<p><strong>加载报告：</strong><br>在 Nsight Systems GUI 中，点击 File &gt; Open。<br>选择刚才通过命令行生成的 .nsys-rep 文件（例如 report.nsys-rep）。</p>
+<p><strong>分析报告:</strong><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241002215032.png"><br>分析一波：</p>
+<h3 id="3-Nsight-Compute性能分析"><a href="#3-Nsight-Compute性能分析" class="headerlink" title="3 Nsight Compute性能分析"></a>3 Nsight Compute性能分析</h3><p>使用的代码如下，是一个矩阵乘法的代码：</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;cuda_runtime.h&gt;
+#include&lt;time.h&gt; // CPU 时间测量用
+
+// GPU 端的矩阵乘法
+__global__ void multiply(float *a, float *b, float *c, int M, int N, int K) &#123;
+    int indexx = blockDim.x * blockIdx.x + threadIdx.x;
+    int indexy = blockDim.y * blockIdx.y + threadIdx.y;
+
+    float sum = 0.0;
+    if (indexx &lt; M &amp;&amp; indexy &lt; K) &#123;
+        for (int i = 0; i &lt; N; i++) &#123;
+            sum += a[indexx * N + i] * b[i * K + indexy];
+        &#125;
+        c[indexx * K + indexy] = sum;
+    &#125;
+&#125;
+
+// CPU 端的矩阵乘法
+void cpuMultiply(float *a, float *b, float *c, int M, int N, int K) &#123;
+    for (int i = 0; i &lt; M; i++) &#123;
+        for (int j = 0; j &lt; K; j++) &#123;
+            float sum = 0;
+            for (int k = 0; k &lt; N; k++) &#123;
+                sum += a[i * N + k] * b[k * K + j];
+            &#125;
+            c[i * K + j] = sum;
+        &#125;
+    &#125;
+&#125;
+
+int main() &#123;
+    int M = 128;
+    int N = 512;
+    int K = 640;
+    int width = 16;
+
+    float* mema = (float*)malloc(M * N * sizeof(float));
+    float* memb = (float*)malloc(N * K * sizeof(float));
+    float* memc_gpu = (float*)malloc(M * K * sizeof(float));
+    float* memc_cpu = (float*)malloc(M * K * sizeof(float));
+
+    for (int i = 0; i &lt; M * N; i++) mema[i] = 1.0f;
+    for (int i = 0; i &lt; N * K; i++) memb[i] = 1.0f;
+
+    float* gpu_a, *gpu_b, *gpu_c;
+    cudaMalloc((void**)&amp;gpu_a, M * N * sizeof(float));
+    cudaMalloc((void**)&amp;gpu_b, N * K * sizeof(float));
+    cudaMalloc((void**)&amp;gpu_c, M * K * sizeof(float));
+
+    cudaMemcpy(gpu_a, mema, sizeof(float) * M * N, cudaMemcpyHostToDevice);
+    cudaMemcpy(gpu_b, memb, sizeof(float) * N * K, cudaMemcpyHostToDevice);
+
+    dim3 block(width, width);
+    dim3 grid((K + width - 1) / width, (M + width - 1) / width);
+
+    // GPU 时间测量
+    cudaEvent_t start, stop;
+    cudaEventCreate(&amp;start);
+    cudaEventCreate(&amp;stop);
+
+    cudaEventRecord(start, 0);
+    multiply&lt;&lt;&lt;grid, block&gt;&gt;&gt;(gpu_a, gpu_b, gpu_c, M, N, K);
+    cudaEventRecord(stop, 0);
+    cudaEventSynchronize(stop);
+
+    float elapsedTime;
+    cudaEventElapsedTime(&amp;elapsedTime, start, stop);
+    printf(&quot;GPU time: %f ms\n&quot;, elapsedTime);
+
+    cudaMemcpy(memc_gpu, gpu_c, M * K * sizeof(float), cudaMemcpyDeviceToHost);
+
+    // CPU 时间测量
+    clock_t cpu_start = clock();
+    cpuMultiply(mema, memb, memc_cpu, M, N, K);
+    clock_t cpu_end = clock();
+    float cpu_time = ((float)(cpu_end - cpu_start)) / CLOCKS_PER_SEC * 1000; // 转换为毫秒
+    printf(&quot;CPU time: %f ms\n&quot;, cpu_time);
+
+    printf(&quot;GPU Result matrix C (first element): %f\n&quot;, memc_gpu[0]);
+    printf(&quot;CPU Result matrix C (first element): %f\n&quot;, memc_cpu[0]);
+
+    cudaFree(gpu_a);
+    cudaFree(gpu_b);
+    cudaFree(gpu_c);
+    free(mema);
+    free(memb);
+    free(memc_gpu);
+    free(memc_cpu);
+
+    return 0;
+&#125;
+</code></pre>
+<p>cpu与GPU得到结果对比：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241005152931.png"><br>其中</p>
+<ul>
+<li>这里我设置矩阵相乘为矩阵A：128*512 矩阵B：512*640</li>
+<li>block：16*16</li>
+<li>grid：K&#x2F;width * M&#x2F;width</li>
+</ul>
+<p>NsightCompute不会生成图，这个会更直接一点告诉SM利用率，占用率都是多少</p>
+<ul>
+<li><p>1.直接生成报告</p>
+<pre><code> ncu program.exe
+</code></pre>
+</li>
+<li><p>2.生成并查看报告<br>报告会显示：</p>
+</li>
+<li><p>CUDA 内核执行时间</p>
+</li>
+<li><p>SM（Streaming Multiprocessor）利用率</p>
+</li>
+<li><p>内存访问模式和带宽利用率</p>
+</li>
+<li><p>线程束（warp）执行效率</p>
+<pre><code>  ncu --export my_report.ncu-rep my_program.exe
+</code></pre>
+</li>
+</ul>
+<p>显示如下，会比线图更直观点，直接给结果了<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241005155433.png"><br>这里是修改前的第一版本，报告提到几点：</p>
+<ul>
+<li><p>1.延迟问题<br>报错：Latency Issue 警告，说明这个内核存在低计算吞吐量和内存带宽使用率，低于设备的峰值性能的 60%</p>
+</li>
+<li><p>2.Compute (SM) Throughput吞吐量很低<br>Compute Throughput 仅为 10.80%，说明 GPU 的计算资源并没有得到充分利用。这表明：</p>
+<ul>
+<li>计算量相对较少，或者线程数不足以充分利用 GPU。</li>
+<li>存在内存瓶颈，导致计算线程因为等待内存而闲置。</li>
+</ul>
+</li>
+<li><p>3.Memory Throughput（内存带宽利用率）<br>Memory Throughput 为 45.53%，表示全局内存的带宽利用率只有不到一半。内存瓶颈可能导致 GPU 线程长时间等待数据，从而降低计算效率。</p>
+</li>
+<li><p>4.占用率<br>Achieved Occupancy（实际占用率） 为 68.88%，这说明 GPU 的计算单元在大多数时间里都处于空闲状态，并没有得到充分利用。</p>
+</li>
+<li><p>5.启动统计信息<br>Grid Size 为 320，Block Size 为 256，表示总共使用了 320 个块，每个块有 256 个线程。<br>Waves Per SM 为 5.71，表明每个 SM 上的波浪数不高，意味着并行线程束较少。</p>
+</li>
+</ul>
+<p><em><strong>每个SM上的波浪数是什么意思？</strong></em><br>用来衡量在 Streaming Multiprocessor (SM) 上可以调度的 线程束（warp） 的数量。简单来说，它反映了 GPU 中每个 SM 在同一时刻执行的并行线程束（warp）数量。Waves Per SM 反映了 GPU 中每个 SM 的并行度：它表示每个 SM 上并行执行的线程束数量。</p>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><h4 id="1-修改block大小，之前设置的可能太小了，导致一个block占用一个SM，但是太小，导致没有将资源使用全。"><a href="#1-修改block大小，之前设置的可能太小了，导致一个block占用一个SM，但是太小，导致没有将资源使用全。" class="headerlink" title="1.修改block大小，之前设置的可能太小了，导致一个block占用一个SM，但是太小，导致没有将资源使用全。"></a>1.修改block大小，之前设置的可能太小了，导致一个block占用一个SM，但是太小，导致没有将资源使用全。</h4><p>  16——&gt;32：0.5ms——&gt;1.190176 ms<br>  怎么变得更慢了，而且SM吞吐率更低了™&#x3D;&#x3D;<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241005160717.png"><br><strong>可能的原因</strong>：</p>
+<ul>
+<li>寄存器压力：每个 SM 上的寄存器是有限的。如果每个线程使用的寄存器过多，当你增加线程块大小（例如从 16x16 增加到 32x32，线程数量从 256 增加到 1024）时，每个 SM 上可以调度的线程束数量减少，从而导致计算吞吐量下降。<br><em><strong>介绍下GPU寄存器</strong></em>：在 GPU 中，寄存器（Registers） 是最靠近 处理单元 的存储资源，也是访问速度最快的存储区域。它们主要用于临时存储线程执行过程中所需的数据，如局部变量、循环计数器、指针等。<br>寄存器与 Streaming Multiprocessor (SM) 的关系：SM（Streaming Multiprocessor） 是 GPU 中的基本计算单元，每个 SM 上有一组有限的寄存器资源，供其管理和调度的线程束（warp）使用。<strong>每个 SM 的寄存器数量是固定的</strong>。例如，NVIDIA 的 Volta 架构中，每个 SM 具有 64K（65536）个寄存器，而在 Ampere 架构中，每个 SM 上的寄存器数量是 64K 或 128K。这些寄存器资源是共享的，所有在该 SM 上运行的线程都要从这部分寄存器中分配使用。<br><strong>GPU寄存器分配的原则</strong>：每个线程都会被分配一组寄存器用来存储局部变量和临时的计算结果。而一个线程使用多少寄存器，取决于编译器的寄存器分配策略和内核代码中的局部变量数量。每个线程块中的所有线程需要从 SM 的寄存器池 中分配寄存器。假设一个线程需要 32 个寄存器，如果有 256 个线程的线程块，那么这个线程块将占用 32 * 256 &#x3D; 8192 个寄存器。那么如果一个线程所需的寄存器越多，同时可以调度的线程块也就越少，从而影响整体的并行度。<br>报告中显示，<strong>每个线程需要安排的寄存器数量为</strong>：49，而经过查找perSM的<strong>寄存器大小</strong>为：65536，所以49<em>1024 &#x3D; 50176，虽然还是小于65536。<strong>重点是！！！</strong>相当于一个线程块就占走了SM所有的寄存器资源，也就是SM只能运行这一个线程块了<br><strong><em>虽然但是为什么16</em>16&#x3D;256的时候这个的SM吞吐率为10%呢？明明只不过是把一个大的线程块给改成几个小的了？</strong></em><br>&#x3D;&#x3D;内存延迟与计算延迟&#x3D;&#x3D;<br><strong>内存延迟</strong>：从发出一个内存读取请求到数据返回所花费的时间。在 GPU 中，通常访问 全局内存（Global Memory） 的延迟非常高，通常在数百个周期以上。这意味着当一个线程访问全局内存时，它可能需要等待数百个时钟周期才能获取数据。延迟影响：如果线程正在<strong>等待内存数据，它无法进行计算操作</strong>，这会导致 GPU 的计算单元在这段时间内闲置，降低整体性能。<br><strong>计算延迟</strong>（Compute Latency）：计算延迟指的是执行计算指令时所花费的时间。计算延迟通常由复杂的计算操作（如浮点运算、乘法、加法等）决定，尤其是在执行需要更多时钟周期的复杂指令时。<br><strong>如何隐藏延迟</strong>？隐藏内存延迟：当某个线程块在等待内存数据返回时，GPU 可以调度其他线程块进行计算，从而避免计算单元闲置。这样，虽然线程块在等待内存访问的过程中有延迟，但并不会影响 GPU 的整体吞吐量，因为其他线程块可以继续执行。隐藏计算延迟：同样的，如果某个线程块正在执行计算任务，而计算操作需要多周期，GPU 可以调度其他线程块进行内存访问，利用这些时钟周期来执行其他线程的任务。这样就可以充分利用计算单元和内存带宽。<br><strong>所以喵：</strong> 如果一个SM只有一个进程块，那么内存延迟就会变得超级大，因为相当于是顺序执行了，每一次执行完要换的时候就得重新再次换入内存。相当于同步操作花销会非常大。</li>
+</ul>
+<p><strong>如何减少寄存器的使用呢</strong>？？？</p>
+<ul>
+<li><p>减少局部变量的数量</p>
+</li>
+<li><p>使用共享内存代替寄存器</p>
+</li>
+<li><p>使用常量内存：它适用于对于只读数据或不经常改变的数据，可以使用 常量内存（constant memory）。常量内存是 GPU 的一种特殊存储区域，访问它不会消耗寄存器。通常它适用于 只读的全局数据，例如某些配置参数或不经常改变的输入数据。</p>
+</li>
+<li><p>循环展开与手动优化：循环展开<br><em><strong>为什么循环展开可以减少寄存器的使用？</strong></em></p>
+<ul>
+<li>减少控制流开销 在常规的循环结构中，每次迭代都需要进行循环控制判断，例如：判断循环终止条件。更新循环计数器。展开后放弃int i&#x3D;0这个控制变量，相当于减少了一个寄存器的使用。</li>
+<li>减少中间变量</li>
+</ul>
+</li>
+<li><p>共享内存增多：导致可以调用的SM线程减少</p>
+</li>
+</ul>
+<h4 id="2-使用共享变量"><a href="#2-使用共享变量" class="headerlink" title="2.使用共享变量"></a>2.使用共享变量</h4><p>写成这样**a[x][y]**，但是可能因为命中率的问题，所以SM利用率还是没上去</p>
+<pre><code>__global__ void multiply(float *a, float *b, float *c, int M, int N, int K) &#123;
+    __shared__ float shareda[TILE_SIZE][TILE_SIZE];
+    __shared__ float sharedb[TILE_SIZE][TILE_SIZE];
+
+    // 获取线程负责的全局行和列索引
+    int row = blockIdx.x * TILE_SIZE + threadIdx.x;
+    int col = blockIdx.y * TILE_SIZE + threadIdx.y;
+
+    // 用于存储每个线程计算的局部乘积
+    float sum = 0.0f;
+
+    // 遍历所有子矩阵块
+    for (int t = 0; t &lt; (N + TILE_SIZE - 1) / TILE_SIZE; t++) &#123;
+        // 将矩阵 A 的分块数据加载到 shared memory
+        if (row &lt; M &amp;&amp; t * TILE_SIZE + threadIdx.y &lt; N) &#123;
+            shareda[threadIdx.x][threadIdx.y] = a[row * N + t * TILE_SIZE + threadIdx.y];
+        &#125; else &#123;
+            shareda[threadIdx.x][threadIdx.y] = 0.0f;
+        &#125;
+
+        // 将矩阵 B 的分块数据加载到 shared memory
+        if (col &lt; K &amp;&amp; t * TILE_SIZE + threadIdx.x &lt; N) &#123;
+            sharedb[threadIdx.x][threadIdx.y] = b[(t * TILE_SIZE + threadIdx.x) * K + col];
+        &#125; else &#123;
+            sharedb[threadIdx.x][threadIdx.y] = 0.0f;
+        &#125;
+
+        // 同步线程，确保所有线程都完成了当前块的加载
+        __syncthreads();
+
+        // 计算局部块的乘积
+        for (int i = 0; i &lt; TILE_SIZE; i++) &#123;
+            sum += shareda[threadIdx.x][i] * sharedb[i][threadIdx.y];
+        &#125;
+
+        // 同步线程以确保所有线程完成当前块的计算
+        __syncthreads();
+    &#125;
+
+    // 将结果写入矩阵 c
+    if (row &lt; M &amp;&amp; col &lt; K) &#123;
+        c[row * K + col] = sum;
+    &#125;
+&#125;
+</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241006110838.png"></p>
+<p>但是呢换一种写法写成a[y][x]的形式这个利用率一下就上去了&#x3D;&#x3D;||。</p>
+<pre><code>#define TILE_SIZE 16
+
+__global__ void multiplyOptimized(float *a, float *b, float *c, int M, int N, int K) &#123;
+    __shared__ float aTile[TILE_SIZE][TILE_SIZE];
+    __shared__ float bTile[TILE_SIZE][TILE_SIZE];
+
+    // Get the row and column index of the element in the output matrix
+    int row = blockIdx.y * TILE_SIZE + threadIdx.y;
+    int col = blockIdx.x * TILE_SIZE + threadIdx.x;
+
+    float sum = 0.0f;
+    
+    // Loop over the tiles of the input matrices
+    for (int t = 0; t &lt; (N + TILE_SIZE - 1) / TILE_SIZE; ++t) &#123;
+        // Load elements into shared memory from matrix `a` and `b`
+        if (row &lt; M &amp;&amp; t * TILE_SIZE + threadIdx.x &lt; N) &#123;
+            aTile[threadIdx.y][threadIdx.x] = a[row * N + t * TILE_SIZE + threadIdx.x];
+        &#125; else &#123;
+            aTile[threadIdx.y][threadIdx.x] = 0.0f;
+        &#125;
+
+        if (col &lt; K &amp;&amp; t * TILE_SIZE + threadIdx.y &lt; N) &#123;
+            bTile[threadIdx.y][threadIdx.x] = b[(t * TILE_SIZE + threadIdx.y) * K + col];
+        &#125; else &#123;
+            bTile[threadIdx.y][threadIdx.x] = 0.0f;
+        &#125;
+
+        // Synchronize to make sure all threads have loaded the tile
+        __syncthreads();
+
+        // Multiply the tiles together
+        for (int i = 0; i &lt; TILE_SIZE; ++i) &#123;
+            sum += aTile[threadIdx.y][i] * bTile[i][threadIdx.x];
+        &#125;
+
+        // Synchronize again before loading the next tile
+        __syncthreads();
+    &#125;
+
+    // Write the result back to global memory
+    if (row &lt; M &amp;&amp; col &lt; K) &#123;
+        c[row * K + col] = sum;
+    &#125;
+&#125;
+</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241005194224.png"></p>
+<p><strong>原因：</strong></p>
+<ul>
+<li>CUDA 设备（例如 GPU）通常有 全局内存（Global Memory）、共享内存（Shared Memory） 和 寄存器（Registers），其中全局内存访问速度最慢，共享内存和寄存器访问速度较快。GPU 的性能瓶颈常常受制于全局内存访问的效率。</li>
+<li>内存对齐（Memory Coalescing） 是 CUDA 优化的重要一环，意思是当一组线程并发地访问全局内存时，如果这些访问地址是连续的，全局内存访问会更快。</li>
+</ul>
+<h3 id="3-5-全局索引计算"><a href="#3-5-全局索引计算" class="headerlink" title="3.5 全局索引计算"></a>3.5 全局索引计算</h3><p>线程的全局索引计算<br>总共跟索引相关的有这几个值：</p>
+<ul>
+<li>threadIdx：这是线程在线程块内的索引，表示线程在自己所属的块中的位置。每个线程块中的线程都会有相同的 threadIdx.x 和 threadIdx.y 范围。</li>
+</ul>
+<p>blockIdx：这是线程块的索引，表示线程块在整个网格中的位置。</p>
+<ul>
+<li>blockDim：表示线程块中的维度大小，即每个线程块中有多少个线程（在x方向和y方向上的数量）。</li>
+</ul>
+<p>在二维网格中，全局索引（ix 和 iy）是为了确定整个线程模型中每个线程的唯一标识符，避免不同的线程处理相同的数据。计算公式如下：</p>
+<pre><code>ix = threadIdx.x + blockIdx.x * blockDim.x
+iy = threadIdx.y + blockIdx.y * blockDim.y
+</code></pre>
+<p>通过这些公式，可以将每个线程的局部索引转换为全局索引，也就是在整个二维网格中，找到这个线程的唯一位置。<br>也就是 block中x含有的线程数量*当前的blockidx，然后再加上自己的idx，相当于一个大平面就可以被摊开了。</p>
+<h3 id="3-6-GPU设备信息"><a href="#3-6-GPU设备信息" class="headerlink" title="3.6 GPU设备信息"></a>3.6 GPU设备信息</h3><p><strong>指令下</strong>：<br>nvidia-smi指令用于看到整体参数</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241003104911.png"></p>
+<p>内存信息：</p>
+<pre><code>nvidia-smi -q -i 0 -d MEMORY
+</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241003105208.png"></p>
+<h1 id="4-CUDA执行模型"><a href="#4-CUDA执行模型" class="headerlink" title="4.CUDA执行模型"></a>4.CUDA执行模型</h1><p>这一节是要按照硬件的思路去设计程序。了解CUDA的执行模型，可以帮助我们优化指令吞吐量，和内存使用来获得极限速度。</p>
+<h2 id="4-1-GPU执行模型概述"><a href="#4-1-GPU执行模型概述" class="headerlink" title="4.1 GPU执行模型概述"></a>4.1 GPU执行模型概述</h2><h3 id="1-GPU架构概述"><a href="#1-GPU架构概述" class="headerlink" title="1 GPU架构概述"></a>1 GPU架构概述</h3><p>GPU架构是围绕一个流式多处理器（SM）的扩展阵列搭建的。通过复制这种结构来实现GPU的硬件并行。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241003105645.png"><br>上图关键的组件有：</p>
+<ul>
+<li>CUDA核心</li>
+<li>共享内存&#x2F;一级缓存</li>
+<li>寄存器文件</li>
+<li>加载&#x2F;存储单元</li>
+<li>特殊功能单元</li>
+<li>线程束调度器</li>
+</ul>
+<h4 id="1-1-流式多处理器SM"><a href="#1-1-流式多处理器SM" class="headerlink" title="1.1 流式多处理器SM"></a>1.1 流式多处理器SM</h4><p>GPU中每个SM都能支持数百个线程并发执行，每个GPU通常有多个SM，当一个核函数的网格被启动的时候，多个block会被同时分配给可用的SM上执行。<br>注意: 当一个blcok被分配给一个SM后，他就<strong>只能在这个SM上执行了</strong>，不可能重新分配到其他SM上了，多个线程块可以被分配到同一个SM上。<br>在SM上同一个块内的多个线程进行线程级别并行，而同一线程内，指令利用指令级并行将单个线程处理成流水线。<br>一个SM上在某一个时刻，有32个线程在执行同一条指令，这32个线程可以选择性执行，虽然有些可以不执行，但是他也不能执行别的指令，需要另外需要执行这条指令的线程执行完，然后再继续下一条</p>
+<h4 id="1-2-线程束"><a href="#1-2-线程束" class="headerlink" title="1.2 线程束"></a>1.2 线程束</h4><p>CUDA 采用单指令多线程SIMT架构管理执行线程，不同设备有不同的线程束大小，但是到目前为止基本<strong>所有设备都是维持在32</strong>，也就是说每个SM上有多个block，一个block有多个线程（可以是几百个，但不会超过某个最大值），但是从机器的角度，在某时刻T，SM上只执行一个线程束，也就是32个线程在同时同步执行，线程束中的每个线程执行同一条指令，包括有分支的部分，这个我们后面会讲到。</p>
+<h4 id="1-3-SIMD与SIMT"><a href="#1-3-SIMD与SIMT" class="headerlink" title="1.3 SIMD与SIMT"></a>1.3 SIMD与SIMT</h4><p>两者都是将相同指令广播给多个执行单元，但是SIMT的某些线程可以选择不执行，也就是说同一时刻所有线程被分配给相同的指令，SIMD规定所有人必须执行，而SIMT则规定有些人可以根据需要不执行，这样SIMT就保证了线程级别的并行，而SIMD更像是指令级别的并行。</p>
+<h4 id="1-4-CUDA编程的组件与逻辑"><a href="#1-4-CUDA编程的组件与逻辑" class="headerlink" title="1.4 CUDA编程的组件与逻辑"></a>1.4 CUDA编程的组件与逻辑</h4><p>下图从逻辑角度和硬件角度描述了CUDA编程模型对应的组件。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241003110535.png"><br>一个SM不是只能分配一个线程束，具体需要根据共享内存和寄存器等分配。<br>限制内核性能的主要包括但不限于以下因素</p>
+<ul>
+<li>存储带宽</li>
+<li>计算资源</li>
+<li>指令和内存延迟</li>
+</ul>
+<h2 id="4-2-线程束执行的本质"><a href="#4-2-线程束执行的本质" class="headerlink" title="4.2 线程束执行的本质"></a>4.2 线程束执行的本质</h2><h3 id="1-线程束和线程块"><a href="#1-线程束和线程块" class="headerlink" title="1 线程束和线程块"></a>1 线程束和线程块</h3><p>线程束是SM中基本的执行单元，当一个网格被启动（网格被启动，等价于一个内核被启动，每个内核对应于自己的网格），网格中包含线程块，<strong>线程块被分配到某一个SM上以后，将分为多个线程束，每个线程束一般是32个线程</strong>（目前的GPU都是32个线程，但不保证未来还是32个）在一个线程束中，所有线程按照单指令多线程SIMT的方式执行，每一步执行相同的指令，但是处理的数据为私有的数据，下图反应的就是逻辑，实际，和硬件的图形化。<br>当编号使用三维编号时，x位于最内层，y位于中层，z位于最外层，想象下c语言的数组，如果把上面这句话写成c语言，假设三维数组t保存了所有的线程，那么(threadIdx.x,threadIdx.y,threadIdx.z)表示为</p>
+<pre><code>t[z][y][x];
+</code></pre>
+<p>计算三维对应的地址就是：</p>
+<pre><code>tid=threadIdx.x+threadIdx.y×blockDim.x+threadIdx.z×blockDim.x×blockDim.y
+</code></pre>
+<h3 id="2-线程束分化"><a href="#2-线程束分化" class="headerlink" title="2 线程束分化"></a>2 线程束分化</h3><p>线程束被执行的时候会被分配给相同的指令，处理各自私有的数据。在CUDA中支持C语言的控制流，比如if…else, for ,while 等，CUDA中同样支持，但是如果一个线程束中的不同线程包含不同的控制条件，那么当我们执行到这个控制条件是就会面临不同的选择。<br>当一个线程束的32个线程执行这段代码的时候，如果其中16个执行if中的代码段，而另外16个执行else中的代码块，同一个线程束中的线程，执行不同的指令，这叫做线程束的分化。我们知道在每个指令周期，线程束中的所有线程执行相同的指令，但是线程束又是分化的，所以这似乎是相悖的，但是事实上这两个可以不矛盾。<br>解决矛盾的办法就是每个线程都执行所有的if和else部分，当一部分con成立的时候，执行if块内的代码，有一部分线程con不成立，那么他们怎么办？继续执行else？不可能的，因为分配命令的调度器就一个，所以这些con不成立的线程等待，就像分水果，你不爱吃，那你就只能看着别人吃，等大家都吃完了，再&#x3D;&#x3D;进行下一轮（也就是下一个指令）线程束分化会产生严重的性能下降。条件分支越多，并行性削弱越严重&#x3D;&#x3D;。也就是说分支越多就会越多的低效率分水果的情况。因为所有人都发放了一样的指令下来。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241003112833.png"></p>
+<p>线程束分化导致的性能下降就应该用线程束的方法解决，根本思路是避免<strong>同一个线程束内的线程分化</strong>，而让我们能控制线程束内线程行为的原因是线程块中线程分配到线程束是有规律的而不是随机的。这就使得我们根据线程编号来设计分支是可以的，补充说明下，当一个线程束中所有的线程都执行if或者，都执行else时，不存在性能下降；<strong>只有当线程束内有分歧产生分支的时候，性能才会急剧下降</strong>。<br>线程束内的线程是可以被我们控制的，那么我们就把都执行if的线程塞到一个线程束中，或者让一个线程束中的线程都执行if，另外线程都执行else的这种方式可以将效率提高很多。<br>应该尽量保证一个线程束内的分支是一样的，避免出现有分歧的情况发生。</p>
+<h3 id="3-资源分配"><a href="#3-资源分配" class="headerlink" title="3 资源分配"></a>3 资源分配</h3><p>两种未执行的线程束分类：<br>一类是已经激活的，也就是说这类线程束其实已经在SM上准备就绪了，只是没轮到他执行，这时候他的状态叫做阻塞，还有一类可能分配到SM了，但是还没上到片上，这类我称之为未激活线程束。<br>每个SM上有多少个线程束处于激活状态，取决于以下资源：</p>
+<ul>
+<li>程序计数器</li>
+<li>寄存器</li>
+<li>共享内存</li>
+</ul>
+<p>线程束一旦被激活来到片上，那么他就不会再离开SM直到执行结束。<br>每个SM都有32位的寄存器组，每个架构寄存器的数量不一样，其存储于寄存器文件中，为每个线程进行分配，同时，固定数量的共享内存，在线程块之间分配。<br>一个SM上被分配多少个线程块和线程束取决于SM中可用的寄存器和共享内存，以及内核需要的寄存器和共享内存大小。<br>这是一个平衡问题，就像一个固定大小的坑，能放多少萝卜取决于坑的大小和萝卜的大小，相比于一个大坑，小坑内可能放十个小萝卜，或者两个大萝卜，SM上资源也是，当kernel占用的资源较少，那么更多的线程（这是线程越多线程束也就越多）处于活跃状态，相反则线程越少。</p>
+<p>关于寄存器资源的分配：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241003115325.png"><br>关于共享内存的分配：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241003115343.png"></p>
+<h3 id="4-隐藏延时"><a href="#4-隐藏延时" class="headerlink" title="4 隐藏延时"></a>4 隐藏延时</h3><p>由于计算资源是在线程束之间分配的，且线程束的整个生命周期都在片上，所以线程束的上下文切换是非常快速的。下面我们介绍如何通过大量的活跃的线程束切换来隐藏延迟：<br>延迟隐藏，延迟是什么，就是当你让计算机帮你算一个东西的时候计算需要用的时间。，举个宏观的例子，比如一个算法验证，你交给计算机，计算机会让某个特定的计算单元完成这个任务，共需要十分钟，而接下来这十分钟，你就要等待，等他算完了你才能计算下一个任务，那么这十分钟计算机的利用率有可能并不是100%，也就是说他的某些功能是空闲的，你就想能不能再跑一个同样的程序不同的数据（做过机器学习的这种情况不会陌生，大家都是同时跑好几个版本）然后你又让计算机跑，这时候你发现还没有完全利用完资源，于是有继续加任务给计算机，结果加到第十分钟了，已经加了十个了，你还没加完，但是第一个任务已经跑完了，如果你这时候停止加任务，等陆陆续续的你后面加的任务都跑完了共用时20分钟，共执行了10个任务，那么平局一个任务用时 20&#x2F;10&#x3D;2<br> 分钟&#x2F;任务 。<br> <img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241003121058.png"><br> 所以最大化是要最大化硬件，尤其是计算部分的硬件满跑，都不闲着的情况下利用率是最高的，总有人闲着，利用率就会低很多，即最大化功能单元的利用率。利用率与常驻线程束直接相关。<br>硬件中线程调度器负责调度线程束调度，当每时每刻都有可用的线程束供其调度，这时候可以达到计算资源的完全利用，以此来保证通过其他常驻线程束中发布其他指令的，可以隐藏每个指令的延迟。</p>
+<p>与其他类型的编程相比，GPU的延迟隐藏及其重要。对于指令的延迟，通常分为两种：</p>
+<ul>
+<li>算术指令</li>
+<li>内存指令</li>
+</ul>
+<p>tittle法则计算公式：<br>    所需线程束&#x3D;延迟×吞吐量</p>
+<p>注意带宽和吞吐量的区别，带宽一般指的是理论峰值，最大每个时钟周期能执行多少个指令，吞吐量是指实际操作过程中每分钟处理多少个指令。    </p>
+<p>那么我们怎么样确定一个线程束的下界呢，使得当高于这个数字时SM的延迟能充分的隐藏，其实这个公式很简单，也很好理解，就是SM的计算核心数乘以单条指令的延迟，</p>
+<h1 id="面试准备"><a href="#面试准备" class="headerlink" title="面试准备"></a>面试准备</h1><h2 id="1-SM利用率、memory利用率、占用率"><a href="#1-SM利用率、memory利用率、占用率" class="headerlink" title="1.SM利用率、memory利用率、占用率"></a>1.SM利用率、memory利用率、占用率</h2><p><strong>SM利用率</strong>：SM 吞吐率的百分比表示 SM 当前执行任务的实际<strong>指令吞吐量</strong>：与理论最大吞吐量之间的比值。它告诉我们，在执行特定 CUDA 核函数时，SM 的计算资源被利用的程度。<br><strong>memory利用率</strong>：GPU 内存子系统的带宽使用情况，衡量了 GPU 的内存控制器在传输数据时的负载程度。它通常以百分比的形式表示，用于评估程序是否充分利用了 GPU 的内存带宽。<br><strong>占用率</strong>：占用率（Occupancy）是指 SM 上实际执行的线程数与该 SM 能够支持的最大线程数之间的比例。占用率越高，表示更多的 Warps 被调度到 GPU 中。</p>
+<h2 id="2-影响warp数量的因素有哪些？"><a href="#2-影响warp数量的因素有哪些？" class="headerlink" title="2.影响warp数量的因素有哪些？"></a>2.影响warp数量的因素有哪些？</h2><ul>
+<li>1.线程块大小<br>线程块大小越大，可能包含的 Warp 数量就越多，从而 SM 上可以调度的 Warp 数量也可能增加。但是，线程块过大也可能导致其他资源（如寄存器、共享内存）不够用，反而限制了并行度。</li>
+<li>2.线程块的数量<br>每个流多处理器（SM）可以调度的线程块数量有限，具体取决于 GPU 架构。SM 中能同时运行的线程块越多，能同时调度的 Warp 数量也越多。</li>
+<li>3.寄存器使用量<br>如果每个线程占用的寄存器较多，那么每个 SM 能同时调度的线程块数量就会减少，从而减少 Warp 的数量。<br>反之，减少寄存器的使用可以增加线程块的调度数量，从而增加 Warp 数量。</li>
+<li>4.共享内存使用量<br>如果一个线程块需要使用大量的共享内存，那么会导致 SM 上能运行的线程块数量减少，进而减少 Warp 数量。<br>减少每个线程块的共享内存使用量可以增加调度的线程块数量，从而增加 Warp 数量。</li>
+</ul>
+
+            </div>
+
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                               rel="next"
+                               href="/2024/08/29/xreal/"
+                            >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">xreal</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                                <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+            
+        </div>
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            
+<footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+                <span>2020</span> -
+            
+            2024
+            
+                &nbsp;<i class="fas fa-heart icon-animate"></i>
+                &nbsp;<a href="/">caijiQAQ</a>
+            
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.6.1</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+        
+<script src="/js/post-helper.js"></script>
+
+        
+        
+    
+</div>
+
+
+
+</body>
+</html>

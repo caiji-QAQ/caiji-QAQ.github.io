@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2024-08-30 16:09:20</span>
+        <span class="pc">2024-10-14 10:51:05</span>
     </span>
     
     
@@ -224,7 +224,7 @@
 <li>完整性： 报文在传输过程中作为一个完整的消息单元进行传输和处理，而字节流则以连续的字节序列的形式进行传输，接收端需要根据上下文和协议来解析和处理。</li>
 </ul>
 <p>接下来详细讲解下UDP和TCP：</p>
-<h4 id="UDP："><a href="#UDP：" class="headerlink" title="UDP："></a>UDP：</h4><p>UDP（User Datagram Protocol），用户数据包协议，是一个简单的<strong>面向数据报的通信协议</strong>，即对应用层交下来的报文，不合并，不拆分，只是在其上面加上首部后就交给了下面的网络层。<br>UDP无论应用层发给UDP多长的报文都一次全部发送，一次发送一个报文。<br>UDP报头包括4个字段，每个字段占用2个字节（即16个二进制位），标题短，开销小。<strong>总共固定8字节</strong>。依次为：源端口+目的端口+长度+校验和+UDP数据部分<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240830150503.png"></p>
+<h4 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h4><p>UDP（User Datagram Protocol），用户数据包协议，是一个简单的<strong>面向数据报的通信协议</strong>，即对应用层交下来的报文，不合并，不拆分，只是在其上面加上首部后就交给了下面的网络层。<br>UDP无论应用层发给UDP多长的报文都一次全部发送，一次发送一个报文。<br>UDP报头包括4个字段，每个字段占用2个字节（即16个二进制位），标题短，开销小。<strong>总共固定8字节</strong>。依次为：源端口+目的端口+长度+校验和+UDP数据部分<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240830150503.png"></p>
 <h4 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h4><p>TCP（Transmission Control Protocol），传输控制协议，是一种可靠、面向字节流的通信协议，把上面应用层交下来的数据看成无结构的字节流来发送。可以想象成流水形式的，发送方TCP会将数据放入“蓄水池”（缓存区），等到可以发送的时候就发送，不能发送就等着，TCP会根据当前网络的拥塞状态来确定每个报文段的大小<br>TCP报文首部有<strong>20个字节</strong>，额外开销大<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240830150716.png"></p>
 <h3 id="2-DNS和IP地址的区别"><a href="#2-DNS和IP地址的区别" class="headerlink" title="2.DNS和IP地址的区别"></a>2.DNS和IP地址的区别</h3><p>DNS是域名就像是<a class="link"   target="_blank" rel="noopener" href="http://www.baidu.com这样子,而ip地址是用于在互联网上唯一标识计算机或其他网络设备的数字地址.因此域名更像是ip地址的别名.dns由一系列分布式的dns服务器组成,这些服务器相互合作来处理dns查询请求,并将域名解析为ip地址./" >www.baidu.com这样子，而IP地址是用于在互联网上唯一标识计算机或其他网络设备的数字地址。因此域名更像是IP地址的别名。DNS由一系列分布式的DNS服务器组成，这些服务器相互合作来处理DNS查询请求，并将域名解析为IP地址。<i class="fas fa-external-link-alt"></i></a></p>
 <h3 id="3-三次握手的过程"><a href="#3-三次握手的过程" class="headerlink" title="3.三次握手的过程"></a>3.三次握手的过程</h3><ul>
@@ -319,6 +319,7 @@
 <li>3.<strong>乱序处理</strong>：ACK机制可以用于处理乱序到达的数据包。接收方在收到乱序的数据包后，可以通过发送ACK报文来通知发送方已经接收到哪些数据包，以便发送方进行数据包的重排和重传，确保数据的顺序性。</li>
 <li>4.<strong>建立和维护连接</strong>：通过ACK机制，发送方和接收方可以相互确认对方的存在和可达性，进而建立和维护TCP连接。</li>
 </ul>
+<p>ACK可以告诉传输方：我现在确认接收到的数据包，以及窗口大小（窗口大小由接收方在ACK中通告给发送方，表示它当前能够接收的数据量）</p>
 <h3 id="17-如何让UDP也变的可靠"><a href="#17-如何让UDP也变的可靠" class="headerlink" title="17.如何让UDP也变的可靠"></a>17.如何让UDP也变的可靠</h3><ul>
 <li>1.<strong>应用层实现可靠性</strong>：应用程序可以在应用层上通过一些机制来实现UDP的可靠性。例如，发送方可以在发送数据前对数据进行冗余校验，接收方可以检查校验和，并请求重传丢失的数据。</li>
 <li>2.<strong>增加ACK机制</strong>：发送方可以在UDP上实现类似TCP的ACK机制来确认接收到的数据包。当接收方接收到数据包时，发送一个ACK（确认）回执给发送方，告知数据包已成功接收。</li>
@@ -334,17 +335,28 @@
 <li>2.具体来说，当应用程序使用TCP协议时，它可以使用Socket接口来建立一个TCP连接，并通过Socket发送和接收可靠的字节流数据。当应用程序使用UDP协议时，它可以使用Socket接口来发送和接收不可靠的数据报。</li>
 <li>3.由于Socket直接与传输协议交互，并提供了对传输层功能的访问，因此它被认为属于传输层。它将应用程序和网络层之间进行了解耦，使得应用程序可以方便地进行网络通信操作，无需关注底层的网络细节。</li>
 </ul>
-<h3 id="21-什么是长连接、短连接"><a href="#21-什么是长连接、短连接" class="headerlink" title="21.什么是长连接、短连接"></a>21.什么是长连接、短连接</h3><p><strong>长连接（Keep-Alive连接）</strong>：</p>
+<h3 id="21-什么是长连接、短连接"><a href="#21-什么是长连接、短连接" class="headerlink" title="21.什么是长连接、短连接"></a>21.什么是长连接、短连接</h3><ul>
+<li><p><strong>长连接</strong>是指在客户端与服务器之间建立连接后，保持这个连接的持续开放状态，允许在该连接上进行多次数据传输，而不是在每次传输数据后关闭连接。除非客户端或服务器主动关闭连接，或者连接因网络问题中断，否则这个连接会一直保持打开状态。</p>
+</li>
+<li><p><strong>应用场景</strong></p>
 <ul>
-<li>长连接指在一次连接中可以进行多次数据传输的连接方式。在建立连接后，客户端和服务器保持该连接，可以连续发送和接收数据。</li>
-<li>长连接通常使用TCP协议，因为TCP是一种可靠的、面向连接的协议，适合长时间的持续通信。</li>
-<li>长连接可以减少连接的建立和关闭的开销，提高通信效率，适用于实时性较高、频繁通信的场景，如聊天应用、实时数据传输等。</li>
+<li><strong>HTTP&#x2F;1.1</strong>：在HTTP&#x2F;1.1协议中，默认使用长连接（通过Connection: keep-alive头），这意味着多个HTTP请求可以复-用同一个TCP连接，减少连接建立的开销。</li>
+<li>数据库连接：在数据库访问中，长连接常用于维持数据库客户端与服务器之间的连接，以减少频繁建立连接的开销。</li>
 </ul>
-<p><strong>短连接</strong>：</p>
+</li>
+<li><p><strong>短连接</strong>是指客户端与服务器之间在传输数据后立即关闭连接。每次需要传输数据时，都会重新建立一个连接，数据传输完成后就关闭连接。</p>
+</li>
+<li><p>应用场景：</p>
 <ul>
-<li>短连接是一次性的、即时的连接。在完成一次数据传输后，连接会被立即关闭。</li>
-<li>短连接可以使用TCP或UDP协议，但&#x3D;&#x3D;更常见的是使用UDP协议&#x3D;&#x3D;，因为UDP是一种无连接的协议，不需要保持持久连接。</li>
-<li>短连接适用于数据传输较少的场景，如发送一次请求获取某个资源，数据传输完成后连接<strong>即可关闭</strong>。</li>
+<li><strong>HTTP&#x2F;1.0</strong>：在HTTP&#x2F;1.0协议中，每个HTTP请求都会建立一个新的TCP连接，传输完数据后连接立即关闭。短连接适用于需要简单、单次请求响应的场景。 </li>
+<li>非实时性应用：短连接适合那些不需要保持持续连接的应用，如一些简单的文件下载、<strong>网页浏览</strong>等场景。</li>
+</ul>
+</li>
+</ul>
+<p><em><strong>UDP是长连接还是短连接呢？</strong></em><br>UDP不是长连接以及短连接，UDP<strong>没有连接</strong>状态：</p>
+<ul>
+<li>UDP的数据包独立于彼此，发送数据包时不需要也不维持连接状态，因此没有“连接”的概念，更谈不上长连接或短连接。</li>
+<li>因为没有连接，UDP适用于那些对<strong>实时性要求较高</strong>但不需要保证数据可靠性和顺序的应用程序。</li>
 </ul>
 <h3 id="22-如何应对短连接、高并发的场景？"><a href="#22-如何应对短连接、高并发的场景？" class="headerlink" title="22.如何应对短连接、高并发的场景？"></a>22.如何应对短连接、高并发的场景？</h3><ul>
 <li>1.<strong>优化主机系统设置</strong>：降低SYN timeout时间，以便尽快释放占用的半连接。使用SYN cookie设置，为每个连接请求的IP地址分配一个Cookie，当连续收到一个IP地址的重复SYN报文时，认为可能受到攻击，并拒绝来自该IP地址的后续包。</li>
@@ -375,6 +387,24 @@
 </ul>
 <p>Nagle算法通过缓冲和合并数据，<strong>减少小数据包的发送次数</strong>，提高带宽利用率。但在特定场景下，需要权衡实时性和传输效率，选择是否启用或禁用Nagle算法</p>
 <h3 id="25-ARP协议是为了解决？"><a href="#25-ARP协议是为了解决？" class="headerlink" title="25.ARP协议是为了解决？"></a>25.ARP协议是为了解决？</h3><p>MAC 地址和 IP 地址之间的映射。<br>ARP（地址解析协议）用于将网络中的 IP 地址映射为物理网络的 MAC 地址。当一台设备需要发送数据到另一个设备时，它需要知道对方的 MAC 地址。ARP 协议通过广播 IP 地址，询问网络上与之对应的 MAC 地址，然后将二者进行映射。</p>
+<p><strong>ARP协议的工作原理：</strong><br>ARP协议的主要功能是在以太网等基于数据链路层的网络中，通过已知的IP地址，查询并获取对应设备的MAC地址（物理地址），以便在局域网内正确传输数据帧。<br>1.ARP请求</p>
+<ul>
+<li>当主机A需要发送数据包给主机B时，首先需要知道主机B的MAC地址，但它只知道主机B的IP地址。</li>
+<li>主机A在局域网内广播一个ARP请求消息，询问“拥有这个IP地址的设备，告诉我你的MAC地址”。该请求消息会被发送到网络中的所有设备。</li>
+</ul>
+<p>2.ARP应答</p>
+<ul>
+<li>具有所请求IP地址的主机B收到ARP请求后，会生成一个ARP应答消息，其中包含自己的MAC地址。</li>
+<li>主机B将ARP应答消息单播回主机A，告诉它“我有这个IP地址，这是我的MAC地址”。</li>
+</ul>
+<p>3.更新ARP缓存</p>
+<ul>
+<li>主机A收到ARP应答后，将主机B的IP地址与MAC地址的对应关系缓存到本地的ARP缓存表中，以便在将来的通信中直接使用该信息，避免重复发送ARP请求。</li>
+</ul>
+<p>4.数据传输</p>
+<ul>
+<li>现在，主机A可以使用主机B的MAC地址，通过以太网将数据帧直接发送给主机B。</li>
+</ul>
 <h3 id="26-什么是http协议？"><a href="#26-什么是http协议？" class="headerlink" title="26.什么是http协议？"></a>26.什么是http协议？</h3><p>HTTP（Hyper Text Transfer Protocol）： 全称<strong>超文本传输协议</strong>，是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。<br>HTTP 是一种应用层协议，是基于 TCP&#x2F;IP 通信协议来传递数据的，其中 HTTP1.0、HTTP1.1、HTTP2.0 均为 TCP 实现，HTTP3.0 基于 UDP 实现。现主流使用 HTTP1.0 和 HTTP3.0。</p>
 <h4 id="1-http协议的工作过程"><a href="#1-http协议的工作过程" class="headerlink" title="1.http协议的工作过程"></a>1.http协议的工作过程</h4><p>当我们在浏览器输入一个网址，此时浏览器就会给对应的服务器发送一个 <strong>HTTP 请求</strong>，对应的服务器收到这个请求之后，经过计算处理，就会返回一个 <strong>HTTP 响应</strong>。并且当我们访问一个网站时，可能涉及不止一次的 HTTP 请求和响应的交互过程。<br><strong>http协议的重要特点：一发一收，一问一答。</strong><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819143257.png"></p>
 <h4 id="2-http协议的格式"><a href="#2-http协议的格式" class="headerlink" title="2.http协议的格式"></a>2.http协议的格式</h4><p>http请求格式：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819143531.png"><br>http响应格式:<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240819143545.png"></p>
@@ -469,8 +499,6 @@
 <li>响应请求</li>
 <li>页面渲染</li>
 </ul>
-<h4 id="详细分析"><a href="#详细分析" class="headerlink" title="详细分析"></a>详细分析</h4><p><strong>URL解析</strong><br>首先判断你输入的是一个合法的URL 还是一个待搜索的关键词，并且根据你输入的内容进行对应操作<br>URL的解析第过程中的第一步，一个url的结构解析如下：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240830114634.png"></p>
-<p><strong>DNS查询</strong></p>
 <h3 id="35-对称加密和非对称加密的区别？"><a href="#35-对称加密和非对称加密的区别？" class="headerlink" title="35.对称加密和非对称加密的区别？"></a>35.对称加密和非对称加密的区别？</h3><p><strong>公钥加密（非对称加密）</strong>：</p>
 <ul>
 <li>a. 服务器端生成一对密钥：公钥和私钥。</li>
@@ -485,7 +513,7 @@
 <li>a. 客户端和服务器通过握手过程<strong>协商一个对称密钥</strong>，该对称密钥只在本次通信过程中使用。</li>
 <li>b. 客户端和服务器使用对称密钥对通信的数据进行加密和解密。</li>
 </ul>
-<h3 id="36-HTTP为什么要比HTTPS要更安全？"><a href="#36-HTTP为什么要比HTTPS要更安全？" class="headerlink" title="36.HTTP为什么要比HTTPS要更安全？"></a>36.HTTP为什么要比HTTPS要更安全？</h3><ul>
+<h3 id="36-HTTPS为什么要比HTTP要更安全？"><a href="#36-HTTPS为什么要比HTTP要更安全？" class="headerlink" title="36.HTTPS为什么要比HTTP要更安全？"></a>36.HTTPS为什么要比HTTP要更安全？</h3><ul>
 <li><strong>数据加密</strong>：HTTPS使用SSL&#x2F;TLS协议对通信进行加密，而HTTP不对通信进行加密，数据传输是明文的。</li>
 <li><strong>身份验证</strong>：HTTPS使用<strong>数字证书对服务器进行身份验证</strong>，确保客户端连接到真实的服务器。HTTP没有身份验证机制，容易被中间人攻击。</li>
 <li><strong>数据完整性</strong>：HTTPS使用<strong>消息摘要算法和数字签名</strong>来确保数据的完整性，防止数据在传输过程中被篡改。HTTP没有数据完整性保护，数据容易被篡改。</li>
@@ -622,9 +650,34 @@
 <li>HTTP&#x2F;1.0：支持的状态码相对较少，错误处理能力有限。</li>
 <li>HTTP&#x2F;1.1：增加了更多的状态码和<strong>错误处理功能</strong>。例如，增加了 100 Continue 状态码，用于在大文件上传时询问服务器是否准备好接收数据；还引入了 409 Conflict、410 Gone 等更详细的状态码，帮助客户端更好地理解服务器的响应状态。</li>
 </ul>
+<p><em><strong>常见的状态码</strong></em>：</p>
+<ul>
+<li>200：请求成功获取资源。</li>
+<li>301&#x2F;302：资源重定向到新的URL。</li>
+<li>400：请求无效（如参数错误）。</li>
+<li>401&#x2F;403：请求需要认证或没有权限。</li>
+<li>404：请求的资源不存在。</li>
+<li>500：服务器内部错误，无法响应。</li>
+</ul>
 <h4 id="4-Host头部"><a href="#4-Host头部" class="headerlink" title="4.Host头部"></a>4.Host头部</h4><ul>
 <li>HTTP&#x2F;1.0：没有定义 Host 头部字段，这在当时的互联网环境中是可以接受的，因为每个IP地址通常只对应一个网站。</li>
 <li>HTTP&#x2F;1.1：引入了 Host 头部字段，这对于虚拟主机技术至关重要。虚拟主机允许多个域名<strong>共享同一个IP地址</strong>，通过 Host 头部字段，服务器可以根据请求中的域名正确地处理并返回对应的网站内容。</li>
+</ul>
+<h3 id="42-路由器和交换机的区别"><a href="#42-路由器和交换机的区别" class="headerlink" title="42.路由器和交换机的区别"></a>42.路由器和交换机的区别</h3><ol>
+<li><p>路由器在网络层，路由器根据IP地址寻址，路由器可以处理TCP&#x2F;IP协议，交换机不可以，交换机根据<strong>MAC地址</strong>寻址。交换机在数据链路层。</p>
+</li>
+<li><p>路由器可以把一个IP分配给很多个主机使用，这些主机对外只表现出<strong>一个IP</strong>。交换机可以把很多主机连起来，这些主机对外各有各的IP。</p>
+</li>
+<li><p>交换机分割冲突域，但不分割广播域，而路由器分割广播域。由交换机连接的网段，仍属于同一个广播域，广播数据包会在交换机连接的所有网段上传播，这时会导致广播风暴和安全漏洞。而连接在路由器上的网段会被分配到不同的广播域。路由器不会<strong>转发广播数据</strong>。</p>
+</li>
+<li><p>路由器提供防火墙的服务，交换机不能提供该功能。集线器、都是做端口扩展的，就是扩大局域网(通常都是以太网)的接入点，也就是能让局域网可以连进来更多的电脑。路由器是用来做网间连接，也就是用来连接不同的网络。</p>
+</li>
+</ol>
+<p><strong>通俗解释</strong>：<br>我们每个人相当于主机，路由器相当于快递员，宿管大爷相当于交换机，学校是一个局域网<br>快递员根据学校地址（IP）把包裹送到学校，再根据公寓号（子网IP）把快递交给这个公寓的宿管大爷，宿管大爷根据你的名字（MAC）交给你。</p>
+<h4 id="为什么用交换机而不是路由器？"><a href="#为什么用交换机而不是路由器？" class="headerlink" title="为什么用交换机而不是路由器？"></a>为什么用交换机而不是路由器？</h4><ul>
+<li>1.ARP 是局域网内部的协议，作用是将 IP 地址解析为 MAC 地址，用于设备之间的直接通信，因此在局域网中，直接使用交换机处理 MAC 地址广播是最合适的。</li>
+<li>2.广播与路由器的限制<br>路由器不转发广播流量</li>
+<li>3.局域网内部通信效率<br>局域网内的直接通信：交换机的设计让它能够<strong>快速、低延迟</strong>地处理同一局域网内部的设备通信，直接根据 MAC 地址来决定数据转发路径。由于 ARP 解析也是局域网内的通信，交换机是最佳选择。<br>跨子网的通信需要路由器：当需要跨子网通信时，才会用到路由器。路由器通过 IP 地址转发数据包，并根据路由表决定数据包的路径。路由器的转发速度通常比交换机慢，特别是当流量需要频繁解析 MAC 地址时，路由器会成为性能瓶颈。</li>
 </ul>
 
             </div>
