@@ -1,0 +1,949 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1.仿真工具1.art galaxy是什么？Art. Galaxy 是酷芯微电子为 AR93xx 系列视觉 AI 处理器打造的 AI 解决方案。它包含异构的 ARM Cortex-A 系列处理器、CEVA DSP、NPU(Neural Processing Unit)等多个硬件处理单元、运行在这些硬件上的 AI Run-time 软件以及配套的工具链与集成开发环境(Art. Studio)等。目前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xreal">
+<meta property="og:url" content="https://caiji-qaq.github.io/2024/08/29/xreal/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.仿真工具1.art galaxy是什么？Art. Galaxy 是酷芯微电子为 AR93xx 系列视觉 AI 处理器打造的 AI 解决方案。它包含异构的 ARM Cortex-A 系列处理器、CEVA DSP、NPU(Neural Processing Unit)等多个硬件处理单元、运行在这些硬件上的 AI Run-time 软件以及配套的工具链与集成开发环境(Art. Studio)等。目前">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240705132656.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240705132531.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240710170315.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240718171838.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240723175724.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240731112056.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240731111757.png">
+<meta property="article:published_time" content="2024-08-29T03:01:12.000Z">
+<meta property="article:modified_time" content="2024-10-08T08:09:34.543Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240705132656.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>xreal - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"caiji-qaq.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="xreal"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-29 11:01" pubdate>
+          2024年8月29日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">xreal</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="1-仿真工具"><a href="#1-仿真工具" class="headerlink" title="1.仿真工具"></a>1.仿真工具</h1><h2 id="1-art-galaxy是什么？"><a href="#1-art-galaxy是什么？" class="headerlink" title="1.art galaxy是什么？"></a>1.art galaxy是什么？</h2><p>Art. Galaxy 是酷芯微电子为 AR93xx 系列视觉 AI 处理器打造的 AI 解决方案。它包含异构的 ARM Cortex-A 系列处理器、CEVA DSP、NPU(Neural Processing Unit)等多个硬件处理单元、运行在这些硬件上的 AI Run-time 软件以及配套的工具链与集成开发环境(Art. Studio)等。目前 Art. Studio 仅支持 caffe、PyTorch</p>
+<p>软件开发：<br>Model File、Quantization Images、Graph File 及系统配置等信息的.ini 文件经过 NPU处理后生成 <strong>NPU Binary（.npubin）格式数据</strong>。<br>输入各种参数通过仿真来验证模型的实际性能和精度。</p>
+<h2 id="2-安装"><a href="#2-安装" class="headerlink" title="2.安装"></a>2.安装</h2><p>windows 通过SSH 登录Linux 系统并使用docker 安装Art.Studio镜像，运行docker容器并启动Art. Studio</p>
+<h2 id="3-构建工程"><a href="#3-构建工程" class="headerlink" title="3.构建工程"></a>3.构建工程</h2><h3 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h3><p>这一步主要是构建模型，同时再将模型参数录入，方便后面的C++程序进行仿真调试</p>
+<ul>
+<li><strong>Art. Project</strong> 用于将用户训练好的网络转换成 NPU 可执行的.npubin 模型进行 Model 仿真，分析网络模型的性能。其中还需要选择工程所属的<strong>芯片</strong>。</li>
+<li><strong>Art.ini</strong>：Art.ini 文件用于&#x3D;&#x3D;新建配置网络模型文件&#x3D;&#x3D;，其中的设置又包括：是否使用cuda加速、网络模型设置（均值，scale值，网络类型等）；输入图片配置；NPU配置（NPU精度配置，NPUoutput配置）</li>
+</ul>
+<p>配置好ini之后，可以build model，buildmodel的语句，-noSpalsh：不启动动画，</p>
+<pre><code class="hljs">wangzuowei@ai-server-01:~/app/art.studio-v0.7.3/data/sample/sampleArtProject/model$ /home/wangzuowei/app/art.studio-v0.7.3/art.studio/ArtStudio -noSpalsh --artDebug --build --ini mobilenetv1_caffe.ini  --out ../output
+</code></pre>
+<p>来生成下图的对应的文件，主要包含了模型的原始输出以及量化后的输出、同时也包含了板上可运行的&#x3D;&#x3D;npubin文件&#x3D;&#x3D;<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240705132656.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240705132531.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="4-NPU移植神经网络"><a href="#4-NPU移植神经网络" class="headerlink" title="4.NPU移植神经网络"></a>4.NPU移植神经网络</h2><ul>
+<li>1.准备神经网络：模型文件+权值文件</li>
+<li>2.使用art.studio工具进行仿真：project，ini文件，build model生成量化模型文件&#x3D;&gt;.npubin</li>
+<li>3.移植可运行的arcnndemo代码，arcnndemo是用来录入模型信息（包括是否需要callback，模式与npubin所在的板上位置）</li>
+<li>4.复制运行的.npubin文件，运行arcnndemo<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240710170315.png" srcset="/img/loading.gif" lazyload></li>
+</ul>
+<p>API说明文档:009-AR93xx_智能视频子系统API说明.pdf</p>
+<h2 id="5-makefile讲解"><a href="#5-makefile讲解" class="headerlink" title="5.makefile讲解"></a>5.makefile讲解</h2><h3 id="1-基础"><a href="#1-基础" class="headerlink" title="1.基础"></a>1.基础</h3><ul>
+<li><p>1.规则</p>
+<ul>
+<li>目标文件: 依赖文件1 依赖文件2</li>
+<li>make默认执行第一条规则</li>
+</ul>
+</li>
+<li><p>2.伪目标<br>删除时，我们也不希望手动删除，而是编写一个clean规则来删除它们：</p>
+<pre><code class="hljs">  clean:
+      rm -f m.txt
+      rm -f x.txt
+</code></pre>
+<p>  clean规则与我们前面编写的规则有所不同，它没有依赖文件，因此，要执行clean，必须用命令make clean：</p>
+<pre><code class="hljs">      ifeq ($(PARAM_FILE), )
+          PARAM_FILE:=../../arsdk/Makefile.param
+          include $(PARAM_FILE)
+      endif
+
+      applications_sub_dir = libs \
+                                      utils \
+                                      tests \
+                                      mpp_sample \
+                                      hal_sample \
+                                      ipcam \
+                                      ipcam/ipctool \
+                                      mpp_infrared_sample \
+                                      web_service \
+                                      uvc_service2 \
+                                      uac_service
+
+      applications_sub_dir_filter := $(foreach sub_dir, $(applications_sub_dir), $(shell if [ -f $(sub_dir)/Makefile ]; then echo $(sub_dir); fi))
+
+      all::
+
+      define APPLICATIONS_SUBDIR_MAKE_template
+      app-y += $(1)
+      $(1): force
+              make -C $(1) all
+      endef
+
+      $(foreach subdir,$(applications_sub_dir_filter),$(eval $(call APPLICATIONS_SUBDIR_MAKE_template,$(subdir))))
+
+      all:: prepare_dir $(app-y)
+              @echo -e &#39;\033[32;1m ==============building $@: $^ \033[0m&#39;
+
+      prepare_dir:
+              @mkdir -p $(APPLICATION_INSTALL_DIR)
+
+      clean:
+              @$(foreach applications, $(app-y), make -C $(applications) clean;)
+
+      force:
+</code></pre>
+</li>
+</ul>
+<h3 id="2-选项"><a href="#2-选项" class="headerlink" title="2.选项"></a>2.选项</h3><ul>
+<li><p><strong>LDFLAGS</strong></p>
+<pre><code class="hljs">  LDFLAGS += -L$(APPLICATION_INSTALL_DIR)/lib/ \
+          -lhal_sys -losal -lutils -lpthread -lrt -lhal_npu -lcnn_operator -lhal_dsp -lmpi_npu -lmpi_dsp -lopencv_core -lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui
+</code></pre>
+<p>LDFLAGS 是一个用于指定链接器（linker）选项的变量。你所展示的这段 LDFLAGS 的内容主要用于定义编译和链接过程中的库和库路径。</p>
+</li>
+</ul>
+<p><strong>-l</strong>：是用来指定需要链接的库,指定库的名称<br><strong>-L</strong>：添加库路径</p>
+<ul>
+<li><strong>CFLAGS</strong>:指定头文件（.h文件）的路径</li>
+</ul>
+<h1 id="2-整体流程验证"><a href="#2-整体流程验证" class="headerlink" title="2.整体流程验证"></a>2.整体流程验证</h1><h2 id="1-初始化"><a href="#1-初始化" class="headerlink" title="1.初始化"></a>1.初始化</h2><h3 id="1-录入模型"><a href="#1-录入模型" class="headerlink" title="1.录入模型"></a>1.录入模型</h3><p>所需：.npubin文件 + 模型文件配置<br><strong>模型配置</strong>：</p>
+<pre><code class="hljs">    typedef struct
+    &#123;
+    AR_U16    u16NetworkID;
+    AR_U32    u32Priority;
+    AR_U32    u32CBToArm;
+    AR_U32    u32SramAddrPhy;
+    AR_U32    u32SramSize;
+    AR_CHAR   au8NpubinFileName[MAX_NAME_LEN];      //.npubin file name
+    AR_UINTPTR    uptrNpubinVirtAddr;
+    &#125; AR_NPU_CNN_DESC_S;
+</code></pre>
+<ul>
+<li><strong>NetworkID</strong>：网络ID</li>
+<li><strong>u32Priority</strong>：优先级</li>
+<li><strong>u32CBToArm</strong>：向ceva&#x2F;arm注册callback（CB） 0:ceva 1:arm</li>
+<li><strong>u32SramAddrPhy</strong>：ddr物理地址</li>
+<li><strong>u32SramSize</strong>：ddr(Double Data Rate)空间大小</li>
+<li><strong>au8NpubinFileName</strong>：npubin文件名字</li>
+<li><strong>uptrNpubinVirtAddr</strong>：模型虚拟空间</li>
+</ul>
+<p>例：</p>
+<pre><code class="hljs">    m_stCNNDesc.u16NetworkID = -1;
+    m_stCNNDesc.u32Priority = NETWORK_PRIORITY_NORMAL;
+    m_stCNNDesc.u32CBToArm = 0;
+    m_stCNNDesc.u32SramAddrPhy = 0;
+    m_stCNNDesc.u32SramSize = 0;
+    m_stCNNDesc.uptrNpubinVirtAddr = (AR_UINTPTR)npuBinBuff;//npubinbuff为先前malloc空间的地址大小
+</code></pre>
+<p><strong>录入模型</strong>：</p>
+<pre><code class="hljs">    AR_MPI_NPU_LoadModel(&amp;m_stCNNDesc);
+</code></pre>
+<h3 id="2-声明内存"><a href="#2-声明内存" class="headerlink" title="2.声明内存"></a>2.声明内存</h3><ul>
+<li><p>1.申请模型<strong>输入输出</strong>的tensor内存</p>
+<pre><code class="hljs">  MallocNPUBuff(aimodel-&gt;m_handle, aimodel-&gt;m_stCNNDesc.u16NetworkID)
+</code></pre>
+<p><strong>函数需要实现的功能有</strong>：</p>
+<ul>
+<li><ol>
+<li>定义<strong>InBuff</strong>结构体的内容：包括<strong>输入</strong>buff大小、以及是否使用缓存</li>
+</ol>
+</li>
+<li><ol start="2">
+<li><p><strong>声明输入buff</strong>:</p>
+<pre><code class="hljs">     s32Ret = AR_MPI_NPU_MallocCachedBuff(&quot;input&quot;, &amp;m_stNPUInBuff);
+</code></pre>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>定义<strong>OutputBuff</strong>结构体的内容：包括<strong>输出</strong>buff大小、以及是否使用缓存</li>
+</ol>
+</li>
+<li><ol start="4">
+<li><p><strong>声明输出buff</strong>:</p>
+<pre><code class="hljs">     s32Ret = AR_MPI_NPU_MallocCachedBuff((AR_CHAR *)output_name.c_str(), &amp;m_stNPUOutBuff);
+</code></pre>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>2.申请模型<strong>runtime</strong>的运行内存</p>
+<pre><code class="hljs">  0 != MallocRuntimeBuff(aimodel-&gt;m_handle, aimodel-&gt;m_stCNNDesc.u16NetworkID)
+</code></pre>
+<p><strong>函数需要实现的功能有</strong>：</p>
+<ul>
+<li><ol>
+<li><p>获取RuntimeSize：</p>
+<pre><code class="hljs">AR_MPI_NPU_GetRuntimeSize(handle, &amp;u32RuntimeSize);
+</code></pre>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li><p>申请空间大小：</p>
+<pre><code class="hljs">AR_MPI_NPU_MallocBuff((AR_CHAR *)runtime_name.c_str(), &amp;m_stNPURtBuff);
+</code></pre>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li><p>NPU 网络runtime buffer设置接口</p>
+<pre><code class="hljs">AR_MPI_NPU_SetRuntimeBuffer(handle, (AR_UINTPTR)m_stNPURtBuff.u64VirtAddr, (AR_U64)m_stNPURtBuff.u64PhyAddr);
+</code></pre>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>问</strong>：为什么Set需要同时使用虚拟地址和物理地址？<br>设置网络的 runtime 空间地址，此函数在用户想在多个模型间共享 runtime buffer 时使用用户可以预先分配一个较大的 runtime buffer，并将此buffer 地址在做forward 前配置到各个网络模型中去。</p>
+<h3 id="3-输入输出"><a href="#3-输入输出" class="headerlink" title="3.输入输出"></a>3.输入输出</h3><p>现在已经获取到了模型的输入和输出的大小维度了，但是还需要传输给用户，主要这里就是将底层声明的类型的数据给赋值到上层的结构体中。</p>
+<h2 id="2-推理"><a href="#2-推理" class="headerlink" title="2.推理"></a>2.推理</h2><h3 id="1-预处理"><a href="#1-预处理" class="headerlink" title="1.预处理"></a>1.预处理</h3><h2 id="3-callback"><a href="#3-callback" class="headerlink" title="3.callback"></a>3.callback</h2><p>现在有一些算子在npu中不支持，所以要将不支持npu的算子放到ARM&#x2F;DSP中跑，带算子callback的整个流程：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240718171838.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="1-resize"><a href="#1-resize" class="headerlink" title="1.resize"></a>1.resize</h3><p>resize在文档中写的是有条件支持NPU，但是在条件为：</p>
+<ul>
+<li>mode &#x3D; nearest</li>
+<li>coordinate_transformation_mode&#x3D; align_corners</li>
+</ul>
+<p>仍然需要callback，所以现在来看看到底都支持那些模式：</p>
+<p><strong>resize使用条件</strong>：<br>左侧为mode，上侧为coordinate_transformation_mode（只能用这三个）</p>
+<table>
+<thead>
+<tr>
+<th align="center">是否支持NPU</th>
+<th align="center">nearest</th>
+<th align="center">linear</th>
+<th align="center">cubic</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">half_pixel</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">×</td>
+</tr>
+<tr>
+<td align="center">align_corners</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">×</td>
+</tr>
+<tr>
+<td align="center">asymmetric</td>
+<td align="center">√</td>
+<td align="center">×</td>
+<td align="center">×</td>
+</tr>
+</tbody></table>
+<h1 id="3-docker使用"><a href="#3-docker使用" class="headerlink" title="3.docker使用"></a>3.docker使用</h1><h2 id="1-Docker容器生命周期"><a href="#1-Docker容器生命周期" class="headerlink" title="1.Docker容器生命周期"></a>1.Docker容器生命周期</h2><ul>
+<li>1.从镜像创建容器：<br>使用 docker run 命令创建容器。</li>
+<li>2.在容器中运行应用程序：<br>你可以在容器内运行应用程序或执行命令。</li>
+<li>3.停止容器：<br>通过 docker stop <container_name> 停止运行的容器。</li>
+<li>4.删除容器：<br>使用 docker rm <container_name> 删除容器，注意删除前需要先停止容器。</li>
+</ul>
+<h2 id="2-Docker常见指令"><a href="#2-Docker常见指令" class="headerlink" title="2.Docker常见指令"></a>2.Docker常见指令</h2><ul>
+<li>docker ps：列出当前正在运行的容器</li>
+<li>docker run:创建并运行一个新的容器实例<ul>
+<li><p><strong>-i</strong> (Interactive)：保持容器的标准输入（stdin）打开，即使没有附加到终端。</p>
+</li>
+<li><p><strong>-t</strong> (Terminal)：为容器分配一个伪终端，使你可以与容器中的应用程序交互。（一般it一起用这样也就能在终端交互了）</p>
+</li>
+<li><p><strong>-v</strong> $PWD:&#x2F;home&#x2F;nreal：卷挂载（Volume Mount）的指定方式，将主机上的当前工作目录挂载到容器中的 &#x2F;home&#x2F;nreal 目录。这样做的目的是让你在主机和容器之间共享文件</p>
+<pre><code class="hljs">docker run -it -v $PWD:/home/nreal --name shc_ar9311_v2 ubuntu:16.04 /bin/bash
+</code></pre>
+</li>
+<li><p>后面ubuntu:16.04是使用’ubuntu:16.04’镜像</p>
+</li>
+<li><p>&#x2F;bin&#x2F;bash: 指定容器启动时运行的命令。这里的 &#x2F;bin&#x2F;bash 是启动一个 Bash shell，允许你在容器中进行交互操作。</p>
+</li>
+</ul>
+</li>
+<li>docker stop：停止容器</li>
+<li>docker start：启动一个已经停止的容器</li>
+<li>docker exec：退出容器终端，但不会停止容器</li>
+<li>docker rm -f name：删除容器</li>
+<li>docker rmi hello-world：删除镜像</li>
+<li>docker images：列出本地主机上的镜像</li>
+<li>docker pull：拉取镜像</li>
+</ul>
+<h2 id="3-一般流程"><a href="#3-一般流程" class="headerlink" title="3.一般流程"></a>3.一般流程</h2><ul>
+<li><p>1.创建并启动容器</p>
+<pre><code class="hljs">  docker run -it -v $PWD:/home/nreal --name wzw_ar9481 ubuntu:16.04 /bin/bash
+</code></pre>
+</li>
+<li><p>2.退出：ctrl+D&#x2F;exit</p>
+</li>
+<li><p>3.停止容器：</p>
+<pre><code class="hljs">  docker stop wzw_ar9481
+</code></pre>
+</li>
+<li><p>4.启动已经停止的容器：</p>
+<pre><code class="hljs">  docker start wzw_ar9481 -i
+</code></pre>
+</li>
+</ul>
+<h1 id="4-ar9481中替换cv库"><a href="#4-ar9481中替换cv库" class="headerlink" title="4.ar9481中替换cv库"></a>4.ar9481中替换cv库</h1><p>现在主要需要替换cv的地方就在于读取图像，接着截取，送进ifc中，跑出结果后存储这几步。</p>
+<h2 id="1-pdf"><a href="#1-pdf" class="headerlink" title="1.pdf"></a>1.pdf</h2><p><strong>SCALER</strong>实现图像crop、scale功能</p>
+<h2 id="操作指令"><a href="#操作指令" class="headerlink" title="操作指令"></a>操作指令</h2><h3 id="1-检查NPU状态"><a href="#1-检查NPU状态" class="headerlink" title="1.检查NPU状态"></a>1.检查NPU状态</h3><pre><code class="hljs">    cat /proc/arnpu/state
+</code></pre>
+<h3 id="2-重置NPU：NPU挂了被占用，除了重启就只能重置NPU"><a href="#2-重置NPU：NPU挂了被占用，除了重启就只能重置NPU" class="headerlink" title="2.重置NPU：NPU挂了被占用，除了重启就只能重置NPU"></a>2.重置NPU：NPU挂了被占用，除了重启就只能重置NPU</h3><pre><code class="hljs">    echo reset &gt; /dev/arnpu
+</code></pre>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>1.把代码上传至服务器中报错：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240723175724.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>原因</strong>：这里本地上传的本地的文件时间戳要比系统中的要晚，也就是在未来，所以make时会一直等到时间到才开始正常编译。<br><strong>解决</strong>：</p>
+<pre><code class="hljs">    find  .  | xargs   touch  
+</code></pre>
+<p>把目录下文件包括子目录的文件全touch一遍来更新时间戳</p>
+<p>#pragma once：只要在头文件的最开始加入这条指令就能够保证头文件被编译一次，这条指令实际上在VC6中就已经有了，但是考虑到兼容性并没有太多的使用它。<br>#pragma once 与 #ifndef #define #endif 的区别</p>
+<ul>
+<li>对于#pragma once,根据MSDN解说，能够防止一个文件被多次包含。与#ifndef #define #endif形式的文件保护相比，前者是平台相关的，可移植性比较差，但是它效率更高，因为<strong>它不需要去打开包含的文件</strong>，就可以判断这个文件有没有被包含。当然这个工作是系统帮我们完成的。 </li>
+<li>后者的优点在于它是语言相关的特性，所以可移植性好。但是在包含一个文件的时候，只有打开这个文件，根据文件的保护宏是否已经被定义来判断此文件是否已经被包含过。效率相对较低。当然在＃include的时候，程序员也可以自己判断所要包含的文件的保护宏是否已经被定义，来决定是否要包含这个文件。类似下面的代码：</li>
+</ul>
+<p><strong>hal模式</strong>：Hardware Abstraction Layer 模式，硬件抽象层模式。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240731112056.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>MPP模式</strong>：Media Process Platform 模式，媒体处理软件平台。平台对应用软件屏蔽了芯片相关的复杂的底层处理，并对应用软件直接提供MPI（ MPP Programe Interface）接口完成相应功能。MMP层类似于安卓的HAL层，该层主要包含图像数据的功能处理以及视频流的处理，对该层的掌握需要了解视频流的原理，kernel层驱动的开发主要了解硬件的原理，但MPP层需要了解成像的原理。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/xreal@main/img/20240731111757.png" srcset="/img/loading.gif" lazyload><br>&#x2F;usrdata&#x2F;log&#x2F;user.log</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>xreal</div>
+      <div>https://caiji-qaq.github.io/2024/08/29/xreal/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/09/29/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/cuda%E5%AD%A6%E4%B9%A0/" title="cuda学习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">cuda学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/19/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/linux%E5%86%85%E6%A0%B8%E5%87%86%E5%A4%87/" title="linux内核准备">
+                        <span class="hidden-mobile">linux内核准备</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
