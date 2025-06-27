@@ -1,0 +1,879 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一章 绪论1.基本概念数据库系统:是由数据库、数据库管理系统(及其应用开发工具)应用程序和数据库管理员(DBA)组成的存储、管理、处理和维护数据的系统。 文件系统：可保存，但共享性差；冗余度大，独立性差数据库管理系统：数据库系统的出现使信息系统从以加工数据的程序为中心转向围绕&#x3D;&#x3D;共享的数据库&#x3D;&#x3D; 为中心的新阶段优点：1.数据的共享性高、冗余度低且易扩充:数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库速成">
+<meta property="og:url" content="https://caiji-qaq.github.io/2024/12/30/%E5%AD%A6%E7%94%9F%E6%97%B6%E4%BB%A3%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%9F%E6%88%90/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第一章 绪论1.基本概念数据库系统:是由数据库、数据库管理系统(及其应用开发工具)应用程序和数据库管理员(DBA)组成的存储、管理、处理和维护数据的系统。 文件系统：可保存，但共享性差；冗余度大，独立性差数据库管理系统：数据库系统的出现使信息系统从以加工数据的程序为中心转向围绕&#x3D;&#x3D;共享的数据库&#x3D;&#x3D; 为中心的新阶段优点：1.数据的共享性高、冗余度低且易扩充:数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230150506.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230151544.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230151857.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230151953.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230152043.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230152307.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230162328.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230162353.png">
+<meta property="article:published_time" content="2024-12-30T07:01:00.000Z">
+<meta property="article:modified_time" content="2025-06-27T11:37:57.602Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230150506.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>数据库速成 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"caiji-qaq.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>做个好人</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="数据库速成"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-30 15:01" pubdate>
+          2024年12月30日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          44 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">数据库速成</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第一章-绪论"><a href="#第一章-绪论" class="headerlink" title="第一章 绪论"></a>第一章 绪论</h1><h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1.基本概念"></a>1.基本概念</h2><p>数据库系统:是由数据库、数据库管理系统(及其应用开发工具)应用程序和数据库管理员(DBA)组成的存储、管理、处理和维护数据的系统。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230150506.png" srcset="/img/loading.gif" lazyload></p>
+<p>文件系统：可保存，但共享性差；冗余度大，独立性差<br>数据库管理系统：数据库系统的出现使信息系统从以加工数据的程序为中心转向围绕&#x3D;&#x3D;共享的数据库&#x3D;&#x3D; 为中心的新阶段<br>优点：<br>1.数据的共享性高、冗余度低且易扩充:数据共享可以大大减少数据冗余，节约存储空间<br>2.数据独立性高:<br>物理独立性:是指用户的应用程序与数据库中数据的物理存储是相互独立的。<br>逻辑独立性:是指用户的应用程序与数据库的逻辑结构是相互独立的。</p>
+<h2 id="2-数据模型"><a href="#2-数据模型" class="headerlink" title="2.数据模型"></a>2.数据模型</h2><h3 id="2-1-两种数据模型"><a href="#2-1-两种数据模型" class="headerlink" title="2.1 两种数据模型"></a>2.1 两种数据模型</h3><p>概念模型+逻辑模型和物理模型</p>
+<ol>
+<li>概念模型：信息模型，是按照用户的观点来对数据和信息建模，用于<strong>数据库设计</strong>。<br>基本概念：</li>
+</ol>
+<ul>
+<li>实体:客观存在并可相互区别的事物。人</li>
+<li>属性:实体所具有的某一特性。人的鼻子嘴巴</li>
+<li>码:唯一标识实体的属性。学号</li>
+<li>实体型:用实体名及其属性集合来抽象和刻面同类实体。含有鼻子和嘴巴的人</li>
+<li>实体集:同一类型实体的集合。学校</li>
+<li>联系:实体之间的联系通常是指不同实体集之间的联系。实体之间的联系有一对一、一对多和多对多等多种联系。</li>
+<li>概念模型的一种表示方法:实体-联系方法。用E-R图来描述现实世界的概念模型，E-R方法也称为E-R模型。</li>
+</ul>
+<ol start="2">
+<li>逻辑模型与物理模型：<br>逻辑模型（类似自己写的代码）：按照&#x3D;&#x3D;计算机系统的观点&#x3D;&#x3D;对数据建模，用于数据库管理系统的实现。</li>
+</ol>
+<ul>
+<li>层次模型</li>
+<li>网状模型</li>
+<li>关系模型</li>
+</ul>
+<p>物理模型（类似机器码01）：物理模型:是对数据最底层的抽象，它描述数据在系统内部的表示方法和存取方法，或在<strong>磁盘或磁带上的存储方式和存取方法</strong>，是而向计算机系统的。<br>联系:</p>
+<ul>
+<li>实体之间的联系通常是指不同实体集之间的联系。实体之间的联系有一对一、一对多和多对多等多种联系。</li>
+<li>实体内部的联系通常是指实体各属性之间的联系</li>
+</ul>
+<p>ER图<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230151544.png" srcset="/img/loading.gif" lazyload></p>
+<p>ER图分为实体、属性、关系三个核心的部分。实体是长方形体现，而属性则是椭圆性，关系为菱形。</p>
+<h3 id="2-2-常用的数据模型"><a href="#2-2-常用的数据模型" class="headerlink" title="2.2 常用的数据模型"></a>2.2 常用的数据模型</h3><p>常用的数据模型:层次模型，网状模型，关系模型，面向对象数据模型，对象关系数据模型，半结构化数据模型。</p>
+<ul>
+<li><p>层次模型<br>有且只有一个结点没有双亲结点，这个结点称为<strong>根结点</strong>，根以外的其他结点有且只有一个双亲结点，<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230151857.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>网状模型<br>允许一个以上的节点无双亲，一个节点可以有多于一个双亲<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230151953.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>关系模型<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230152043.png" srcset="/img/loading.gif" lazyload><br>关系:一个关系对应通常说的一张表。<br>元组:表中的一行。<br>属性:表中的一列。<br>码:也称码键，表中的某个属性组，<br>域:是一组具有相同数据类型的值的集合。<br>分量:元组中的一个属性。</p>
+</li>
+</ul>
+<h3 id="2-3-数据库系统结构"><a href="#2-3-数据库系统结构" class="headerlink" title="2.3 数据库系统结构"></a>2.3 数据库系统结构</h3><p>三级模式：外模式+模式+内模式</p>
+<ul>
+<li>外模式:也称子模式或用户模式，它是数据库用户(包括应用程序员和最终用户)能够看见和使用的局部数据的逻辑结构和结征的猫述，最数据库用产的数据视图、是与基一应用有关的歌据的逻辑表示。</li>
+<li>模式:也称为逻辑模式，是数据库中全体数据的逻辑结构和特征的描述，是所有用户的公共数据视图</li>
+<li>内模式:也称存储模式，一个数据库&#x3D;&#x3D;只有一个内模式&#x3D;&#x3D;。它是数据物理结构和存储方式的描述，是数据在数据库内部的组织方式</li>
+</ul>
+<p>二级映像：</p>
+<ul>
+<li>小模式&#x2F;模式映像:当模式改变时，由数据库管理员对各个外模式&#x2F;模式映像作相应改变，可以使外模式保持不变。应用程序不必修改。保证了数据与程序的逻辑独立性。</li>
+<li>模式&#x2F;内模式映像:当数据库的存储结构改变时，有数据库管理员对模式&#x2F;内楼式作相应改变，可以使楼式保持不变，从而应用程序也不用改变，保证了数据与程序的物理独立性</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230152307.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-4-数据库系统的组成"><a href="#2-4-数据库系统的组成" class="headerlink" title="2.4 数据库系统的组成"></a>2.4 数据库系统的组成</h3><ol>
+<li>硬件平台及数据库: 足够大内存、磁盘或磁盘阵列等设备，较高的通道能力以提高数据的传送率</li>
+<li>软件：数据库管理系统，支持数据库管理系统运行的操作系统，具有与数据库接口的高级语言及其编译系统，以数据库管理系统为核心的应用开发工具，为特定应用环境开发的数据库应用系统</li>
+<li>人员: 开发、管理和使用数据库的人员主要包括数据库管理员、系统分析员和数据库设计人员、应用程序员和最终用户。</li>
+</ol>
+<h1 id="第二章-关系数据库"><a href="#第二章-关系数据库" class="headerlink" title="第二章 关系数据库"></a>第二章 关系数据库</h1><h2 id="1-关系模式"><a href="#1-关系模式" class="headerlink" title="1.关系模式"></a>1.关系模式</h2><h3 id="1-1-关系操作"><a href="#1-1-关系操作" class="headerlink" title="1.1 关系操作"></a>1.1 关系操作</h3><h3 id="1-2-关系代数语言"><a href="#1-2-关系代数语言" class="headerlink" title="1.2 关系代数语言"></a>1.2 关系代数语言</h3><p>通过对关系的运算来表达查询。(抽象查询)<br>关系代数运算:5种基本运算:并，差，笛卡儿积，选择，投影及交，连接，除。</p>
+<p>自然连接，（悬浮元组）外连接</p>
+<h1 id="第三章-SQL语言"><a href="#第三章-SQL语言" class="headerlink" title="第三章 SQL语言"></a>第三章 SQL语言</h1><h2 id="1-SQL的基本概念"><a href="#1-SQL的基本概念" class="headerlink" title="1 SQL的基本概念"></a>1 SQL的基本概念</h2><p>SQL是Structured Query Language的缩写，意思是结构化询语言，是一种在数据库管理系统中查询或对数据库里面的数据进行更改的语言</p>
+<p>不同数据库管理系统的SQL语言略有不同</p>
+<ul>
+<li>1.数据定义语言DDL(Data Ddefinition Language)<br>SQL数据定义语言主要用来定义逻辑结构，包括定义基表，视图和索引。<br>删除表 定义表 修改表</li>
+<li>2.数据查询语言DQL(Data Query Language)SQL的数据查询语言主要用来对数据库中的各种数据对象进行查询。</li>
+<li>3.数据操纵语言DML(Data Manipulation Language)<br>SQL的数据操纵语言，用于改变数据库中的数据，包括插入，删除，修改</li>
+<li>4.数据控制功能DCL(DataControl Language)<br>SQL的数据控制语言，对表和视图的授权，完整性规则的描述以及事务开始和结束等控制语句。</li>
+</ul>
+<h2 id="2-SQL基本语法"><a href="#2-SQL基本语法" class="headerlink" title="2 SQL基本语法"></a>2 SQL基本语法</h2><h3 id="2-1-数据类型"><a href="#2-1-数据类型" class="headerlink" title="2.1 数据类型"></a>2.1 数据类型</h3><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230162328.png" srcset="/img/loading.gif" lazyload><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20241230162353.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="1-模式定义-amp-删除"><a href="#1-模式定义-amp-删除" class="headerlink" title="1.模式定义&amp;删除"></a>1.模式定义&amp;删除</h4><p><strong>模式定义</strong>：CREATE SCHEMA&lt;模式名&gt;AUTHORIZATION&lt;用户名&gt;；<br>为用户WANG定义一个学生-课程模式 S-T。</p>
+<pre><code class="hljs">CREATE SCHEMA&quot;S-T&quot; AUTHORIZATION WANG;
+</code></pre>
+<p><strong>模式删除</strong>：DROP SCHEMA&lt;模式名&gt;&lt;CASCADEIRESTRICT&gt;;<br>制除模式，其中CASCADE和RESTRICT 必须二选一</p>
+<ul>
+<li>CASCADE是(级联)制除模式的同时也把该模式的所有数据库对象删除。有点类似于删除中的-r </li>
+<li>RESTRICT(限制)如果该模式下有下属对象，比如表视图就拒绝这个删除语句的执行</li>
+</ul>
+<h4 id="2-表的定义和删除和修改"><a href="#2-表的定义和删除和修改" class="headerlink" title="2.表的定义和删除和修改"></a>2.表的定义和删除和修改</h4><p>定义</p>
+<pre><code class="hljs">table 表名(字段名 类型 字段约束，字段名 类型 字段约束，字段名 类型 字段约束);create//创建表
+比如
+create table user(
+name varchar(20)
+age int,
+sex char(1)
+）
+</code></pre>
+<p>删除</p>
+<pre><code class="hljs">DROPTABLE&lt;表名&gt;[RESTRICTICASCADE]
+</code></pre>
+<p>[例3.11]删除 Student 表:</p>
+<pre><code class="hljs">DROP TABLE Student CASCADE:
+</code></pre>
+<p>修改</p>
+<pre><code class="hljs">ALTER TABLE&lt;表名&gt;
+[ADD[COLUMN]&lt;新列名&gt;&lt;数据类型&gt;【完整性约束]][ADD&lt;表级完整性约束&gt;]
+</code></pre>
+<p>[例3.8] 向 Student 表增加“入学时间”列，其数据类型为目期型。</p>
+<pre><code class="hljs">ALTER TABLE Student ADD S entrance DATE:
+</code></pre>
+<h4 id="3-索引的简历与修改-amp-删除"><a href="#3-索引的简历与修改-amp-删除" class="headerlink" title="3.索引的简历与修改&amp;删除"></a>3.索引的简历与修改&amp;删除</h4><p>数据量比较大的时候，查询耗时间长，建立索引可以有效减少消耗时间。索引可以建立在一列或者多列上<br><strong>建立</strong>：</p>
+<pre><code class="hljs">CREATE[UNIQUE][CLUSTERIINDEX&lt;索引名&gt;ON&lt;表名&gt;(&lt;列名&gt;[&lt;次序&gt;][，&lt;列名&gt;[&lt;次序&gt;]]…);
+</code></pre>
+<p>CLUSTER:聚簇索引:物理顺序与索引的逻辑顺序相同。比如买书里的科幻区这样子<br>UNIQUE 唯一索引</p>
+<pre><code class="hljs">CREATE UNIOUE INDEX Stusno ON Student(Sno):
+</code></pre>
+<p><strong>修改</strong>：</p>
+<pre><code class="hljs">ALTER INDEX&lt;旧索引名&gt;RENAME TO&lt;新索引名&gt;;
+</code></pre>
+<p>[例3.14]将SC表的SCno 索引名改为 SCSno。</p>
+<pre><code class="hljs">ALTER INDEX SCnO RENAME TO SCSno;
+</code></pre>
+<p><strong>删除</strong>：</p>
+<pre><code class="hljs">DROP INDEX&lt;索引名&gt;;
+</code></pre>
+<p>[例3.15] 删除 Student 表的 Stusname 索引。</p>
+<pre><code class="hljs">DROP INDEX Stusname
+</code></pre>
+<h1 id="八股"><a href="#八股" class="headerlink" title="八股"></a>八股</h1><h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><h3 id="1-三个范式："><a href="#1-三个范式：" class="headerlink" title="1.三个范式："></a>1.三个范式：</h3><ul>
+<li>1.第一范式：保每列的原子性，要求每列（或者每个属性值）都是不可再分的最小数据单元（也称为最小的原子单元）</li>
+<li>2.第二范式：第一范式的基础上更进一层，要求表中的每列都和主键相关，即要求实体的唯一性。如果一个表满足第一范式，并且除了主键以外的其他列全部都&#x3D;&#x3D;依赖于该主键&#x3D;&#x3D;，那么该表满足第二范式。</li>
+<li>3.第三范式：在第二范式的基础上更进一层，第三范式是确保每列都和主键列直接相关，而不是间接相关，即限制列的冗余性。如果一个关系满足第二范式，并且<strong>除了主键以外的其他列都依赖于主键列，列和列之间不存在相互依赖关系</strong>，则满足第三范式。</li>
+</ul>
+<h3 id="2-MySQL中varchar与char的区别"><a href="#2-MySQL中varchar与char的区别" class="headerlink" title="2.MySQL中varchar与char的区别"></a>2.MySQL中varchar与char的区别</h3><ul>
+<li>char字段的最大长度为255字符，varchar字段的最大长度为65535个字符。</li>
+<li>char类型如果存的数据量小于最大长度，剩余的空间会使用空格填充，因此可能会浪费空间，所以char类型适合<strong>存储长度固定的数据，这样不会浪费空间</strong>，效率还比varchar略高；varchar类型如果存到数据量小于最大长度，剩余的空间会留给别的数据使用，所以varchar类型适合存储长度不固定的数据，这样虽然没有char存储效率高，但至少不会浪费空间。</li>
+<li>char类型的查找效率高，varchar类型的查找效率较低。</li>
+</ul>
+<h3 id="3-select的执行过程"><a href="#3-select的执行过程" class="headerlink" title="3.select的执行过程"></a>3.select的执行过程</h3><ul>
+<li><p>1.首先先进行连接：数据库传输是根据TCP连接的，连接的首先客户端和MySQL通过三次握手建立连接，MySQL是基于TCP进行传输的。MySQL服务如果没有启动就会报错。MySQL正常运行的话就去校验用户名和密码，如果认证信息错误也会报错。检验通过之后连接器会获取用户权限并且保存起来，后续的任何操作都会基于开始的读到权限进行判断，即便创建连接之后更改了权限也不会影响已连接的权限。</p>
+</li>
+<li><p>2.查询缓存：<br>接成功后会像MySQL服务中发送SQL语句，MySQL服务收到语句之后会进行解析判断SQL语句的类型。如果是select语句的话就去缓存中查询，看看之前有没有执行过这条select语句。缓存是以k-v形式保存在内存中的，key是SQL语句，value是SQL查询结果。<strong>如果缓存中有结果就直接返回给客户端，如果没有命中就继续向下执行。执行完成后的结果会被放入缓存中</strong>。</p>
+</li>
+<li><p>3.执行SQL</p>
+</li>
+</ul>
+<h3 id="4-drop-delete-alter的区别"><a href="#4-drop-delete-alter的区别" class="headerlink" title="4.drop delete alter的区别"></a>4.drop delete alter的区别</h3><p>drop删除整张表和表结构，以及表的索引、约束和触发器。<br> delete只删除表的全部或部分数据，表结构、索引、约束等会被保留。<br>alter：修改表的结构，例如列的增删改</p>
+<h3 id="5-事务的四大特性（ACID）"><a href="#5-事务的四大特性（ACID）" class="headerlink" title="5.事务的四大特性（ACID）"></a>5.事务的四大特性（ACID）</h3><ul>
+<li><p><strong>原子性</strong>：整个事务中的所有操作要么全部提交成功，要么全部失败回滚，对于一个事务来说，不可能只执行其中的一部分操作，这就是事务的原子性。<br>例子：A账户转账100元到B账户</p>
+</li>
+<li><p><strong>一致性</strong>：数据库总是从一个一致性的状态转换到另一个一致性的状态。<br>例子：假设在银行的转账过程中，A账户和B账户都应该保持非负余额。如果有一个事务将A账户的钱扣除超过账户余额，那么这个操作违反了数据库的一致性要求。数据库必须确保无论事务是否成功，都不会留下不一致的数据。</p>
+</li>
+<li><p>**隔离性(isolation)**：一个事务所做的修改在最终提交以前，对其他事务是不可见的。<br>例子：T1 执行查询操作，但没有提交。T2 进行修改并提交。</p>
+</li>
+<li><p>**持久性(durability)**：一旦事务提交，则其所做的修改就会永久保存到数据库中。此时即使系统崩溃，修改的数据也不会丢失。<br>例子：假设银行系统在转账完成并提交后，系统崩溃。由于持久性特性，尽管系统崩溃，转账操作依然被保存到数据库中，不会丢失。有点像是日志相关的</p>
+</li>
+</ul>
+<h3 id="6-并发事务的问题"><a href="#6-并发事务的问题" class="headerlink" title="6.并发事务的问题"></a>6.并发事务的问题</h3><p>并发事务：<br>是指在同一时间内，有多个事务同时进行并对数据库进行操作。数据库管理系统（DBMS）需要确保这些并发事务能够正确执行，而不会导致数据不一致或错误。这是因为多个事务同时访问同一数据时，可能会发生 脏读、不可重复读 和 幻读 等问题。</p>
+<p>脏读：</p>
+<ul>
+<li>事务T1 执行：从账户A扣除100元，更新账户B余额（但还没有提交）。</li>
+<li>事务T2 执行：从账户A扣除200元，更新账户B余额（但还没有提交）。<br>此时，T1和T2都修改了账户A和账户B的余额，但都没有提交。事务T1可能已经读取到T2未提交的数据，这就导致了脏读。</li>
+</ul>
+<p>不可重复读：不可重复读是指在一个事务内，读取的数据在后续查询中发生变化，导致不一致。</p>
+<p>幻读：一个事务在执行查询时，其他事务在其中插入或删除了数据，导致查询结果在事务中发生变化。例如，事务T1查询账户余额大于100元的所有账户，事务T2同时插入了一个新的账户，导致事务T1查询的结果发生了变化。</p>
+<h3 id="7-事务隔离级别"><a href="#7-事务隔离级别" class="headerlink" title="7.事务隔离级别"></a>7.事务隔离级别</h3><ul>
+<li><p>读未提交(read uncommitted)：指一个事务还没提交时，它做的变更就能被其他事务看到。</p>
+</li>
+<li><p>读提交(read committed)：指一个事务提交之后，它做的变更才能被其他事务看到。</p>
+</li>
+<li><p>可重复读(repeatable read)：指一个事务执行过程中看到的数据，一直跟这个事务启动时看到的数据是一致的，MySQL InnoDB 引擎的默认隔离级别。</p>
+</li>
+<li><p>串行化(serializable )：会对记录加上读写锁，在多个事务对这条记录进行读写操作时，如果发生了读写冲突的时候，后访问的事务必须等前一个事务执行完成，才能继续执行。</p>
+</li>
+</ul>
+<h3 id="8-B-树来做索引的优势"><a href="#8-B-树来做索引的优势" class="headerlink" title="8.B+树来做索引的优势"></a>8.B+树来做索引的优势</h3><p><strong>B+树的特点与定义</strong><br>B+Tree 是一种多叉树，叶子节点才存放数据，非叶子节点只存放索引，每个节点里的数据是按主键顺序存放的。在叶子节点中，包括了所有的索引值信息，并且每一个叶子节点都指向下一个叶子节点，形成一个链表。B+Tree 存储千万级的数据只需要 3-4 层高度就可以满足，千万级的表查询目标数据最多需要 3-4 次磁盘 I&#x2F;O。</p>
+<p><strong>B+树和B树相比</strong></p>
+<ul>
+<li>B+树所有关键码都存放在叶节点中，上层的非叶节点的关键码是其子树中最小关键码的复写</li>
+<li>B+树叶节点包含了全部关键码及指向相应数据记录存放地址的指针，且叶节点本身按关键码从小到大顺序连接</li>
+<li>B+树在搜索过程中，如果查询和内部节点的关键字一致，那么搜索过程不停止，而是继续向下搜索这个分支</li>
+</ul>
+<p><strong>优势：</strong></p>
+<ul>
+<li>单点查询：B 树进行单个索引查询时，最快可以在 O(1) 的时间代价内就查到。从平均时间代价来看，会比 B+ 树稍快一些。但是 B 树的查询波动会比较大，因为每个节点即存索引又存记录，所以有时候访问到了非叶子节点就可以找到索引，而有时需要访问到叶子节点才能找到索引。B+ 树的非叶子节点不存放实际的记录数据，仅存放索引，数据量相同的情况下，B+树的非叶子节点可以存放更多的索引，查询底层节点的磁盘 I&#x2F;O次数会更少。</li>
+<li>插入和删除效率：B+ 树有大量的冗余节点，删除一个节点的时候，可以直接从叶子节点中删除，甚至可以不动非叶子节点，删除非常快。B+ 树的插入也是一样，有冗余节点，插入可能存在节点的分裂（如果节点饱和），但是最多只涉及树的一条路径。B 树没有冗余节点，删除节点的时候非常复杂，可能涉及复杂的树的变形。</li>
+<li>范围查询：B+ 树所有叶子节点间有一个链表进行连接，而 B 树没有将所有叶子节点用链表串联起来的结构，因此只能通过树的遍历来完成范围查询，范围查询效率不如 B+ 树。B+ 树的插入和删除效率更高。存在大量范围检索的场景，适合使用 B+树，比如数据库。而对于大量的单个索引查询的场景，可以考虑 B 树，比如nosql的MongoDB。</li>
+</ul>
+<p><strong>对比：</strong></p>
+<ul>
+<li>B+Tree 对比 B Tree：B+Tree 只在叶子节点存储数据，而 B 树 的非叶子节点也要存储数据，所以 B+Tree 的单个节点的数据量更小，在<strong>相同的磁盘 I&#x2F;O 次数</strong>下，就能查询更多的节点。B+Tree 叶子节点采用的是双链表连接，适合 MySQL 中常见的基于范围的顺序查找，而 B 树无法做到这一点。（因为IO查询是整个查询流程中最耗时的部分，因此在相同IO次数下，小的节点可以查询到更多的数据）</li>
+<li>B+Tree 对比 二叉树：对于有 N 个叶子节点的 B+Tree，其搜索复杂度为O(logdN)，其中 d 表示节点允许的最大子节点个数。在实际的应用当中， d 值是大于100的，即使数据达到千万级别时，B+Tree 的高度依然维持在 34 层左右，一次数据查询操作只需要做 34 次的磁盘 I&#x2F;O 操作就能查询到。二叉树的每个父节点的儿子节点个数是 2 个，意味着其搜索复杂度为 O(logN)，二叉树检索到目标数据所经历的磁盘 I&#x2F;O 次数要更多。</li>
+<li>B+Tree 对比 Hash：Hash在做等值查询的时候效率高，搜索复杂度为 O(1)。但是 Hash 表不适合做<strong>范围查询</strong>。</li>
+</ul>
+<h3 id="9-索引种类"><a href="#9-索引种类" class="headerlink" title="9.索引种类"></a>9.索引种类</h3><ul>
+<li><p>单值索引</p>
+</li>
+<li><p>唯一索引：索引值必须唯一</p>
+</li>
+<li><p>联合索引：假设我们有一个 employees 表，并且我们经常根据 name 和 age 两个字段一起查询员工。如果你同时创建一个多列索引，会更有效地加速这类查询。<br><strong>注意</strong>：多列索引的顺序很重要。如果你创建了 (name, age) 的多列索引，那么数据库会优先考虑 name 列进行索引。如果查询只使用 age 列进行过滤，可能无法使用该索引。因此，多列索引的顺序应根据查询的频率来确定。</p>
+</li>
+<li><p>主键索引：设定为主键后数据库会自动建立索引</p>
+</li>
+</ul>
+<h3 id="10-使用索引的缺陷"><a href="#10-使用索引的缺陷" class="headerlink" title="10.使用索引的缺陷"></a>10.使用索引的缺陷</h3><p>虽然索引大大提高了查询速度，同时却会降低更新表的速度，如对表进行INSERT、UPDATE和DELETE。因为更新表时，MySQL 不仅要保存数据，还要保存一下索引文件每次更新添加了索引列的字段，都会调整因为更新所带来的键值变化后的索引信息。<br>同时索引也是一张白哦，所以索引也是需要占用空间的。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E7%94%9F%E6%97%B6%E4%BB%A3%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/" class="category-chain-item">学生时代面试准备</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>数据库速成</div>
+      <div>https://caiji-qaq.github.io/2024/12/30/学生时代面试准备/数据库速成/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/06/27/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/linux%E7%B3%BB%E7%BB%9F%E8%A3%85%E6%9C%BA/" title="linux系统装机">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">linux系统装机</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/29/%E5%85%AB%E8%82%A1%E9%9D%A2%E7%BB%8F/cuda%E5%AD%A6%E4%B9%A0/" title="cuda学习">
+                        <span class="hidden-mobile">cuda学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

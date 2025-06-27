@@ -36,13 +36,14 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240725223417.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240806222720.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240827200210.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20250225163631.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240822165123.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240923223323.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240923231216.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240923231843.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240923232000.png">
 <meta property="article:published_time" content="2024-05-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-10-24T08:43:40.752Z">
+<meta property="article:modified_time" content="2025-06-27T11:26:39.073Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20240622161115.png">
@@ -115,7 +116,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Fluid</strong>
+      <strong>做个好人</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -240,7 +241,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          35k 字
+          38k 字
         
       </span>
     
@@ -251,7 +252,7 @@
         
         
         
-          295 分钟
+          314 分钟
         
       </span>
     
@@ -770,9 +771,11 @@ ptrStack.pop(); // 此时，指向`new int(10)`的指针丢失，导致内存泄
 <li>执行完成后，工作线程将继续从任务队列中取出下一个任务。</li>
 </ul>
 </li>
-<li>5.<strong>线程复用</strong>：</li>
+<li>5.<strong>线程复用</strong>：<ul>
 <li>线程池通过&#x3D;&#x3D;复用现有线程避免了频繁的线程创建和销毁&#x3D;&#x3D;，降低了系统的开销。</li>
 <li>当没有任务时，工作线程会进入等待状态，直到有新任务提交。</li>
+</ul>
+</li>
 </ul>
 <h4 id="决定数量"><a href="#决定数量" class="headerlink" title="决定数量"></a>决定数量</h4><p>线程池中线程数量的选择与CPU、IO、并行和并发等因素有关。</p>
 <ol>
@@ -867,7 +870,7 @@ ptrStack.pop(); // 此时，指向`new int(10)`的指针丢失，导致内存泄
 <li>写入数据时，可以将数据直接写入文件中指定记录的位置。</li>
 <li>直接访问适用于需要根据记录标识符快速访问文件中数据的场景，如数据库系统或索引文件。</li>
 </ul>
-<p>顺序访问和直接访问的区别就像是链表和数组的区别，顺序访问是锁定只能顺序一步一步走下来，而直接访问可以通过索引一步到位。</p>
+<p>例子：<br>随机访问：一个数组访问第三个元素和第一个元素访问时间相同<br>直接访问：硬盘上有一个文件data.txt读取第1000个字节<br>硬盘驱动器需要移动磁头到数据所在的扇区，等待磁盘旋转将目标扇区移动到磁头下，读取目标字节，因此和元素位置是有关系的。<br>其实感觉主要是<strong>所处位置不一样</strong>，一个是内存一个是磁盘。</p>
 <h3 id="35-内核态与用户态的区别"><a href="#35-内核态与用户态的区别" class="headerlink" title="35.内核态与用户态的区别"></a>35.内核态与用户态的区别</h3><p>1.权限：内核态拥有最高的权限，可以访问和执行所有的系统指令和资源，而用户态的权限相对较低，只能访问受限的指令和资源。内核态能够执行特权指令，如修改内存映射、管理硬件设备等，而用户态不能直接执行这些特权指令。</p>
 <p>2.安全性：由于内核态具有较高的权限，错误的操作或滥用权限可能会导致系统崩溃或不安全。为了保护系统的稳定性和安全性，将操作系统的核心部分放在内核态下运行，限制用户态的权限。</p>
 <p>3.进入内核态的方式：进入内核态有三种方式，分别是&#x3D;&#x3D;系统调用、异常和设备中断&#x3D;&#x3D;。系统调用是应用程序主动向内核请求服务的方式；异常是由应用程序中的错误或异常情况触发的，如非法指令、内存访问越界等；设备中断是外部设备产生的中断信号，需要内核处理。</p>
@@ -1002,7 +1005,7 @@ ptrStack.pop(); // 此时，指向`new int(10)`的指针丢失，导致内存泄
 <ul>
 <li>1.<strong>紧凑化</strong>：操作系统通过将分散的内存块移动到一起，将空闲内存集中起来，形成一个大块的连续内存空间。这种方法主要用于处理外部碎片，但它需要较大的计算开销，因为涉及数据的移动和地址的更新。</li>
 <li>2.<strong>内存池</strong>：操作系统或应用程序可以使用预先分配好的内存池来减少碎片。内存池通过管理固定大小的内存块，减少内部碎片的产生。</li>
-<li>3.分页：通过将内存划分为固定大小的页和页框来消除外部碎片</li>
+<li>3.分页：通过将内存划分为固定大小的页和页框来消除外部碎片，常见的话就是一页4KB</li>
 <li>4.分段：分段是一种内存管理方式，将程序的内存空间划分为逻辑段，每个段代表一个特定的用途（如代码段、数据段、堆栈段等）。</li>
 </ul>
 <h3 id="52-解释一下操作系统中的信号机制"><a href="#52-解释一下操作系统中的信号机制" class="headerlink" title="52.解释一下操作系统中的信号机制"></a>52.解释一下操作系统中的信号机制</h3><p>1.信号定义：信号是一种用于通知进程发生某种特定事件的简短消息。每个信号都有一个唯一的整数标识符（例如，SIGINT、SIGKILL），表示不同的事件类型。<br>2.信号类型：</p>
@@ -1367,9 +1370,38 @@ ptrStack.pop(); // 此时，指向`new int(10)`的指针丢失，导致内存泄
 <li>ioremap<br><strong>用途</strong>: 用于将<strong>设备寄存器的物理地址</strong>（如内存映射 I&#x2F;O）映射到内核虚拟地址空间。<br><strong>特点</strong>: 常用于将硬件设备的寄存器或设备内存映射到内核地址空间，以便进行访问。</li>
 <li>vmalloc<br><strong>用途</strong>: 为内核分配虚拟地址空间，并在必要时将多个物理页映射到连续的虚拟地址空间。<br><strong>特点</strong>: 分配的虚拟地址是连续的，但底层的物理内存<strong>不需要是连续的</strong>。</li>
 <li>vmap<br><strong>用途</strong>: 将已有的一组物理页（通常通过 struct page 表示）映射到连续的虚拟地址空间。</li>
+<li>mmap</li>
 </ul>
 <h3 id="74-字符设备与块设备"><a href="#74-字符设备与块设备" class="headerlink" title="74.字符设备与块设备"></a>74.字符设备与块设备</h3><h4 id="块设备"><a href="#块设备" class="headerlink" title="块设备"></a>块设备</h4><p>块设备以“块”为单位进行数据传输，通常每次读写的数据量较大。典型的块设备包括硬盘、SSD、SD 卡等。块设备支持随机访问，意味着可以直接访问设备上的任意块。块设备通常用于存储文件系统，Linux 中的文件系统通常构建在块设备之上。</p>
 <h4 id="字符设备"><a href="#字符设备" class="headerlink" title="字符设备"></a>字符设备</h4><p>字符设备以“字符”为单位进行数据传输，每次读写的数据量较小。典型的字符设备包括串口设备（如 UART）、键盘、鼠标、打印机等。字符设备通常支持顺序访问，即一次读取一个字节或多个连续的字节。字符设备更适合处理小规模的数据流，比如从键盘输入数据、读取串口信息等。</p>
+<h3 id="75-mmap匿名映射以及私有映射"><a href="#75-mmap匿名映射以及私有映射" class="headerlink" title="75.mmap匿名映射以及私有映射"></a>75.mmap匿名映射以及私有映射</h3><h3 id="76-TLB有什么用？使用TLB的地址翻译是什么样子的？"><a href="#76-TLB有什么用？使用TLB的地址翻译是什么样子的？" class="headerlink" title="76.TLB有什么用？使用TLB的地址翻译是什么样子的？"></a>76.TLB有什么用？使用TLB的地址翻译是什么样子的？</h3><p>TLB 属于 (Memory Management Unit，内存管理单元) 内部的单元，本质上就是一块高速缓存（Cache），缓存了虚拟页号到物理页号的映射关系，你可以将其简单看作是存储着键（虚拟页号）值（物理页号）对的哈希表。</p>
+<p>流程：<br>1.用虚拟地址中的虚拟页号作为 key 去 TLB 中查询；<br>2.如果能查到对应的物理页的话，就不用再查询页表了，这种情况称为 TLB 命中（TLB hit)。<br>3.如果不能查到对应的物理页的话，还是需要去查询主存中的页表，同时将页表中的该映射表项添加到 TLB 中，这种情况称为 TLB 未命中（TLB miss)。<br>4.当 TLB 填满后，又要登记新页时，就按照一定的淘汰策略淘汰掉快表中的一个页。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20250225163631.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="77-常见的页面置换算法有哪些"><a href="#77-常见的页面置换算法有哪些" class="headerlink" title="77.常见的页面置换算法有哪些?"></a>77.常见的页面置换算法有哪些?</h3><p>当发生硬性页缺失时，如果物理内存中没有空闲的物理页面可用的话。操作系统就必须将物理内存中的一个物理页淘汰出去，这样就可以腾出空间来加载新的页面了。<br>用来选择淘汰哪一个物理页的规则叫做 页面置换算法 ，我们可以把页面置换算法看成是淘汰物物理页的规则。<br><strong>常见的页面置换算法</strong>：<br>1.<strong>最佳页面置换算法</strong>（OPT，Optimal）：优先选择淘汰的页面是以后永不使用的，或者是在最长时间内不再被访问的页面，这样可以保证获得最低的缺页率。但由于人们目前无法预知进程在内存下的若干页面中哪个是未来最长时间内不再被访问的，因而该算法无法实现，只是理论最优的页面置换算法，可以作为衡量其他置换算法优劣的标准。<br>2.<strong>先进先出页面置换算法</strong>（FIFO，First In First Out） : 最简单的一种页面置换算法，总是淘汰最先进入内存的页面，即选择在内存中驻留时间最久的页面进行淘汰。该算法易于实现和理解，一般只需要通过一个 FIFO 队列即可满足需求。不过，它的性能并不是很好。</p>
+<p>3.<strong>最近最久未使用页面置换算法</strong>（LRU ，Least Recently Used）：LRU 算法赋予每个页面一个访问字段，用来记录一个页面自上次被访问以来所经历的时间 T，当须淘汰一个页面时，选择现有页面中其 T 值最大的，即最近最久未使用的页面予以淘汰。LRU 算法是根据各页之前的访问情况来实现，因此是易于实现的。OPT 算法是根据各页未来的访问情况来实现，因此是不可实现的。</p>
+<p>4.<strong>最少使用页面置换算法</strong>（LFU，Least Frequently Used） : 和 LRU 算法比较像，不过该置换算法选择的是之前一段时间内使用最少的页面作为淘汰页。</p>
+<h3 id="78-sizeof-struct"><a href="#78-sizeof-struct" class="headerlink" title="78.sizeof(struct)"></a>78.sizeof(struct)</h3><pre><code class="hljs">struct EmptyStruct &#123;&#125;;
+</code></pre>
+<p><strong>sizeof(EmptyStruct)是多大呢？</strong><br>一般情况下，编译器会分配 1 字节 给 EmptyStruct，但某些情况下（如继承或对齐优化）可能会调整大小。</p>
+<h3 id="79-数组做参数退化为指针"><a href="#79-数组做参数退化为指针" class="headerlink" title="79.数组做参数退化为指针"></a>79.数组做参数退化为指针</h3><pre><code class="hljs">int func(char array[]) &#123;
+    printf(&quot;sizeof=%d\n&quot;, sizeof(array));
+    printf(&quot;strlen=%d\n&quot;, strlen(array));
+&#125;
+
+int main() &#123;
+    char array[] = &quot;Hello World&quot;;
+    printf(&quot;sizeof=%d\n&quot;, sizeof(array));
+    printf(&quot;strlen=%d\n&quot;, strlen(array));
+    func(array);
+&#125;
+</code></pre>
+<p>对于64位机器来说，输出结果就是：</p>
+<pre><code class="hljs">sizeof=12
+strlen=11
+sizeof=8
+strlen=11
+</code></pre>
+<p>在 C++ 中，数组在作为函数参数时会退化为指向其首元素的指针。退化的原因是因为数组作为函数参数时，实际传递的是指向数组首元素的指针，不可能逐个拷贝整个数组然后在栈上传递，所以编译器只知道参数是一个指针，而不知道它的长度信息。</p>
 <h1 id="linux问题："><a href="#linux问题：" class="headerlink" title="linux问题："></a>linux问题：</h1><h3 id="1-如何查看进程以及其中包含的线程"><a href="#1-如何查看进程以及其中包含的线程" class="headerlink" title="1.如何查看进程以及其中包含的线程"></a>1.如何查看进程以及其中包含的线程</h3><p>查看进程 ps -aux 或者 使用 top<br>top 和 ps 都是常用的命令行工具，用于查看 Linux 系统中的进程和线程信息，但它们的用途和功能上有一些重要区别：</p>
 <ul>
 <li>top是<strong>实时</strong>的，而ps现实的是<strong>静态</strong>的</li>
@@ -1470,8 +1502,8 @@ int main() &#123;
 </ul>
 <p>LEAK SUMMARY：</p>
 <ul>
-<li>“definitely lost” 表示确实丢失的内存，通常是忘记释放的内存。</li>
-<li>“indirectly lost” 表示由 “definitely lost” 内存指向的内存。</li>
+<li>Direct 内存泄漏：直接分配的内存块本身没有被释放（例如，直接调用 new 分配但没有对应的 delete）。在这里报告中的 “40 direct” 意味着这 40 字节是直接泄漏的。</li>
+<li>Indirect 内存泄漏：指的是被一个直接泄漏的内存块所引用（通常是其内部包含的指针指向的内存）。这里 “432 indirect” 意味着这 432 字节是通过被泄漏的内存块间接泄漏的。</li>
 <li>“still reachable” 表示仍然可以访问的内存，但程序在退出前没有释放它，这不一定是错误，但通常也需要清理。</li>
 </ul>
 <h3 id="6-linux的free指令"><a href="#6-linux的free指令" class="headerlink" title="6.linux的free指令"></a>6.linux的free指令</h3><p>free 是 Linux 系统中用于显示内存使用情况的命令。它可以帮助我们查看系统的总内存、已用内存、可用内存、交换分区等的情况。free 命令通过读取 &#x2F;proc&#x2F;meminfo 文件来提供这些信息。下面是 free 命令的详细介绍，包括输出和常用选项。</p>
@@ -1573,6 +1605,192 @@ int main() &#123;
 </ul>
 <h3 id="8-Linux中的常见段错误可能的原因有哪些？以及如何排查？"><a href="#8-Linux中的常见段错误可能的原因有哪些？以及如何排查？" class="headerlink" title="8.Linux中的常见段错误可能的原因有哪些？以及如何排查？"></a>8.Linux中的常见段错误可能的原因有哪些？以及如何排查？</h3><p>段错误是一种常见的错误，它通常出现在程序试图访问非法的内存区域时。段错误发生时，操作系统会终止程序，并生成一个错误信号 SIGSEGV，表示<strong>程序试图访问未被允许的内存区域</strong>。</p>
 <p>常见原因，其实也就是访问到不该访问的内存地址了：空指针引用，数组元素访问越界，使用已经释放的内存</p>
+<h3 id="9-死锁以及死锁的解决方法，与实例结合版本"><a href="#9-死锁以及死锁的解决方法，与实例结合版本" class="headerlink" title="9.死锁以及死锁的解决方法，与实例结合版本"></a>9.死锁以及死锁的解决方法，与实例结合版本</h3><p>总所周知，死锁的条件：</p>
+<ul>
+<li>互斥：只能被一个线程所持有</li>
+<li>占有且等待：一个线程占有资源的同时，还申请其他资源。</li>
+<li>不可抢占：资源一旦分配给线程后，在未使用完之前，不能被其他线程强行夺走。</li>
+<li>循环等待：两个或多个线程形成一种头尾相接的循环等待资源关系。</li>
+</ul>
+<p><strong>示例</strong>：<br>线程1 和线程2 分别以不同的顺序申请两个互斥锁 mutex1 和 mutex2</p>
+<pre><code class="hljs">#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;mutex&gt;
+#include &lt;chrono&gt;
+
+std::mutex mutex1;
+std::mutex mutex2;
+
+void threadFunc1() &#123;
+    // 线程1先锁定 mutex1，再锁定 mutex2
+    std::cout &lt;&lt; &quot;线程1尝试锁定 mutex1...\n&quot;;
+    mutex1.lock();
+    std::cout &lt;&lt; &quot;线程1锁定了 mutex1\n&quot;;
+    
+    // 模拟处理时间
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    
+    std::cout &lt;&lt; &quot;线程1尝试锁定 mutex2...\n&quot;;
+    mutex2.lock();
+    std::cout &lt;&lt; &quot;线程1锁定了 mutex2\n&quot;;
+    
+    // 模拟工作
+    std::cout &lt;&lt; &quot;线程1正在工作...\n&quot;;
+    
+    // 解锁
+    mutex2.unlock();
+    mutex1.unlock();
+&#125;
+
+void threadFunc2() &#123;
+    // 线程2先锁定 mutex2，再锁定 mutex1
+    std::cout &lt;&lt; &quot;线程2尝试锁定 mutex2...\n&quot;;
+    mutex2.lock();
+    std::cout &lt;&lt; &quot;线程2锁定了 mutex2\n&quot;;
+    
+    // 模拟处理时间
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    
+    std::cout &lt;&lt; &quot;线程2尝试锁定 mutex1...\n&quot;;
+    mutex1.lock();
+    std::cout &lt;&lt; &quot;线程2锁定了 mutex1\n&quot;;
+    
+    // 模拟工作
+    std::cout &lt;&lt; &quot;线程2正在工作...\n&quot;;
+    
+    // 解锁
+    mutex1.unlock();
+    mutex2.unlock();
+&#125;
+
+int main() &#123;
+    std::thread t1(threadFunc1);
+    std::thread t2(threadFunc2);
+    
+    t1.join();
+    t2.join();
+    
+    std::cout &lt;&lt; &quot;程序结束\n&quot;;
+    return 0;
+&#125;
+</code></pre>
+<p><strong>解法</strong>：</p>
+<ul>
+<li><p>1.资源有序分配（Lock Ordering）————&gt;循环等待：<br>规定所有线程按照相同的顺序来申请多个锁，避免出现循环等待的情况。</p>
+</li>
+<li><p>2.使用 try_lock 与超时机制————&gt;不可剥夺：<br>使用 std::try_lock 或者自定义的超时机制尝试获取锁，如果获取失败则释放已获得的锁并重试。<br>使用try_lock_for会在一段时间内尝试获取锁，如果获取不到则会返回false</p>
+<pre><code class="hljs">#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;mutex&gt;
+#include &lt;chrono&gt;
+
+std::timed_mutex tmtx;
+
+void timedLockExample(int id) &#123;
+    // 尝试在 100 毫秒内获取锁
+    if (tmtx.try_lock_for(std::chrono::milliseconds(100))) &#123;
+        std::cout &lt;&lt; &quot;线程 &quot; &lt;&lt; id &lt;&lt; &quot; 成功获得锁\n&quot;;
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));  // 模拟工作
+        tmtx.unlock();
+    &#125; else &#123;
+        std::cout &lt;&lt; &quot;线程 &quot; &lt;&lt; id &lt;&lt; &quot; 超时未获得锁\n&quot;;
+    &#125;
+&#125;
+
+int main() &#123;
+    std::thread t1(timedLockExample, 1);
+    std::thread t2(timedLockExample, 2);
+    
+    t1.join();
+    t2.join();
+    
+    return 0;
+&#125;
+</code></pre>
+</li>
+<li><p>3.使用 std::lock：<br>C++11 提供的 std::lock 可以同时锁定多个 mutex，并保证不会发生死锁。</p>
+</li>
+</ul>
+<p><strong>解法1</strong>：有序分配</p>
+<pre><code class="hljs">#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;mutex&gt;
+#include &lt;chrono&gt;
+
+std::mutex mutex1;
+std::mutex mutex2;
+
+void safeThreadFunc1() &#123;
+    // 线程1按照规定顺序锁定
+    std::lock_guard&lt;std::mutex&gt; lock1(mutex1);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::lock_guard&lt;std::mutex&gt; lock2(mutex2);
+    
+    std::cout &lt;&lt; &quot;safeThreadFunc1 正在工作...\n&quot;;
+&#125;
+
+void safeThreadFunc2() &#123;
+    // 线程2也按照相同顺序锁定
+    std::lock_guard&lt;std::mutex&gt; lock1(mutex1);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::lock_guard&lt;std::mutex&gt; lock2(mutex2);
+    
+    std::cout &lt;&lt; &quot;safeThreadFunc2 正在工作...\n&quot;;
+&#125;
+
+int main() &#123;
+    std::thread t1(safeThreadFunc1);
+    std::thread t2(safeThreadFunc2);
+    
+    t1.join();
+    t2.join();
+    
+    std::cout &lt;&lt; &quot;安全程序结束\n&quot;;
+    return 0;
+&#125;
+</code></pre>
+<p><strong>解法2</strong>：使用lock同时锁定多个mutex</p>
+<pre><code class="hljs">#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;mutex&gt;
+#include &lt;chrono&gt;
+
+std::mutex mutex1;
+std::mutex mutex2;
+
+void lockedThreadFunc1() &#123;
+    // 使用 std::lock 同时锁定多个 mutex
+    std::lock(mutex1, mutex2);
+    // 使用 std::adopt_lock 告知 lock_guard 已经获得锁
+    std::lock_guard&lt;std::mutex&gt; lock1(mutex1, std::adopt_lock);
+    std::lock_guard&lt;std::mutex&gt; lock2(mutex2, std::adopt_lock);
+    
+    std::cout &lt;&lt; &quot;lockedThreadFunc1 正在工作...\n&quot;;
+    // 模拟工作
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+&#125;
+
+void lockedThreadFunc2() &#123;
+    // 同样使用 std::lock 同时锁定
+    std::lock(mutex1, mutex2);
+    std::lock_guard&lt;std::mutex&gt; lock1(mutex1, std::adopt_lock);
+    std::lock_guard&lt;std::mutex&gt; lock2(mutex2, std::adopt_lock);
+    
+    std::cout &lt;&lt; &quot;lockedThreadFunc2 正在工作...\n&quot;;
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+&#125;
+
+int main() &#123;
+    std::thread t1(lockedThreadFunc1);
+    std::thread t2(lockedThreadFunc2);
+    
+    t1.join();
+    t2.join();
+    
+    std::cout &lt;&lt; &quot;使用 std::lock 安全程序结束\n&quot;;
+    return 0;
+&#125;
+</code></pre>
 
                 
               </div>
@@ -1580,6 +1798,27 @@ int main() &#123;
             <hr/>
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E7%94%9F%E6%97%B6%E4%BB%A3%E5%85%AB%E8%82%A1/" class="category-chain-item">学生时代八股</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
 </div>
@@ -1635,7 +1874,7 @@ int main() &#123;
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/05/05/linux%20camera%E9%A1%B9%E7%9B%AE%E5%AE%9E%E7%8E%B0/" title="linux camera项目实现">
+                      <a href="/2024/05/05/%E9%A9%B1%E5%8A%A8%E5%AD%A6%E4%B9%A0/linux%20camera%E9%A1%B9%E7%9B%AE%E5%AE%9E%E7%8E%B0/" title="linux camera项目实现">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">linux camera项目实现</span>
                         <span class="visible-mobile">上一篇</span>
@@ -1645,7 +1884,7 @@ int main() &#123;
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/01/01/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B/" title="《网络是怎样连接的》">
+                      <a href="/2024/01/01/%E4%B9%A6%E7%B1%8D/%E3%80%8A%E7%BD%91%E7%BB%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%9E%E6%8E%A5%E7%9A%84%E3%80%8B/" title="《网络是怎样连接的》">
                         <span class="hidden-mobile">《网络是怎样连接的》</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
