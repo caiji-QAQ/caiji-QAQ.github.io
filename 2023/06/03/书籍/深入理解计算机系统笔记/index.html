@@ -19,12 +19,12 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="##程序的机器级表示or S,D D&lt;——D|Ssub S,D D&lt;——D-S%rax用于存放函数返回值###移位操作SAL、SHL：左移指令SAR：算术移位 填上符号位SHR：逻辑移位 填上0###x86-64命名延续字 2字节双字 4字节四字 8字节八字 16字节对应传送指令 字节movb 传送字节 1movw 传送字 2movl 传送双字 4movq 传送四字 8指令与字节：##">
+    <meta name="description" content="程序的机器级表示or S,D D&lt;——D|Ssub S,D D&lt;——D-S%rax用于存放函数返回值 移位操作SAL、SHL：左移指令SAR：算术移位 填上符号位SHR：逻辑移位 填上0 x86-64命名延续字 2字节双字 4字节四字 8字节八字 16字节对应传送指令 字节movb 传送字节 1movw 传送字 2movl 传送双字 4movq 传送四字 8指令与字节： 跳转反汇编版本">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《深入理解计算机系统》">
 <meta property="og:url" content="https://caiji-qaq.github.io/2023/06/03/%E4%B9%A6%E7%B1%8D/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="##程序的机器级表示or S,D D&lt;——D|Ssub S,D D&lt;——D-S%rax用于存放函数返回值###移位操作SAL、SHL：左移指令SAR：算术移位 填上符号位SHR：逻辑移位 填上0###x86-64命名延续字 2字节双字 4字节四字 8字节八字 16字节对应传送指令 字节movb 传送字节 1movw 传送字 2movl 传送双字 4movq 传送四字 8指令与字节：##">
+<meta property="og:description" content="程序的机器级表示or S,D D&lt;——D|Ssub S,D D&lt;——D-S%rax用于存放函数返回值 移位操作SAL、SHL：左移指令SAR：算术移位 填上符号位SHR：逻辑移位 填上0 x86-64命名延续字 2字节双字 4字节四字 8字节八字 16字节对应传送指令 字节movb 传送字节 1movw 传送字 2movl 传送双字 4movq 传送四字 8指令与字节： 跳转反汇编版本">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230705224241.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/IMG_20230706_223245.jpg">
@@ -74,7 +74,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231011211134.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231012204126.png">
 <meta property="article:published_time" content="2023-06-03T12:24:59.000Z">
-<meta property="article:modified_time" content="2025-06-27T11:36:41.135Z">
+<meta property="article:modified_time" content="2025-06-27T11:57:05.976Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230705224241.png">
@@ -334,7 +334,10 @@
             
               <div class="markdown-body">
                 
-                <p>##程序的机器级表示<br>or S,D D&lt;——D|S<br>sub S,D D&lt;——D-S<br>%rax用于存放函数返回值<br>###移位操作<br>SAL、SHL：左移指令<br>SAR：算术移位 填上符号位<br>SHR：逻辑移位 填上0<br>###x86-64命名<br>延续字 2字节<br>双字 4字节<br>四字 8字节<br>八字 16字节<br>对应传送指令 字节<br>movb 传送字节 1<br>movw 传送字 2<br>movl 传送双字 4<br>movq 传送四字 8<br>指令与字节：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230705224241.png" srcset="/img/loading.gif" lazyload><br>###跳转<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/IMG_20230706_223245.jpg" srcset="/img/loading.gif" lazyload><br>反汇编版本中是根据第二个字节的数值加上下一个指令的地址来判断跳转的地址，若出现f*这种情况则是负数(补码)，同样是与下一个指令的地址加和。<br>条件判断转移中第一种比较普通的方式：转移</p>
+                <h2 id="程序的机器级表示"><a href="#程序的机器级表示" class="headerlink" title="程序的机器级表示"></a>程序的机器级表示</h2><p>or S,D D&lt;——D|S<br>sub S,D D&lt;——D-S<br>%rax用于存放函数返回值</p>
+<h3 id="移位操作"><a href="#移位操作" class="headerlink" title="移位操作"></a>移位操作</h3><p>SAL、SHL：左移指令<br>SAR：算术移位 填上符号位<br>SHR：逻辑移位 填上0</p>
+<h3 id="x86-64命名"><a href="#x86-64命名" class="headerlink" title="x86-64命名"></a>x86-64命名</h3><p>延续字 2字节<br>双字 4字节<br>四字 8字节<br>八字 16字节<br>对应传送指令 字节<br>movb 传送字节 1<br>movw 传送字 2<br>movl 传送双字 4<br>movq 传送四字 8<br>指令与字节：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230705224241.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h3><p><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/IMG_20230706_223245.jpg" srcset="/img/loading.gif" lazyload><br>反汇编版本中是根据第二个字节的数值加上下一个指令的地址来判断跳转的地址，若出现f*这种情况则是负数(补码)，同样是与下一个指令的地址加和。<br>条件判断转移中第一种比较普通的方式：转移</p>
 <pre><code class="hljs">if（a&gt;b) goto state1
 else goto state2
 </code></pre>
@@ -359,7 +362,7 @@ if c a1=a2
 <p>流水线、完全流水线化（发射时间为1）</p>
 <p>针对一个硬件的性能：功能单元的最大吞吐量，定义为发射时间的倒数。对一个容量为C发射时间为I的操作来说，处理器可能的吞吐量为每个时钟周期C&#x2F;I个操作。<br>CPE每个元素的周期数。<br>延迟界限：完成合并原酸的函数所需要的最小CPE值（总量）<br>吞吐量界限：CPE最小界限（处理器能做的最好是多少）</p>
 <h1 id="06-存储器层次结构"><a href="#06-存储器层次结构" class="headerlink" title="06 存储器层次结构"></a>06 存储器层次结构</h1><p><strong>存储器系统：</strong> 一个具有不同容量成本和访问时间的存储设备的层次结构。主要分为：高速缓存(cache memory)，主存储器（main memory），磁盘。<br><strong>局部性：</strong> 具有良好局部性的程序倾向于一次又一次地访问相同的数据项集合，或是临近的数据项。良好局部性的程序较好可以从存储器层次结构较高的层次访问数据项，运行时间可以更短。</p>
-<h2 id="1-存储技术"><a href="#1-存储技术" class="headerlink" title="1.存储技术"></a>1.存储技术</h2><p>###1.1随机访问存储器(RAM)<br><strong>1 静态与动态RAM</strong><br>静态RAM(SRAM)：更快但空间更小，可以在CPU芯片上也可以在片下，不易受到干扰。<br>动态RAM(DRAM)：慢但空间较大，作为驻村和图形系统的缓冲区，更易受到干扰。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230831224239.png" srcset="/img/loading.gif" lazyload><br><strong>2 DRAM与超单元</strong><br>DRAM芯片中单元分为d个超单元，每个超单元由w个DRAM单元组成（w位数，d个数）<br>DRAN组成二维阵列而不是线性数组的原因：降低芯片上地址引脚的数量：16个超单元，芯片正常需要4个地址引脚，而做成二维需要两个；但二维阵列组织缺点是必须分成两部发送地址，增加访问时间。<br><strong>3 内存模块取出地址</strong><br>内存地址传输：64位的一个字，示例使用8个64Mbit的8M*8的DRAM芯片。存储：8个芯片，每个芯片取出一个超单元(i,j)存储主存的一个字节，也就是8个单元表示主存的64位字。取出：A转化为超单元的(i,j)内存模块将i,j广播到每个DRAM，每个DRAM分别传出对应位置的8bit组成64bit传回给内存管理器<br><strong>4 ROM</strong><br>ROM是一种非易失性存储器，即关电也会保存原有的信息（RAM无法维持信息）<br>ROM类型：<br>PROM：只能被编写一次<br>EPROM：可擦写可编程ROM，可以编程1000次<br>flash memory闪存：大量使用</p>
+<h2 id="1-存储技术"><a href="#1-存储技术" class="headerlink" title="1.存储技术"></a>1.存储技术</h2><h3 id="1-1随机访问存储器-RAM"><a href="#1-1随机访问存储器-RAM" class="headerlink" title="1.1随机访问存储器(RAM)"></a>1.1随机访问存储器(RAM)</h3><p><strong>1 静态与动态RAM</strong><br>静态RAM(SRAM)：更快但空间更小，可以在CPU芯片上也可以在片下，不易受到干扰。<br>动态RAM(DRAM)：慢但空间较大，作为驻村和图形系统的缓冲区，更易受到干扰。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230831224239.png" srcset="/img/loading.gif" lazyload><br><strong>2 DRAM与超单元</strong><br>DRAM芯片中单元分为d个超单元，每个超单元由w个DRAM单元组成（w位数，d个数）<br>DRAN组成二维阵列而不是线性数组的原因：降低芯片上地址引脚的数量：16个超单元，芯片正常需要4个地址引脚，而做成二维需要两个；但二维阵列组织缺点是必须分成两部发送地址，增加访问时间。<br><strong>3 内存模块取出地址</strong><br>内存地址传输：64位的一个字，示例使用8个64Mbit的8M*8的DRAM芯片。存储：8个芯片，每个芯片取出一个超单元(i,j)存储主存的一个字节，也就是8个单元表示主存的64位字。取出：A转化为超单元的(i,j)内存模块将i,j广播到每个DRAM，每个DRAM分别传出对应位置的8bit组成64bit传回给内存管理器<br><strong>4 ROM</strong><br>ROM是一种非易失性存储器，即关电也会保存原有的信息（RAM无法维持信息）<br>ROM类型：<br>PROM：只能被编写一次<br>EPROM：可擦写可编程ROM，可以编程1000次<br>flash memory闪存：大量使用</p>
 <p>固件：存储在ROM设备中的程序，计算机关键程序</p>
 <p><strong>5 访问主存</strong><br>总线结构：主要分为IO桥链接CPU的系统总线和IO桥连接主存的内存总线。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230903110038.png" srcset="/img/loading.gif" lazyload><br>从主存上读取数据：<br>1 CPU传输地址给系统总线，IO桥将信号给内存总线<br>2 内存总线将数据传输给内存总线，IO桥将内存总线信号翻译为系统总线信号，传输信号给系统总线<br>3 从系统总线上读取数据，并将数据复制给寄存器<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230903110600.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="1-2磁盘存储"><a href="#1-2磁盘存储" class="headerlink" title="1.2磁盘存储"></a>1.2磁盘存储</h3><p><strong>1.磁盘构造</strong><br>整体：盘片，每个盘片有两个盘面<br>磁盘表面：一组同心圆称为磁道，每个磁道被划分为一组扇区，扇区之间由间隙隔开<br>柱面：多个盘片驱动器的构造。例如：驱动器有6个盘面，每个表面磁道编号一致，那么柱面k是6个磁道k的集合。<br><strong>2.磁盘操作</strong><br>磁盘以扇区大小的块来读写数据，访问时间主要有三个影响因素：寻道时间，旋转时间，传送时间。分别对对应了三个步骤：读写头定位磁道，磁道上定位扇区，读取扇区信息。<br>寻道时间：读写&#x2F;头定位到想要读取数据磁道的时间<br>旋转时间：取决于磁盘旋转速度RPM<br>传送时间：读取一个扇区的时间，旋转速度+一个磁道上的扇区数量需要考虑到间隔的影响<br><strong>3.磁盘控制器</strong><br>对操作系统隐藏复杂性，磁盘显示为B个扇区大小的逻辑块序列，编号为0、1…、B-1。磁盘封装一个硬件&#x2F;固件设备—— <strong>磁盘控制器</strong> ，维持逻辑块号和实际磁盘分区的映射关系。磁盘控制器令操作系统读取信息变得更为简单。<br>当操作系统读取一个磁盘分区数据到主存：操作系统令磁盘控制器，读一个逻辑块号——控制器将逻辑块号翻译成一个（盘面，磁道，扇区）三元组。<br><strong>4.CPU读取磁盘信息</strong><br>IO总线：将例如图形卡、监视器、鼠标、键盘和磁盘这样的输入&#x2F;输出IO设备与CPU与主存相连。主机总线适配器可以将一个或多个磁盘连接到IO总线<br>注：主存：一般指RAM</p>
@@ -382,8 +385,8 @@ if c a1=a2
 <h2 id="1-将程序翻译为目标可执行文件流程"><a href="#1-将程序翻译为目标可执行文件流程" class="headerlink" title="1.将程序翻译为目标可执行文件流程"></a>1.将程序翻译为目标可执行文件流程</h2><p>编译系统需要提供编译器驱动程序，调用语言预处理器，编译器，汇编器和链接器。<br>预处理器：就是将#include的内容插入进来以及去掉注释这些简单工作。</p>
 <p>源程序（.c）——（预处理器）——&gt;ASCII码中间文件(.i)——（编译器）——&gt;ASCII汇编程序(.s)——（汇编器）——&gt;可重定位目标文件（.o）——(链接器)——&gt;可执行目标文件</p>
 <h2 id="2-静态链接器"><a href="#2-静态链接器" class="headerlink" title="2.静态链接器"></a>2.静态链接器</h2><p>出现的问题：因为所有的程序在没有链接之前都是散的节，也就会出现指令在一节里，数据在一节里这种情况发生，为了解决这个问题链接器主要需要完成：符号解析+重定向。<br>符号解析：将每个符号引用对应一个符号定义<br>重定向：将这些符号从地址0开始对应一个内存的位置</p>
-<h2 id="3-可重定位目标文件"><a href="#3-可重定位目标文件" class="headerlink" title="3.可重定位目标文件"></a>3.可重定位目标文件</h2><p>###3.1可执行的目标文件细节（ELF格式）<br>包含二进制代码以及数据，可以在编译时与其他可重定位目标文件合并，创造一个可执行的目标文件<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230910155612.png" srcset="/img/loading.gif" lazyload><br>.text:已编译程序的机器代码<br>.rodata:只读数据，例如printf里面这些<br>.data:已初始化的全局变量和静态变量<br>.bss:未初始化的静态变量，以及初始化为0的全局变量或静态变量，不占用实际空间，只是一个占位符<br>.symtab:一个符号表，用于存放<strong>程序中定义和引用的函数和全局变量</strong>的信息<br>.rel.text:一个.text节中位置的列表，当链接器想要将这个目标文件与其他文件结合时需要修改位置信息。<br>.rel.data:被模块引用或定义的所有全局变量的重定位信息<br>.debug:调试符号表，定义的局部变量和类型定义<br>.line:原始c程序的行数和.text节中机器指令的映射<br>.strtab:一个字符串表，包括.symtab和.debug节中的符号表，以及节头部中的节名字。</p>
-<p>###3.2符号和符号表<br>每个可重定位目标模块m都有一个符号表，包含m定义和引用符号的信息。共有3类<br>1.模块m定义并且能被其他模块引用的全局符号，全局链接器符号对应于非静态的C函数和全局变量。<br>2.其他模块定义并被模块m引用的全局符号，这些符号被称为外部符号，对应其他模块中定义的非静态的C函数和全局变量。<br>3.局部符号：带static属性的C函数和全局变量，不能被其他模块引用。<br>局部变量是归由堆栈处理的，链接器不管这个，但带上了static就得放在.data里了，就更像是一个全局变量。</p>
+<h2 id="3-可重定位目标文件"><a href="#3-可重定位目标文件" class="headerlink" title="3.可重定位目标文件"></a>3.可重定位目标文件</h2><h3 id="3-1可执行的目标文件细节（ELF格式）"><a href="#3-1可执行的目标文件细节（ELF格式）" class="headerlink" title="3.1可执行的目标文件细节（ELF格式）"></a>3.1可执行的目标文件细节（ELF格式）</h3><p>包含二进制代码以及数据，可以在编译时与其他可重定位目标文件合并，创造一个可执行的目标文件<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230910155612.png" srcset="/img/loading.gif" lazyload><br>.text:已编译程序的机器代码<br>.rodata:只读数据，例如printf里面这些<br>.data:已初始化的全局变量和静态变量<br>.bss:未初始化的静态变量，以及初始化为0的全局变量或静态变量，不占用实际空间，只是一个占位符<br>.symtab:一个符号表，用于存放<strong>程序中定义和引用的函数和全局变量</strong>的信息<br>.rel.text:一个.text节中位置的列表，当链接器想要将这个目标文件与其他文件结合时需要修改位置信息。<br>.rel.data:被模块引用或定义的所有全局变量的重定位信息<br>.debug:调试符号表，定义的局部变量和类型定义<br>.line:原始c程序的行数和.text节中机器指令的映射<br>.strtab:一个字符串表，包括.symtab和.debug节中的符号表，以及节头部中的节名字。</p>
+<h3 id="3-2符号和符号表"><a href="#3-2符号和符号表" class="headerlink" title="3.2符号和符号表"></a>3.2符号和符号表</h3><p>每个可重定位目标模块m都有一个符号表，包含m定义和引用符号的信息。共有3类<br>1.模块m定义并且能被其他模块引用的全局符号，全局链接器符号对应于非静态的C函数和全局变量。<br>2.其他模块定义并被模块m引用的全局符号，这些符号被称为外部符号，对应其他模块中定义的非静态的C函数和全局变量。<br>3.局部符号：带static属性的C函数和全局变量，不能被其他模块引用。<br>局部变量是归由堆栈处理的，链接器不管这个，但带上了static就得放在.data里了，就更像是一个全局变量。</p>
 <p><strong>符号表：</strong><br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230910162421.png" srcset="/img/loading.gif" lazyload><br>name：字符串表的字节偏移，字符串的名字<br>value：符号的地址<br>size：目标的大小<br>type：要么是数据要么是函数<br>binding：表示本地还是全局<br>每个符号被分配到目标文件的某个节，有三个特殊的伪节在节头部表中没有条目：<br>ABS代表不该被重定位的符号<br>UNDEF：未定义的符号，在目标模块中引用但却在其他地方定义的符号<br>COMMON：未被分配位置的未初始化的数据目标。<br>COMMON与.bss，COMMON：未初始化的全局变量，.bss：未初始化的静态变量以及初始化为0的全局活静态变量。</p>
 <pre><code class="hljs">静态函数（extern):
 1）静态函数在其他文件中科技定义形同的名字，不会发生冲突；
@@ -412,7 +415,7 @@ gcc foo.c libx.a libz.a foo.c调用静态库中的函数，这时就必须要保
 <h2 id="6-可执行目标文件"><a href="#6-可执行目标文件" class="headerlink" title="6.可执行目标文件"></a>6.可执行目标文件</h2><p>linux加载可执行目标文件prog：prog不是内置的shell命令，所以shell会认为prog是一个可执行的目标文件，通过调用某个驻留在储存器中的加载器来运行。加载器将可执行目标文件中的代码和数据从磁盘加载到内存里，然后跳转到程序的第一条指令或入口点来运行程序。<br>linux程序都有一个运行时的内存映像，如下图所示<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230918220159.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="7-动态链接共享库"><a href="#7-动态链接共享库" class="headerlink" title="7.动态链接共享库"></a>7.动态链接共享库</h2><p>7.1 动态链接库<br>静态库所存在的问题：<br>标准的IO函数例如printf和scanf，运行时，这些函数的代码会被复制到每个运行进程的文本断种，是对内存资源的浪费。共享库就是为了解决这样的问题被提出的。</p>
 <p>共享库是一个目标模块，在运行或加载时可以加载到任意的内存地址，并和一个在内存中的程序链接起来。这个过程也被称为动态链接，动态库在linux中通常用.so来表示。<br><strong>共享方式</strong><br>1.一个库只有一个.so文件，所有引用该库的可执行目标文件共享这个.so文件的代码和数据，这样就不需要静态库复制和嵌入到可执行文件里了。<br>2.在内存中一个共享库的.text节的一个副本可以被不同正在运行的进程共享。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230918221135.png" srcset="/img/loading.gif" lazyload><br>创建可执行文件时静态执行一些链接，加载时再动态完成链接过程。<br>可执行文件只保留一个动态链接器的路径名，相当于不整合在一起而是直接放一个链接去访问那个内存然后再调用过来。</p>
-<p>7.2位置无关代码（PIC）<br>位置无关代码：可以使用直接加载而无需重定位的代码（PIC）</p>
+<p>7.2 位置无关代码（PIC）<br>位置无关代码：可以使用直接加载而无需重定位的代码（PIC）</p>
 <p>8.打桩<br>打桩：截获对共享库函数的调用，取而代之执行自己的代码。使用打桩机制，可以实现追踪某个特殊库函数的调用次数，验证和追踪他的输入和输出值。</p>
 <h1 id="08-异常控制流"><a href="#08-异常控制流" class="headerlink" title="08 异常控制流"></a>08 异常控制流</h1><h2 id="1异常"><a href="#1异常" class="headerlink" title="1异常"></a>1异常</h2><p>异常：控制流中的突变<br>事件：状态变化，例如系统定时器产生一个信号或者一个IO请求完成。<br>异常表：当处理器检测到有事件发生时，通过一张表进行间接过程调用，到一个专门处理这类事件的操作系统子程序（异常处理程序），对应异常会通过对应异常表里处理程序代码。</p>
 <h3 id="1-1异常处理"><a href="#1-1异常处理" class="headerlink" title="1.1异常处理"></a>1.1异常处理</h3><p>系统启动时，操作系统分配和初始化一张称为异常表，在运行时处理器检测到一个事件，并且确定相应的异常号k，通过异常表调用对应的处理程序。<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20230921215323.png" srcset="/img/loading.gif" lazyload><br>异常类别：<br><img src="https://cdn.jsdelivr.net/gh/caiji-QAQ/PICGO@master/20231007112556.png" srcset="/img/loading.gif" lazyload></p>
